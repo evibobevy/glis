@@ -1,0 +1,26 @@
+<% unless @post.blank? %>
+  <%= social_share_button_tag(@post.name, :url => "http://guides.rubyonrails.org/association_basics.html", :image => @post.user.image, :'data-type' => 'photo') %>
+	<%= image_tag @post.user.image.url(:thumb) %>
+	<h2><%=@post.user.full_name + " volunteered for " %><%= @post.event.title %></h2>
+  <% seconds = (TimeDifference.between(Time.now, Post.last.created_at).in_seconds.to_i) %>
+			<% mm, ss = seconds.divmod(60) %>
+	    <% hh, mm = mm.divmod(60) %>
+	    <% dd, hh = hh.divmod(24)%>
+  <strong><%= "%d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss] %> </strong>
+
+  <h3><%= @post.name %></h3>
+<% end %>
+
+<% if @post.present? && @users.exists?(@post.user) %>
+  <%= link_to 'Join', event_path(@post.event) %>
+<% else %>
+  <%= link_to 'Disjoin', new_user_registration_path %>
+<% end %>
+
+<% unless @post.blank?  %>
+	<h4> Comments</h4>
+		<% @post.comments.each do |comment|%>
+			<%= comment.commenter %><br>
+		<hr>
+		<% end %>
+<% end %>

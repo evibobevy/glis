@@ -1,0 +1,66 @@
+<!--Register Popup starts here-->
+<%= javascript_include_tag 'user.js'%>
+<div class="register-popup">
+  <h3>Register</h3>
+  <%=form_for(resource, :as => resource_name,
+              :url => registration_path(resource_name),
+              :html => {:id => "sign_up_user"},
+              :format => :json,
+              :remote => true ) do |f| %>
+    <%= devise_error_messages! %>
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <%= f.text_field :first_name, :placeholder=>"First Name", :required => true %>
+      </div>
+      <div class="col-reg-lft">
+        <%= f.text_field :last_name, :placeholder=>"Last Name", :required => true %>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <%= f.email_field :email, :placeholder=>"Email", :required => true %>
+      </div>
+      <div class="col-reg-lft">
+        <%= f.email_field :confirm_email, :placeholder=>"Confirm Email", :required => true, :oninput=>"check_email(this)" %>
+        <script language='javascript' type='text/javascript'>
+          function check_email(input) {
+            if (input.value != document.getElementById('user_email').value) {
+              input.setCustomValidity('Email and email confirm must be matching.');
+            } else {
+              input.setCustomValidity('');
+            }
+          }
+        </script>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <%= f.password_field :password, autocomplete: "off", :placeholder=>"Password", :required => true , :minlength=>"8" %>
+      </div>
+
+      <div class="col-reg-lft">
+        <%= f.password_field :password_confirmation, :placeholder=> "Confirm Password", :required => true, :minlength=>"8", :oninput=>"check(this)" %>
+        <script language='javascript' type='text/javascript'>
+          function check(input) {
+            if (input.value != document.getElementById('user_password').value) {
+              input.setCustomValidity('Password Must be Matching.');
+            } else {
+              // input is valid -- reset the error message
+              input.setCustomValidity('');
+            }
+          }
+        </script>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <input type="button" class="reg-fb" value="Register with Facebook" onclick="window.location.href='/users/auth/facebook'"></input>
+      </div>
+      <div class="col-reg-lft">
+        <%= f.submit "Submit Registration",:class=>"reg-fb sub-regis" %>
+      </div>
+    </div>
+  <% end %>
+</div>

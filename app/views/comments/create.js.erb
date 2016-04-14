@@ -1,0 +1,3 @@
+$('.comments').first().remove();
+$('.comments').after('<%= j render("events/comment", :comment => @comment) %>');
+$('#comment_commenter').val('')

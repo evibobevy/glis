@@ -1,0 +1,38 @@
+<header id="top-container">
+  <div class="fixed-wrapper">
+    <div class="logo"><%= image_tag('logo.png', alt: '') %></div>
+    <div class="header-search">
+      <form action="" method="get">
+        <div class="hd-search-box">
+          <input name="" type="text">
+          <button class="search-icon"></button>
+        </div>
+        <span class="inspire-text">Inspire the world with good.</span>
+      </form>
+    </div>
+    <% if user_signed_in? %>
+      <div class="loged-rgt">
+        <div class="after-login-icon">
+          <ul>
+            <li><a href="#"><img src="/assets/date-icon.png" alt=""></a></li>
+            <li><a href="#"><img src="/assets/setting-icon.png" alt=""></a></li>
+            <li><a href="#"><img src="/assets/email-icon.png" alt=""></a></li>
+            <li><a href="#"><img src="/assets/add-icon.png" alt=""></a></li>
+          </ul>
+        </div>
+        <div class="loged-user">
+          <img src="/assets/after-user-img.jpg" alt="">
+          <span>Jameson</span>
+        </div>
+        <%= link_to 'Sign out', destroy_user_session_path, :method => :delete, :class => 'after-login-icon' %>
+      </div>
+    <% else %>
+      <!--After login right section-->
+      <div class="header-rgt-btn"> <a href="#"><small>CHECK</small> <strong>NEW</strong> <small class="event-pos">EVENTS</small></a>
+        <!--<a href="#" class="join-today"><strong>JOIN</strong> <small>TODAY</small></a> </div>-->
+        <%= link_to 'Join Today', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success join-today'%>
+          <!--ends here-->
+        <% end %>
+      </div>
+  </div>
+</header>

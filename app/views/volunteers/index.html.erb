@@ -1,0 +1,13 @@
+<h1>Listing volunteers</h1>
+
+<table>
+  <tbody>
+    <% @volunteers.each do |volunteer| %>
+      <tr>
+        <th><%= image_tag event.volunteer.url(:medium) %>
+       <h3><%= volunteer.name %></h3></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>

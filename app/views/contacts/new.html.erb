@@ -1,0 +1,47 @@
+<div class="contact-popup">
+  <div class="modal-header">
+    <h3>Contact Us</h3>
+    <div class="modal-body">
+      <!--<div id="edit_address_errors"></div>-->
+      <div id="success_msg"></div>
+      <%= form_for @contact, url: contact_path, html: {id: 'new_address', class: 'form-horizontal', role: 'form', data: {remote: true}} do |f| %>
+        <div class="form-row">
+          <div style="float: left; width: 100px;">Name</div>
+          <div class="col-reg-lft-contact">
+            <%= f.text_field :name, id: 'name', class: 'form-control', :required => true,  :maxlength=> "30"%>
+          </div>
+        </div>
+        <div class="form-row">
+          <div style="float: left; width: 100px;">Email</div>
+           <div class="col-reg-lft-contact">
+             <%= f.email_field :email, id: 'email', class: 'form-control', required: true %>
+           </div>
+        </div>
+        <div class="form-row">
+          <div style="float: left; width: 100px;">Company Name</div>
+          <div class="col-reg-lft-contact">
+            <%= f.text_field :company_name, id: 'company_name', class: 'form-control', :required => true %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div style="float: left; width: 100px;">Phone number</div>
+          <div class="col-reg-lft-contact">
+            <%= f.text_field :phone_number, id: 'phone_number', class: 'form-control', :required => true, :pattern => '[0-9]{10}' %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div style="float: left; width: 100px;">Description</div>
+          <div class="col-reg-lft-contact">
+            <%= f.text_area :description, id: 'description', class: 'form-control', required: true %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-reg-lft-contact">
+            <%= f.submit 'Send',:id => 'send_form', :class=>"reg-fb sub-regis", :onclick => '$("#submit_contact_form").show();$(this).prop("disabled", true);$(this).addClass("sub-regis-contact");' %>
+          </div>
+          <%= image_tag 'ajax-loader.gif', :id => 'submit_contact_form', :style => 'display: none; height: 25px;' %>
+        </div>
+        </div>
+      <% end %>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @event.title %>
+</p>
+
+<p>
+  <strong>Event date:</strong>
+  <%= @event.event_date %>
+</p>
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @event.image.url(:medium) %>
+</p>
+
+<%= render 'posts/form' %>
+<%= link_to 'Back', root_path %>
+
+
+
