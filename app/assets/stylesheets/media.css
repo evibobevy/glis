@@ -1,0 +1,158 @@
+@media screen and (max-width: 1300px){
+body { -webkit-text-size-adjust: none; }
+input, textarea, button { appearance: none; -moz-appearance: none; -webkit-appearance: none;}
+input[type="radio"] { appearance: radio; -moz-appearance: radio; -webkit-appearance: radio; }
+input[type="checkbox"] { appearance: checkbox; -moz-appearance: checkbox; -webkit-appearance: checkbox;}
+button{-moz-border:none;}
+}
+
+@media (min-width: 1px) and (max-width: 767px) {
+.fixed-wrapper{width:94%;}
+#top-container {padding:20px 0;}
+.logo {width:100px; margin:0 auto; float:none;}
+.header-search {width:100%; margin:0;}
+.hd-search-box {margin:10px 0;}
+.hd-search-box input {padding:0 50px 0 10px;}
+.inspire-text {font-size:23px; text-align:center; margin:0 0 10px 0; display:block;}
+.header-rgt-btn {margin:0 auto; float:none; width:290px; clear:both;}
+.header-rgt-btn a {margin-right:14px;}
+.social-network-row {padding:20px 0;}
+.child-left {width:200px; text-align:center; margin:0 auto; float:none; padding-bottom:20px;}
+.social-net-rgt {margin:0; width:100%; text-align:center;}
+.social-net-rgt h1 {font-size:45px;}
+.social-net-rgt h2 {padding:10px; font-size:30px; display:block;}
+.gray-box-row p {font-size:20px;}
+.gray-box-row {padding:10px 0;}
+.volunteer-full {padding:40px 0;}
+.volunteer-full h3 {font-size:22px; margin-bottom:20px;}
+.volunteer-full h3::after {width:40px; height:40px;}
+.stay-icon {width:170px; margin:0 auto; float:none;}
+.stay-detail h5 {font-size:25px; line-height:normal;}
+.stay-detail {width:100%; margin:10px 0; text-align:center;}
+.date-small {font-size:21px; display:block;}
+a.btn-join {font-size:26px; height: 50px;line-height: 52px;}
+.vol-left-main {width:100%;}
+.volunteer-lft {margin-bottom:20px;}
+.volunteer-rgt {width:100%; float:left;}
+.volunteer-rgt ul li {width:140px; margin-right:}
+.volunteer-rgt ul li:nth-child(2n) {margin-right:0px;}
+.volunteer-rgt ul {width:300px; margin:0 auto; float:none;}
+.vol-name-over {width:125px; min-height:120px; font-size:21px;}
+.vol-detail-row {padding-top:30px;}
+.vol-lft {margin:0 auto; float:none;}
+.vol-user-comment {width:100%; margin:0;}
+.vol-user-comment h4 {text-align:center; font-size:22px;}
+.day-time-row {text-align:center;font-size:22px;}
+p.vol-desc {text-align:center; font-size:18px;}
+.vol-reply-sec ul {padding:10px;}
+.reply-desc {width:65%;}
+.reply-desc span {float:left; width:100%;}
+.reply-form {text-align:center;}
+.reply-form input {width:100%; margin:0 0 10px 0;}
+#bott-container {margin-top:0px;}
+.foo-col-1 {width:100%; border:none; text-align:center;}
+a.btn-contact {width:220px;}
+.footer-link {width:100%; padding:15px 15px 0 15px; border:none; border-top:2px solid #fff;}
+.send-feedback {margin:0 auto; float:none; clear:both; padding:10px 15px 0;}
+.cpy-full {font-size:16px;}
+.social-net-rgt p {font-size:24px;}
+.foo-col-1 span {display:block;}
+.social-foo {margin-top:10px;}
+.rgt-hd {margin-top:20px;}
+
+/*after login css*/
+.loged-rgt {float:none; margin:20px auto 0 auto; clear:both; overflow:hidden;}
+
+/*popup css*/
+.register-popup {width:96%; padding:30px 15px;}
+.register-popup input[type="text"], .register-popup input[type="email"], .register-popup input[type="password"] {width:100%; margin-bottom:10px;}
+.col-reg-lft {width:100%;}
+.register-popup .form-row {margin-bottom:0px;}
+.reg-fb {margin-top:10px;}
+
+.contact-popup {width:96%; padding:30px 15px;}
+.contact-popup input[type="text"], .contact-popup textarea, .contact-popup input[type="email"], .contact-popup input[type="password"] {width:100%; margin-bottom:10px;}
+.contact-popup .form-row {margin-bottom:0px;}
+
+
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+.social-net-rgt h1 {font-size:42px;}
+.social-net-rgt h2 {font-size:27px; padding:10px 10px 6px;}
+.stay-icon {float:left;}
+.stay-detail {float:left; width:57%; text-align:left; margin-left:3%; margin-top:0px;}
+.volunteer-rgt ul {width:430px;}
+.volunteer-rgt ul li {width:200px;}
+.vol-name-over {min-height: 100px;width: 165px;}
+.vol-lft {float:left; width:100%;}
+.vol-img-lft {float:left; width:auto; margin-right:20px;}
+a.btn-black {width:170px;}
+.reply-desc {width:77%;}
+.reply-form input {width:60%; margin-right:10px;}
+
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+
+}
+
+
+@media (min-width: 768px) and (max-width: 1060px) {
+.fixed-wrapper{width:96%;}
+#top-container {padding:20px 0;}
+.header-search {width:34%;}
+.inspire-text {font-size:28px;}
+.child-left {float:left; width:200px;}
+.social-net-rgt {width:66%;}
+.social-net-rgt h1 {font-size:44px;}
+.social-net-rgt h2 {font-size:37px; display:block;}
+.social-net-rgt p {font-size:27px;}
+.gray-box-row p {font-size:23px;}
+.vol-left-main {width:48%;}
+.volunteer-full h3 {font-size:26px;}
+.volunteer-full h3::after {width:40px; height:40px;}
+.stay-icon {width:150px;}
+.stay-detail {width:187px;}
+.stay-detail h5 {font-size:22px; line-height:normal;}
+.date-small {font-size:22px;}
+a.btn-join {font-size:26px; height: 50px;line-height: 52px; width:150px;}
+.volunteer-lft {margin-bottom:40px;}
+.volunteer-rgt {width:49%;}
+.volunteer-rgt ul li {width:44%; margin-right:4%;}
+.volunteer-rgt ul li:nth-child(2n) {margin-right:0px;}
+.vol-name-over {width:145px; font-size:20px;}
+.vol-user-comment {margin-left:20px; width:72%;}
+.vol-user-comment h4 {font-size:26px;}
+p.vol-desc {font-size:18px;}
+.reply-desc {width:80%;}
+.reply-form input {width:70%;}
+.footer-link {width:41%; padding:15px 20px;}
+.send-feedback {float:right; width:160px; font-size:24px;}
+.send-feedback i {margin-top:10px;}
+.cpy-full {font-size:20px;}
+.footer-link ul li a {font-size:20px;}
+
+}
+
+@media (min-width: 900px) and (max-width: 1020px) {
+.header-search {width:43%;}
+.footer-link {width:44%; padding:15px 50px;}
+}
+
+
+@media (min-width: 1024px) and (max-width: 1060px) {
+.header-search {width:48%;}
+.inspire-text {font-size:35px;}
+.child-left {width:260px;}
+.social-net-rgt h1 {font-size:58px;}
+.social-net-rgt p {font-size:35px;}
+.gray-box-row p {font-size:30px;}
+.stay-detail {width:237px;}
+.vol-user-comment {width:80%;}
+.reply-desc {width:87%;}
+.reply-form input {width:80%;}
+.send-feedback {width:250px; font-size:30px;}
+.footer-link {padding:15px 40px;}
+
+}
