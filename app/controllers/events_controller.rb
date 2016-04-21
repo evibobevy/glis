@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy, :join_volunteer, :disjoin_volunteers]
   before_filter :authorize, only: [:join_volunteer, :disjoin_volunteers]
-  respond_to :html
+  respond_to :html,:js
 
   def authorize
     unless user_signed_in?
@@ -14,7 +14,7 @@ class EventsController < ApplicationController
     @events = Event.last(3)
     @post = Post.last
     @comments = @post.comments unless @post.nil?
-    @volunteers = User.last(6)
+    @last_six_users = User.last(6)
     respond_with(@events)
   end
 
@@ -61,12 +61,18 @@ class EventsController < ApplicationController
     redirect_to root_path
   end
 
+  def event_list
+    @event_list = Event.all
+    @latest_month_event = Event.this_months_event
+    render layout: 'fancybox'
+  end
+
   private
     def set_event
       @event = Event.find(params[:id])
     end
 
     def event_params
-      params.require(:event).permit(:title, :event_date,:image)
+      params.require(:event).permit(:title, :event_date,:image, :start_time, :end_date)
     end
 end

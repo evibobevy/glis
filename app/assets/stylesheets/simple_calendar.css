@@ -1,0 +1,51 @@
+/*.simple_calendar {*/
+    /*width: 80%;*/
+    /*float: left;*/
+/*}*/
+.simple-calendar table {
+    background-color: rgba(0, 0, 0, 0);
+    border: 3px solid gray;
+    border-collapse: collapse;
+    border-radius: 10px;
+    box-sizing: border-box;
+    max-width: 75%;
+    margin-left: 21%;
+    width: 75%;
+    margin-bottom: 50px;
+    table-layout: fixed;
+}
+.simple-calendar tr {
+    border-collapse: collapse;
+}
+.simple-calendar th {
+    border-collapse: collapse;
+    border-color: #333333 #dddddd #dddddd;
+    /*border-style: none solid solid;*/
+    border-width: 0 1px 2px;
+    box-sizing: border-box;
+    padding: 6px;
+    text-align: left;
+}
+.simple-calendar td {
+    vertical-align: top;
+    /*width: 80px;*/
+    overflow: hidden;s
+}
+.simple-calendar .day {
+    margin: 12px 12px 12px 12px;
+    padding: 12px 12px 12px 12px;
+    height: 96px;
+}
+.simple-calendar .today {
+    background: #ffffc0 none repeat scroll 0 0;
+}
+.simple-calendar .prev-month {
+    background: #ddd none repeat scroll 0 0;
+}
+.simple-calendar .next-month {
+    background: #ddd none repeat scroll 0 0;
+}
+.simple-calendar table .calendar_tbody {
+    border: 3px solid gray;
+}
+

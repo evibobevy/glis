@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get 'disjoin_volunteer' => 'events#disjoin_volunteer', as: :disjoin_volunteer
   get 'contacts/new', :to => 'contacts#new'
   post 'contact', :to => 'contacts#contact'
+  get 'event_list', :to => 'events#event_list'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   # Example of named route that can be invoked with purchase_url(id: product.id)
