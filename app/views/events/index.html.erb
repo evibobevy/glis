@@ -16,7 +16,7 @@
       </div>
       <div class="volunteer-rgt">
         <h3 class="rgt-hd">Top 6 Glis Volunteers</h3>
-        <% @volunteers.in_groups_of(2, false) do |volunteer| %>
+        <% @last_six_users.in_groups_of(2, false) do |volunteer| %>
           <ul>
             <% for vol in volunteer %>
               <li>

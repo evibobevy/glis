@@ -55,7 +55,8 @@ a.btn-contact {width:220px;}
 .footer-link {width:100%; padding:15px 15px 0 15px; border:none; border-top:2px solid #fff;}
 .send-feedback {margin:0 auto; float:none; clear:both; padding:10px 15px 0;}
 .cpy-full {font-size:16px;}
-.social-net-rgt p {font-size:24px;}
+.social-net-rgt p {font-size:22px;}
+.social-net-rgt p br {display: none;}
 .foo-col-1 span {display:block;}
 .social-foo {margin-top:10px;}
 .rgt-hd {margin-top:20px;}

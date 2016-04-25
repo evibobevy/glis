@@ -47,7 +47,7 @@
       <% unless @latest_month_event.blank? %>
       <div class="latest_event">
         <% @latest_month_event.each do |latest_event|%>
-          <h3> <%= latest_event.event_date.try(:strftime, '%B %d, %Y') %> </h3>
+          <h3> <%= latest_event.event_date.try(:strftime, '%b %dth, %Y') %> </h3>
           <h4><%= latest_event.title.titleize %></h4>
           <hr />
         <% end %>
@@ -76,6 +76,9 @@
 		margin-top: 0px;
 		padding: 8px;
 		text-align: justify;
+    display: block;
+    overflow: scroll;
+    height: 540px;
 	}
 	.event_title {
 		float: left;

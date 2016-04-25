@@ -113,7 +113,7 @@ a.join-today {padding-top:20px;}
 .volunteer-full h3:after {content:""; background:url(heading-crnr.png) no-repeat; width:60px; height:60px; position:absolute; left:0; top:-10px;}
 .volunteer-row {float:left; width:100%; margin-bottom:40px;}
 .volunteer-lft {float:left; width:100%; margin-bottom:80px;}
-.stay-icon {float:left; margin:0 10px 0 0;}
+.stay-icon {float:left; margin:0 10px 0 0; border-radius:6px; border:5px solid #67aa4d;}
 .stay-detail {float:left;width:237px; margin-left:5px;}
 .stay-detail h5 {font-size:40px; color:#78b55f; font-family:'proxima_novasemibold'; margin-bottom:5px; line-height:44px;}
 .date-small {font-size:30px;font-family:'proxima_nova_rgregular'; display:inline-block; margin-bottom:10px;}
