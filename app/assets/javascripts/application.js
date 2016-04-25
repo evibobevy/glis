@@ -16,3 +16,12 @@
 //= require fancybox
 //= require_tree .
 
+function check_form(){
+    if ($('#name').val() != "" && $('#email').val() != "" && $('#company_name').val() != "" && $('#phone_number').val() != "" && $('#description').val() != ""){
+        $("#send_form").prop("disabled", true);
+        $("#send_form").val("Sending...");
+        $("#send_form").addClass("sub-regis-contact");
+        $("#send_form").submit();
+    }
+}
+
