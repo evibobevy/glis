@@ -3,17 +3,23 @@
     <div class="foo-col-1"> <span>Glis, Inc. (888) 888-8888</span>
       <div class="social-foo"> <a href="#" target="_blank"><%= image_tag('fb-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('twitter-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('gplus-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('linked-icon.png', alt: '') %></a> </div>
       <!--<a href="#" class="btn-contact">Contact Us</a>-->
-      <%= link_to 'Contact Us', {:controller => 'contacts', :action => 'new'}, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-contact'%>
+      <%= link_to 'Contact Us', {:controller => 'contacts', :action => 'new'}, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-contact', onclick: '$("body").addClass("no-scroll");' %>
     </div>
     <div class="footer-link">
       <ul>
         <li><a href="#">Home</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Inbox</a></li>
+        <% if user_signed_in? %>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Inbox</a></li>
+        <% end %>
         <li><a href="#">Sitemap</a></li>
-        <li><a href="#">Events</a></li>
+        <% if user_signed_in? %>
+          <li><a href="#">Events</a></li>
+        <% end %>
         <li><a href="#">Partners</a></li>
-        <li><a href="#">My Profile</a></li>
+        <% if user_signed_in? %>
+          <li><a href="#">My Profile</a></li>
+        <% end %>
         <li><a href="#">Privacy Policy</a></li>
       </ul>
     </div>

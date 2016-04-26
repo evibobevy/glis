@@ -25,3 +25,9 @@ function check_form(){
     }
 }
 
+$(function(){
+    $(document).on('click','.fancybox-close',function(){
+      $('body').removeClass('no-scroll');
+    })
+});
+

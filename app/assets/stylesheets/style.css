@@ -125,10 +125,11 @@ a.btn-join:hover{background:#4b962e;}
 .volunteer-rgt ul {margin:0;padding:0;}
 .volunteer-rgt ul li {width:191px; float:left; margin-right:20px; margin-bottom:30px; position:relative;}
 .volunteer-rgt ul li img {border-radius:6px; border:5px solid #67aa4d;}
-.vol-name-over {width:165px; float:left; position:relative; padding:9px; text-align:center; border:5px solid #4a4a4a; color:#67aa4d; font-size:25px; background:#fff; font-size:25px; font-family:'proxima_novasemibold'; color:#67aa4d; min-height:90px; margin:-30px 0 0 7px; box-shadow:1px 4px 6px rgba(0, 0, 0, 0.3);}
+.vol-name-over {width:165px; float:left; position:relative; padding:9px; text-align:center; border:5px solid #4a4a4a; color:#67aa4d; font-size:25px; background:#fff; font-size:25px; font-family:'proxima_novasemibold'; color:#67aa4d; min-height:50px; margin:-30px 0 0 7px; box-shadow:1px 4px 6px rgba(0, 0, 0, 0.3);}
 .volunteer-rgt ul li:last-child {margin-right:0px;}
 .left-hd {float:left;}
 .rgt-hd {float:right; width:38%;}
+.no-scroll {overflow:hidden;}
 
 .vol-detail-row {float:left; width:100%; border-top:4px solid #4a4a4a; padding:64px 0 0 0;}
 .vol-lft {float:left; width:170px;}
@@ -215,3 +216,26 @@ button{-moz-border:0px;}
 .contact-popup h3 {font-size:26px; color:#5c5b5c; font-family:'proxima_novasemibold'; position:relative; margin-bottom:15px; padding-left:20px;}
 .contact-popup h3:after {content:""; background:url(reg-crnr.png) no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
 .contact-popup input[type="text"], .contact-popup textarea, .contact-popup input[type="email"], .contact-popup input[type="password"] {border:3px solid #979797; border-radius:8px; height:46px; padding:0 13px; font-size:16px; width:100%;}
+
+
+/*new css added for user profile page*/
+.user-prf-sec {float:left; width:100%; background:#fff;box-shadow: 0 6px 9px -7px #000000 inset;padding:60px 0 0 0;}
+.user-prf-row1 {float:left; width:100%;}
+.user-prf-left {float:left; width:747px;}
+.user-prf-left-cont {float:left; width:546px;}
+.user-prf-left-cont h2 {font-size:32px; color:#78b55f; font-family:'proxima_nova_rgbold'; margin-bottom:10px; display:inline-block; width:80%;}
+.add-icon {float:right; margin:0 0 0 0;}
+.user-prf-left .vol-img-lft {float:left; width:180px; margin-right:20px;}
+.user-prf-left-cont span {font-family: "proxima_nova_rgbold";font-size: 25px;width: 100%; margin-bottom:10px; display:inline-block;}
+.user-prf-left-cont p{font-size:16px;}
+.user-prf-rgt {float:right; width:220px; border:2px solid #67aa4d; border-radius:6px; padding:22px; box-sizing:border-box; text-align:center; min-height:200px;}
+.user-prf-rgt strong {font-size:25px; font-family: "proxima_nova_rgbold";}
+.user-prf-rgt p {color:#4a4a4a; font-size:25px; font-family: "proxima_nova_rgbold"; display:block; margin-bottom:0px; line-height:normal;}
+.user-prf-rgt p span {color:#67aa4d;}
+
+.user-photos-row {border-top: 4px solid #4a4a4a;float: left;padding:20px 0 0 0;width: 100%; margin:15px 0 0 0;}
+.user-photos-row ul {margin:0; padding:0;}
+.user-photos-row ul li {padding:0; list-style:none; float:left; width:23.5%; margin:0 2% 10px 0;}
+.user-photos-row ul li img {max-width:100%; border:1px solid #979797;}
+.user-photos-row ul li:nth-child(4n) {margin-right:0px;}
+.user-prf-vol {padding-top:15px;}

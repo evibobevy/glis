@@ -2,37 +2,39 @@
   <div class="fixed-wrapper">
     <!--<h3 class="left-hd">Available Volunteer Events</h3>-->
     <!--<h3 class="rgt-hd">Top 6 Glis Volunteers</h3>-->
-    <div class="volunteer-row">
-      <div class="vol-left-main">
-        <h3 class="left-hd">Available Volunteer Events</h3>
-        <% @events.each do |event| %>
-          <div class="volunteer-lft">
-            <div class="stay-icon"><% if event.image.present? %><%= image_tag event.image.url(:medium), alt: '' %><% else %><%= image_tag 'stay-icon.png', alt: '' %><% end %></div>
-            <div class="stay-detail">
-              <h5><%= event.title %></h5>
-              <span class="date-small"><%= event.event_date.try(:strftime, '%B %d, %Y') %></span> <a href="#" class="btn-join">JOIN</a> </div>
-          </div>
-        <% end %>
+    <% if !user_signed_in? %>
+      <div class="volunteer-row">
+        <div class="vol-left-main">
+          <h3 class="left-hd">Available Volunteer Events</h3>
+          <% @events.each do |event| %>
+            <div class="volunteer-lft">
+              <div class="stay-icon"><% if event.image.present? %><%= image_tag event.image.url(:medium), alt: '' %><% else %><%= image_tag 'stay-icon.png', alt: '' %><% end %></div>
+              <div class="stay-detail">
+                <h5><%= event.title %></h5>
+                <span class="date-small"><%= event.event_date.try(:strftime, '%B %d, %Y') %></span> <a href="#" class="btn-join">JOIN</a> </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="volunteer-rgt">
+          <h3 class="rgt-hd">Top 6 Glis Volunteers</h3>
+          <% @last_six_users.in_groups_of(2, false) do |volunteer| %>
+            <ul>
+              <% for vol in volunteer %>
+                <li>
+                  <% if vol.image.present? %>
+                    <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 190px; width: 180px' %>
+                  <% else %>
+                    <%= image_tag 'no-img.jpg', alt: '', style: 'height: 190px; width: 180px' %>
+                  <% end %>
+                  <span class="vol-name-over"> <%= vol.last_name_initial %> </span>
+                </li>
+                <!--<li> <%#= image_tag('no-img.jpg', alt: '') %> <span class="vol-name-over"> &nbsp; </span> </li>-->
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
       </div>
-      <div class="volunteer-rgt">
-        <h3 class="rgt-hd">Top 6 Glis Volunteers</h3>
-        <% @last_six_users.in_groups_of(2, false) do |volunteer| %>
-          <ul>
-            <% for vol in volunteer %>
-              <li>
-                <% if vol.image.present? %>
-                  <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 190px; width: 180px' %>
-                <% else %>
-                  <%= image_tag 'no-img.jpg', alt: '', style: 'height: 190px; width: 180px' %>
-                <% end %>
-                <span class="vol-name-over"> Jameson W. 300 Hours </span>
-              </li>
-              <!--<li> <%#= image_tag('no-img.jpg', alt: '') %> <span class="vol-name-over"> &nbsp; </span> </li>-->
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-    </div>
+    <% end %>
 
     <div class="vol-detail-row">
       <div class="vol-lft">

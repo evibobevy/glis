@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
     self.first_name + " " + self.last_name
   end
 
+  def last_name_initial
+    self.first_name + " " + self.last_name[0] + '.'
+  end
+
   private
 
   def from_omniauth?
