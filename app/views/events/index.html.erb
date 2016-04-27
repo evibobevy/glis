@@ -1,7 +1,18 @@
+<!--<script src="assets/mediaelement-and-player.min.js"></script>-->
+<!--<link rel="assets/stylesheet" href="mediaelementplayer.css"/>-->
 <div class="volunteer-full float-full">
   <div class="fixed-wrapper">
-    <!--<h3 class="left-hd">Available Volunteer Events</h3>-->
-    <!--<h3 class="rgt-hd">Top 6 Glis Volunteers</h3>-->
+    <% unless user_signed_in? %>
+      <div class="video_row">
+        <!--<video width="100%" height="400" id="player1" controls>-->
+          <!--<source src="https://www.youtube.com/watch?v=C0DPdy98e4c" source type="video/youtube" />-->
+        <!--</video>-->
+	      <div class="videoWrapper">
+	      <!-- Copy & Pasted from YouTube -->
+	        <iframe width="400" height="300" src="http://www.youtube.com/embed/n_dZNLr2cME?rel=0&hd=1" frameborder="0" allowfullscreen></iframe>
+	      </div>
+	    </div>
+		 <% end %>
     <% if !user_signed_in? %>
       <div class="volunteer-row">
         <div class="vol-left-main">
@@ -131,8 +142,12 @@
 </div>
 <script>
   function fbShare(url, title, descr, image, winWidth, winHeight) {
+	  alert("fdfdf");
     var winTop = (screen.height / 2) - (winHeight / 2);
     var winLeft = (screen.width / 2) - (winWidth / 2);
     window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
   }
+</script>
+<script>
+	var player = new MediaElementPlayer('#player1');
 </script>

@@ -30,7 +30,7 @@
       <!--After login right section-->
       <div class="header-rgt-btn">
         <!--<a href="#"><small>CHECK</small> <strong>NEW</strong> <small class="event-pos">EVENTS</small></a>-->
-        <%= link_to raw("<small>CHECK</small> <strong>NEW</strong> <small class='event-pos'>GIGS</small>"), event_list_path, data: {fancybox_width: 850}, class: 'fancybox btn btn-success', onclick: '$("body").addClass("no-scroll");' %>
+        <%= link_to raw("<small>CHECK</small> <strong>NEW</strong> <strong>GIGS</strong>"), event_list_path, data: {fancybox_width: 850}, class: 'fancybox btn btn-success', onclick: '$("body").addClass("no-scroll");' %>
         <!--<a href="#" class="join-today"><strong>JOIN</strong> <small>TODAY</small></a> </div>-->
         <%= link_to raw("<strong>JOIN</strong> <small>TODAY</small>"), new_user_registration_path, data: { fancybox_width: 600, autoSize: false }, class: 'fancybox btn btn-success join-today', onclick: '$("body").addClass("no-scroll");' %>
           <!--ends here-->
