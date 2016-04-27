@@ -5,7 +5,7 @@
     <% if !user_signed_in? %>
       <div class="volunteer-row">
         <div class="vol-left-main">
-          <h3 class="left-hd">Available Volunteer Events</h3>
+          <h3 class="left-hd">Available Volunteer Gigs</h3>
           <% @events.each do |event| %>
             <div class="volunteer-lft">
               <div class="stay-icon"><% if event.image.present? %><%= image_tag event.image.url(:medium), alt: '' %><% else %><%= image_tag 'stay-icon.png', alt: '' %><% end %></div>
