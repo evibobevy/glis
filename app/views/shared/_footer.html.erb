@@ -3,7 +3,7 @@
     <div class="foo-col-1"> <span>Glis, Inc. (888) 888-8888</span>
       <div class="social-foo"> <a href="#" target="_blank"><%= image_tag('fb-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('twitter-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('gplus-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('linked-icon.png', alt: '') %></a> </div>
       <!--<a href="#" class="btn-contact">Contact Us</a>-->
-      <%= link_to 'Contact Us', {:controller => 'contacts', :action => 'new'}, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-contact', onclick: '$("body").addClass("no-scroll");' %>
+      <%= link_to 'Contact Us', {:controller => 'contacts', :action => 'new'}, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-contact', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
     </div>
     <div class="footer-link">
       <ul>
