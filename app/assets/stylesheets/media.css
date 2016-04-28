@@ -1,3 +1,5 @@
+.no-scroll {position: fixed; overflow:hidden;}
+
 @media screen and (max-width: 1300px){
 body { -webkit-text-size-adjust: none; }
 input, textarea, button { appearance: none; -moz-appearance: none; -webkit-appearance: none;}
@@ -37,7 +39,7 @@ a.btn-join {font-size:26px; height: 50px;line-height: 52px;}
 .volunteer-rgt ul li {width:140px; margin-right:}
 .volunteer-rgt ul li:nth-child(2n) {margin-right:0px;}
 .volunteer-rgt ul {width:300px; margin:0 auto; float:none;}
-.vol-name-over {width:125px; min-height:50px; font-size:21px;}
+.vol-name-over {width:125px; min-height:60px; font-size:21px;}
 .vol-detail-row {padding-top:30px;}
 .vol-lft {margin:0 auto; float:none;}
 .vol-user-comment {width:100%; margin:0;}
@@ -65,14 +67,16 @@ a.btn-contact {width:220px;}
 .loged-rgt {float:none; margin:20px auto 0 auto; clear:both; overflow:hidden;}
 
 /*popup css*/
-.register-popup {width:96%; padding:30px 15px;}
-.register-popup input[type="text"], .register-popup input[type="email"], .register-popup input[type="password"] {width:100%; margin-bottom:10px;}
+.register-popup {width:96%; padding:15px; height: 405px;}
+.register-popup h3:after {height:30px; width:30px; top: -7px;}
+.register-popup h3 {font-size:23px; margin-bottom: 7px;padding-left: 12px;}
+.register-popup input[type="text"], .register-popup input[type="email"], .register-popup input[type="password"] {width:100%; margin-bottom:7px; border: 2px solid #979797;font-size: 16px;height: 34px;}
 .col-reg-lft {width:100%;}
 .register-popup .form-row {margin-bottom:0px;}
-.reg-fb {margin-top:10px;}
+.reg-fb {margin-top:7px; height:40px;font-size: 16px;}
 
-.contact-popup {width:96%; padding:30px 15px;}
-.contact-popup input[type="text"], .contact-popup textarea, .contact-popup input[type="email"], .contact-popup input[type="password"] {width:100%; margin-bottom:10px;}
+.contact-popup {width:96%; padding:15px 15px; height: 400px;}
+.contact-popup input[type="text"], .contact-popup textarea, .contact-popup input[type="email"], .contact-popup input[type="password"] {width:100%; margin-bottom:3px; height: 30px;}
 .contact-popup .form-row {margin-bottom:0px;}
 
 /*user profile page css*/
@@ -85,6 +89,7 @@ a.btn-contact {width:220px;}
 .user-photos-row ul li {width:47%; margin:0 3% 15px 0; display:inline-block;}
 .user-photos-row {width:300px; margin:0 auto; clear:both; float:none;}
 .user-prf-row1 {padding-bottom:25px;}
+.prf-suppo-list ul li {width:100%; margin:0 0 15px 0;}
 
 
 }
@@ -103,6 +108,13 @@ a.btn-black {width:170px;}
 .reply-desc {width:77%;}
 .reply-form input {width:60%; margin-right:10px;}
 
+.prf-suppo-list ul {max-height:122px;}
+.prf-suppo-list ul li {width:48%; margin:0 0 15px 0;}
+.prf-suppo-list ul li:nth-child(2n) {float:right;}
+.prf-suppo-list ul li:nth-child(4n) {margin-right:0px;}
+.prf-suppo-list ul li span {font-size:19px;}
+.prf-suppo-list ul li img {width:25%;}
+
 }
 
 @media (min-width: 640px) and (max-width: 767px) {
@@ -110,11 +122,11 @@ a.btn-black {width:170px;}
 }
 
 
-@media (min-width: 768px) and (max-width: 1060px) {
+@media (min-width: 768px) and (max-width: 865px) {
 .fixed-wrapper{width:96%;}
 #top-container {padding:20px 0;}
-.header-search {width:34%;}
-.inspire-text {font-size:28px;}
+.header-search {width:41%;}
+.inspire-text {font-size:23px;}
 .child-left {float:left; width:200px;}
 .social-net-rgt {width:66%;}
 .social-net-rgt h1 {font-size:44px;}
@@ -135,7 +147,8 @@ a.btn-join {font-size:26px; height: 50px;line-height: 52px; width:150px;}
 .volunteer-rgt ul li:nth-child(2n) {margin-right:0px;}
 .vol-name-over {width:145px; font-size:20px;}
 .vol-user-comment {margin-left:20px; width:72%;}
-.vol-user-comment h4 {font-size:26px;}
+.vol-user-comment h4 {font-size:20px;}
+.day-time-row {font-size:18px;}
 p.vol-desc {font-size:18px;}
 .reply-desc {width:80%;}
 .reply-form input {width:70%;}
@@ -155,9 +168,10 @@ p.vol-desc {font-size:18px;}
 
 }
 
-@media (min-width: 900px) and (max-width: 1020px) {
+@media (min-width: 860px) and (max-width: 1000px) {
 .header-search {width:43%;}
 .footer-link {width:44%; padding:15px 50px;}
+.inspire-text {font-size:27px;}
 }
 
 
@@ -179,4 +193,8 @@ p.vol-desc {font-size:18px;}
 .user-prf-left {width:79%;}
 .user-prf-left-cont {width:80%;}
 
+}
+
+@media screen and (max-width: 1300px) {
+.videoWrapper { margin: 0 auto;}
 }

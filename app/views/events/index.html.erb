@@ -1,6 +1,6 @@
 <!--<script src="assets/mediaelement-and-player.min.js"></script>-->
 <!--<link rel="assets/stylesheet" href="mediaelementplayer.css"/>-->
-<div class="volunteer-full float-full">
+<div class="volunteer-full float-full user-prf-vol">
   <div class="fixed-wrapper">
     <% unless user_signed_in? %>
       <div class="video_row">
@@ -43,6 +43,24 @@
               <% end %>
             </ul>
           <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="supports-block">
+        <h3 class="left-hd">My Supporters: <span>2456</span></h3>
+        <div class="prf-suppo-list">
+          <ul>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+            <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
+          </ul>
         </div>
       </div>
     <% end %>
