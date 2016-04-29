@@ -6,6 +6,7 @@ input, textarea, button { appearance: none; -moz-appearance: none; -webkit-appea
 input[type="radio"] { appearance: radio; -moz-appearance: radio; -webkit-appearance: radio; }
 input[type="checkbox"] { appearance: checkbox; -moz-appearance: checkbox; -webkit-appearance: checkbox;}
 button{-moz-border:none;}
+.videoWrapper { margin: 0 auto;}
 }
 
 @media (min-width: 1px) and (max-width: 767px) {
@@ -38,7 +39,7 @@ a.btn-join {font-size:26px; height: 50px;line-height: 52px;}
 .volunteer-rgt {width:100%; float:left;}
 .volunteer-rgt ul li {width:140px; margin-right:}
 .volunteer-rgt ul li:nth-child(2n) {margin-right:0px;}
-.volunteer-rgt ul {width:300px; margin:0 auto; float:none;}
+.volunteer-rgt ul {width:300px; margin:0 auto; float:none; word-wrap: break-word;}
 .vol-name-over {width:125px; min-height:60px; font-size:21px;}
 .vol-detail-row {padding-top:30px;}
 .vol-lft {margin:0 auto; float:none;}
@@ -54,7 +55,7 @@ p.vol-desc {text-align:center; font-size:18px;}
 #bott-container {margin-top:0px;}
 .foo-col-1 {width:100%; border:none; text-align:center;}
 a.btn-contact {width:220px;}
-.footer-link {width:100%; padding:15px 15px 0 15px; border:none; border-top:2px solid #fff;}
+.footer-link {width:100%; padding:15px; min-height:inherit; border:none; border-top:2px solid #fff;}
 .send-feedback {margin:0 auto; float:none; clear:both; padding:10px 15px 0;}
 .cpy-full {font-size:16px;}
 .social-net-rgt p {font-size:22px;}
@@ -73,7 +74,7 @@ a.btn-contact {width:220px;}
 .register-popup input[type="text"], .register-popup input[type="email"], .register-popup input[type="password"] {width:100%; margin-bottom:7px; border: 2px solid #979797;font-size: 16px;height: 34px;}
 .col-reg-lft {width:100%;}
 .register-popup .form-row {margin-bottom:0px;}
-.reg-fb {margin-top:7px; height:40px;font-size: 16px;}
+.reg-fb {margin-top:4px; height:40px;font-size: 16px;}
 
 .contact-popup {width:96%; padding:15px 15px; height: 400px;}
 .contact-popup input[type="text"], .contact-popup textarea, .contact-popup input[type="email"], .contact-popup input[type="password"] {width:100%; margin-bottom:3px; height: 30px;}
@@ -91,6 +92,15 @@ a.btn-contact {width:220px;}
 .user-prf-row1 {padding-bottom:25px;}
 .prf-suppo-list ul li {width:100%; margin:0 0 15px 0;}
 
+.event_title:after {margin-right:15px;}
+.event_title {margin-right:auto; margin-left:15px;}
+.pre_next {height:auto;}
+.dayname_header {margin:0 auto 15px auto !important;}
+.simple-calendar table {table-layout: inherit; margin:0 auto 20px auto;}
+.latest_event {width: 91%; margin:0 auto 20px auto; float:none;}
+.simple-calendar .day {height:46px;}
+.simple-calendar th {padding:4px; font-size:12px;}
+
 
 }
 
@@ -101,7 +111,7 @@ a.btn-contact {width:220px;}
 .stay-detail {float:left; width:57%; text-align:left; margin-left:3%; margin-top:0px;}
 .volunteer-rgt ul {width:430px;}
 .volunteer-rgt ul li {width:200px;}
-.vol-name-over {min-height: 100px;width: 165px;}
+.vol-name-over {min-height: 60px;width: 165px;}
 .vol-lft {float:left; width:100%;}
 .vol-img-lft {float:left; width:auto; margin-right:20px;}
 a.btn-black {width:170px;}
@@ -125,7 +135,7 @@ a.btn-black {width:170px;}
 @media (min-width: 768px) and (max-width: 865px) {
 .fixed-wrapper{width:96%;}
 #top-container {padding:20px 0;}
-.header-search {width:41%;}
+.header-search {width:34%;}
 .inspire-text {font-size:23px;}
 .child-left {float:left; width:200px;}
 .social-net-rgt {width:66%;}
@@ -169,13 +179,13 @@ p.vol-desc {font-size:18px;}
 }
 
 @media (min-width: 860px) and (max-width: 1000px) {
-.header-search {width:43%;}
+.header-search {width:43%; margin-right:15px;}
 .footer-link {width:44%; padding:15px 50px;}
 .inspire-text {font-size:27px;}
 }
 
 
-@media (min-width: 1024px) and (max-width: 1060px) {
+/*@media (min-width: 1024px) and (max-width: 1060px) {
 .header-search {width:48%;}
 .inspire-text {font-size:35px;}
 .child-left {width:260px;}
@@ -189,12 +199,12 @@ p.vol-desc {font-size:18px;}
 .send-feedback {width:250px; font-size:30px;}
 .footer-link {padding:15px 40px;}
 
-/*user profile page css*/
+/*user profile page css
 .user-prf-left {width:79%;}
 .user-prf-left-cont {width:80%;}
 
 }
 
 @media screen and (max-width: 1300px) {
-.videoWrapper { margin: 0 auto;}
 }
+*/
