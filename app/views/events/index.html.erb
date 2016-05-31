@@ -48,6 +48,10 @@
     <% else %>
       <div class="supports-block">
         <h3 class="left-hd">My Supporters: <span>2456</span></h3>
+	      <% @friend_requests.each do |friend_request| %>
+	        <%= link_to 'Accept', accept_friend_request_path(:friend_id => friend_request)%>
+          <%= link_to 'Deny', deny_friend_request_path(:friend_id => friend_request)%>
+		    <% end %>
         <div class="prf-suppo-list">
           <ul>
             <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>
@@ -67,20 +71,20 @@
 
     <div class="vol-detail-row">
       <div class="vol-lft">
-        <div class="vol-img-lft"> <%= image_tag @post.user.image.url(:medium) %></div>
+        <div class="vol-img-lft"><% if !@post.nil? %> <%= image_tag @post.user.image.url(:medium) %></div> <% end %>
         <% if user_signed_in? %>
-        <% unless current_user.friendships.exists?(friend_id:@post.user) %>
-          <%= link_to 'Support',support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black"%>
-        <% else %>
-          <%= link_to 'Unsupport',unsupport_path(:friend_id => @post.user), :method => :post, :class=>"btn-black"%>
-        <% end %>
+          <% unless current_user.friendships.exists?(friend_id:@post.user) %>
+            <%= link_to 'Support',support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black"%>
+          <% else %>
+            <%= link_to 'Unsupport',unsupport_path(:friend_id => @post.user), :method => :post, :class=>"btn-black"%>
+          <% end %>
         <% else %>
           <%= link_to 'Support', 'javascript:;', :class=>"btn-black", :onclick => 'alert("Please Sign Up to support this user.");'%>
         <% end %>
         <!--<a href="#" class="btn-black"> Support </a>-->
         <!--<a href="#" class="btn-black"> Spread </a>-->
         <%#= social_share_button_tag(@post.name, :popup => "true", :'data-type' => 'photo' , :url => "192.168.31.206:3000", :class => 'btn-black') %>
-        <a class="btn-black" href="javascript:;" onclick="javascript:fbShare('<%= @post.event.image.url %>', '<%= @post.name %>', 'Facebook Share popup', '<%= @post.event.image.url %>', 520, 350)">Share</a>
+          <% if !@post.nil? %> <a class="btn-black" href="javascript:;" onclick="javascript:fbShare('<%= @post.event.image.url %>', '<%= @post.name %>', 'Facebook Share popup', '<%= @post.event.image.url %>', 520, 350)">Share</a> <% end %>
         <% if user_signed_in? %>
           <%= link_to 'Join', {:controller => 'events', :action => 'show', :id => @post.event.id}, { class: 'btn-black' } %>
         <% else %>
@@ -91,7 +95,7 @@
         <!--<a href="#" class="btn-black"> Support </a> <a href="#" class="btn-black"> Spread </a> <%#= link_to 'Join', class: 'btn-black' %><a href="#" class="btn-black"> Join </a> </div>-->
       <div class="vol-user-comment">
         <!--<h4>Jameson Welch <span>volunteered for</span> Habitat for Humanity</h4>-->
-        <h4><%=@post.user.full_name %> <span>volunteered for</span> <%= @post.event.title %></h4>
+       <% if !@post.user.nil? %> <h4><%=@post.user.full_name %> <% end %><span>volunteered for</span> <%= @post.event.title %></h4>
         <% seconds = (TimeDifference.between(Time.now, Post.last.created_at).in_seconds.to_i) %>
         <% mm, ss = seconds.divmod(60) %>
         <% hh, mm = mm.divmod(60) %>

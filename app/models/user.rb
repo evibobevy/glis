@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   has_and_belongs_to_many :events, join_table: :events_users
   has_many :posts, dependent: :destroy
+  has_many :email_messages, dependent: :destroy
+
   has_many :friendships, dependent: :destroy
   has_many :friends, :through => :friendships
   has_attached_file :image, styles: { medium: "150x200#", thumb: "100x100#" }, default_url: "/images/:style/missing.png"
@@ -18,6 +20,12 @@ class User < ActiveRecord::Base
 
   def last_name_initial
     self.first_name + " " + self.last_name[0] + '.'
+  end
+
+  def self.search(search)
+    if search
+      where('first_name LIKE ?', "%#{search}%")
+    end
   end
 
   private

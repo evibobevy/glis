@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :contacts, only: [:new, :create]
 
   # get 'welcome/index'
-  #get 'events/new' => 'events#new', as: :new_events
+  # get 'email_messages/new' => 'email_messages#new', as: :new_email_messages
   #post 'events/create'=> 'events#create'
   #get 'events/:id' => 'events#show', as: :event
   devise_for :users, :controllers => {:registrations => "registrations", :omniauth_callbacks => "omniauth_callbacks"}
@@ -28,9 +28,18 @@ Rails.application.routes.draw do
   # get 'events/join_volunteer'=> 'events#join_volunteer', as: :join_volunteer
   get 'join_volunteer' => 'events#join_volunteer', as: :join_volunteer
   get 'disjoin_volunteer' => 'events#disjoin_volunteer', as: :disjoin_volunteer
+  get 'accept_friend_request' => 'friendships#accept_friend_request', as: :accept_friend_request
+  get 'deny_friend_request' => 'friendships#deny_friend_request', as: :deny_friend_request
   get 'contacts/new', :to => 'contacts#new'
+  get 'email_messages' => 'email_messages#index', as: :email_messages
+  post 'email_messages' => 'email_messages#email_message'
   post 'contact', :to => 'contacts#contact'
   get 'event_list', :to => 'events#event_list'
+  post 'email_message_detail' => 'email_messages#email_message_detail', as: :email_message_detail
+  post 'send_message_reply' => 'email_messages#send_message_reply', as: :send_message_reply
+  get 'email_message_detail' => 'email_messages#email_message_detail'
+  get 'friendsearch_request' => 'events#friendsearch_request'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   # Example of named route that can be invoked with purchase_url(id: product.id)

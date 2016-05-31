@@ -8,7 +8,7 @@ class FriendshipsController < ApplicationController
   end
 
   def support
-    @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i)
+    @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending')
     if @friendship.save
       flash[:notice] = "Added friend."
       redirect_to root_url
@@ -23,5 +23,17 @@ class FriendshipsController < ApplicationController
     @friendship.destroy
     flash[:notice] = "Successfully destroyed friendship."
     redirect_to root_url
+  end
+
+  def accept_friend_request
+    @friendship = Friendship.find(params[:friend_id])
+    @friendship.update_attributes(:accepted => 'approved')
+    redirect_to :back
+  end
+
+  def deny_friend_request
+    @friendship = Friendship.find(params[:friend_id])
+    @friendship.update_attributes(:accepted => 'unapproved')
+    redirect_to :back
   end
 end

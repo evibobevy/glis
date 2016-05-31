@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy, :join_volunteer, :disjoin_volunteers]
-  before_filter :authorize, only: [:join_volunteer, :disjoin_volunteers]
+  before_filter :authorize, only: [:join_volunteer, :disjoin_volunteers, :friendsearch_request]
   respond_to :html,:js
 
   def authorize
@@ -11,6 +11,7 @@ class EventsController < ApplicationController
 
   def index
     @users = User.all
+    @friend_requests = Friendship.where('friend_id =? AND accepted=? AND user_id !=?', current_user.id,'pending',current_user.id) if user_signed_in?
     @events = Event.last(3)
     @post = Post.last
     @comments = @post.comments unless @post.nil?
@@ -65,6 +66,15 @@ class EventsController < ApplicationController
     @event_list = Event.all
     @latest_month_event = Event.this_months_event
     render layout: 'fancybox'
+  end
+
+  def friendsearch_request
+    @mutual_friends  = current_user.friends
+    if  params[:search_user].present? || params[:search_location].present?
+      @users = @mutual_friends.where('first_name LIKE ? AND location LIKE ?', "%#{params[:search_user]}%", "%#{params[:search_location]}%")
+    else
+      @users = @mutual_friends.all
+    end
   end
 
   private

@@ -5,14 +5,14 @@ class Event < ActiveRecord::Base
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates :title,  :presence => true
   validates_attachment :image, presence: true
-  validate :end_date_after_start_date?
+  # validate :end_date_after_start_date?
   scope :this_months_event, lambda { where("event_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_month, Time.zone.now.end_of_month) }
 
-  def end_date_after_start_date?
-    if end_date < start_time
-      errors.add :end_date, "must be after start date"
-    end
-  end
+  # def end_date_after_start_date?
+  #   if end_date < start_time
+  #     errors.add :end_date, "must be after start date"
+  #   end
+  # end
 
   before_save do
     self.event_date = self.start_time

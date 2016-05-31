@@ -1,0 +1,16 @@
+<p><h2>Full Name: <%= @email_message.user.full_name %></h2></p>
+  <p> <h2> Subject:<%= @email_message.subject %>  </h2></p>
+  <p><h2> Message:  <%= @email_message.message %>  </h2></p>
+
+<%= form_tag send_message_reply_path do |f| %>
+  <%= hidden_field_tag :email_message_id, @email_message.id %>
+  <div class="field">
+    <%= label_tag :message %><br>
+    <%= text_area_tag :message, nil, :required => true %>
+  </div>
+
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>
+</div>

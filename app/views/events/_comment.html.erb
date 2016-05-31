@@ -1,12 +1,13 @@
 <div class="comments">
-  <div class="reply-img"> <%= image_tag @post.user.image.url(:medium), style: 'height: 70px; width: 90px;' %></div>
-  <div class="reply-desc">
-    <!--<h5>John Smith</h5>-->
-    <h5><%= @post.user.full_name %></h5>
-    <!--<span>2 minutes ago</span>-->
-    <span><%= time_ago_in_words(comment.created_at) + " ago" %></span>
-    <p>
-      <%= comment.commenter %>
-    </p><br><hr>
-  </div>
-</div>
+  <% if !@post.user.nil? %> <div class="reply-img"> <%= image_tag @post.user.image.url(:medium), style: 'height: 70px; width: 90px;' %></div>
+	  <div class="reply-desc">
+	    <!--<h5>John Smith</h5>-->
+	    <h5><%= @post.user.full_name %></h5>
+	    <!--<span>2 minutes ago</span>-->
+	    <span><%= time_ago_in_words(comment.created_at) + " ago" %></span>
+	    <p>
+	      <%= comment.commenter %>
+	    </p><br><hr>
+	  </div>
+	</div>
+<% end %>

@@ -1,0 +1,22 @@
+<% if @users.present? %>
+	<table border="1">
+	  <thead>
+	  <tr>
+	    <th><Center>Email</Center></th>
+	    <th><Center>First Name</Center></th>
+	    <th><Center>Last Name</Center></th>
+	    <th><Center>Location</Center></th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <% @users.each do |user|%>
+	    <tr>
+	      <td><CENTER><%= user.email %></CENTER></td>
+	      <td><CENTER><%= user.first_name %></CENTER></td>
+	      <td><CENTER><%= user.last_name %></CENTER></td>
+	      <td><CENTER><%= user.location %></CENTER></td>
+	    </tr>
+	  <% end %>
+	  </tbody>
+	</table>
+<% end %>

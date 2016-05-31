@@ -1,0 +1,71 @@
+<% unless @email_message_recipients.blank?%>
+<h1>Listing email message</h1>
+	<table border="1">
+	  <tr>
+	    <th>User name</th>
+	    <th>Subject</th>
+	    <th>Message</th>
+	    <th>Created at</th>
+	  </tr>
+	  <% @email_message_recipients.each do |email_message_recipient| %>
+	    <tr>
+	      <td><%=link_to email_message_recipient.email_message.user.full_name, email_message_detail_path(:email_message_id=> email_message_recipient.email_message.id), remote: true  %></td>
+	      <td><%= email_message_recipient.email_message.subject %></td>
+	      <td><%= email_message_recipient.email_message.message %></td>
+		    <td><% seconds = (TimeDifference.between(Time.now, email_message_recipient.email_message.created_at).in_seconds.to_i) %>
+		       <% mm, ss = seconds.divmod(60) %>
+		      <% hh, mm = mm.divmod(60) %>
+		      <% dd, hh = hh.divmod(24)%>
+		      <strong> <% if dd > 0 %><%= "%d days for" % [dd] %> <% end %><%= " ago %d hours" % [hh] %> </strong></td>
+	    </tr>
+	  <% end %>
+	</table>
+ <% end %>
+<div class="email_message" align="center"> </div>
+<%= form_for @email_message, url: email_messages_path do |f| %>
+  <% if @email_message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@email_message.errors.count, "error") %> prohibited this email message from being saved:</h2>
+
+      <ul>
+        <% @email_message.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= label_tag :to %><br>
+    <%= email_field_tag :email, nil, :required => true, :multiple => true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :subject %><br>
+    <%= f.text_field :subject, :required => true %>
+  </div>
+  <div class="field">
+    <%= f.label :message %><br>
+    <%= f.text_area :message, :required => true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+   <br>
+<h1>Notifications </h1>
+<div class=""listing_notification">
+<% @user_notifications.each do |user_notification|%>
+  <p><h3>User Name: <%= user_notification.email_message.user.full_name %></h3></p>
+  <p><h3>Subject: <%= user_notification.email_message.subject %></h3></p>
+  <p><h3>Message: <%= user_notification.email_message.message %></h3></p>
+	 ============================
+<% end %>
+  <% if !@user_friendrequests.blank? %>
+	<h2><b>Friend Request</h2>
+    <% @user_friendrequests.each do |user_friendrequest| %>
+      <p><h3>1 Friend Request by <%= find_user_by_friend_id(user_friendrequest.user_id).full_name %></h3></p>
+	  <% end %>
+	<% end %>
+</div>
