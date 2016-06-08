@@ -20,6 +20,20 @@ Rails.application.routes.draw do
   #post 'events/create'=> 'events#create'
   #get 'events/:id' => 'events#show', as: :event
   devise_for :users, :controllers => {:registrations => "registrations", :omniauth_callbacks => "omniauth_callbacks"}
+  devise_scope :user do
+    get 'registrations/profile_settings' => 'registrations#profile_settings', as: :profile_settings
+    get 'registrations/edit_user' => 'registrations#edit_user'
+    get 'registrations/edit_location' => 'registrations#edit_location'
+    get 'registrations/edit_description' => 'registrations#edit_description'
+    get 'registrations/edit_email' => 'registrations#edit_email'
+    get 'registrations/edit_phone' => 'registrations#edit_phone'
+    post 'registrations/update_user' => 'registrations#update_user'
+    post 'registrations/update_location' => 'registrations#update_location'
+    post 'registrations/update_description' => 'registrations#update_description'
+    post 'registrations/update_email' => 'registrations#update_email'
+    post 'registrations/update_phone' => 'registrations#update_phone'
+    post 'registrations/update_settings' => 'registrations#update_settings'
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

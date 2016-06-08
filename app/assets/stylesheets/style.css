@@ -215,7 +215,7 @@ button{-moz-border:0px;}
 .contact-popup {width:580px; height: 555px; border:6px solid #67aa4d; border-radius:0 12px 12px 12px; margin:10px; padding:32px 32px 15px; box-sizing:border-box; overflow:hidden;}
 .contact-popup h3 {font-size:26px; color:#5c5b5c; font-family:'proxima_novasemibold'; position:relative; margin-bottom:15px; padding-left:20px;}
 .contact-popup h3:after {content:""; background:url(reg-crnr.png) no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
-.contact-popup input[type="text"], .contact-popup textarea, .contact-popup input[type="email"], .contact-popup input[type="password"] {border:3px solid #979797; border-radius:8px; height:46px; padding:0 13px; font-size:16px; width:100%;}
+.contact-popup input[type="text"], .contact-popup textarea, .contacst-popup input[type="email"], .contact-popup input[type="password"] {border:3px solid #979797; border-radius:8px; height:46px; padding:0 13px; font-size:16px; width:100%;}
 
 
 /*new css added for user profile page*/
