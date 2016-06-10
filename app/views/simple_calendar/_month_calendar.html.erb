@@ -1,9 +1,9 @@
 <div class="simple-calendar">
 	<div>
 	<div class="pre_next">
-    <%= link_to "", url_for(params.merge(start_date: date_range.first - 1.day)), remote: true, class:'arrow_left', style: 'float: left; margin-top: 3px;"' %>
+    <%= link_to "", url_for(params.merge(start_date: date_range.first - 1.day, previous_link:  "previous_link") ), remote: true, class:'arrow_left', style: 'float: left; margin-top: 3px;"' %>
 	  <h2 style="float:left;font-size: 22px;font-family: proxima_nova_rgbold;"><strong><%= I18n.t("date.month_names")[start_date.month] %> <%= start_date.year %></strong> </h2>
-	  <%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day)), remote: true, class:'arrow_right', style: 'float: left; margin-top: 3px;"' %>
+	  <%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day, next_link:  "next_link")), remote: true, class:'arrow_right', style: 'float: left; margin-top: 3px;"' %>
 </div>
   <div class="event_title">
     <h1>Event Calendar </h1>
@@ -44,15 +44,40 @@
           <% end %>
         </tr>
       <% end %>
-      <% unless @latest_month_event.blank? %>
+      <%# unless @next_month_event.blank? %>
       <div class="latest_event">
-        <% @latest_month_event.each do |latest_event|%>
-          <h3> <%= latest_event.event_date.try(:strftime, '%b %dth, %Y') %> </h3>
-          <h4><%= latest_event.title.titleize %></h4>
-          <hr />
+        <h2>Today's Schedule</h2>
+        <% if @today_gigs.present? %>
+          <% @today_gigs.each do |today_gig|%>
+            <h3> <%= today_gig.start_time.try(:strftime, '%b %dth, %Y') %> </h3>
+            <h4><%= today_gig.title.titleize %></h4>
+          <% end %>
+        <% else %>
+          <%= t(:today_no_event)%>
+        <% end %>
+        <hr />
+        <h2>Upcoming Gigs</h2>
+        <% if @next_month_event.present? %>
+          <% @next_month_event.each do |next_event|%>
+            <h3> <%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> </h3>
+            <h4><%= next_event.title.titleize %></h4>
+          <% end %>
+        <% else %>
+          <%= t(:next_month_no_event)%>
+        <% end %>
+        <hr />
+        <h2>Past Gigs</h2>
+        <% if @past_gigs.present? %>
+          <% @past_gigs.each do |past_gig|%>
+            <h3> <%= past_gig.start_time.try(:strftime, '%b %dth, %Y') %> </h3>
+            <h4><%= past_gig.title.titleize %></h4>
+            <hr />
+          <% end %>
+        <% else %>
+          <%= t(:past_month_no_event)%>
         <% end %>
       </div>
-    <% end %>
+      <%# end %>
     </tbody>
   </table>
 </div>
@@ -62,3 +87,6 @@
 		$( "td.day.today ").css({"border-radius": "11px", "background": "#89BBF5", "padding": "0px","height": "150px;"  });
 	});
 </script>
+  <hr />
+
+  <%= render 'events/form' %>

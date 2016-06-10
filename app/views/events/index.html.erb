@@ -47,11 +47,6 @@
       </div>
     <% else %>
       <div class="supports-block">
-        <h3 class="left-hd">My Supporters: <span>2456</span></h3>
-	      <% @friend_requests.each do |friend_request| %>
-	        <%= link_to 'Accept', accept_friend_request_path(:friend_id => friend_request)%>
-          <%= link_to 'Deny', deny_friend_request_path(:friend_id => friend_request)%>
-		    <% end %>
         <div class="prf-suppo-list">
           <ul>
             <li> <%= image_tag 'user-support.jpg', alt: '' %> <span>John Smith</span> </li>

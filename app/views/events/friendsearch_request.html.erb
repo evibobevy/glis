@@ -1,8 +1,10 @@
+<!--<h2 class="left-hd">Requests</h2>-->
+<%= render 'friendships/glisSupportPage' %>
 <h1>Search for  Supporters</h1>
 <%= form_tag friendsearch_request_path, :method => 'get', :id => "friend_search", :remote=> true do %>
   <p>
-    <%= text_field_tag :search_user, params[:search_user] %>
-    <%= text_field_tag :search_location, params[:search_location] %>
+    <%= text_field_tag :search_user, params[:search_user], :placeholder=> "Name" %>
+    <%= text_field_tag :search_location, params[:search_location], :placeholder=> "Location" %>
     <%= submit_tag "Search", :name => nil %>
   </p>
 <% end %>
@@ -15,4 +17,3 @@
   <h1>Mutual Supporters</h1>
   <%= render 'mutual_support' %>
 </div>
-

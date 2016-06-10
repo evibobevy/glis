@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   post 'send_message_reply' => 'email_messages#send_message_reply', as: :send_message_reply
   get 'email_message_detail' => 'email_messages#email_message_detail'
   get 'friendsearch_request' => 'events#friendsearch_request'
+  get 'glisSupportPage' =>  'friendships#glisSupportPage', as: :glisSupportPage
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

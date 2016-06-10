@@ -1,33 +1,82 @@
-<%= form_for(@event) do |f| %>
-  <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<div class="event_from" align="center">
+  <h1>Create GIGS</h1>
+  <%= form_for @event, :html => { :multipart => true } do |f| %>
+    <% if @event.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-      <ul>
-      <% @event.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+          <% @event.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.text_field :title, :placeholder => 'Gig Name', :required => true %>
+    </div>
+
+    <div class="field">
+      <%= f.text_field :location, :placeholder => 'Location', :required => true %>
+    </div>
+
+    <div class="field">
+      <!--<input type='text' class="form-control" id='datepicker' />-->
+      <%= f.text_field :event_date, :id=> "datepicker" %>
+    </div>
+
+    <div class="field">
+      <%= f.text_field :event_start_time, :id=> "timepicker1"  %>
+    </div>
+
+    <div class="field">
+      <%= f.text_field :event_end_time, :id => "timepicker2"  %>
+    </div>
+
+    <div class="field">
+      <%= f.text_area :basic_info, :placeholder => 'Basic Info', :required => true  %>
+    </div>
+
+    <div class="field">
+      <%= f.text_area :full_description, :placeholder => 'Full Description', :required => true %>
+    </div>
+
+    <div class="field">
+      <%#= f.file_field :image, :placeholder => 'Upload image'%>
+      <%= file_field_tag "images[]", multiple: true, class: "multi" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title, :required => true %>
-  </div>
-  <div class="field">
-    <%= f.label :start_time %><br>
-    <%= f.date_select :start_time %>
-  </div>
-  <div class="field">
-    <%= f.label :end_date %><br>
-    <%= f.date_select :end_date %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.file_field :image %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+<!--Script for upload multiple image-->
+<script>
+	$(function(){
+		$('.multi').MultiFile({
+			accept:'gif|jpg|png|gif',
+			max:10,
+			STRING: {
+				remove:'Remover',
+				selected:'Selecionado: $file',
+				denied:'Invalido arquivo de tipo $ext!',
+				duplicate:'Arquivo ja selecionado:\n$file!'
+			}
+		});
+	});
+	$('#timepicker1').timepicker();
+	$('#timepicker2').timepicker();
+	$(function () {
+		$('#datepicker').datepicker({
+			format: 'yyyy/mm/dd',
+			autoclose:true
+		});
+	});
+</script>
+
+
+

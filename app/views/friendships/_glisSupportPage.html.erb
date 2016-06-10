@@ -1,0 +1,19 @@
+<% if @friend_requests.present? %>
+  <table border="1" align="center">
+    <tbody>
+    <% @friend_requests.each do |friend_request| %>
+      <tr>
+        <td><h3><CENTER> Name: <%= find_fullname_by_user_id(friend_request).full_name %></CENTER></h3>
+	          <h3><CENTER> Location: <%= find_fullname_by_user_id(friend_request).location %></CENTER></h3>
+        </td>
+        <td><h3><CENTER><%= link_to 'Accept', accept_friend_request_path(:friend_id => friend_request), class: "btn btn-primary" %></CENTER></h3></td>
+        <td><h3><CENTER><%= link_to 'Deny', deny_friend_request_path(:friend_id => friend_request)%></CENTER></h3></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+		<h2> <%= t(:request_not_found) %>
+		</h2>
+<% end %>
+ <%=  "-"*300 %>
