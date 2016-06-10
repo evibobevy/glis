@@ -10,7 +10,7 @@
         <li><a href="#">Home</a></li>
         <% if user_signed_in? %>
           <li><a href="#">Settings</a></li>
-          <li><%= link_to "inbox", email_messages_path %></li>
+          <li><%= link_to "inbox", inbox_notifications_path %></li>
           <!--<li><a href="#">Inbox</a></li>-->
         <% end %>
         <li><a href="#">Sitemap</a></li>

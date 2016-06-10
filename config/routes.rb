@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get 'accept_friend_request' => 'friendships#accept_friend_request', as: :accept_friend_request
   get 'deny_friend_request' => 'friendships#deny_friend_request', as: :deny_friend_request
   get 'contacts/new', :to => 'contacts#new'
-  get 'email_messages' => 'email_messages#index', as: :email_messages
+  get 'inbox_notifications' => 'email_messages#index', as: :inbox_notifications
   post 'email_messages' => 'email_messages#email_message'
   post 'contact', :to => 'contacts#contact'
   get 'event_list', :to => 'events#event_list'
