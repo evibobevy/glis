@@ -25,6 +25,7 @@ class RegistrationsController  < Devise::RegistrationsController
   end
 
   def profile_settings
+    @user_picture = UserPicture.new
     @user_settings = User::USER_PRIVACY_SETTINGS
   end
 

@@ -1,16 +1,30 @@
-<p><h2>Full Name: <%= @email_message.user.full_name %></h2></p>
-  <p> <h2> Subject:<%= @email_message.subject %>  </h2></p>
-  <p><h2> Message:  <%= @email_message.message %>  </h2></p>
-
-<%= form_tag send_message_reply_path do |f| %>
-  <%= hidden_field_tag :email_message_id, @email_message.id %>
-  <div class="field">
-    <%= label_tag :message %><br>
-    <%= text_area_tag :message, nil, :required => true %>
+<div class="message">
+  <% if @email_message.user.profile_image.present? %>
+    <a href="#"><%= @email_message.user.profile_image %>
+  <% else %>
+    <img src="/assets/volImg.jpg"/>
+  <% end %>
+  <div class="messDesc">
+    <h2><%= @email_message.user.full_name.capitalize %></h2>
+    <h3><%= @email_message.subject %></h3>
+    <h4><% seconds = (TimeDifference.between(Time.now, @email_message.created_at).in_seconds.to_i) %>
+      <% mm, ss = seconds.divmod(60) %>
+      <% hh, mm = mm.divmod(60) %>
+      <% dd, hh = hh.divmod(24)%>
+      <% if dd > 0 %><span><%= "%d " % [dd] %></span> days<% end %>
+    </h4>
+  </div><br/>
+  <div class="messCont">
+    <h3><%= @email_message.message %></h3>
   </div>
-
-  <div class="actions">
-    <%= submit_tag %>
+  <div class="messReply">
+    <%= form_tag send_message_reply_path do |f| %>
+      <%= hidden_field_tag :email_message_id, @email_message.id %>
+      <%= text_area_tag :message, nil, :required => true, :placeholder=> "Send A Reply..." %>
+      <!--<div class="messSend"><input type="submit" value="Reply"></div>-->
+      <div class="messSend">
+        <%= submit_tag "Reply", :onclick => 'if($("#message").val() == ""){alert("Please fill out this message box.")}' %>
+      </div>
+    <% end %>
   </div>
-<% end %>
 </div>

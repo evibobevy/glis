@@ -1,71 +1,148 @@
-<% unless @email_message_recipients.blank?%>
-<h1>Listing email message</h1>
-	<table border="1">
-	  <tr>
-	    <th>User name</th>
-	    <th>Subject</th>
-	    <th>Message</th>
-	    <th>Created at</th>
-	  </tr>
-	  <% @email_message_recipients.each do |email_message_recipient| %>
-	    <tr>
-	      <td><%=link_to email_message_recipient.email_message.user.full_name, email_message_detail_path(:email_message_id=> email_message_recipient.email_message.id), remote: true  %></td>
-	      <td><%= email_message_recipient.email_message.subject %></td>
-	      <td><%= email_message_recipient.email_message.message %></td>
-		    <td><% seconds = (TimeDifference.between(Time.now, email_message_recipient.email_message.created_at).in_seconds.to_i) %>
-		       <% mm, ss = seconds.divmod(60) %>
-		      <% hh, mm = mm.divmod(60) %>
-		      <% dd, hh = hh.divmod(24)%>
-		      <strong> <% if dd > 0 %><%= "%d days for" % [dd] %> <% end %><%= " ago %d hours" % [hh] %> </strong></td>
-	    </tr>
-	  <% end %>
-	</table>
- <% end %>
-<div class="email_message" align="center"> </div>
-<%= form_for @email_message, url: email_messages_path do |f| %>
-  <% if @email_message.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@email_message.errors.count, "error") %> prohibited this email message from being saved:</h2>
+<!--Middle content starts here-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webshim/1.15.10/minified/polyfiller.js"></script>
+<script>jQuery.webshims.polyfill('forms');</script>
+<section id="midd-container">
+  <div class="message-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner"></div>
+        <h1>Inbox</h1>
+        <div class="mail">
+          <% if @email_message_recipients.present? %>
+            <% @email_message_recipients.each do |emr| %>
+              <a href="#"><img src="/assets/volImg.jpg"/>
+                <div class="messDesc">
+                  <h2><% if emr.present? %>
+                      <%= link_to emr.email_message.user.last_name_initial, email_message_detail_path(:email_message_id => emr.email_message.id), remote: true %>
+                    <% end %>
+                  </h2>
+                  <h3><% if emr.present? %><%= h truncate(emr.email_message.subject, :length => 10) if emr.email_message.subject.present? %><% end %></h3>
+                  <h4>
+	                  <span>
+		                  <% if emr.email_message.created_at.present? %>
+	                      <% seconds = (TimeDifference.between(Time.now, emr.email_message.created_at).in_seconds.to_i) %>
+	                      <% mm, ss = seconds.divmod(60) %>
+	                      <% hh, mm = mm.divmod(60) %>
+	                      <% dd, hh = hh.divmod(24) %>
+	                      <%= dd > 0 ? ("%d " % [dd] + 'days') : '0 days'  %>
+	                    <% end %>
+	                  </span></h4>
+                </div></a>
+              <br/>
+            <% end %>
+          <% else %>
+            <h2><b>No user Notification </b></h2>
+          <% end %>
+        </div>
+        <div class="email_message">
+          <div class="message">
+            <% if @email_message_recipients.present? %>
+                <% if @email_message_recipients.last.email_message.user.profile_image.present? %>
+                  <%= @email_message_recipients.last.email_message.user.profile_image %>
+                <% else %>
+                  <img src="/assets/volImg.jpg"/>
+		            <% end %>
+            <% end %>
+            <div class="messDesc">
+              <% if @email_message_recipients.present? %>
+                <h2>
+                  <%= @email_message_recipients.last.email_message.user.full_name.capitalize %>
+                </h2>
+		          <% end %>
+              <h3><% if @email_message_recipients.present? %> <%= @email_message_recipients.last.email_message.subject %><% end %></h3>
+              <h4>
+                <% if @email_message_recipients.present? %>
+                  <% seconds = (TimeDifference.between(Time.now, @email_message_recipients.last.email_message.created_at).in_seconds.to_i) %>
+                  <% mm, ss = seconds.divmod(60) %>
+                  <% hh, mm = mm.divmod(60) %>
+                  <% dd, hh = hh.divmod(24) %>
+                  <% if dd > 0 %><span><%= "%d " % [dd] %></span> days
+                  <% end %>
+                <% end %>
+              </h4>
+            </div>
+            <br/>
 
-      <ul>
-        <% @email_message.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+            <div class="messCont">
+	          <% if @email_message_recipients.present? %>
+              <h3><%= @email_message_recipients.last.email_message.message if @email_message_recipients.present? %></h3>
+            </div>
+            <div class="messReply">
+              <%= form_tag send_message_reply_path do %>
+                <%= hidden_field_tag :email_message_id, @email_message_recipients.last.email_message.id if @email_message_recipients.present? %>
+                <%= text_area_tag :message, nil, :required => true, :placeholder=> "Send A Reply...", :rows=> "4",  :columns=> "100" %>
+                <div class="messSend">
+                  <%= submit_tag "Reply", :onclick => 'if($("#message").val() == ""){alert("Please fill out this message box.")}' %></div>
+              <% end %>
+            </div>
+		       <% else %>
+	            <h1><b>No user notification</b></h1>
+		      <% end %>
+          </div>
+        </div>
+      </div>
+</section>
+<section id="midd-container">
+  <div class="newmess-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner"></div>
+        <h1>New Message</h1>
+
+        <div class="newMess">
+          <%= form_for @email_message, url: email_messages_path do |f| %>
+            <% if @email_message.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@email_message.errors.count, "error") %> prohibited this email message from being
+                  saved:</h2>
+                <ul>
+                  <% @email_message.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <!--<input type="text" placeholder="To:"/><br/>-->
+            <%= email_field_tag :email, nil, :required => true, :multiple => true, :placeholder => "To:" %> <br/>
+            <%= f.text_field :subject, :required => true, :placeholder => "Subject:" %>
+            <%= f.text_area :message, :required => true, :placeholder => "Send A Reply..."%>
+            <!--<input type="submit" value="Send">-->
+            <%= f.submit "Send" %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= label_tag :to %><br>
-    <%= email_field_tag :email, nil, :required => true, :multiple => true %>
   </div>
-
-  <div class="field">
-    <%= f.label :subject %><br>
-    <%= f.text_field :subject, :required => true %>
+</section>
+<section id="midd-container">
+  <div class="note-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner"></div>
+        <h1>Notifications</h1>
+        <div class="noteBox">
+	      <% if @user_notifications.count > 6 %>
+            <% @user_notifications.each do |user_notification| %>
+              <div class="note">
+                <h3><% if user_notification.email_message.message.present? %><%= user_notification.email_message.message %><% end %>
+                  By <% if user_notification.email_message.user.full_name.present? %><%= user_notification.email_message.user.full_name.capitalize %><% end %></h3>
+              </div>
+			      <% end %>
+			     <% else %>
+            <% empty_note = (6 - @user_notifications.count) %>
+            <% @user_notifications.each do |user_notification| %>
+              <div class="note">
+                <h3><% if user_notification.email_message.message.present? %><%= user_notification.email_message.message %><% end %>
+                  By <%= user_notification.email_message.user.full_name.capitalize %></h3>
+              </div>
+            <% end %>
+            <% empty_note.times do %>
+              <div class="note"></div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :message %><br>
-    <%= f.text_area :message, :required => true %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-   <br>
-<h1>Notifications </h1>
-<div class=""listing_notification">
-<% @user_notifications.each do |user_notification|%>
-  <p><h3>User Name: <%= user_notification.email_message.user.full_name %></h3></p>
-  <p><h3>Subject: <%= user_notification.email_message.subject %></h3></p>
-  <p><h3>Message: <%= user_notification.email_message.message %></h3></p>
-	 ============================
-<% end %>
-  <% if !@user_friendrequests.blank? %>
-	<h2><b>Friend Request</h2>
-    <% @user_friendrequests.each do |user_friendrequest| %>
-      <p><h3>1 Friend Request by <%= find_user_by_friend_id(user_friendrequest.user_id).full_name %></h3></p>
-	  <% end %>
-	<% end %>
-</div>
+</section>
+<!--Middle content ends here--> 

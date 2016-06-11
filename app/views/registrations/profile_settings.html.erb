@@ -48,10 +48,91 @@
     </div>
     <div class="user-photos-row">
       <ul>
-        <li><%= image_tag 'photo-img.jpg', alt: '' %><%= file_field_tag 'Change Photo', multiple: true %></li>
-        <li><%= image_tag 'photo-img.jpg', alt: '' %><%= link_to 'Change Photo', '#' %></li>
-        <li><%= image_tag 'photo-img.jpg', alt: '' %><%= link_to 'Change Photo', '#' %></li>
-        <li><%= image_tag 'photo-img.jpg', alt: '' %><%= link_to 'Change Photo', '#' %></li>
+        <% user_photos = get_user_photos(current_user) %>
+        <%# user_photos.size.times do %>
+        <% if user_photos.size > 0 %>
+          <% user_photos.each do |photo| %>
+            <li>
+              <%= image_tag photo.image.url(:medium), alt: '', height: '125', width: '175' %>
+              <div id="change_photo">
+                <%= link_to 'Change Photo', 'javascript:void(0);', :onclick => '$("#change_photo").hide();$("#show_change_photo_form").show();' %>
+              </div>
+              <div id="show_change_photo_form" style="display: none;">
+                <%= form_for @user_picture do |f| %>
+                  <%= f.file_field :image %>
+                  <%= f.hidden_field :user_id, :value => current_user.id %>
+                  <%= submit_tag "Save", :class => "buton" %>
+                <% end %>
+              </div>
+            </li>
+            <% (4 - user_photos.size).times do  %>
+              <li><%= image_tag 'photo-img.jpg', alt: '' %>
+                <div id="change_photo">
+                  <%= link_to 'Change Photo', 'javascript:void(0);', :onclick => '$("#change_photo").hide();$("#show_change_photo_form").show();' %>
+                </div>
+                <div id="show_change_photo_form" style="display: none;">
+                  <%= form_for @user_picture do |f| %>
+                    <%= f.file_field :image %>
+                    <%= f.hidden_field :user_id, :value => current_user.id %>
+                    <%= submit_tag "Save", :class => "buton" %>
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
+          <% end %>
+        <% else %>
+          <% 4.times do %>
+            <li><%= image_tag 'photo-img.jpg', alt: '' %>
+              <div id="change_photo">
+                <%= link_to 'Change Photo', 'javascript:void(0);', :onclick => '$("#change_photo").hide();$("#show_change_photo_form").show();' %>
+              </div>
+              <div id="show_change_photo_form" style="display: none;">
+                <%= form_for @user_picture do |f| %>
+                  <%= f.file_field :image %>
+                  <%= f.hidden_field :user_id, :value => current_user.id %>
+                  <%= submit_tag "Save", :class => "buton" %>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+          <li><%= image_tag 'photo-img.jpg', alt: '' %>
+            <div id="change_photo">
+              <%= link_to 'Change Photo', 'javascript:void(0);', :onclick => '$("#change_photo").hide();$("#show_change_photo_form").show();' %>
+            </div>
+            <div id="show_change_photo_form" style="display: none;">
+              <%= form_for @user_picture do |f| %>
+                <%= f.file_field :image %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= submit_tag "Save", :class => "buton" %>
+              <% end %>
+            </div>
+          </li>
+          <li><%= image_tag 'photo-img.jpg', alt: '' %>
+            <div id="change_photo">
+              <%= link_to 'Change Photo', 'javascript:void(0);', :onclick => '$("#change_photo").hide();$("#show_change_photo_form").show();' %>
+            </div>
+            <div id="show_change_photo_form" style="display: none;">
+              <%= form_for @user_picture do |f| %>
+                <%= f.file_field :image %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= submit_tag "Save", :class => "buton" %>
+              <% end %>
+            </div>
+          </li>
+          <li><%= image_tag 'photo-img.jpg', alt: '' %>
+            <div id="change_photo">
+              <%= link_to 'Change Photo', 'javascript:void(0);', :onclick => '$("#change_photo").hide();$("#show_change_photo_form").show();' %>
+            </div>
+            <div id="show_change_photo_form" style="display: none;">
+              <%= form_for @user_picture do |f| %>
+                <%= f.file_field :image %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= submit_tag "Save", :class => "buton" %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+        <%# end %>
       </ul>
     </div>
     <div class="volunteer-full supports-block">
@@ -64,7 +145,7 @@
             <th width="15%" style="font-size: 15px;">Supporters</th>
             <th width="15%" style="font-size: 15px;">Needs Approval</th>
           </tr>
-          <%= form_for :user, :url => {:controller => 'registrations', :action => :update_settings}, :remote => true do |f| %>
+          <%= form_for :user, :url => registrations_update_settings_path, :remote => true do |f| %>
             <% @user_settings.each do |setting, column_name| %>
               <tr>
                 <td width="46%" style="font-size: 24px;"><%= setting %>:</td>
@@ -93,9 +174,9 @@
                 </div>
               </td>
               <td id="show_email" colspan="2" width="65%" style="font-size: 24px;">Email Notifications to:&nbsp;&nbsp;&nbsp;<span><%= current_user.email %></span>
-                <%= link_to 'Change Email', url_for(:controller => 'registrations', :action => 'edit_email'), :remote => true, :style => 'float: right;' %></td>
+                <%= link_to 'Change Email', registrations_edit_email_path, :remote => true, :style => 'float: right;' %></td>
               <td colspan="2" id="edit_email" width="65%" style="display: none; font-size: 24px;">
-                <%= form_for :user, :url => {:controller => 'registrations', :action => :update_email}, :remote => true do %>
+                <%= form_for :user, :url => registrations_update_email_path, :remote => true do %>
                   Email Notifications to:  <%= text_field_tag 'email', '', :value => current_user.email, :size => 20, :maxlength => 60, :placeholder => 'Email', :required => true, :style => 'border: 4px solid #93c281; border-radius: 8px; font-size: 16px;' %>&nbsp;&nbsp;
                   <%= submit_tag "Save", {:class => "button"} %>&nbsp;&nbsp;
                   <%= button_tag 'Cancel', :type => 'cancel', :onclick => "if(confirm(\'Are you sure?\\n\\nEmail will not be updated.\')){ $('#edit_email').hide(); $('#show_email').show(); } return false; " %>
@@ -114,9 +195,9 @@
                 </div>
               </td>
               <td id="show_phone" colspan="2" width="65%" style="font-size: 24px;">Text Notifications to:&nbsp;&nbsp;&nbsp;<span><%= current_user.phone_number[0..2] + "-" + current_user.phone_number[3..5] + "-" + current_user.phone_number[6..9] %></span>
-                <%= link_to 'Change Phone', url_for(:controller => 'registrations', :action => 'edit_phone'), :remote => true, :style => 'float: right;' %></td>
+                <%= link_to 'Change Phone', registrations_edit_phone_path, :remote => true, :style => 'float: right;' %></td>
               <td colspan="2" id="edit_phone" width="65%" style="display: none; font-size: 24px;">
-                <%= form_for :user, :url => {:controller => 'registrations', :action => :update_phone}, :remote => true do %>
+                <%= form_for :user, :url => registrations_update_phone_path, :remote => true do %>
                   Text Notifications to:  <%= text_field_tag 'phone_number', '', :value => current_user.phone_number, :size => 20, :maxlength => 60, :placeholder => 'Phone Number', :required => true, :style => 'border: 4px solid #93c281; border-radius: 8px; font-size: 16px;' %>&nbsp;&nbsp;
                   <%= submit_tag "Save", {:class => "button"} %>&nbsp;&nbsp;
                   <%= button_tag 'Cancel', :type => 'cancel', :onclick => "if(confirm(\'Are you sure?\\n\\nPhone No. will not be updated.\')){ $('#edit_phone').hide(); $('#show_phone').show(); } return false; " %>
