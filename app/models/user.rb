@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   # validates_attachment :image, presence: true, unless: -> { from_omniauth? }
   validates :first_name, :last_name, :confirm_email, :presence => true, unless: -> { from_omniauth? }
   validates :email, confirmation: true
+  ROLE = {
+      :group_leader => 0,
+      :volunteer => 1
+  }
   def full_name
     self.first_name + " " + self.last_name
   end
