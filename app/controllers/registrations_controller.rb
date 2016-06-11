@@ -24,6 +24,64 @@ class RegistrationsController  < Devise::RegistrationsController
     end
   end
 
+  def profile_settings
+    @user_picture = UserPicture.new
+    @user_settings = User::USER_PRIVACY_SETTINGS
+  end
+
+  def edit_user
+  end
+
+  def edit_location
+  end
+
+  def edit_description
+  end
+
+  def edit_email
+  end
+
+  def edit_phone
+  end
+
+  def update_user
+    @user = User.find_by_id(current_user.id)
+    @user.first_name = params[:first_name] if params[:first_name].present?
+    @user.last_name = params[:last_name] if params[:last_name].present?
+    @user.save
+  end
+
+  def update_location
+    @user = User.find_by_id(current_user.id)
+    @user.city = params[:city] if params[:city].present?
+    @user.state = params[:state] if params[:state].present?
+    @user.save
+  end
+
+  def update_description
+    @user = User.find_by_id(current_user.id)
+    @user.description = params[:description] if params[:description].present?
+    @user.save
+  end
+
+  def update_email
+    @user = User.find_by_id(current_user.id)
+    @user.email = params[:email] if params[:email].present?
+    @user.save
+  end
+
+  def update_phone
+    @user = User.find_by_id(current_user.id)
+    @user.phone_number = params[:phone_number] if params[:phone_number].present?
+    @user.save
+  end
+
+  def update_settings
+    p "============================"
+    p params
+    p "============================"
+  end
+
 
   private
 

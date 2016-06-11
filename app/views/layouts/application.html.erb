@@ -9,6 +9,7 @@
   <!--Custom style css-->
   <%= javascript_include_tag 'application' %>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <%= stylesheet_link_tag 'application' %>
   <%= stylesheet_link_tag 'style', 'media' %>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css">
@@ -28,25 +29,10 @@
 
   <!--Middle content starts here-->
   <section id="midd-container">
-    <% if !user_signed_in? %>
-      <div class="float-full social-network-row">
-        <div class="fixed-wrapper">
-          <div class="child-left"><%= image_tag('child-img.png', alt: '') %></div>
-          <div class="social-net-rgt">
-            <h1>A SOCIAL NETWORK</h1>
-            <h2>FOR VOLUNTEERS</h2>
-            <p>Here you can find new gigs to work on<br>
-              and friends to work with and support you.</p>
-          </div>
-        </div>
-      </div>
-      <div class="float-full gray-box-row">
-        <div class="fixed-wrapper">
-          <p>“Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola
-            brisket prosciutto sausage ball tip salami pork chop cupim shank swine.”<br>
-            -Some Butcher</p>
-        </div>
-      </div>
+    <% if user_signed_in? %>
+      <%= render 'shared/volunteer_section' if action_name != 'profile_settings' %>
+    <% else %>
+      <%= render 'shared/social_network' %>
     <% end %>
     <%= yield %>
   </section>
@@ -55,7 +41,7 @@
   <!--Footer Starts here-->
     <%= render 'shared/footer' %>
   <!--Footer ends here-->
-
+</div>
   <!--Main Wrapper Ends Here-->
 </body>
 </html>

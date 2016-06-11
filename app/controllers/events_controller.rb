@@ -94,6 +94,16 @@ class EventsController < ApplicationController
     end
   end
 
+  def sitemap
+    @event = Event.last
+  end
+
+  # def find_location
+  #   @event = Event.find_by_id(params[:event_id])
+  #   # @location =  Geocoder.coordinates(@event.location)
+  #   redirect_to "http://maps.google.com/maps?q=#{@event.location}"
+  # end
+
   private
 
   def set_event
