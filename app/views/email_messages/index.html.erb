@@ -1,6 +1,6 @@
 <!--Middle content starts here-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webshim/1.15.10/minified/polyfiller.js"></script>
-<script>jQuery.webshims.polyfill('forms');</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/webshim/1.15.10/minified/polyfiller.js"></script>-->
+<!--<script>jQuery.webshims.polyfill('forms');</script>-->
 <section id="midd-container">
   <div class="message-sec">
     <div class="fixed-wrapper">
@@ -145,4 +145,16 @@
     </div>
   </div>
 </section>
-<!--Middle content ends here--> 
+<!--Middle content ends here-->
+<script language="javascript" type="text/javascript">
+	$(document).ready(function() {
+		var timeout = setInterval(autoRefresh_div, 3000);
+		function autoRefresh_div()
+		{
+//			$("email_message .message").load("inbox_notifications");
+//			$( "email_message .message" ).load( "inbox_notifications");
+			$(".messCont").load(location.href+" .messCont>*","");
+			$(".messDesc").load(location.href);
+		}
+	});
+</script>
