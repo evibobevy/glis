@@ -1,19 +1,103 @@
-<% if @friend_requests.present? %>
-  <table border="1" align="center">
-    <tbody>
-    <% @friend_requests.each do |friend_request| %>
-      <tr>
-        <td><h3><CENTER> Name: <%= find_fullname_by_user_id(friend_request).full_name %></CENTER></h3>
-	          <h3><CENTER> Location: <%= find_fullname_by_user_id(friend_request).location %></CENTER></h3>
-        </td>
-        <td><h3><CENTER><%= link_to 'Accept', accept_friend_request_path(:friend_id => friend_request), class: "btn btn-primary" %></CENTER></h3></td>
-        <td><h3><CENTER><%= link_to 'Deny', deny_friend_request_path(:friend_id => friend_request)%></CENTER></h3></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-<% else %>
-		<h2> <%= t(:request_not_found) %>
-		</h2>
-<% end %>
- <%=  "-"*300 %>
+<link href="http://getbootstrap.com/assets/css/docs.min.css" rel="stylesheet">
+<link href="/assets/main.css" rel="stylesheet">
+<link rel="stylesheet" href="/assets/calendar.css" type="text/css" />
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico" />
+<section id="midd-container">
+  <!--new volunteer section-->
+  <div class="user-prf-sec">
+    <div class="fixed-wrapper">
+      <div class="user-prf-row1">
+        <div class="user-prf-left">
+
+        </div>
+      </div>
+      <!--photo section ends-->
+      <div class="volunteer-full float-full user-prf-vol">
+        <div class="fixed-wrapper">
+          <div id="requests">
+            <div class="corner"></div>
+            <h1>My Requests</h1><br/>
+            <div class="volBox">
+              <% if @friend_requests.present? %>
+                <% @friend_requests.each do |friend_request| %>
+                  <div class="supporters2">
+                    <img src="/assets/noImg.jpg"/>
+                    <% if find_fullname_by_user_id(friend_request).full_name.present? %><h2><%= find_fullname_by_user_id(friend_request).full_name %></h2> <% end %>
+                    <% if find_fullname_by_user_id(friend_request).city.present? || find_fullname_by_user_id(friend_request).state.present? %><h2><span><%= find_fullname_by_user_id(friend_request).full_address %></span></h2><% end %>
+                    <h2><span>300 Gigs 700 Hours</span></h2>
+                    <%= button_to 'Accept', accept_friend_request_path(:friend_id => friend_request), :method => :post, :class=> 'btn-accept' %>
+                    <%= button_to 'Deny', deny_friend_request_path(:friend_id => friend_request), :method => :post, :class=> 'btn-deny' %>
+                  </div>
+                <% end %>
+              <% else %>
+                <h2 align="center"> <%= t(:request_not_found) %></h2>
+              <% end %>
+            </div>
+            <div id="requests">
+              <div class="corner"></div>
+              <h1>Suggested Supporters</h1><br/>
+              <div class="volBox">
+                <% if @mutual_friends.present? %>
+                  <% @mutual_friends.each do |friend|%>
+                    <div class="supporters2">
+                      <img src="/assets/noImg.jpg"/><% if friend.full_name.present? %><h2><%= friend.full_name %></h2><% end %>
+                      <% if friend.full_address.present? %> <h2><span><%= friend.full_address %></span></h2><% end %>
+                      <h2><span>300 Gigs 700 Hours</span></h2>
+                      <%= button_to 'Add',add_user_path(:friend_id => friend.id), :method => :post, :class=>"btn-Add" %>
+                      <%= button_to 'Remove',removed_user_path(:friend_id => friend.id), :method => :post, :class=>"btn-Remove" %>
+                      <!--<button class="btn-Remove">Remove</button>-->
+                    </div>
+                  <% end %>
+                <% else %>
+                  <h2 align="center" ><%= t(:no_mutual_friend) %></h2>
+                <% end %>
+              </div>
+
+              <div class="searchSupport">
+                <div class="searchLeft">
+                  <div class="corner4"></div>
+                  <h1>Search</h1><br/>
+                  <!--<form>-->
+                  <%= form_tag search_users_path, :method => 'get', :id => "friend_search", :remote=> true do %>
+                    <div class="search">
+                      <!--<input type="text" placeholder="Name"/><br/>-->
+                      <%= text_field_tag :search_user, params[:search_user], :placeholder=> "Name" %> <br/>
+                      <%= text_field_tag :search_location, params[:search_location], :placeholder=> "Location" %><br/>
+                      <!--<input type="text" placeholder="Location"/><br/>-->
+                    </div>
+                    <div class="dropdown"style="margin-left:1%;margin-top:10px;background-color:#fff;">
+                      <a href="#" data-toggle="dropdown" class="dropdown-toggle">Gig Interests<b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <!--<a><%#= select_tag :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), :include_blank => true %> </a>-->
+                        <li><a>Community</a></li>
+                        <li><a>Environment</a></li>
+                        <li><a>Health</a></li>
+                        <li><a>Animals</a></li>
+                        <li><a>Faith</a></li>
+                        <li><a>Other</a></li>
+                      </ul>
+                  <%= hidden_field_tag :type_of_gig, :value => " " %>
+                    </div>
+                    <div class="searchButton"><input type="submit" value="Search Supporters"/></div>
+                    </div>
+                  <% end %>
+                  <!--</form>-->
+                  </div>
+
+              <div class="searchRight">
+                <%= render 'users_list' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<!--Middle content ends here-->
+<script>
+	$('.dropdown-menu li').on('click', function() {
+		$('.dropdown-toggle').html($(this).find('a').html() + '<b class="caret"></b>');
+		select_value = $('.dropdown-toggle').text();
+		$('#type_of_gig').val(select_value);
+	});
+</script>
