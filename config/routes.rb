@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
 
+  get 'passwords/create'
+
+  get 'passwords/new'
+
   post 'support' => 'friendships#support', as: :support
-  post 'unsupport' => 'friendships#unsupport', as: :unsupport
+  # post 'unsupport' => 'friendships#unsupport', as: :unsupport
+
+  post 'add_user' => 'friendships#add_user', as: :add_user
+  post 'removed_user' => 'friendships#removed_user', as: :removed_user
+  post 'remove_friend' => 'friendships#remove_friend', as: :remove_friend
 
   resources :posts do
     resources :comments
@@ -38,6 +46,8 @@ Rails.application.routes.draw do
     post 'registrations/update_email' => 'registrations#update_email'
     post 'registrations/update_phone' => 'registrations#update_phone'
     post 'registrations/update_settings' => 'registrations#update_settings'
+    post 'registrations/update' => 'registrations#update'
+    post 'registrations/update_password' => 'registrations#update_password'
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -47,8 +57,8 @@ Rails.application.routes.draw do
   # get 'events/join_volunteer'=> 'events#join_volunteer', as: :join_volunteer
   get 'join_volunteer' => 'events#join_volunteer', as: :join_volunteer
   get 'disjoin_volunteer' => 'events#disjoin_volunteer', as: :disjoin_volunteer
-  get 'accept_friend_request' => 'friendships#accept_friend_request', as: :accept_friend_request
-  get 'deny_friend_request' => 'friendships#deny_friend_request', as: :deny_friend_request
+  post 'accept_friend_request' => 'friendships#accept_friend_request', as: :accept_friend_request
+  post 'deny_friend_request' => 'friendships#deny_friend_request', as: :deny_friend_request
   get 'contacts/new', :to => 'contacts#new'
   get 'inbox_notifications' => 'email_messages#index', as: :inbox_notifications
   post 'email_messages' => 'email_messages#email_message'
@@ -58,6 +68,7 @@ Rails.application.routes.draw do
   post 'send_message_reply' => 'email_messages#send_message_reply', as: :send_message_reply
   get 'email_message_detail' => 'email_messages#email_message_detail'
   get 'friendsearch_request' => 'events#friendsearch_request'
+  get 'search_users' => 'events#search_users'
   get 'glisSupportPage' =>  'friendships#glisSupportPage', as: :glisSupportPage
 
   # Example of regular route:

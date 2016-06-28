@@ -10,21 +10,27 @@ class User < ActiveRecord::Base
   has_many :friendships, dependent: :destroy
   has_many :friends, :through => :friendships
   has_many :user_pictures, :dependent => :destroy
-  has_attached_file :image, styles: { medium: "150x200#", thumb: "100x100#" }, default_url: "/images/:style/missing.png"
+  has_attached_file :image, styles: { medium: "150x200#", thumb: "100x100#", default_url: "noImg.jpg" }
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   # validates_attachment :image, presence: true, unless: -> { from_omniauth? }
   validates :first_name, :last_name, :confirm_email, :presence => true, unless: -> { from_omniauth? }
   validates :email, confirmation: true
-
-  ROLE = {
-      :group_leader => 0,
-      :volunteer => 1
-  }
+  validates_length_of :phone_number, maximum: 10
+  # USER_ROLE = {
+  #     :Group_Leader => 1,
+  #     :Volunteer => 2
+  # }
+  #
+  # enum role_of_user: [ :group_leader, :volunteer ]
 
   USER_PRIVACY_SETTINGS = {"Who can see my profile" => 'user_profile_settings', "Who can comment on my posts" => 'user_post_comments_settings', "Who can message me" => 'user_message_settings', "Who can invite me to events" => 'user_events_invite_settings'}
 
   def full_name
-    self.first_name + " " + self.last_name
+    self.first_name.capitalize + " " + self.last_name.capitalize  if self.first_name.present? || self.last_name.present?
+  end
+
+  def full_address
+    self.city.capitalize + " " + self.state.capitalize  if self.city.present? || self.state.present?
   end
 
   def last_name_initial
@@ -36,6 +42,36 @@ class User < ActiveRecord::Base
       where('first_name LIKE ?', "%#{search}%")
     end
   end
+
+  def update_with_password(params={})
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+    update_attributes(params)
+  end
+
+  # def update_with_password(params, *options)
+  #   current_password = params.delete(:current_password)
+  #
+  #   if params[:password].blank?
+  #     params.delete(:password)
+  #     params.delete(:password_confirmation) if params[:password_confirmation].blank?
+  #   end
+  #
+  #   result = if params[:password].blank? || valid_password?(current_password)
+  #              update_attributes(params, *options)
+  #            else
+  #              self.assign_attributes(params, *options)
+  #              self.valid?
+  #              self.errors.add(:current_password, current_password.blank? ? :blank : :invalid)
+  #              false
+  #            end
+  #
+  #   clean_up_passwords
+  #   result
+  # end
+
 
   private
 

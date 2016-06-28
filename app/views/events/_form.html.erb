@@ -1,81 +1,139 @@
-<div class="event_from" align="center">
-  <h1>Create GIGS</h1>
-  <%= form_for @event, :html => { :multipart => true } do |f| %>
-    <% if @event.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
-        <ul>
-          <% @event.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
+<div class="newgig-sec">
+  <div class="fixed-wrapper">
+    <div class="inbox">
+      <div class="corner3"></div>
+      <h1>Create A Gig</h1>
+      <%= form_for @event, :html => { :multipart => true } do |f| %>
+        <div class="createGig-left">
+          <% if @event.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+              <ul>
+                <% @event.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
           <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="field">
-      <%= f.text_field :title, :placeholder => 'Gig Name', :required => true %>
+          <%= f.text_field :title, :placeholder => 'Gig Name *', :required => true %><br/>
+          <div class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Your Role<span>*</span><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <!--<a><%#= f.select :user_role, options_for_select(users_role.collect { |s| [s[0].humanize, s[0]] }), {} %></a>-->
+              <li><a>Group Leader</a></li>
+              <li><a>Volunteer</a></li>
+            </ul>
+            <%= hidden_field_tag :user_role %>
+          </div>
+          <div class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Type of Gig<span>*</span><b class="caret"></b>
+            <%#= f.select :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), {}, :include_blank => true %> </a>
+            <ul class="dropdown-menu">
+              <li><a>Community</a></li>
+              <li><a>Environment</a></li>
+              <li><a>Health</a></li>
+              <li><a>Animals</a></li>
+              <li><a>Faith</a></li>
+              <li><a>Other</a></li>
+            </ul>
+            <%= hidden_field_tag :type_of_gig %>
+          </div>
+          <%= f.text_field :location, :placeholder => 'Location *', :required => true %> <br/>
+          <%= f.text_field :event_date, :id=> "datepicker", :placeholder=> "Start Date *" %><br/>
+          <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" %><br/>
+          <div class="time">
+            <%= f.text_field :event_start_time, :class=> "timepicker", :placeholder=> "Start Time *" %>
+            <%= f.text_field :event_end_time, :class => "timepicker1", :placeholder=> "End Time *"  %>
+          </div>
+          <div class='switchQuestions'>
+            <div class="questions">
+              <h5>Is this recurring? <span>*</span></h5><br/>
+              <h5>Is this open to the public?<span>*</span></h5></br>
+              <h5>Can anyone volunteer?<span>*</span></h5>
+            </div>
+            <div class="switch">
+              <div>
+                <%= f.check_box :anyone_volunteer, :class=>"form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :open_to_the_public, :class=>"form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :recurring, :class=>"form-control" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="createGig-right">
+          <!--<input type="text" placeholder="Foundation Name (Optional)"/><br/>-->
+          <%= f.text_field :foundation_name, :placeholder => 'Foundation Name (Optional)' %><br/>
+          <%= f.text_area :basic_info, :placeholder => 'Basic Info *', :required => true %>
+          <%= f.text_area :full_description, :placeholder => 'Full Description *', :required => true %><br/>
+          <div class="upload">
+            <%= file_field_tag "images[]", multiple: true, class: "multi" %>
+          </div>
+          <div class="submitCancel">
+            <input type="button" value="Cancel", class="btn-cancel"/>
+            <%= f.submit "Create Gig" %>
+          </div>
+        </div>
+      <% end %>
     </div>
+  </div>
+  <!--</div>-->
+  <script>
+	  $(function() {
+		  $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+		  $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd' });
+	  });
+	  $(function(){
+		  $('.multi').MultiFile({
+			  accept:'gif|jpg',
+			  max:4,
+			  STRING: {
+				  remove:'Remover',
+				  selected:'Selecionado: $file',
+				  denied:'Invalido arquivo de tipo $ext!',
+				  duplicate:'Arquivo ja selecionado:\n$file!'
+			  }
+		  });
+	  });
+	  $(function(argument) {
+		  $('[type="checkbox"]').bootstrapSwitch();
+	  });
 
-    <div class="field">
-      <%= f.text_field :location, :placeholder => 'Location', :required => true %>
-    </div>
+	  $('.timepicker').timepicker({
+		  timeFormat: 'h:mm p',
+		  dynamic: false,
+		  dropdown: true,
+		  scrollbar: true
+	  });
+	  $('.timepicker1').timepicker({
+		  timeFormat: 'h:mm p',
+		  dynamic: false,
+		  dropdown: true,
+		  scrollbar: true
+	  });
+	  $('.btn-cancel').click(function(){
+		  window.location.href='/event_list';
+	  })
+	  $('.dropdown-menu li').on('click', function() {
 
-    <div class="field">
-      <!--<input type='text' class="form-control" id='datepicker' />-->
-      <%= f.text_field :event_date, :id=> "datepicker" %>
-    </div>
+//		  $(".dropdown-menu:first").addClass("role");
+//		  $(".dropdown-menu:last").addClass("gig");
+//
+//		  $(".dropdown-menu:first").addClass("role");
+//		  $(".dropdown-menu:last").addClass("gig");
 
-    <div class="field">
-      <%= f.text_field :event_start_time, :id=> "timepicker1"  %>
-    </div>
-
-    <div class="field">
-      <%= f.text_field :event_end_time, :id => "timepicker2"  %>
-    </div>
-
-    <div class="field">
-      <%= f.text_area :basic_info, :placeholder => 'Basic Info', :required => true  %>
-    </div>
-
-    <div class="field">
-      <%= f.text_area :full_description, :placeholder => 'Full Description', :required => true %>
-    </div>
-
-    <div class="field">
-      <%#= f.file_field :image, :placeholder => 'Upload image'%>
-      <%= file_field_tag "images[]", multiple: true, class: "multi" %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-    </div>
-  <% end %>
-</div>
-
-<!--Script for upload multiple image-->
-<script>
-	$(function(){
-		$('.multi').MultiFile({
-			accept:'gif|jpg|png|gif',
-			max:10,
-			STRING: {
-				remove:'Remover',
-				selected:'Selecionado: $file',
-				denied:'Invalido arquivo de tipo $ext!',
-				duplicate:'Arquivo ja selecionado:\n$file!'
-			}
-		});
-	});
-	$('#timepicker1').timepicker();
-	$('#timepicker2').timepicker();
-	$(function () {
-		$('#datepicker').datepicker({
-			format: 'yyyy/mm/dd',
-			autoclose:true
-		});
-	});
-</script>
-
-
+		  $('.dropdown-toggle').html($(this).find('a').html() + '<b class="caret"></b>');
+		  select_value = $('.dropdown-toggle').text();
+		  $('#type_of_gig').val(select_value);
+		  $('#user_role').val(select_value);
+	  });
+  </script>
+  <style>
+	  #event_full_description{
+		  height: 200px;
+	  }
+  </style>
 

@@ -10,7 +10,7 @@
         <li><a href="#">Home</a></li>
         <% if user_signed_in? %>
           <!--<li><a href="#">Settings</a></li>-->
-          <li><%= link_to "Inbox", inbox_notifications_path %></li>
+          <li><%= link_to "Inbox", inbox_notifications_path(:page=> "inbox_notifications") %></li>
           <!--<li><a href="#">Settings</a></li>-->
           <li><%= link_to 'Settings', profile_settings_path %></li>
           <!--<li><a href="#">Inbox</a></li>-->
@@ -29,7 +29,7 @@
     </div>
     <div class="send-feedback"> <a href="#">SEND US <br>
       FEEDBACK<br>
-      <i><%= image_tag('feedback-icon.png', alt: '') %></i> </a> </div>
+      <i><%#= image_tag('feedback-icon.png', alt: '') %></i> </a> </div>
     <p class="cpy-full">Glis, Inc. &copy; <%= Time.now.year %> | Developed by evibobevy</p>
   </div>
 </footer>

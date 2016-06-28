@@ -1,6 +1,5 @@
-<!--Middle content starts here-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/webshim/1.15.10/minified/polyfiller.js"></script>-->
-<!--<script>jQuery.webshims.polyfill('forms');</script>-->
+<link href="/assets/jquery-ui.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
+<script src="/assets/jquery-ui.js"></script>
 <section id="midd-container">
   <div class="message-sec">
     <div class="fixed-wrapper">
@@ -121,25 +120,28 @@
         <div class="corner"></div>
         <h1>Notifications</h1>
         <div class="noteBox">
-	      <% if @user_notifications.count > 6 %>
-            <% @user_notifications.each do |user_notification| %>
-              <div class="note">
-                <h3><% if user_notification.email_message.message.present? %><%= user_notification.email_message.message %><% end %>
-                  By <% if user_notification.email_message.user.full_name.present? %><%= user_notification.email_message.user.full_name.capitalize %><% end %></h3>
-              </div>
-			      <% end %>
-			     <% else %>
-            <% empty_note = (6 - @user_notifications.count) %>
-            <% @user_notifications.each do |user_notification| %>
-              <div class="note">
-                <h3><% if user_notification.email_message.message.present? %><%= user_notification.email_message.message %><% end %>
-                  By <%= user_notification.email_message.user.full_name.capitalize %></h3>
+          <div id="accordion">
+            <% if @email_message_recipients.present? %>
+              <h3><%= image_tag("chat.svg", size: "20x20") %>&nbsp;&nbsp;&nbsp;You have a new message</h3>
+              <div>
+                <% @email_message_recipients.each do |user_notification| %>
+                  <% if user_notification.email_message.message.present? %>
+                    <h3>* <%= user_notification.email_message.message %><% end %>
+                  By <% if user_notification.email_message.user.full_name.present? %><%= user_notification.email_message.user.full_name.capitalize %>
+                  <% end %>
+                  </h3>
+                <% end %>
               </div>
             <% end %>
-            <% empty_note.times do %>
-              <div class="note"></div>
+            <% if @user_friendrequests.present? %>
+              <h3><%= image_tag("add-friend.svg", size: "20x20") %>&nbsp;&nbsp;&nbsp;You have a support request</h3>
+              <div>
+                <% @user_friendrequests.each do |user_friendrequest| %>
+                  <h3>* Friend Request by <%= user_friendrequest.friend.full_name %> </br>
+                <% end %></h3>
+              </div>
             <% end %>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
@@ -148,13 +150,26 @@
 <!--Middle content ends here-->
 <script language="javascript" type="text/javascript">
 	$(document).ready(function() {
-		var timeout = setInterval(autoRefresh_div, 3000);
+		var timeout = setInterval(autoRefresh_div, 10000);
 		function autoRefresh_div()
 		{
-//			$("email_message .message").load("inbox_notifications");
-//			$( "email_message .message" ).load( "inbox_notifications");
-			$(".messCont").load(location.href+" .messCont>*","");
-			$(".messDesc").load(location.href);
+			$(".messCont").load(location.href+" .messCont");
+			$(".messCont").load(location.href+" .messCont >*","");
+			$(".messDesc").load(location.href+" .messDesc");
 		}
 	});
+
+	$("#accordion").accordion({
+		active: false,
+		autoHeight: false,
+		navigation: true,
+		collapsible: true,
+		create: function(event, ui) { $("#accordion").show(); }
+	});
 </script>
+<style>
+	#ui-id-4 .note{
+		background-color: white;
+		border-bottom: none;
+	}
+</style>

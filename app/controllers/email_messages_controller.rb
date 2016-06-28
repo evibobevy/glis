@@ -4,12 +4,9 @@ class EmailMessagesController < ApplicationController
 
   def index
     @email_message = EmailMessage.new
-    @email_message_recipients = EmailMessageRecipients.where(:email=> current_user.email)
-    # @email_message_recipients = EmailMessage.where('user_id = ? AND parent_id IS NOT NULL', current_user.id) if user_signed_in?
-    # @email_message_recipients.where('parent_id IS NOT Null',t.collect(&:parent_id).compact)
+    @email_message_recipients = EmailMessageRecipients.includes(:email_message).where(:email=> current_user.email)
     @email_message_detail = EmailMessage.last
-    @user_notifications = EmailMessageRecipients.where(:email => current_user.email)
-    @user_friendrequests = Friendship.where(:friend_id => current_user.id)
+    @user_friendrequests = Friendship.includes(:friend).where(:friend_id => current_user.id)
   end
 
   def email_message
@@ -36,7 +33,7 @@ class EmailMessagesController < ApplicationController
   def send_message_reply
     if params[:email_message_id].present?
       email_message  = EmailMessage.find(params[:email_message_id])
-      @message = current_user.email_messages.build(:parent_id => email_message.id, :subject=> "#{email_message.subject}", :message=> params[:message]) if user_signed_in?
+      @message = current_user.email_messages.build(:parent_id => email_message.id, :subject=> "RE: #{email_message.subject}", :message=> params[:message]) if user_signed_in?
       if @message.valid?
         @message.save
         user = EmailMessage.find(@message.parent_id).user_id

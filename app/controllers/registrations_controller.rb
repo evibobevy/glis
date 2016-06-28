@@ -1,5 +1,6 @@
-class RegistrationsController  < Devise::RegistrationsController
-  layout "fancybox", :only => [:new,:create]
+class RegistrationsController < Devise::RegistrationsController
+  before_action :set_user, only: [:edit, :update, :update_password]
+  layout "fancybox", :only => [:new, :create]
 
   def new
     super
@@ -11,21 +12,34 @@ class RegistrationsController  < Devise::RegistrationsController
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_up(resource_name, resource)
-        return render :json => {:success => true}
+        return render :json => { :success => true }
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
         expire_session_data_after_sign_in!
-        return render :json => {:success => true}
+        return render :json => { :success => true }
       end
     else
       puts resource.errors.full_messages.inspect
       clean_up_passwords resource
-      return render :json => {:success => false, :error=> resource.errors.full_messages}
+      return render :json => { :success => false, :error => resource.errors.full_messages }
     end
   end
 
+  def edit
+  end
+
+  def update
+    super
+    # if @user.update(account_update_params)
+    #   redirect_to :back and return
+    # else
+    #   p "=====================Hello+++++++++++++++++++++++++++"
+    #   redirect_to :back and return
+    # end
+  end
+
   def profile_settings
-    @user_picture = UserPicture.new
+    @user_picture  = UserPicture.new
     @user_settings = User::USER_PRIVACY_SETTINGS
   end
 
@@ -45,35 +59,42 @@ class RegistrationsController  < Devise::RegistrationsController
   end
 
   def update_user
-    @user = User.find_by_id(current_user.id)
+    @user            = User.find_by_id(current_user.id)
     @user.first_name = params[:first_name] if params[:first_name].present?
-    @user.last_name = params[:last_name] if params[:last_name].present?
+    @user.last_name  = params[:last_name] if params[:last_name].present?
     @user.save
   end
 
   def update_location
-    @user = User.find_by_id(current_user.id)
-    @user.city = params[:city] if params[:city].present?
+    @user       = User.find_by_id(current_user.id)
+    @user.city  = params[:city] if params[:city].present?
     @user.state = params[:state] if params[:state].present?
     @user.save
   end
 
   def update_description
-    @user = User.find_by_id(current_user.id)
+    @user             = User.find_by_id(current_user.id)
     @user.description = params[:description] if params[:description].present?
     @user.save
   end
 
   def update_email
-    @user = User.find_by_id(current_user.id)
+    @user       = User.find_by_id(current_user.id)
     @user.email = params[:email] if params[:email].present?
     @user.save
   end
 
   def update_phone
-    @user = User.find_by_id(current_user.id)
+    @user              = User.find_by_id(current_user.id)
     @user.phone_number = params[:phone_number] if params[:phone_number].present?
     @user.save
+  end
+
+  def update_password
+    @user.password = params[:password] if params[:password].present?
+    @user.password_confirmation = params[:password_confirmation] if params[:password].present?
+    @user.save
+    redirect_to edit_user_registration_path
   end
 
   def update_settings
@@ -82,14 +103,26 @@ class RegistrationsController  < Devise::RegistrationsController
     p "============================"
   end
 
-
   private
 
   def sign_up_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :image, :first_name, :last_name, :confirm_email)
+    params.require(:user).permit(:email, :confirm_email, :password, :password_confirmation, :first_name, :last_name)
   end
 
+
   def account_update_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :current_password, :image, :first_name, :last_name, :confirm_email)
+    params.require(:user).permit(:email, :first_name, :last_name, :city, :state, :image, :description, :password, :password_confirmation, :everyone_view_your_profile, :everyone_view_your_calendar, :everyone_invite_you_to_events, :everyone_view_your_post, :everyone_message_you, :volunteers_need_approval_join_your_gigs, :supporters_need_approval_to_comment, :email_notification, :sms_notification, :mobile_ping_notifications, :phone_number )
+  end
+
+
+  def set_user
+    @user = User.find_by_id(current_user.id)
+    @user_supporters = current_user.friendships.find_not_remove_friend if user_signed_in?
+  end
+
+  protected
+
+  def after_update_path_for(resource)
+    edit_user_registration_path
   end
 end

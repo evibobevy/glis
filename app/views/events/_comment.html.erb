@@ -1,5 +1,6 @@
 <div class="comments">
-  <% if !@post.user.nil? %> <div class="reply-img"> <%= image_tag @post.user.image.url(:medium), style: 'height: 70px; width: 90px;' %></div>
+  <% if !@post.user.nil? %> <div class="reply-img"> <%#= image_tag @post.user.image.url(:medium), style: 'height: 70px; width: 90px;' %>
+  <%= image_tag 'no-img.jpg', style: 'height: 70px; width: 90px;' %></div>
 	  <div class="reply-desc">
 	    <!--<h5>John Smith</h5>-->
 	    <h5><%= @post.user.full_name %></h5>

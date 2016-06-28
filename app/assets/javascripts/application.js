@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery.MultiFile
 //= require fancybox
 //= require_tree .
 
@@ -51,4 +52,37 @@ var isMobile = {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 };
+$(function() {
+    $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd' });
+});
+$(function(){
+    $('.multi').MultiFile({
+        accept:'gif|jpg',
+        max:4,
+        STRING: {
+            remove:'Remover',
+            selected:'Selecionado: $file',
+            denied:'Invalido arquivo de tipo $ext!',
+            duplicate:'Arquivo ja selecionado:\n$file!'
+        }
+    });
+});
+$(function(argument) {
+    $('[type="checkbox"]').bootstrapSwitch();
+});
+
+$('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+$('.timepicker1').timepicker({
+    timeFormat: 'h:mm p',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+
 

@@ -5,7 +5,7 @@ $ ->
     type: 'ajax'
     closeBtn: true
     autoSize: false
-    height: 'auto'
+    height: 400
     minWidth: 100
     arrows: false
     beforeLoad: ->

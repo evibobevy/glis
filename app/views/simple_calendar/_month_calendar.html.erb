@@ -1,92 +1,163 @@
-<div class="simple-calendar">
-	<div>
-	<div class="pre_next">
-    <%= link_to "", url_for(params.merge(start_date: date_range.first - 1.day, previous_link:  "previous_link") ), remote: true, class:'arrow_left', style: 'float: left; margin-top: 3px;"' %>
-	  <h2 style="float:left;font-size: 22px;font-family: proxima_nova_rgbold;"><strong><%= I18n.t("date.month_names")[start_date.month] %> <%= start_date.year %></strong> </h2>
-	  <%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day, next_link:  "next_link")), remote: true, class:'arrow_right', style: 'float: left; margin-top: 3px;"' %>
-</div>
-  <div class="event_title">
-    <h1>Event Calendar </h1>
-  </div>
-	</div>
- <div>
-	 <table class="dayname_header" style="border: 0px solid gray;margin-left: 198px; margin-bottom: 0;">
-		 <tr>
-		   <th>MON</th>
-		   <th>TUES</th>
-		   <th>WED</th>
-		   <th>THURS</th>
-		   <th>FRI</th>
-		   <th>SAT</th>
-		   <th>SUN</th>
-		 </tr>
-	 </table>
-  <table class="table table-striped" style="border-collapse: separate;border-spacing: 8px;*border-collapse: expression('separate', cellSpacing = '10px');">
-    <thead>
-      <!--<tr>-->
-        <!--&lt;!&ndash;<%# date_range.slice(0, 7).each do |day| %>&ndash;&gt;-->
-          <!--&lt;!&ndash;&lt;!&ndash;<th><%#= I18n.t("date.abbr_day_names")[day.wday] %></th>&ndash;&gt;&ndash;&gt;-->
-      <!--</tr>-->
-    </thead>
-    <tbody>
-      <% date_range.each_slice(7) do |week| %>
-        <tr>
-          <% week.each do |day| %>
-            <%= content_tag :td, class: calendar.td_classes_for(day) do %>
-              <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(block) %>
-                <% capture_haml do %>
-                  <% block.call day, sorted_events.fetch(day, []) %>
+<link rel="stylesheet" href="/assets/calendar.css">
+<section id="midd-container">
+  <div class="message-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner3"></div>
+        <h1><%= user_signed_in? ? "My Calendar" : "Event Calendar" %></h1>
+        <div id="myCalendar">
+          <div class="calHead">
+            <i><%= link_to "", url_for(params.merge(start_date: date_range.first - 1.day, previous_link:  "previous_link") ), remote: true, class:'flaticon-arrows', style: 'float: left; margin-top: 3px;"' %></i>
+            <h2><%= I18n.t("date.abbr_month_names")[start_date.month] %> <%= start_date.year %> </h2>
+            <i><%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day, next_link:  "next_link")), remote: true, class:'flaticon-arrows-1', style: 'float: left; margin-top: 3px;"' %></i>
+          </div>
+          <div class="sched"><h4>Today's Schedule</h4><hr>
+            <% if !params[:start_date].present? %>
+              <% if @latest_month_gigs.present? %>
+                <% @latest_month_gigs.each do |today_gig|%>
+                  <% if today_gig.event_start_time.present?  && today_gig.event_date == Time.zone.now.beginning_of_day %> <b style ="font-size: x-small;"> <%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %>  - <% end %>
+                  <% if today_gig.event_end_time.present? && today_gig.event_date == Time.zone.now.beginning_of_day %><%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %> </b><br><% end %>
+                  <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day%><b style ="font-size: x-small;"><%= today_gig.title.titleize %> </b><% end %>
+                  <% if user_signed_in? %>
+                    <div class="gig_info" style="display:none">
+                      <% if today_gig.location.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3><%= today_gig.location.titleize %><% end %>
+                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Details:</b> <%= today_gig.full_description %><% end %>
+                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <%= link_to 'View GIG', "javascript:void(0)" %> <br><% end %>
+                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> <% end %>
+                    </div>
+                    <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day%> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br><hr> <% end %>
+                  <% end %>
+                  <% if !user_signed_in? %>
+                    <% if today_gig.event_date == Time.zone.now.beginning_of_day%><%= link_to 'Join', new_user_session_path %> <br><hr> <% end %>
+                  <% end %>
                 <% end %>
               <% else %>
-                <% block.call day, sorted_events.fetch(day, []) %>
+                <%= t(:today_no_event)%>
+              <% end %>
+            <% else %>
+              <% if @today_gigs.present? %>
+                <% @today_gigs.each do |today_gig|%>
+                  <b style ="font-size: x-small;"> <% if today_gig.event_start_time.present? %><%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %><% end %> -
+                    <% if today_gig.event_end_time.present? %><%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %><% end %> </b><br>
+                  <b style ="font-size: x-small;"><% if today_gig.title.present? %><%= today_gig.title.titleize %> <% end %></b>
+                  <% if user_signed_in? %>
+                    <div class="gig_info" style="display:none">
+                      <% if today_gig.location.present? %> <b>Address:</b></h3> <h3><%= today_gig.location.titleize %><% end %>
+                      <% if today_gig.full_description.present? %> <b>Details:</b> <%= today_gig.full_description %><% end %>
+                      <%= link_to 'View GIG', "javascript:void(0)" %> <br>
+                      <%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %>
+                    </div>
+                    <br> <%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br><hr>
+                  <% end %>
+                  <% if !user_signed_in? %>
+                    <%= link_to 'Join', new_user_session_path %> <br><hr>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= t(:today_no_event)%>
               <% end %>
             <% end %>
+          </div>
+          <div class="calendar">
+            <table>
+              <tr>
+                <td><h3>SUN</h3></td>
+                <td><h3>MON</h3></td>
+                <td><h3>TUE</h3></td>
+                <td><h3>WED</h3></td>
+                <td><h3>THURS</h3></td>
+                <td><h3>FRI</h3></td>
+                <td><h3>SAT</h3></td>
+              </tr>
+              <% date_range.each_slice(7) do |week| %>
+                <tr>
+                  <% week.each do |day| %>
+                    <%= content_tag :td, class: calendar.td_classes_for(day) do %>
+                      <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(block) %>
+                        <% capture_haml do %>
+                          <% block.call day, sorted_events.fetch(day, []) %>
+                        <% end %>
+                      <% else %>
+                        <% block.call day, sorted_events.fetch(day, []) %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+          <% if user_signed_in? %>
+            <div class="sched2"><div class="border"><h4>Upcoming Gigs</h4>
+              <% if !params[:start_date].present? %>
+                <% if @latest_month_gigs.present? %>
+                  <% @latest_month_gigs.each do |next_event|%>
+                    <b style ="font-size: x-small;"><% if next_event.event_date.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
+                      <% if next_event.title.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.title.titleize %></b><hr /><% end %>
+                  <% end %>
+                <% else %>
+                  <%= t(:next_month_no_event)%>
+                <% end %>
+              <% else %>
+                <% if @next_month_event.present? %>
+                  <% @next_month_event.each do |next_event|%>
+                    <% if next_event.event_date.present? %><b style ="font-size: x-small;"><%= next_event.event_date.try(:strftime, '%b %dth, %Y') %> - <% end %> <br>
+                    <% if next_event.title.present? %><%= next_event.title.titleize %></b><% end %><hr />
+                  <% end %>
+                <% else %>
+                  <%= t(:next_month_no_event)%>
+                <% end %>
+              <% end %>
+            </div>
           <% end %>
-        </tr>
-      <% end %>
-      <%# unless @next_month_event.blank? %>
-      <div class="latest_event">
-        <h2>Today's Schedule</h2>
-        <% if @today_gigs.present? %>
-          <% @today_gigs.each do |today_gig|%>
-            <h3> <%= today_gig.start_time.try(:strftime, '%b %dth, %Y') %> </h3>
-            <h4><%= today_gig.title.titleize %></h4>
+          </div>
+          <% if user_signed_in? %>
+            <div class="sched3"><div class="border"><h4>Past Gigs</h4>
+              <% if !params[:start_date].present? %>
+                <% if @latest_month_gigs.present? %>
+                  <% @latest_month_gigs.each do |past_gig|%>
+                    <% if past_gig.event_date.present? && past_gig.event_date < Time.zone.now.beginning_of_day %><b style ="font-size: x-small;"> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
+                    <% if past_gig.title.present? && past_gig.event_date < Time.zone.now.beginning_of_day  %><%= past_gig.title.titleize %></b><hr /><% end %>
+                  <% end %>
+                <% else %>
+                  <%= t(:past_month_no_event)%>
+                <% end %>
+              <% else  %>
+                <% if @next_month_event.present? && !params[:next_link].present? %>
+                  <% @next_month_event.each do |past_gig|%>
+                    <b style ="font-size: x-small;"><% if past_gig.event_date.present? %> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
+                      <% if past_gig.title.present? %><%= past_gig.title.titleize %></b> <hr /><% end %>
+                  <% end %>
+                <% else %>
+                  <%= t(:past_month_no_event)%>
+                <% end %>
+              <% end %>
+            </div>
           <% end %>
-        <% else %>
-          <%= t(:today_no_event)%>
+          </div>
+        </div>
+        <% if user_signed_in? %>
+          <%= render 'events/form' %>
         <% end %>
-        <hr />
-        <h2>Upcoming Gigs</h2>
-        <% if @next_month_event.present? %>
-          <% @next_month_event.each do |next_event|%>
-            <h3> <%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> </h3>
-            <h4><%= next_event.title.titleize %></h4>
-          <% end %>
-        <% else %>
-          <%= t(:next_month_no_event)%>
-        <% end %>
-        <hr />
-        <h2>Past Gigs</h2>
-        <% if @past_gigs.present? %>
-          <% @past_gigs.each do |past_gig|%>
-            <h3> <%= past_gig.start_time.try(:strftime, '%b %dth, %Y') %> </h3>
-            <h4><%= past_gig.title.titleize %></h4>
-            <hr />
-          <% end %>
-        <% else %>
-          <%= t(:past_month_no_event)%>
-        <% end %>
-      </div>
-      <%# end %>
-    </tbody>
-  </table>
-</div>
+</section>
 <script>
 	$(document).ready(function(){
-		$( "td.day").css({"border-radius": "11px", "background": "#73AD21", "padding": "0px","height": "150px;"  });
-		$( "td.day.today ").css({"border-radius": "11px", "background": "#89BBF5", "padding": "0px","height": "150px;"  });
+		$( "td.day").css({"border-radius": "11px", "color": "#fff", "padding": "8px","height": "150px;"  });
+		$( "td.day.today ").css({"border-radius": "11px", "background": "#5b9ebd", "padding": "8px","height": "150px;"  });
+		$( "td.day.prev-month ").css({"background": "#E8E6E6", "padding": "8px","height": "150px;"  });
+		$( "td.day.next-month ").css({"background": "#E8E6E6", "padding": "8px","height": "150px;"  });
+	});
+	$(".close_btn").click(function(){
+		$(".gig_info").hide();
+		$(".basic_btn").show();
+	});
+	$(".basic_btn").click(function(){
+		$(".gig_info").show();
+		$(".basic_btn").hide();
 	});
 </script>
-  <hr />
-
-  <%= render 'events/form' %>
+<style>
+	.gig_info {
+		/*border: 2px solid #979797;*/
+		/*border-radius: 5px;*/
+	}
+</style>

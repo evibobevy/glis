@@ -6,31 +6,31 @@
       <div id="success_msg"></div>
       <%= form_for @contact, url: contact_path, html: {id: 'new_address', class: 'form-horizontal', role: 'form', data: {remote: true}} do |f| %>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Name</div>
+          <div style="float: left; width: 100%;">Name</div>
           <div class="col-reg-lft-contact">
             <%= f.text_field :name, id: 'name', class: 'form-control', required: true,  maxlength: "30"%>
           </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Email</div>
+          <div style="float: left; width: 100%;">Email</div>
            <div class="col-reg-lft-contact">
              <%= f.email_field :email, id: 'email', class: 'form-control', required: true %>
            </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Company Name</div>
+          <div style="float: left; width: 100%;">Company Name</div>
           <div class="col-reg-lft-contact">
             <%= f.text_field :company_name, id: 'company_name', class: 'form-control', required: true %>
           </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Phone number</div>
+          <div style="float: left; width: 100%;">Phone number</div>
           <div class="col-reg-lft-contact">
             <%= f.text_field :phone_number, id: 'phone_number', class: 'form-control', required: true, pattern: '[0-9]{10}' %>
           </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Description</div>
+          <div style="float: left; width: 100%;">Description</div>
           <div class="col-reg-lft-contact">
             <%= f.text_area :description, id: 'description', class: 'form-control', required: true %>
           </div>
