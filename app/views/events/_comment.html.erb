@@ -1,5 +1,5 @@
 <div class="comments">
-  <% if !@post.user.nil? %> <div class="reply-img"> <%#= image_tag @post.user.image.url(:medium), style: 'height: 70px; width: 90px;' %>
+  <% if !@post.user.nil? %> <div class="reply-img">
   <%= image_tag 'no-img.jpg', style: 'height: 70px; width: 90px;' %></div>
 	  <div class="reply-desc">
 	    <!--<h5>John Smith</h5>-->
@@ -8,7 +8,7 @@
 	    <span><%= time_ago_in_words(comment.created_at) + " ago" %></span>
 	    <p>
 	      <%= comment.commenter %>
-	    </p><br><hr>
+	    </p>
 	  </div>
 	</div>
 <% end %>

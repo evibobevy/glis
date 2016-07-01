@@ -13,11 +13,11 @@
           </div>
           <div class="sched"><h4>Today's Schedule</h4><hr>
             <% if !params[:start_date].present? %>
-              <% if @latest_month_gigs.present? %>
-                <% @latest_month_gigs.each do |today_gig|%>
-                  <% if today_gig.event_start_time.present?  && today_gig.event_date == Time.zone.now.beginning_of_day %> <b style ="font-size: x-small;"> <%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %>  - <% end %>
-                  <% if today_gig.event_end_time.present? && today_gig.event_date == Time.zone.now.beginning_of_day %><%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %> </b><br><% end %>
-                  <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day%><b style ="font-size: x-small;"><%= today_gig.title.titleize %> </b><% end %>
+              <% if @today_gigs.present? %>
+                <% @today_gigs.each do |today_gig|%>
+                   <b style ="font-size: x-small;"> <%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %>  -
+                  <%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %> </b><br>
+                  <b style ="font-size: x-small;"><%= today_gig.title.titleize %> </b>
                   <% if user_signed_in? %>
                     <div class="gig_info" style="display:none">
                       <% if today_gig.location.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3><%= today_gig.location.titleize %><% end %>

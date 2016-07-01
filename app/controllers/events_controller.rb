@@ -4,6 +4,7 @@ class EventsController < ApplicationController
   before_filter :glisSupportPage ,except: [:support, :unsupport]
   before_filter :find_latest_month_gigs, :only => :event_list
   before_filter :find_mutual_friends ,only: :friendsearch_request
+  before_filter :login_user_friend ,only: :index
   respond_to :html, :js
 
   def authorize
@@ -34,8 +35,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    Event.type_of_gigs[params[:type_of_gig].downcase.to_sym].inspect
-    @event.user_role = Event.user_roles[params[:event][:user_role].to_sym]
+    @event.user_role = Event.user_roles[params[:user_role].downcase.to_sym]
     @event.type_of_gig = Event.type_of_gigs[params[:type_of_gig].downcase.to_sym]
     if @event.save
       if params[:images].present?
@@ -81,6 +81,7 @@ class EventsController < ApplicationController
     if params[:start_date].present?
       @next_month_event = Event.where('extract(year from event_date) = ? AND extract(month from event_date) = ?', Date.parse(params[:start_date]).year, Date.parse(params[:start_date]).month)
     end
+    @today_gigs = Event.where("start_time = ?", Time.zone.now.beginning_of_day)
     layout = user_signed_in? ? 'application' : 'fancybox'
     render layout: layout
   end
@@ -92,8 +93,8 @@ class EventsController < ApplicationController
 
   def search_users
     if params[:search_user].present? || params[:search_location].present? || params[:type_of_gig].present?
-      @users = User.joins(:events).where("lower(first_name) LIKE ? OR lower(city) LIKE ? OR events.type_of_gig = ?","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%", Event.type_of_gigs[params[:type_of_gig].downcase]).uniq
-      #@users = User.joins(:events).where("lower(city) LIKE ? OR lower(first_name) LIKE ? OR events.type_of_gig = ? " ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%", Event.type_of_gigs[params[:type_of_gig].downcase])
+      #@users = User.joins(:events).where("lower(first_name) LIKE ? OR lower(city) LIKE ? OR events.type_of_gig = ?","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%", Event.type_of_gigs[params[:type_of_gig].downcase]).uniq
+      @users = User.joins(:events).where("lower(city) LIKE ? AND lower(first_name) LIKE ?" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
       p "======="
       p @users.count.inspect
       p "======="
@@ -124,6 +125,10 @@ class EventsController < ApplicationController
 
   def find_mutual_friends
     @mutual_friends = current_user.friends.collect {|i| i.friends}.flatten.uniq.reject{|user| user == current_user} - current_user.friends
+  end
+
+  def login_user_friend
+    @user_supporters = current_user.friendships.find_not_remove_friend if user_signed_in?
   end
 
 end

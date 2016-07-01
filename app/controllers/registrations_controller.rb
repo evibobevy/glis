@@ -26,16 +26,12 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
+    @user_pictures  = current_user.user_pictures.last(4)  if user_signed_in?
+    @picture = UserPicture.new
   end
 
   def update
     super
-    # if @user.update(account_update_params)
-    #   redirect_to :back and return
-    # else
-    #   p "=====================Hello+++++++++++++++++++++++++++"
-    #   redirect_to :back and return
-    # end
   end
 
   def profile_settings
@@ -94,7 +90,7 @@ class RegistrationsController < Devise::RegistrationsController
     @user.password = params[:password] if params[:password].present?
     @user.password_confirmation = params[:password_confirmation] if params[:password].present?
     @user.save
-    redirect_to edit_user_registration_path
+    redirect_to new_user_session_path
   end
 
   def update_settings

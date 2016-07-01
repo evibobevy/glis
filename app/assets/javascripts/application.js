@@ -63,7 +63,7 @@ $(function(){
         STRING: {
             remove:'Remover',
             selected:'Selecionado: $file',
-            denied:'Invalido arquivo de tipo $ext!',
+            denied:'Invalido image $ext!',
             duplicate:'Arquivo ja selecionado:\n$file!'
         }
     });

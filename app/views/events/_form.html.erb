@@ -17,18 +17,17 @@
           <% end %>
           <%= f.text_field :title, :placeholder => 'Gig Name *', :required => true %><br/>
           <div class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Your Role<span>*</span><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <!--<a><%#= f.select :user_role, options_for_select(users_role.collect { |s| [s[0].humanize, s[0]] }), {} %></a>-->
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle role"><span id="dropdown_role">Your Role<span>*</span><b class="caret"></b></a>
+            <ul class="dropdown-menu role">
               <li><a>Group Leader</a></li>
               <li><a>Volunteer</a></li>
             </ul>
             <%= hidden_field_tag :user_role %>
           </div>
           <div class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Type of Gig<span>*</span><b class="caret"></b>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle gig"><span id="dropdown_gig">Type of Gig<span>*</span><b class="caret"></b>
             <%#= f.select :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), {}, :include_blank => true %> </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu gig">
               <li><a>Community</a></li>
               <li><a>Environment</a></li>
               <li><a>Health</a></li>
@@ -117,7 +116,7 @@
 	  $('.btn-cancel').click(function(){
 		  window.location.href='/event_list';
 	  })
-	  $('.dropdown-menu li').on('click', function() {
+//	  $('.dropdown-menu li').on('click', function() {
 
 //		  $(".dropdown-menu:first").addClass("role");
 //		  $(".dropdown-menu:last").addClass("gig");
@@ -125,12 +124,31 @@
 //		  $(".dropdown-menu:first").addClass("role");
 //		  $(".dropdown-menu:last").addClass("gig");
 
-		  $('.dropdown-toggle').html($(this).find('a').html() + '<b class="caret"></b>');
-		  select_value = $('.dropdown-toggle').text();
-		  $('#type_of_gig').val(select_value);
-		  $('#user_role').val(select_value);
-	  });
+//		  $('.gig').html($(this).find('a').html() + '<b class="caret"></b>');
+//		  select_value = $('.gig').text();
+//		  $('#type_of_gig').val(select_value);
+//
+//		  $('.role').html($(this).find('a').html() + '<b class="caret"></b>');
+//		  select_value = $('.role').text();
+//		  $('#user_role').val(select_value);
+//	  });
   </script>
+
+	<script>
+		$('.role').dropdown();
+		$('.role li').on('click', function() {
+			$('#dropdown_role').html($(this).find('a').html());
+			select_value = $('#dropdown_role').text();
+			$('#user_role').val(select_value);
+		});
+
+		$('.gig').dropdown();
+		$('.gig li').on('click', function() {
+			$('#dropdown_gig').html($(this).find('a').html());
+			select_value = $('#dropdown_gig').text();
+			$('#type_of_gig').val(select_value);
+		});
+	</script>
   <style>
 	  #event_full_description{
 		  height: 200px;

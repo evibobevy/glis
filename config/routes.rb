@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :volunteers
 
   resources :user_pictures
+  post 'user_pictures/update' => 'user_pictures#update', as: :update
 
   resources :contacts, only: [:new, :create]
 

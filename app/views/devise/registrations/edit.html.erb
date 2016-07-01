@@ -7,7 +7,7 @@
     <div class="fixed-wrapper">
       <div class="inbox">
         <div class="corner3"></div>
-        <h1>Profile Settings</h1>
+        <h1><%=t (:profile_setting)%></h1>
       </div>
       <div class="user-prf-row1">
         <div class="user-prf-left">
@@ -52,36 +52,54 @@
       <div class="user-photos-row">
         <ul>
           <div class="photoSettings">
-            <li><img src="/assets/photoImg.jpg" alt="">
-              <button>CHANGE PHOTO</button>
-            </li>
-          </div>
-          <div class="photoSettings">
-            <li><img src="/assets/photoImg.jpg" alt="">
-              <button>CHANGE PHOTO</button>
-            </li>
-          </div>
-          <div class="photoSettings">
-            <li><img src="/assets/photoImg.jpg" alt="">
-              <button>CHANGE PHOTO</button>
-            </li>
-          </div>
-          <div class="photoSettings">
-            <li><img src="/assets/photoImg.jpg" alt="">
-              <button>CHANGE PHOTO</button>
-            </li>
+            <% if @user_pictures.present? %>
+              <% picture = 4 - @user_pictures.size %>
+              <% @user_pictures.each do |user_picture|%>
+                <li>
+                  <%= image_tag user_picture.image.url, style: "height: 130px;width: 100%;" %>
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_image", :id=> "#{user_picture.id}" %>
+                  <%= form_for user_picture, url: update_path, :html => {:class => 'user_images'}  do |f| %>
+                    <%= f.hidden_field :user_picture_id, :value => user_picture.id %>
+                    <br><%= f.file_field :image, :class=>"upload_image" %> <br>
+                    <%= f.submit "Save", :class=>"save_user_image" %>
+                    <%= button_to "Cancle", "javascript;;",:class=> "cancle_user_image" %>
+                    </li>
+                  <% end %>
+              <% end %>
+              <% 1.upto(picture) do |i| %>
+                <li><img src="/assets/photoImg.jpg" alt="">
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_user_new_image", :id => "#{i}" %>
+                  <%= form_for @picture, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
+                    <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
+                    <%= f.submit "Save", :class=>"save_new_user_image" %>
+                    <%= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
+                  <% end %>
+                </li>
+              <% end %>
+            <% else %>
+              <% 1.upto(4) do |i| %>
+                <li><img src="/assets/photoImg.jpg" alt="">
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_user_new_image", :id => "#{i}" %>
+                  <%= form_for @picture, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
+                    <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
+                    <%#= button_to "Cancel", 'javascript:;', :class=>"cancle_user_image" %>
+                    <%= f.submit "Save", :class=>"save_new_user_image" %>
+                    <%= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
+                  <% end %>
+                </li>
+              <% end %>
+            <% end %>
           </div>
         </ul>
       </div>
     </div>
   </div>
   <!--photo section ends-->
-
   <div class="volunteer-full float-full user-prf-vol">
     <div class="fixed-wrapper">
       <div id="volunteers">
         <div class="corner"></div>
-        <h1>My Supporters</h1><br/>
+        <h1><%=t (:my_supporters)%></h1><br/>
 
         <div class="volBox">
           <% if @user_supporters.present? %>
@@ -103,8 +121,8 @@
                 </div>
               <% end %>
             <% end %>
-        <% else %>
-            <b><%= t(:no_supporter) %></b>
+          <% else %>
+            <h2 align="center" style="margin: 100px;"><b><%= t(:no_supporter) %></b></h2>
           <% end %>
         </div>
       </div>
@@ -116,7 +134,7 @@
         <div class="fixed-wrapper">
           <div id="settings">
             <div class="corner"></div>
-            <h1>Privacy Settings</h1><br/>
+            <h1><%=t (:privacy_setting)%></h1><br/>
 
             <div class="privacyQuestion-left">
               <h2>Permissions:</h2>
@@ -175,7 +193,7 @@
                 <h2>Notifications:</h2>
 
                 <div class="notificationSettings">
-                  <%= f.email_field :email, :placeholder => "Email" %>
+                  <%= f.email_field :email, :required => true, :placeholder => "Email" %>
                 </div>
                 <h2>Email Notifications?</h2>
 
@@ -223,6 +241,14 @@
 		$('#user_supporters_need_approval_to_comment').attr('checked', 'checked');
 		$("#user_email").val(" ");
 	});
+	$(".change_user_image").click(function(){
+		$("#edit_user_picture_"+this.id).show();
+		$(this).toggle();
+	});
+	$(".change_user_new_image").click(function(){
+		$("#new_user_picture_"+this.id).show();
+		$(this).toggle();
+	});
 	function update_password() {
 		if ($('#password').val() == '' || $('#password_confirmation').val() == '') {
 			if ($('#password').val() != '' || $('#password_confirmation').val() != '')
@@ -242,6 +268,14 @@
 		}
 		return false;
 	}
+	$('.cancle_user_image').click(function(){
+		window.location.href='/users/edit';
+		return false;
+	})
+	$('.cancle_new_user_image').click(function(){
+		window.location.href='/users/edit';
+		return false;
+	})
 </script>
 <style>
 	.photoSettings li #user_image {
@@ -260,4 +294,26 @@
 	#error_explanation h2 {
 		display: none;
 	}
+	.user_images {
+		display: none;
+	}
+	.user_new_images {
+		display: none;
+	}
+
+	/*#new_user_picture {*/
+	/*display: none;*/
+	/*}*/
 </style>
+<script>
+	$('.save_user_image').click( function() {
+		//check whether browser fully supports all File API
+		if (window.File && window.FileReader && window.FileList && window.Blob)
+		{
+			//get the file size and file type from file input field
+			var fsize = $('#user_picture_image')[0].files[0].size;
+		}else{
+			alert("Please upgrade your browser, because your current browser lacks some new features we need!");
+		}
+	});
+</script>
