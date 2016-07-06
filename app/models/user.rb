@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def full_address
-    self.city.capitalize + " " + self.state.capitalize  if self.city.present? || self.state.present?
+    self.city.capitalize + ", " + self.state.upcase  if self.city.present? || self.state.present?
   end
 
   def last_name_initial

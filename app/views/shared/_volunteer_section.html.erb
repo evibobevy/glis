@@ -4,11 +4,14 @@
     <div class="fixed-wrapper">
       <div class="user-prf-row1">
         <div class="user-prf-left">
-          <div class="vol-img-lft"> <%= image_tag 'vol-img.jpg', alt: '' %> </div>
+          <div class="vol-img-lft"> <% if current_user.user_pictures.present? %> <%= image_tag current_user.user_pictures.first.image.url, style: "height: 140px;width: 100%;" %><% else %><%= image_tag 'vol-img.jpg', alt: '' %> <% end %> </div>
           <div class="user-prf-left-cont">
-            <h2>Jameson Welch</h2>
-            <i class="add-icon"><img src="/assets/addIcon.jpg" alt=""></i> <span>Los Angeles, CA</span>
-            <p style="font-family: 'GothamRndBook'";>Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola brisket prosciutto sausage ball tip salami pork chop cupim shank swine. Ball tip meatball jowl pork chop picanha. Andouille beef leberkas ham hock pancetta. Ball tip salami jowl meatloaf beef rump pork belly tongue shank boudin pancetta. </p>
+           <% if user_signed_in? %> <h2><%= current_user.full_name.present? ? current_user.full_name : 'Jameson Welch'  %></h2> <% end %>
+            <i class="add-icon"><img src="/assets/addIcon.jpg" alt=""></i> <span><% if user_signed_in? %> <%= current_user.full_address.present? ? current_user.full_address : 'Los Angeles, CA'  %> <% end %></span>
+            <p style="font-family: 'GothamRndBook'";>
+              <% if user_signed_in? %>
+                <%= current_user.description.present? ? current_user.description : 'Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola brisket prosciutto sausage ball tip salami pork chop cupim shank swine. Ball tip meatball jowl pork chop picanha. Andouille beef leberkas ham hock pancetta. Ball tip salami jowl meatloaf beef rump pork belly tongue shank boudin pancetta.'  %> <% end %>
+            </p>
           </div>
         </div>
         <div class="user-prf-rgt"> <strong>Volunteered:</strong>
@@ -19,10 +22,15 @@
       </div>
       <div class="user-photos-row">
         <ul>
-          <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
-          <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
-          <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
-          <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
+          <% user_image_counter = 4 - current_user.user_pictures.size %>
+          <% if user_signed_in? && current_user.user_pictures.present? %>
+            <% current_user.user_pictures.last(4).each do |user_image|%>
+              <li><%= image_tag user_image.image.url, style: "height: 130px;width: 100%;" %></li>
+            <% end %>
+          <% end %>
+          <% 1.upto(user_image_counter) do |i| %>
+            <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
+          <% end %>
         </ul>
       </div>
     </div>

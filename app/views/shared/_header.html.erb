@@ -19,13 +19,14 @@
               <%#= link_to image_tag('setting-icon.png', alt: ''), :controller => 'registrations', :action => 'profile_settings' %>
               <a href="/users/edit"><img src="/assets/setting-icon.png" alt=""></a>
             </li>
-            <li><a href="#"><img src="/assets/email-icon.png" alt=""></a></li>
-            <li><a href="#"><img src="/assets/add-icon.png" alt=""></a></li>
+            <li><a href="/inbox_notifications"><img src="/assets/email-icon.png" alt=""></a></li>
+            <li><a href="#"><img src="/assets/add-icon.png" alt=""> </a></li>
           </ul>
         </div>
         <div class="loged-user">
-          <img src="/assets/after-user-img.jpg" alt="">
-          <span>Jameson</span>
+          <!--<link_to <img src="/assets/after-user-img.jpg" alt="">-->
+          <% if user_signed_in? && current_user.user_pictures.present? %><%= link_to image_tag("#{current_user.user_pictures.first.image.url}", :alt => '', :title => '', style: "height: 60px;width: 60%;"), root_path %><% else %><%= link_to image_tag("/assets/after-user-img.jpg", :alt => '', :title => ''), root_path %> <% end %>
+          <span><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name ||= 'Jameson' %><% end %></span>
         </div>
 	      <%#= link_to "Change your password", edit_user_registration_path%>
         <%= link_to 'Sign out', destroy_user_session_path, :method => :get, :class => 'after-login-icon' %>
@@ -33,11 +34,8 @@
     <% else %>
       <!--After login right section-->
       <div class="header-rgt-btn">
-        <!--<a href="#"><small>CHECK</small> <strong>NEW</strong> <small class="event-pos">EVENTS</small></a>-->
         <%= link_to raw("<small>CHECK</small><br /><strong>NEW</strong><br /><strong>GIGS</strong>"), event_list_path, data: {fancybox_width: 850}, class: 'fancybox btn btn-success', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
-        <!--<a href="#" class="join-today"><strong>JOIN</strong> <small>TODAY</small></a> </div>-->
         <%= link_to raw("<strong>JOIN</strong><br /><small>TODAY</small>"), new_user_registration_path, data: { fancybox_width: 600, autoSize: false }, class: 'fancybox btn btn-success join-today', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
-          <!--ends here-->
         <% end %>
       </div>
   </div>

@@ -5,6 +5,7 @@ class EventsController < ApplicationController
   before_filter :find_latest_month_gigs, :only => :event_list
   before_filter :find_mutual_friends ,only: :friendsearch_request
   before_filter :login_user_friend ,only: :index
+  before_filter :checkuser_for_calendar ,only: :event_list
   respond_to :html, :js
 
   def authorize
@@ -14,8 +15,9 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events         = Event.last(3)
-    @post           = Post.last
+    @events         = Event.includes(:posts).last(3)
+    @post           = Post.first
+    # @posts = current_user.friends.collect {|i| i.posts}.flatten.uniq.reject{|user| user == current_user}
     @comments       = @post.comments unless @post.nil?
     @last_six_users = User.last(6)
     respond_with(@events)
@@ -93,11 +95,8 @@ class EventsController < ApplicationController
 
   def search_users
     if params[:search_user].present? || params[:search_location].present? || params[:type_of_gig].present?
-      #@users = User.joins(:events).where("lower(first_name) LIKE ? OR lower(city) LIKE ? OR events.type_of_gig = ?","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%", Event.type_of_gigs[params[:type_of_gig].downcase]).uniq
-      @users = User.joins(:events).where("lower(city) LIKE ? AND lower(first_name) LIKE ?" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
-      p "======="
-      p @users.count.inspect
-      p "======="
+      #@users = User.includes(:events).where("lower(first_name) LIKE ? AND lower(city) LIKE ? OR events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig]])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
+      @users = User.includes(:events).where("lower(city) LIKE ? AND lower(first_name) LIKE ?" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
     end
   end
 
@@ -129,6 +128,12 @@ class EventsController < ApplicationController
 
   def login_user_friend
     @user_supporters = current_user.friendships.find_not_remove_friend if user_signed_in?
+  end
+
+  def checkuser_for_calendar
+    if !user_signed_in? && !request.xhr?
+      redirect_to new_user_session_path
+    end
   end
 
 end

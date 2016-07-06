@@ -23,6 +23,14 @@ class Event < ActiveRecord::Base
     errors.add("Gig at date", "is invalid.") unless end_date
   end
 
+  def self.open_to_the_public?
+    open_to_the_public == true
+  end
+
+  def self.anyone_volunteer?
+    anyone_volunteer == true
+  end
+
   # def end_date_after_start_date?
   #   if end_date < start_time
   #     errors.add :end_date, "must be after start date"

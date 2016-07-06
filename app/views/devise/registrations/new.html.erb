@@ -18,13 +18,13 @@
     </div>
     <div class="form-row">
       <div class="col-reg-lft">
-        <%= f.email_field :email, :placeholder=>"Email", :required => true %>
+        <%= f.email_field :email, :placeholder=>"Email", :required => true  %>
       </div>
       <div class="col-reg-lft">
-        <%= f.email_field :confirm_email, :placeholder=>"Confirm Email", :required => true, :oninput=>"check_email(this)" %>
+        <%= f.email_field :confirm_email, :placeholder=>"Confirm Email", :required => true, :oninput=>"check_confirm_email(this)" %>
         <script language='javascript' type='text/javascript'>
-          function check_email(input) {
-            if (input.value != document.getElementById('user_email').value) {
+          function check_confirm_email(input) {
+            if (input.value != document.getElementById('user_email').value || document.getElementById('user_email').value != document.getElementById('user_confirm_email').value) {
               input.setCustomValidity('Email and email confirm must be matching.');
             } else {
               input.setCustomValidity('');

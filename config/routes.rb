@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'passwords/new'
 
   post 'support' => 'friendships#support', as: :support
-  # post 'unsupport' => 'friendships#unsupport', as: :unsupport
+  post 'unsupport' => 'friendships#unsupport', as: :unsupport
 
   post 'add_user' => 'friendships#add_user', as: :add_user
   post 'removed_user' => 'friendships#removed_user', as: :removed_user

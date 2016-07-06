@@ -20,6 +20,15 @@ class FriendshipsController < ApplicationController
     end
   end
 
+  def unsupport
+    if  current_user.friendships.find_by_friend_id(params[:friend_id]).present?
+      @friendship = current_user.friendships.find_by_friend_id(params[:friend_id])
+      @friendship.destroy
+      flash[:notice] = "Successfully destroyed friendship."
+      redirect_to root_url
+    end
+  end
+
   def add_user
     if params[:friend_id].present?
       @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending')

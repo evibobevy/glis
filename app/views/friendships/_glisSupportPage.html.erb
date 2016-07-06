@@ -61,7 +61,7 @@
                   <%= form_tag search_users_path, :method => 'get', :id => "friend_search", :remote=> true do %>
                     <div class="search">
                       <!--<input type="text" placeholder="Name"/><br/>-->
-                      <%= text_field_tag :search_user, params[:search_user], :placeholder=> "Name" %> <br/>
+                      <%= text_field_tag :search_user, params[:search_user], :placeholder=> "Name", :required => true %> <br/>
                       <%= text_field_tag :search_location, params[:search_location], :placeholder=> "Location" %><br/>
                       <!--<input type="text" placeholder="Location"/><br/>-->
                     </div>

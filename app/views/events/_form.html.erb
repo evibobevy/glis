@@ -1,3 +1,4 @@
+<link href="/assets/bootstrap.min.css" rel="stylesheet">
 <div class="newgig-sec">
   <div class="fixed-wrapper">
     <div class="inbox">
@@ -46,9 +47,9 @@
           </div>
           <div class='switchQuestions'>
             <div class="questions">
-              <h5>Is this recurring? <span>*</span></h5><br/>
-              <h5>Is this open to the public?<span>*</span></h5></br>
-              <h5>Can anyone volunteer?<span>*</span></h5>
+              <h5>Is this recurring? </h5><br/>
+              <h5>Is this open to the public?</h5></br>
+              <h5>Can anyone volunteer?</h5>
             </div>
             <div class="switch">
               <div>
@@ -69,7 +70,7 @@
           <%= f.text_area :basic_info, :placeholder => 'Basic Info *', :required => true %>
           <%= f.text_area :full_description, :placeholder => 'Full Description *', :required => true %><br/>
           <div class="upload">
-            <%= file_field_tag "images[]", multiple: true, class: "multi" %>
+            <span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload" %></span>
           </div>
           <div class="submitCancel">
             <input type="button" value="Cancel", class="btn-cancel"/>

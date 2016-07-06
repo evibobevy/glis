@@ -19,11 +19,11 @@
                   <h4>
 	                  <span>
 		                  <% if emr.email_message.created_at.present? %>
-	                      <% seconds = (TimeDifference.between(Time.now, emr.email_message.created_at).in_seconds.to_i) %>
-	                      <% mm, ss = seconds.divmod(60) %>
-	                      <% hh, mm = mm.divmod(60) %>
-	                      <% dd, hh = hh.divmod(24) %>
-	                      <%= dd > 0 ? ("%d " % [dd] + 'days') : '0 days'  %>
+		                      <%# seconds = (TimeDifference.between(Time.now, emr.email_message.created_at).in_seconds.to_i) %>
+	                      <%# mm, ss = seconds.divmod(60) %>
+	                      <%# hh, mm = mm.divmod(60) %>
+	                      <%# dd, hh = hh.divmod(24) %>
+	                      <%= time_diff_for_email_message(emr.email_message)[0] > 0 ? ("%d " % "#{time_diff_for_email_message(emr.email_message)[0]}" + 'days') : '0 days'  %>
 	                    <% end %>
 	                  </span></h4>
                 </div></a>
@@ -153,10 +153,10 @@
 		var timeout = setInterval(autoRefresh_div, 10000);
 		function autoRefresh_div()
 		{
-			$(".messCont").load(location.href+" .messCont");
-			$(".messCont").load(location.href+" .messCont >*","");
+//			$(".messCont").load(location.href+" .messCont");
+//			$(".messCont").load(location.href+" .messCont >*","");
 
-			$(".messDesc").load(location.href+" .messDesc");
+//			$(".messDesc").load(location.href+" .messDesc");
 		}
 	});
 
