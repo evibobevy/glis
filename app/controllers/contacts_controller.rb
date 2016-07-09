@@ -10,7 +10,6 @@ class ContactsController < ApplicationController
       if @contact.valid?
         @contact.save
         flash[:notice] = "Thank you for your interest to contact us!"
-        #redirect_to root_path
       else
         @error_message = error_messages(@contact)
         @error_message ||= 'Unable to create new address.'

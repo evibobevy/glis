@@ -17,7 +17,7 @@
           <h3 class="left-hd">Available Volunteer Gigs</h3>
           <% @events.each do |event| %>
             <div class="volunteer-lft">
-              <div class="stay-icon"><% if event.image.present? %><%= image_tag event.image.url(:medium), alt: '' %><% else %><%= image_tag 'stay-icon.png', alt: '' %><% end %></div>
+              <div class="stay-icon"><% if event.pictures.first.present? %><%= image_tag event.pictures.first.image.url(:medium), alt: '' %><% else %><%= image_tag 'stay-icon.png', alt: '' %><% end %></div>
               <div class="stay-detail">
                 <h5><%= event.title %></h5>
                 <span class="date-small"><%= event.event_date.try(:strftime, '%B %d, %Y') %></span> <a href="#" class="btn-join">JOIN</a> </div>
@@ -31,8 +31,8 @@
             <ul>
               <% for vol in volunteer %>
                 <li>
-                  <% if vol.image.present? %>
-                    <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 190px; width: 180px' %>
+                  <% if vol.user_pictures.first.present? %>
+                    <%= image_tag vol.user_pictures.first.image.url(:medium), alt: '', style: 'height: 190px; width: 180px' %>
                   <% else %>
                     <%= image_tag 'no-img.jpg', alt: '', style: 'height: 190px; width: 180px' %>
                   <% end %>
@@ -49,92 +49,144 @@
         <h1>My Supporters</h1><br/>
         <div class="volBox">
           <% if @user_supporters.present? %>
-	            <% @user_supporters.in_groups_of(3, false) do |user_support| %>
+            <% @user_supporters.in_groups_of(3, false) do |user_support| %>
               <% for user in user_support %>
                 <div class="supporters">
-                  <% if user.friend.present? && user.friend.image.present? %>
-                    <%= image_tag user.friend.image.url(:medium), style: "height: 65px;" %>
+                  <% if user.friend.present? && user.friend.user_pictures.first.present? %>
+                    <%= image_tag user.friend.user_pictures.first.image.url(:medium), style: "height: 65px;" %>
                   <% else %>
                     <img src="/assets/noImg.jpg"/>
                   <% end %>
-                  <h2><%= user.friend.present? && user.friend.first_name.present? ? user.friend.last_name_initial.capitalize : 'John Smith' %></h2>
+                  <h2><% if user.friend.present? && user.friend.first_name.present? %>
+                      <%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %>
+                    <% else %>
+                      John Smith
+                    <% end %>
+                  </h2>
                 </div>
               <% end %>
             <% end %>
           <% else %>
-            <b><%#= t(:no_supporter) %></b>
+            <h2 align="center"> <b><%= t(:no_supporter) %></b> </h2>
           <% end %>
-          <div class="supporters">
-            <img src="/assets/noImg.jpg"/><h2>John Smith</h2>
-          </div>
         </div>
       </div>
     <% end %>
-
-    <div class="vol-detail-row">
-      <div class="vol-lft">
-        <div class="vol-img-lft"><% if !@post.nil? %> <%= image_tag @post.user.image.url(:medium), style: 'height: 180px; width: 180px;' %></div> <% end %>
-          <% if user_signed_in? %>
-            <% unless current_user.friendships.exists?(friend_id:@post.user) %>
-              <%= button_to 'Support', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black support"%>
-            <% else %>
-              <%= button_to 'Unsupport',unsupport_path(:friend_id => @post.user), :method => :post, :class=>"btn-black support"%>
-            <% end %>
-          <% else %>
-            <%#= link_to 'Support', 'javascript:;', :class=>"btn-black", :onclick => 'alert("Please Sign Up to support this user.");'%>
-            <%= button_to 'Support', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
-          <% end %>
-          <%#= social_share_button_tag(@post.name, :popup => "true", :'data-type' => 'photo' , :url => "192.168.31.206:3000", :class => 'btn-black') %>
-          <% if !@post.nil? %> <a class="btn-black spread" href="javascript:;" onclick="javascript:fbShare('<%= @post.event.image.url %>', '<%= @post.name %>', 'Facebook Share popup', '<%= @post.event.image.url %>', 520, 350)">Spread</a> <% end %>
-          <% if user_signed_in? && @post.event.open_to_the_public? %>
-            <%#= link_to 'Join', {:controller => 'events', :action => 'show', :id => @post.event.id}, { class: 'btn-black' } %>
-            <%= button_to 'Join','javascript:;' , { class: 'btn-black join' } %>
-          <% else %>
-            <%= button_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black join'%>
-          <% end %>
-          </div>
-      <div class="vol-user-comment">
-        <% if !@post.user.nil? %> <h4><%=@post.user.full_name %> <% end %><span>volunteered for</span> <%= @post.event.title %></h4>
-        <%# seconds = (TimeDifference.between(Time.now, Post.last.created_at).in_seconds.to_i) %>
-	      <%# time_diff %>
-        <%# mm, ss = seconds.divmod(60) %>
-        <%# hh, mm = mm.divmod(60) %>
-        <%# dd, hh = hh.divmod(24) %>
-        <span class="day-time-row"><strong><%= "%d " % "#{time_diff_for_post(@post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(@post)[1]}" %></strong>hours</span>
-        <p class="vol-desc"><%= @post.name %></p>
-        <div class="vol-reply-sec">
-          <ul>
-              <% unless @post.blank?  %>
-                <% @comments = @post.comments.last(2) %>
-                <% @comments.each do |comment|%>
-                  <%= render "comment", :comment => comment %>
-                <% end %>
-              <% end %>
-          </ul>
-          <div class="reply-form">
-            <%= form_for([@post, @post.comments.build], remote: true) do |f| %>
-              <div>
-                <%= f.text_field :commenter, :required => true %>
+    <div style="float:left; width:103%; padding:64px 0 0 0; overflow: scroll; height: 500px;">
+      <% if @posts.present? %>
+        <% @posts.each do |post|%>
+          <div style="float:left; width:100%; padding:64px 0 0 0;">
+            <div style="float:left; width:19%;">
+              <div class="vol-img-lft"><% if !post.nil? %> <%= image_tag post.user.image.url(:medium), style: 'height: 180px; width: 180px;' %></div> <% end %>
                 <% if user_signed_in? %>
-                  <%= f.button 'Reply', :class => 'btn-reply' %>
+                  <% unless current_user.friendships.exists?(friend_id:post.user) %>
+                    <%= button_to 'Support', support_path(:friend_id => post.user), :method => :post, :class=>"btn-black support"%>
+                  <% else %>
+                    <%= button_to 'Unsupport',unsupport_path(:friend_id => post.user), :method => :post, :class=>"btn-black support"%>
+                  <% end %>
                 <% else %>
-                  <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this event.");' %>
+                  <%= button_to 'Support', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                <% end %>
+                <% if user_signed_in? %>
+                  <%= button_to ' Spread ', spread_post_path(:post_id => post.id), :method => :post, :class=>"btn-black support"%>
+                <% else %>
+                  <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black support", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                <% end %>
+                <% if user_signed_in? && post.event.present? && post.event.open_to_the_public? %>
+                  <%= link_to 'Join', support_path(:friend_id => post.user), :method => :post, :class=>"btn-black join"%>
+                <% else %>
+                  <%= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black join'%>
+                <% end %>
+                </div>
+            <div class="vol-user-comment">
+              <% if !post.user.nil? %> <h4><%=post.user.full_name %> <% end %><span>volunteered for</span> <% if post.event.present? %><%= post.event.title %><% end %></h4>
+              <span class="day-time-row"><strong><%= "%d " % "#{time_diff_for_post(post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(post)[1]}" %></strong>hours</span>
+              <p class="vol-desc"><%= post.name %></p>
+              <div class="vol-reply-sec">
+                <ul>
+                  <% unless post.blank?  %>
+                    <% @comments = post.comments.last(2) %>
+                    <% @comments.each do |comment|%>
+                      <%= render "comment", :comment => comment %>
+                    <% end %>
+                  <% end %>
+                </ul>
+                <div class="reply-form">
+                  <%= form_for([post, post.comments.build], remote: true) do |f| %>
+                    <div>
+                      <%#= f.hidden_field :comment_id, :value => post.id %>
+                      <%= f.text_field :commenter, :required => true , :id => "comment_commenter_#{post.id}" %>
+                      <% if user_signed_in? %>
+                        <%= f.button 'Reply', :class => 'btn-reply' %>
+                      <% else %>
+                        <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this event.");' %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="vol-detail-row">
+          <div class="vol-lft">
+            <div class="vol-img-lft"><% if @post.user.user_pictures.first.image.present? %> <%= image_tag @post.user.user_pictures.first.image.url(:medium), style: 'height: 180px; width: 180px;'  %><% else %><%= image_tag 'no-img.jpg' %></div> <% end %>
+              <% if user_signed_in? %>
+                <% unless current_user.friendships.exists?(friend_id:@post.user) %>
+                  <%= button_to 'Support', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black support"%>
+                <% else %>
+                  <%= button_to 'Unsupport',unsupport_path(:friend_id => @post.user), :method => :post, :class=>"btn-black unsupport"%>
+                <% end %>
+              <% else %>
+                <%= button_to 'Support', 'javascript:;', :class=>"btn-black support", :onclick => 'alert("Please Sign Up to support this user.");'%>
+              <% end %>
+              <% if user_signed_in? && current_user.posts.present? %>
+                <%= button_to ' Spread ', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black support"%>
+              <% else %>
+                <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+              <% end %>
+              <% if user_signed_in? && @post.event.open_to_the_public? && @post.user != current_user %>
+                <%= link_to 'Join', support_path(:friend_id => @post.user), :class=>"btn-black join"%>
+              <% else %>
+                <%= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black'%>
+              <% end %>
+              </div>
+          <div class="vol-user-comment">
+            <!--<h4>Jameson Welch <span>volunteered for</span> Habitat for Humanity</h4>-->
+            <% if !@post.user.nil? %> <h4><%=@post.user.full_name %> <% end %><span>volunteered for</span> <%= @post.event.title %></h4>
+            <span class="day-time-row"><strong><%= "%d " % "#{time_diff_for_post(@post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(@post)[1]}" %></strong>hours</span>
+            <p class="vol-desc"><%= @post.name %></p>
+            <div class="vol-reply-sec">
+              <ul>
+                <li>
+                  <% unless @post.blank?  %>
+                    <% @comments = @post.comments.last(2) %>
+                    <% @comments.each do |comment|%>
+                      <%= render "comment", :comment => comment %>
+                    <% end %>
+                  <% end %>
+                </li>
+              </ul>
+              <div class="reply-form">
+                <%= form_for([@post, @post.comments.build], remote: true) do |f| %>
+                  <div>
+                    <%= f.text_field :commenter, :required => true %>
+                    <% if user_signed_in? %>
+                      <%= f.button 'Reply', :class => 'btn-reply' %>
+                    <% else %>
+                      <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this event.");' %>
+                    <% end %>
+                  </div>
                 <% end %>
               </div>
-            <% end %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
-<script>
-	function fbShare(url, title, descr, image, winWidth, winHeight) {
-		var winTop = (screen.height / 2) - (winHeight / 2);
-		var winLeft = (screen.width / 2) - (winWidth / 2);
-		window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-	}
-</script>
 <script>
 	var player = new MediaElementPlayer('#player1');
 </script>

@@ -19,10 +19,6 @@
                   <h4>
 	                  <span>
 		                  <% if emr.email_message.created_at.present? %>
-		                      <%# seconds = (TimeDifference.between(Time.now, emr.email_message.created_at).in_seconds.to_i) %>
-	                      <%# mm, ss = seconds.divmod(60) %>
-	                      <%# hh, mm = mm.divmod(60) %>
-	                      <%# dd, hh = hh.divmod(24) %>
 	                      <%= time_diff_for_email_message(emr.email_message)[0] > 0 ? ("%d " % "#{time_diff_for_email_message(emr.email_message)[0]}" + 'days') : '0 days'  %>
 	                    <% end %>
 	                  </span></h4>
@@ -51,11 +47,11 @@
               <h3><% if @email_message_recipients.present? %> <%= @email_message_recipients.last.email_message.subject %><% end %></h3>
               <h4>
                 <% if @email_message_recipients.present? %>
-                  <% seconds = (TimeDifference.between(Time.now, @email_message_recipients.last.email_message.created_at).in_seconds.to_i) %>
-                  <% mm, ss = seconds.divmod(60) %>
-                  <% hh, mm = mm.divmod(60) %>
-                  <% dd, hh = hh.divmod(24) %>
-                  <% if dd > 0 %><span><%= "%d " % [dd] %></span> days
+                  <%# seconds = (TimeDifference.between(Time.now, @email_message_recipients.last.email_message.created_at).in_seconds.to_i) %>
+                  <%# mm, ss = seconds.divmod(60) %>
+                  <%# hh, mm = mm.divmod(60) %>
+                  <%# dd, hh = hh.divmod(24) %>
+                  <% if time_diff_for_email_message(@email_message_recipients.last.email_message)[0] > 0 %><span><%= "%d " % "#{time_diff_for_email_message(@email_message_recipients.last.email_message)[0]}" %></span> days
                   <% end %>
                 <% end %>
               </h4>
@@ -90,15 +86,9 @@
 
         <div class="newMess">
           <%= form_for @email_message, url: email_messages_path do |f| %>
-            <% if @email_message.errors.any? %>
-              <div id="error_explanation">
-                <h2><%= pluralize(@email_message.errors.count, "error") %> prohibited this email message from being
-                  saved:</h2>
-                <ul>
-                  <% @email_message.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                  <% end %>
-                </ul>
+            <% flash.each do |key, value| %>
+              <div class="<%= flash_class(key) %>">
+                <%= value %>
               </div>
             <% end %>
             <!--<input type="text" placeholder="To:"/><br/>-->
@@ -127,7 +117,7 @@
                 <% @email_message_recipients.each do |user_notification| %>
                   <% if user_notification.email_message.message.present? %>
                     <h3>* <%= user_notification.email_message.message %><% end %>
-                  By <% if user_notification.email_message.user.full_name.present? %><%= user_notification.email_message.user.full_name.capitalize %>
+                  By <% if user_notification.email_message.user.full_name.present? %><b><%= user_notification.email_message.user.full_name.capitalize %></b>
                   <% end %>
                   </h3>
                 <% end %>
@@ -137,7 +127,7 @@
               <h3><%= image_tag("add-friend.svg", size: "20x20") %>&nbsp;&nbsp;&nbsp;You have a support request</h3>
               <div>
                 <% @user_friendrequests.each do |user_friendrequest| %>
-                  <h3>* Friend Request by <%= user_friendrequest.friend.full_name %> </br>
+                  <h3> <b>* <%= find_fullname_by_id(user_friendrequest.user_id) %></b> has send you friend request.
                 <% end %></h3>
               </div>
             <% end %>
@@ -149,16 +139,16 @@
 </section>
 <!--Middle content ends here-->
 <script language="javascript" type="text/javascript">
-	$(document).ready(function() {
-		var timeout = setInterval(autoRefresh_div, 10000);
-		function autoRefresh_div()
-		{
-//			$(".messCont").load(location.href+" .messCont");
-//			$(".messCont").load(location.href+" .messCont >*","");
-
-//			$(".messDesc").load(location.href+" .messDesc");
-		}
-	});
+//	$(document).ready(function() {
+//		var timeout = setInterval(autoRefresh_div, 10000);
+//		function autoRefresh_div()
+//		{
+////			$(".messCont").load(location.href+" .messCont");
+////			$(".messCont").load(location.href+" .messCont >*","");
+//
+////			$(".messDesc").load(location.href+" .messDesc");
+//		}
+//	});
 
 	$("#accordion").accordion({
 		active: false,

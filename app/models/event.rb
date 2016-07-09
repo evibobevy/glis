@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   has_and_belongs_to_many :users, join_table: :events_users
+  belongs_to :user
   has_many :posts
   has_many :pictures, :dependent => :destroy
   has_attached_file :image, styles: { medium: "200x200#", thumb: "100x100>" }

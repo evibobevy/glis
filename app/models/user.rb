@@ -16,12 +16,7 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, :confirm_email, :presence => true, unless: -> { from_omniauth? }
   validates :email, confirmation: true
   validates_length_of :phone_number, maximum: 10
-  # USER_ROLE = {
-  #     :Group_Leader => 1,
-  #     :Volunteer => 2
-  # }
-  #
-  # enum role_of_user: [ :group_leader, :volunteer ]
+
 
   USER_PRIVACY_SETTINGS = {"Who can see my profile" => 'user_profile_settings', "Who can comment on my posts" => 'user_post_comments_settings', "Who can message me" => 'user_message_settings', "Who can invite me to events" => 'user_events_invite_settings'}
 
@@ -43,6 +38,22 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.email_notification?
+    email_notification == true
+  end
+
+  def self.everyone_view_your_profile?
+    everyone_view_your_profile == true
+  end
+
+  def self.everyone_view_your_post?
+    everyone_view_your_post == true
+  end
+
+  def self.everyone_message_you?
+    everyone_message_you == true
+  end
+
   def update_with_password(params={})
     if params[:password].blank?
       params.delete(:password)
@@ -50,28 +61,6 @@ class User < ActiveRecord::Base
     end
     update_attributes(params)
   end
-
-  # def update_with_password(params, *options)
-  #   current_password = params.delete(:current_password)
-  #
-  #   if params[:password].blank?
-  #     params.delete(:password)
-  #     params.delete(:password_confirmation) if params[:password_confirmation].blank?
-  #   end
-  #
-  #   result = if params[:password].blank? || valid_password?(current_password)
-  #              update_attributes(params, *options)
-  #            else
-  #              self.assign_attributes(params, *options)
-  #              self.valid?
-  #              self.errors.add(:current_password, current_password.blank? ? :blank : :invalid)
-  #              false
-  #            end
-  #
-  #   clean_up_passwords
-  #   result
-  # end
-
 
   private
 

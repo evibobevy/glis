@@ -1,10 +1,10 @@
-<li class="comments">
+<li class="comments_<%=comment.id%>">
   <% if !@post.user.nil? %>
     <div class="reply-img">
-      <% if comment.user.present? && comment.present? && comment.user.user_pictures.first.image.present? %><%=image_tag comment.user.user_pictures.first.image.url, style: "height: 75px;width: 100%;" %><% else %><%= image_tag 'no-img.jpg', style: 'height: 70px; width: 90px;' %><% end %>
+      <% if comment.user.present? && comment.present? && comment.user.user_pictures.present? %><%=image_tag comment.user.user_pictures.first.image.url, style: "height: 75px;width: 100%;" %><% else %><%= image_tag 'no-img.jpg', style: 'height: 70px; width: 90px;' %><% end %>
     </div>
     <div class="reply-desc">
-      <h5><% if @post.user.first_name.present? || @post.user.last_name.present? %><%= @post.user.full_name %><% end %></h5>
+      <h5><% if @post.user.full_name %><% end %></h5>
       <span><% if comment.created_at.present? %><%= time_ago_in_words(comment.created_at) + " ago" %><% end %></span>
       <p><% if comment.commenter.present? %><%= comment.commenter %> <% end %></p>
     </div>

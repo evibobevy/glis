@@ -248,10 +248,11 @@ p.vol-desc {font-size:18px;}
     margin: 40px auto;
 }
 }
-
-
-
-
+@media (min-width: 320px) and (max-width: 460px) {
+    .contact-popup{
+        height: 450px;
+    }
+}
 
 /*@media (min-width: 1024px) and (max-width: 1060px) {
 .header-search {width:48%;}

@@ -14,4 +14,8 @@ module EmailMessagesHelper
     dd, hh = hh.divmod(24)
   end
 
+  def find_fullname_by_id(friend)
+    User.find(friend).full_name
+  end
+
 end

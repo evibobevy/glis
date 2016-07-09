@@ -8,10 +8,16 @@
     </div>
   <% end %>
 <% else %>
-  No results matching your search criteria
+ <div class ="no-result"> <h2> No results matching your search criteria </h2> </div>
 <% end %>
 <script>
 	$(window).load(function() {
 		$('.searchRight').text("No search results");
 	});
 </script>
+
+<style>
+	 .no-result{
+		 padding-top: 110px;
+	 }
+</style>

@@ -11,17 +11,21 @@ class EmailMessagesController < ApplicationController
 
   def email_message
     emails = params[:email].split(',') if params[:email].present?
+    permitted_emails = User.where(email: emails, everyone_message_you: false).map(&:email)
+    not_permitted_email = emails - permitted_emails
     @email_message = current_user.email_messages.build(email_message_params)
-    if @email_message.valid?
-      @email_message.save
-      emails.each do |email|
+    if @email_message.save
+      permitted_emails.each do |email|
         @email_message.email_message_recipients.build(:email=> email)
-        @email_message.save
+        if @email_message.save
+          flash[:success] = "Email Message saved"
+        else
+          flash[:error] = "Error occurred when Sending message."
+        end
       end
-      flash[:notice] = "Email Message saved"
-      redirect_to :back and return
-    else
-      flash[:error] = "Error occurred when Sending message."
+      if not_permitted_email.present?
+        flash[:alert] =  "This #{not_permitted_email.join("','")} is not permitted for email  "
+      end
       redirect_to :back and return
     end
   end

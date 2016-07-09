@@ -7,11 +7,7 @@
   <div class="messDesc">
     <h2><%= @email_message.user.full_name.capitalize %></h2>
     <h3><%= @email_message.subject %></h3>
-    <h4><% seconds = (TimeDifference.between(Time.now, @email_message.created_at).in_seconds.to_i) %>
-      <% mm, ss = seconds.divmod(60) %>
-      <% hh, mm = mm.divmod(60) %>
-      <% dd, hh = hh.divmod(24)%>
-      <% if dd > 0 %><span><%= "%d " % [dd] %></span> days<% end %>
+    <h4><% if time_diff_for_email_message(@email_message)[0] > 0 %><span><%= "%d " % "#{time_diff_for_email_message(@email_message)[0]}" %></span> days <% end %>
     </h4>
   </div><br/>
   <div class="messCont">

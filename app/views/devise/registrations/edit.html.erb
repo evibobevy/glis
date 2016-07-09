@@ -108,17 +108,10 @@
             <% @user_supporters.in_groups_of(3, false) do |user_support| %>
               <% for user in user_support %>
                 <div class="supporters">
-                  <% if user.friend.present? && user.friend.image.present? %>
+                  <% if user.friend.present? && user.friend.image.present? && user.friend != current_user %>
                     <%= image_tag user.friend.image.url(:medium), style: "height: 65px;" %>
-                  <% else %>
-                    <img src="/assets/noImg.jpg"/>
-                  <% end %>
-                  <%#= user.friend.present? && user.friend.image.present? ? image_tag user.friend.image.url(:medium), style: "height: 65px;"  : <img src="/assets/noImg.jpg"/> %>
-                  <h2><%= user.friend.present? && user.friend.first_name.present? ? user.friend.last_name_initial.capitalize : 'John Smith' %></h2>
-                  <% if user.friend.present? %>
+                    <h2><%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %></h2>
                     <%= button_to 'Remove', remove_friend_path(:friend_id => user.friend.id, :user_id => current_user.id), :method => :post, :class=>"remove-btn" %>
-                  <% else %>
-                    <a href="#"><button>REMOVE</button></a>
                   <% end %>
                 </div>
               <% end %>
@@ -157,10 +150,10 @@
             </div>
             <div class="switch2">
               <div>
-                <%= f.check_box :everyone_view_your_calendar, :class => "form-control" %>
+                <%= f.check_box :everyone_view_your_profile, :class => "form-control" %>
               </div>
               <div>
-                <%= f.check_box :everyone_invite_you_to_events, :class => "form-control" %>
+                <%= f.check_box :everyone_view_your_calendar, :class => "form-control" %>
               </div>
               <div>
                 <%= f.check_box :everyone_invite_you_to_events, :class => "form-control" %>
@@ -291,14 +284,14 @@
 	}
 </style>
 <script>
-	$('.save_user_image').click( function() {
-		//check whether browser fully supports all File API
-		if (window.File && window.FileReader && window.FileList && window.Blob)
-		{
-			//get the file size and file type from file input field
-			var fsize = $('#user_picture_image')[0].files[0].size;
-		}else{
-			alert("Please upgrade your browser, because your current browser lacks some new features we need!");
-		}
-	});
+//	$('.save_user_image').click( function() {
+//		//check whether browser fully supports all File API
+//		if (window.File && window.FileReader && window.FileList && window.Blob)
+//		{
+//			//get the file size and file type from file input field
+//			var fsize = $('#user_picture_image')[0].files[0].size;
+//		}else{
+//			alert("Please upgrade your browser, because your current browser lacks some new features we need!");
+//		}
+//	});
 </script>

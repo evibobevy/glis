@@ -10,13 +10,11 @@ class PasswordsController < Devise::PasswordsController
 
   def edit
     p "edit ======================"
-    abort params.inspect
     super
   end
 
   def update
     p "update ======================"
-    abort params.inspect
     super
   end
 

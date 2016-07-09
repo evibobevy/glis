@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   post 'support' => 'friendships#support', as: :support
   post 'unsupport' => 'friendships#unsupport', as: :unsupport
+  post 'spread_post' => 'friendships#spread_post', as: :spread_post
 
   post 'add_user' => 'friendships#add_user', as: :add_user
   post 'removed_user' => 'friendships#removed_user', as: :removed_user
@@ -35,7 +36,6 @@ Rails.application.routes.draw do
   #get 'events/:id' => 'events#show', as: :event
   devise_for :users, :controllers => {:registrations => "registrations", :omniauth_callbacks => "omniauth_callbacks"}
   devise_scope :user do
-    get 'registrations/profile_settings' => 'registrations#profile_settings', as: :profile_settings
     get 'registrations/edit_user' => 'registrations#edit_user'
     get 'registrations/edit_location' => 'registrations#edit_location'
     get 'registrations/edit_description' => 'registrations#edit_description'
@@ -56,8 +56,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'events#index'
   # get 'events/join_volunteer'=> 'events#join_volunteer', as: :join_volunteer
-  get 'join_volunteer' => 'events#join_volunteer', as: :join_volunteer
-  get 'disjoin_volunteer' => 'events#disjoin_volunteer', as: :disjoin_volunteer
+  post 'join_event' => 'events#join_event', as: :join_event
+  # get 'join_volunteer' => 'events#join_volunteer', as: :join_volunteer
+  # get 'disjoin_volunteer' => 'events#disjoin_volunteer', as: :disjoin_volunteer
   post 'accept_friend_request' => 'friendships#accept_friend_request', as: :accept_friend_request
   post 'deny_friend_request' => 'friendships#deny_friend_request', as: :deny_friend_request
   get 'contacts/new', :to => 'contacts#new'
@@ -70,7 +71,8 @@ Rails.application.routes.draw do
   get 'email_message_detail' => 'email_messages#email_message_detail'
   get 'friendsearch_request' => 'events#friendsearch_request'
   get 'search_users' => 'events#search_users'
-  get 'glisSupportPage' =>  'friendships#glisSupportPage', as: :glisSupportPage
+  get 'glis_support' =>  'friendships#glis_support', as: :glis_support
+  get 'users/:id' => 'friendships#user_profile', as: :user_profile
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

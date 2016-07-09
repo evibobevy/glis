@@ -9,8 +9,11 @@ class FriendshipsController < ApplicationController
 
   def support
     if params[:friend_id].present?
+      @friend_id = params[:friend_id] if params[:friend_id].present?
       @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending')
+      @user = User.find(params[:friend_id])
       if @friendship.save
+        UserMailer.user_notification(@user,@friend_id).deliver!  if @user.email_notification?
         flash[:notice] = "Added friend."
         redirect_to root_url
       else
@@ -21,12 +24,26 @@ class FriendshipsController < ApplicationController
   end
 
   def unsupport
-    if  current_user.friendships.find_by_friend_id(params[:friend_id]).present?
+    if current_user.friendships.find_by_friend_id(params[:friend_id]).present?
       @friendship = current_user.friendships.find_by_friend_id(params[:friend_id])
       @friendship.destroy
       flash[:notice] = "Successfully destroyed friendship."
       redirect_to root_url
     end
+  end
+
+  def spread_post
+   if params[:post_id ].present?
+     post = Post.find(params[:post_id])
+     @post = current_user.posts.build(:name=> post.name)
+     if @post.save
+       flash[:notice] = "Shared post."
+       redirect_to :back and return
+     else
+       flash[:error] = "Error occur when adding friend."
+       redirect_to root_url
+     end
+   end
   end
 
   def add_user
@@ -77,11 +94,21 @@ class FriendshipsController < ApplicationController
     if params[:friend_id].present?
       @friendship = Friendship.find(params[:friend_id])
       @friendship.update_attributes(:accepted => 'unapproved')
-      redirect_to :back
+      redirect_to :back and return
     end
   end
 
-  def glisSupportPage
+  def user_profile
+    if params[:id].present?
+      @user = User.find(params[:id])
+      @user_supporters = @user.friendships.find_unremove_friend.uniq.reject{|user| user.user_id == @user.id}
+      @post = Post.first
+      @posts = @user.posts if @user.posts.present?
+      @comments = Post.first.comments
+    end
+  end
+
+  def glis_support
     @friend_requests = Friendship.where('friend_id =? AND accepted=? AND user_id !=?', current_user.id,'pending',current_user.id) if user_signed_in?
   end
 

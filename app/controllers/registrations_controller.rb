@@ -113,7 +113,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def set_user
     @user = User.find_by_id(current_user.id)
-    @user_supporters = current_user.friendships.find_not_remove_friend if user_signed_in?
+    @user_supporters = current_user.friendships.find_unremove_friend if user_signed_in?
   end
 
   protected
