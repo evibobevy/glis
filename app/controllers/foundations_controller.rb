@@ -1,5 +1,5 @@
 class FoundationsController < ApplicationController
-  before_action :set_foundation, only: [:foundation_profile, :edit, :update, :destroy]
+  before_action :set_foundation, only: [:show, :edit, :update, :destroy]
   before_filter :find_latest_month_foundation, :only => :foundation_calendar
   respond_to :html, :js
 
@@ -43,7 +43,9 @@ class FoundationsController < ApplicationController
     @today_foundation = Foundation.today_foundation
   end
 
-  def foundation_profile
+  def show
+    @posts = @foundation.posts
+    @post = Post.first
   end
 
   private

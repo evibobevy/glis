@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_filter :authorize, only: [:new, :create]
+  # before_filter :authorize, only: [:new, :create]
+  before_filter :find_postable, only: [:new, :create]
   respond_to :html
 
   def authorize
@@ -27,8 +28,9 @@ class PostsController < ApplicationController
   end
 
   def create
-    @event = Event.find(params[:event_id])
-    @post = @event.posts.new(post_params)
+    #@postable = Event.find(params[:event_id])
+    @postable = find_postable
+    @post = @postable.posts.build(post_params)
     @post.user_id = current_user.id
      if @post.save
       redirect_to root_path
@@ -48,11 +50,22 @@ class PostsController < ApplicationController
   end
 
   private
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
-    def post_params
-      params.require(:post).permit(:name, :user_id, :event_id)
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def post_params
+    params.require(:post).permit(:name, :user_id, :event_id)
+  end
+
+  def find_postable
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
     end
+    nil
+  end
+
 end

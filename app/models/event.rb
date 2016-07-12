@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   has_and_belongs_to_many :users, join_table: :events_users
   belongs_to :user
-  has_many :posts
+  has_many :posts , :as => :postable
   has_many :pictures, :dependent => :destroy
   has_attached_file :image, styles: { medium: "200x200#", thumb: "100x100>" }
   #validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/

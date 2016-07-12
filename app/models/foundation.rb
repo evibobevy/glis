@@ -1,5 +1,7 @@
 class Foundation < ActiveRecord::Base
   has_many :foundation_pictures, :dependent => :destroy
+  has_many :posts , :as => :postable
+  belongs_to :user
   has_attached_file :image, :path => ":rails_root/public/images/:id/:filename", :url  => "/images/:id/:filename"
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   scope :today_foundation, lambda { where("start_date = ? ", Time.zone.now.beginning_of_day) }
@@ -8,6 +10,12 @@ class Foundation < ActiveRecord::Base
   enum user_roles: [ :group_leader, :volunteer ]
 
   def full_address
-    self.city.capitalize + ", " + self.state.upcase  if self.city.present? || self.state.present?
+    if self.city.present? && self.state.present?
+      self.city.capitalize + ", " + self.state.upcase
+    elsif self.city.present?
+      self.city.capitalize
+    else
+      self.state.upcase
+    end
   end
 end

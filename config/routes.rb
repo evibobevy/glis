@@ -26,13 +26,18 @@ Rails.application.routes.draw do
   resources :events  do
     resources :posts
   end
+  resources :foundations  do
+    resources :posts
+  end
 
   resources :volunteers
   resources :foundations, except: [:index, :show]
+ # resources :foundations
   resources :foundation_pictures
   post 'foundation_pictures/update' => 'foundation_pictures#update', as: :foundations_update
   get 'foundation_calendar', :to => 'foundations#foundation_calendar'
-  get 'foundations/:id' => 'foundations#foundation_profile', as: :foundation_profile
+  # get 'foundations/:id' => 'foundations#foundation_profile', as: :foundation_profile
+  get 'foundations/:id' => 'foundations#show', as: :show
 
   resources :user_pictures
   post 'user_pictures/update' => 'user_pictures#update', as: :update
