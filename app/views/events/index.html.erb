@@ -72,7 +72,7 @@
         </div>
       </div>
     <% end %>
-    <div style="float:left; width:103%; padding:64px 0 0 0; overflow: scroll; height: 500px;">
+    <div style="float:left; width:103%; padding:64px 0 0 0; overflow-y: scroll; height: 500px;">
       <% if @posts.present? %>
         <% @posts.each do |post|%>
           <div style="float:left; width:100%; padding:64px 0 0 0;">
@@ -152,6 +152,7 @@
                 <%= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black'%>
               <% end %>
               </div>
+        </div>
           <div class="vol-user-comment">
             <!--<h4>Jameson Welch <span>volunteered for</span> Habitat for Humanity</h4>-->
             <% if !@post.user.nil? %> <h4><%=@post.user.full_name %> <% end %><span>volunteered for</span> <%= @post.event.title %></h4>
@@ -179,7 +180,6 @@
                     <% end %>
                   </div>
                 <% end %>
-              </div>
             </div>
           </div>
         </div>

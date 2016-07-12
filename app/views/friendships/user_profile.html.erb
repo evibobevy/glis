@@ -73,7 +73,7 @@
   <% end %>
   <!--mysupporters section ends-->
   <% if @user.everyone_view_your_profile? && @user.everyone_view_your_post? %>
-    <div style="float:left; width:103%; padding:64px 0 0 0; overflow: scroll; height: 500px;">
+    <div style="float:left; width:103%; padding:64px 0 0 0; overflow-y: scroll; height: 500px;">
       <% if @posts.present? %>
         <% @posts.each do |post|%>
           <div style="float:left; width:100%; padding:64px 0 0 0;">

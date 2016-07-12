@@ -12,11 +12,12 @@
             <i><%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day, next_link:  "next_link")), remote: true, class:'flaticon-arrows-1', style: 'float: left; margin-top: 3px;"' %></i>
           </div>
           <div class="sched"><h4>Today's Schedule</h4><hr>
-            <% if !params[:start_date].present? %>
+	          <!-- Start todays events -->
+            <% if params[:action] =='event_list' && params[:controller] =='events' %>
               <% if @today_gigs.present? %>
                 <% @today_gigs.each do |today_gig|%>
-                   <b style ="font-size: x-small;"> <%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %>  -
-                  <%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %> </b><br>
+                  <b style ="font-size: x-small;"> <%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %>  -
+                    <%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %> </b><br>
                   <b style ="font-size: x-small;"><%= today_gig.title.titleize %> </b>
                   <% if user_signed_in? %>
                     <div class="gig_info" style="display:none">
@@ -25,7 +26,7 @@
                       <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <%= link_to 'View GIG', "javascript:void(0)" %> <br><% end %>
                       <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> <% end %>
                     </div>
-                    <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day%> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br><hr> <% end %>
+                    <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br><hr> <% end %>
                   <% end %>
                   <% if !user_signed_in? %>
                     <% if today_gig.event_date == Time.zone.now.beginning_of_day%><%= link_to 'Join', new_user_session_path %> <br><hr> <% end %>
@@ -54,9 +55,36 @@
                   <% end %>
                 <% end %>
               <% else %>
-                <%= t(:today_no_event)%>
+                <% if params[:action] =='event_list' && params[:controller] =='events' %><%= t(:today_no_event)%> <% end %>
               <% end %>
             <% end %>
+            <!-- END todays events -->
+            <!-- Start todays foundations -->
+            <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>
+                 <% if @today_foundation.present? %>
+                <% @today_foundation.each do |today_foundation|%>
+                  <b style ="font-size: x-small;"> <%= today_foundation.start_time.try(:strftime, "%I:%M %p") %>  -
+                    <%= today_foundation.end_time.try(:strftime, "%I:%M %p") %> </b><br>
+                  <b style ="font-size: x-small;"><%= today_foundation.name.titleize %> </b>
+                  <% if user_signed_in? %>
+                    <div class="gig_info" style="display:none">
+                      <% if today_foundation.city.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3><%= today_foundation.city.titleize %><% end %>
+                      <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <b>Details:</b> <%= today_foundation.description %><% end %>
+                      <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <%= link_to 'View GIG', "javascript:void(0)" %> <br><% end %>
+                      <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> <% end %>
+                    </div>
+                    <% if today_foundation.name.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br><hr> <% end %>
+                  <% end %>
+                  <% if !user_signed_in? %>
+                    <% if today_foundation.start_date == Time.zone.now.beginning_of_day%><%= link_to 'Join', new_user_session_path %> <br><hr> <% end %>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %><%= t(:today_no_foundation)%> <% end %>
+              <% end %>
+            <% end %>
+
+            <!-- End todays foundations -->
           </div>
           <div class="calendar">
             <table>
@@ -87,16 +115,17 @@
             </table>
           </div>
           <% if user_signed_in? %>
-            <div class="sched2"><div class="border"><h4>Upcoming Gigs</h4>
-              <% if !params[:start_date].present? %>
-                <% if @latest_month_gigs.present? %>
-                  <% @latest_month_gigs.each do |next_event|%>
-                    <b style ="font-size: x-small;"><% if next_event.event_date.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
-                      <% if next_event.title.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.title.titleize %></b><hr /><% end %>
+            <div class="sched2">
+              <% if !params[:start_date].present? && params[:action] =='event_list' && params[:controller] =='events' %>
+                <div class="border"><h4>Upcoming Gigs</h4></div>
+                  <% if @latest_month_gigs.present? %>
+                    <% @latest_month_gigs.each do |next_event|%>
+                      <b style ="font-size: x-small;"><% if next_event.event_date.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
+                        <% if next_event.title.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.title.titleize %></b><hr /><% end %>
+                    <% end %>
+                  <% else %>
+                    <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:next_month_no_event)%>  <% end %>
                   <% end %>
-                <% else %>
-                  <%= t(:next_month_no_event)%>
-                <% end %>
               <% else %>
                 <% if @next_month_event.present? %>
                   <% @next_month_event.each do |next_event|%>
@@ -104,22 +133,48 @@
                     <% if next_event.title.present? %><%= next_event.title.titleize %></b><% end %><hr />
                   <% end %>
                 <% else %>
-                  <%= t(:next_month_no_event)%>
+                  <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:next_month_no_event)%>  <% end %>
                 <% end %>
               <% end %>
+              <!-- Start latest month foundations -->
+              <% if !params[:start_date].present? && params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>
+                <div class="border"><h4>Upcoming Foundation</h4>
+                  <% if @latest_month_foundation.present? %>
+                    <% @latest_month_foundation.each do |latest_foundation|%>
+                      <b style ="font-size: x-small;"><% if latest_foundation.start_date.present? && latest_foundation.start_date > Time.zone.now.beginning_of_day %><%= latest_foundation.start_date.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
+                        <% if latest_foundation.name.present? && latest_foundation.start_date > Time.zone.now.beginning_of_day %><%= latest_foundation.name.titleize %></b><hr /><% end %>
+                    <% end %>
+                  <% else %>
+                    <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>  <%= t(:next_month_no_foundation)%>  <% end %>
+                  <% end %>
+              <% else %>
+                <div class="border"><h4>Upcoming Foundation</h4>
+                <% if @next_month_foundation.present? %>
+                  <% @next_month_foundation.each do |next_foundation|%>
+                    <% if next_foundation.start_date.present? %><b style ="font-size: x-small;"><%= next_foundation.start_date.try(:strftime, '%b %dth, %Y') %> - <% end %> <br>
+                    <% if next_foundation.name.present? %><%= next_foundation.name.titleize %></b><% end %><hr />
+                  <% end %>
+                <% else %>
+                  <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>  <%= t(:next_month_no_foundation)%>  <% end %>
+                <% end %>
+              <% end %>
+              <!-- End latest month foundations -->
             </div>
           <% end %>
           </div>
+
+          <!-- Start latest month events -->
           <% if user_signed_in? %>
-            <div class="sched3"><div class="border"><h4>Past Gigs</h4>
-              <% if !params[:start_date].present? %>
+            <div class="sched3">
+              <% if !params[:start_date].present?  && params[:action] =='event_list' && params[:controller] =='events'%>
+                <div class="border"><h4>Past Gigs</h4></div>
                 <% if @latest_month_gigs.present? %>
                   <% @latest_month_gigs.each do |past_gig|%>
                     <% if past_gig.event_date.present? && past_gig.event_date < Time.zone.now.beginning_of_day %><b style ="font-size: x-small;"> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
                     <% if past_gig.title.present? && past_gig.event_date < Time.zone.now.beginning_of_day  %><%= past_gig.title.titleize %></b><hr /><% end %>
                   <% end %>
                 <% else %>
-                  <%= t(:past_month_no_event)%>
+                  <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:past_month_no_event)%>   <% end %>
                 <% end %>
               <% else  %>
                 <% if @next_month_event.present? && !params[:next_link].present? %>
@@ -128,15 +183,44 @@
                       <% if past_gig.title.present? %><%= past_gig.title.titleize %></b> <hr /><% end %>
                   <% end %>
                 <% else %>
-                  <%= t(:past_month_no_event)%>
+                  <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:past_month_no_event)%>   <% end %>
                 <% end %>
               <% end %>
-            </div>
+              <!-- END latest month events -->
+              <!-- ----------------------------------->
+              <!-- Start latest month foundation -->
+              <% if !params[:start_date].present?  && params[:action] =='foundation_calendar' && params[:controller] =='foundations'%>
+                <div class="border"><h4> Past Foundation</h4></div>
+                <% if @latest_month_foundation.present? %>
+                  <% @latest_month_foundation.each do |past_foundation|%>
+                    <% if past_foundation.start_date.present? && past_foundation.start_date < Time.zone.now.beginning_of_day %><b style ="font-size: x-small;"> <%= past_foundation.start_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
+                    <% if past_foundation.name.present? && past_foundation.start_date < Time.zone.now.beginning_of_day  %><%= past_foundation.name.titleize %></b><hr /><% end %>
+                  <% end %>
+                <% else %>
+                  <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %><%= t(:past_month_no_foundation)%>  <% end %>
+                <% end %>
+              <% else  %>
+                <div class="border"><h4>Past Foundation</h4></div>
+                <% if @next_month_foundation.present? && !params[:next_link].present? %>
+                  <% @next_month_foundation.each do |past_foundation|%>
+                    <b style ="font-size: x-small;"><% if past_foundation.start_date.present? %> <%= past_foundation.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
+                      <% if past_foundation.name.present? %><%= past_foundation.name.titleize %></b> <hr /><% end %>
+                  <% end %>
+                <% else %>
+                  <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %> <%= t(:past_month_no_foundation)%>   <% end %>
+                <% end %>
+              <% end %>
+              <!-- End latest month foundation -->
           <% end %>
           </div>
         </div>
-        <% if user_signed_in? %>
+
+        <% if user_signed_in? && params[:action] == 'event_list' %>
           <%= render 'events/form' %>
+        <% end %>
+        <% if user_signed_in? && params[:action] == 'foundation_calendar' %>
+          <%= render 'foundations/volunteer_list' %>
+          <%= render 'foundations/form' %>
         <% end %>
 </section>
 <script>

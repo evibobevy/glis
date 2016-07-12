@@ -213,6 +213,7 @@
               </div>
             </div>
           </div>
+	        <div class="cleat"></div>
           <div class="fixed-wrapper">
             <div class="saveSettings">
               <!--<input type="submit" value="Save Privacy Settings">-->
@@ -264,7 +265,8 @@
 		return false;
 	}
 	$('.cancle_user_image').click(function(){
-		window.location.href='/users/edit';
+//		window.location.href='/users/edit';
+		window.location.reload();
 		return false;
 	})
 	$('.cancle_new_user_image').click(function(){

@@ -117,25 +117,7 @@
 	  $('.btn-cancel').click(function(){
 		  window.location.href='/event_list';
 	  })
-//	  $('.dropdown-menu li').on('click', function() {
 
-//		  $(".dropdown-menu:first").addClass("role");
-//		  $(".dropdown-menu:last").addClass("gig");
-//
-//		  $(".dropdown-menu:first").addClass("role");
-//		  $(".dropdown-menu:last").addClass("gig");
-
-//		  $('.gig').html($(this).find('a').html() + '<b class="caret"></b>');
-//		  select_value = $('.gig').text();
-//		  $('#type_of_gig').val(select_value);
-//
-//		  $('.role').html($(this).find('a').html() + '<b class="caret"></b>');
-//		  select_value = $('.role').text();
-//		  $('#user_role').val(select_value);
-//	  });
-  </script>
-
-	<script>
 		$('.role').dropdown();
 		$('.role li').on('click', function() {
 			$('#dropdown_role').html($(this).find('a').html());
@@ -149,6 +131,7 @@
 			select_value = $('#dropdown_gig').text();
 			$('#type_of_gig').val(select_value);
 		});
+
 	</script>
   <style>
 	  #event_full_description{

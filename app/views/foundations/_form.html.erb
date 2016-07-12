@@ -1,0 +1,135 @@
+<div class="fixed-wrapper">
+  <div class="createGig">
+    <div class="corner3"></div>
+    <h1>Create A Foundation</h1>
+    <%= form_for @foundation, :html => { :multipart => true } do |f| %>
+      <div class="createGig-left">
+        <% if @foundation.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@foundation.errors.count, "error") %> prohibited this foundation from being saved:</h2>
+            <ul>
+              <% @foundation.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%= f.text_field :name, :placeholder => 'Gig Name *', :required => true %><br/>
+        <div class="dropdown">
+          <a href="#" data-toggle="dropdown" class="dropdown-toggle user_role"><span id="dropdown_user_role">Your Role<span>*</span><b class="caret"></b></a>
+          <ul class="dropdown-menu user_role">
+            <li><a>Group Leader</a></li>
+            <li><a>Volunteer</a></li>
+          </ul>
+          <%= hidden_field_tag :user_role %>
+        </div>
+        <div class="dropdown">
+          <a href="#" data-toggle="dropdown" class="dropdown-toggle foundation"><span id="dropdown_foundation">Type of Gig<span>*</span><b class="caret"></b>
+            <%#= f.select :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), {}, :include_blank => true %> </a>
+          <ul class="dropdown-menu foundation">
+            <li><a>Community</a></li>
+            <li><a>Environment</a></li>
+            <li><a>Health</a></li>
+            <li><a>Animals</a></li>
+            <li><a>Faith</a></li>
+            <li><a>Other</a></li>
+          </ul>
+          <%= hidden_field_tag :type_of_foundation %>
+        </div>
+        <%= f.text_field :city, :placeholder => 'Location *', :required => true %> <br/>
+        <div class="date">
+          <%= f.text_field :start_date, :id=> "datepicker", :placeholder=> "Start Date *" %>
+          <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" %>
+        </div>
+        <div class="time">
+          <%= f.text_field :start_time, :class=> "timepicker", :placeholder=> "Start Time *" %>
+          <%= f.text_field :end_time, :class => "timepicker1", :placeholder=> "End Time *"  %>
+        </div>
+        <div class='switchQuestions'>
+          <div class="questions">
+            <h5>Is this recurring?</h5><br/>
+            <h5>Is this open to the public?</h5></br>
+            <h5>Can anyone volunteer?</h5>
+          </div>
+          <div class="switch">
+            <div>
+              <%= f.check_box :anyone_volunteer, :class=>"form-control" %>
+            </div>
+            <div>
+              <%= f.check_box :open_to_the_public, :class=>"form-control" %>
+            </div>
+            <div>
+              <%= f.check_box :recurring, :class=>"form-control" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="createGig-right">
+        <%#= f.text_field :name, :placeholder => 'Foundation Name (Optional)' %>
+        <input type="text" placeholder="Foundation Name (Optional)"/><br/>
+        <%= f.text_area :basic_info, :placeholder => 'Basic Info *', :required => true %>
+        <%= f.text_area :description, :placeholder => 'Full Description *', :required => true %><br/>
+        <div class="upload"><span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload" %></span><h5>Upload a photo:</h5></div>
+        <div class="submitCancel">
+          <input type="button" value="Cancel", class="btn-cancel"/>
+          <%= f.submit "Create Gig" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+	$(function(argument) {
+		$('[type="checkbox"]').bootstrapSwitch();
+	})
+	$(function() {
+		$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+		$("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+	$(function(){
+		$('.multi').MultiFile({
+			accept:'gif|jpg',
+			max:5,
+		});
+	});
+	$(function(argument) {
+		$('[type="checkbox"]').bootstrapSwitch();
+	});
+
+	$('.timepicker').timepicker({
+		timeFormat: 'h:mm p',
+		dynamic: false,
+		dropdown: true,
+		scrollbar: true
+	});
+	$('.timepicker1').timepicker({
+		timeFormat: 'h:mm p',
+		dynamic: false,
+		dropdown: true,
+		scrollbar: true
+	});
+	$('.btn-cancel').click(function(){
+		window.location.reload();
+	})
+
+	$('.user_role').dropdown();
+	$('.user_role li').on('click', function() {
+		$('#dropdown_user_role').html($(this).find('a').html());
+		select_value = $('#dropdown_user_role').text();
+		$('#user_role').val(select_value);
+	});
+
+	$('.foundation').dropdown();
+	$('.foundation li').on('click', function() {
+		$('#dropdown_foundation').html($(this).find('a').html());
+		select_value = $('#dropdown_foundation').text();
+		$('#type_of_foundation').val(select_value);
+	});
+</script>
+<style>
+	#foundation_description{
+		height: 110px;
+	}
+</style>
+

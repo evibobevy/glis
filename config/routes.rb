@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  # get 'foundations/new'
+  # # get 'foundations/create'
+  # get 'foundations/:id' => 'foundations#edit'
+  # post 'foundations/:id' => 'foundations#edit'
+
   get 'passwords/create'
 
   get 'passwords/new'
@@ -17,13 +22,17 @@ Rails.application.routes.draw do
   end
 
   get 'events/sitemap' => 'events#sitemap'
-  #get 'events/find_location' => 'events#find_location'
 
   resources :events  do
     resources :posts
   end
 
   resources :volunteers
+  resources :foundations, except: [:index, :show]
+  resources :foundation_pictures
+  post 'foundation_pictures/update' => 'foundation_pictures#update', as: :foundations_update
+  get 'foundation_calendar', :to => 'foundations#foundation_calendar'
+  get 'foundations/:id' => 'foundations#foundation_profile', as: :foundation_profile
 
   resources :user_pictures
   post 'user_pictures/update' => 'user_pictures#update', as: :update

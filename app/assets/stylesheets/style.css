@@ -154,7 +154,7 @@ p.vol-desc {color: #5c5b5c;font-size: 19px;line-height: normal; margin:10px 0 20
 .vol-reply-sec ul li .comments {float:left; width:100%; border-bottom:2px solid #9c9c9c; padding-bottom:10px; margin-bottom:20px; list-style:none;}
 
 .vol-reply-sec ul li:last-child {border-bottom:none; margin-bottom:0px; padding-bottom:0px;}
-.reply-desc {width:455px; float:left; margin:0 0 0 16px; height: 100px;overflow: scroll;}
+.reply-desc {width:455px; float:left; margin:0 0 0 16px; height: 100px;overflow-y: scroll;}
 .reply-desc h5 {font-size:18px; color:#78b585; display:inline-block;}
 .reply-desc h5 a {color:#78b585;}
 .reply-desc span{float:right; font-size:18px; color:#78b585;}
@@ -218,6 +218,8 @@ button{-moz-border:0px;}
 .contact-popup h3 {font-size:26px; color:#5c5b5c; font-family:'GothamRndMedium'; position:relative; margin-bottom:15px; padding-left:20px; padding-top: 5px;}
 .contact-popup h3:after {content:""; background:url(regCrnr.png) no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
 .contact-popup input[type="text"], .contact-popup textarea, .contact-popup input[type="email"], .contact-popup input[type="password"] {border:3px solid #979797; border-radius:8px; height:46px; padding:0 13px; font-size:16px; width:100%;}
+.contact-popup .modal-body {padding:0px;}
+.contact-popup .modal-header {padding:15px 0; border:none;}
 
 
 /*new css added for user profile page*/
@@ -386,6 +388,15 @@ button{-moz-border:0px;}
     margin-bottom: 3px;
     font-size:18px;
 }
+.createGig-right foundation_description {
+    position:relative;
+    border: 2px solid #979797;
+    width: 98%;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 3px;
+    font-size:18px;
+}
 .upload {font-size:9px;width:50%;float:left;color:#979797;border:2px solid #979797;border-radius: 5px;width:98%;padding-bottom:45px;}
 .upload h5 {font-size: 18px;}
 .createGig {margin-top: 50px;}
@@ -540,18 +551,18 @@ button{-moz-border:0px;}
     width:48.5%;
     display: inline;
 }
-/*.photoSettings li button {*/
-    /*position: relative;*/
-    /*padding:6px 5px 5px 5px;*/
-    /*width: 100%;*/
-    /*margin-top:5%;*/
-    /*border: 2px solid #fff;*/
-    /*border-radius: 5px;*/
-    /*font-size: 14px;*/
-    /*color: #fff;*/
-    /*font-family: "GothamRndMedium";*/
-    /*background-color: #67aa4d;*/
-/*}*/
+.photoSettings li button {
+    position: relative;
+    padding:6px 5px 5px 5px;
+    width: 100%;
+    margin-top:5%;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    font-family: "GothamRndMedium";
+    background-color: #67aa4d;
+}
 /*Start Css for IMage uploader user edit page */
 .photoSettings li #user_image {
     position: relative;
@@ -566,6 +577,22 @@ button{-moz-border:0px;}
     background-color: #67aa4d;
 }
 /*End Css for IMage uploader user edit page */
+
+/*Start Css for IMage uploader user edit page */
+.photoSettings li #foundation_image {
+    position: relative;
+    padding:6px 5px 5px 5px;
+    width: 100%;
+    margin-top:5%;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    font-family: "GothamRndMedium";
+    background-color: #67aa4d;
+}
+/*End Css for IMage uploader user edit page */
+
 .photoSettings li .change_user_image {
     position: relative;
     padding:6px 5px 5px 5px;
@@ -579,6 +606,32 @@ button{-moz-border:0px;}
     background-color: #67aa4d;
 }
 .photoSettings li .change_user_new_image {
+    position: relative;
+    padding:6px 5px 5px 5px;
+    width: 100%;
+    margin-top:5%;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    font-family: "GothamRndMedium";
+    background-color: #67aa4d;
+}
+
+.photoSettings li .change_user_foundation_image {
+    position: relative;
+    padding:6px 5px 5px 5px;
+    width: 100%;
+    margin-top:5%;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    font-family: "GothamRndMedium";
+    background-color: #67aa4d;
+}
+
+.photoSettings li .change_new_user_foundation_image {
     position: relative;
     padding:6px 5px 5px 5px;
     width: 100%;
@@ -746,6 +799,18 @@ button{-moz-border:0px;}
 .found-prf-left {float:left; width:810px;}
 .found-prf-left-cont {float:right;width:630px;}
 .found-prf-left-cont input[type=submit]{
+    position:relative;
+    border: none;
+    background-color:#5b9ebd;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    font-size:18px;
+    width:48.5%;
+    display: inline;
+}
+.found-prf-left-cont input[type=button]{
     position:relative;
     border: none;
     background-color:#5b9ebd;
