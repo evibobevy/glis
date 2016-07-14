@@ -4,7 +4,7 @@
     <div class="fixed-wrapper">
       <div class="inbox">
         <div class="corner"></div>
-        <h1>Profile Settings</h1>
+        <h1 style="margin-top: 0px;">Profile Settings</h1>
       </div>
       <div class="user-prf-row1">
         <div class="found-prf-left">
@@ -253,6 +253,16 @@
 		$('#dropdown_gig').html($(this).find('a').html());
 		select_value = $('#dropdown_gig').text();
 		$('#type_of_gig').val(select_value);
+	});
+
+	$('.new_user_foundation_images').submit(function(){
+		var val = $(".upload_new_image").val();
+		if(val == ''){
+			alert("Please uploads Foundation image");
+			return false;
+		}
+		else
+			return true;
 	});
 
 </script>

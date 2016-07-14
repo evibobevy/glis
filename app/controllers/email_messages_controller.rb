@@ -37,7 +37,7 @@ class EmailMessagesController < ApplicationController
   def send_message_reply
     if params[:email_message_id].present?
       email_message  = EmailMessage.find(params[:email_message_id])
-      @message = current_user.email_messages.build(:parent_id => email_message.id, :subject=> "RE: #{email_message.subject}", :message=> params[:message]) if user_signed_in?
+      @message = current_user.email_messages.build(:parent_id => email_message.id, :subject=> "#{email_message.subject}", :message=> params[:message]) if user_signed_in?
       if @message.valid?
         @message.save
         user = EmailMessage.find(@message.parent_id).user_id

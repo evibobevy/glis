@@ -27,6 +27,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def edit
     @user_pictures  = current_user.user_pictures.last(4)  if user_signed_in?
+    @supporters = current_user.friendships.find_unremove_friend.reject{|user| user.friend_id == current_user.id}  if user_signed_in?
     @picture = UserPicture.new
   end
 

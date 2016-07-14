@@ -34,11 +34,15 @@ class User < ActiveRecord::Base
 
   def full_address
     if self.city.present? && self.state.present?
-      self.city.capitalize + ", " + self.state.upcase
+      self.city.capitalize + ", " + self.state.capitalize
     elsif self.city.present?
       self.city.capitalize
+    elsif self.state.present?
+      self.state.capitalize
+    elsif !self.city.present? && !self.state.present?
+      'Los Angeles, CA'
     else
-      self.state.upcase
+      'Los Angeles, CA'
     end
   end
 

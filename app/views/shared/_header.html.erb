@@ -28,7 +28,7 @@
           <span><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name ||= 'Jameson' %><% end %></span>
         </div>
 	      <%#= link_to "Change your password", edit_user_registration_path%>
-        <%#= link_to 'Sign out', destroy_user_session_path, :method => :get, :class => 'after-login-icon' %>
+        <%= link_to 'Sign out', destroy_user_session_path, :method => :get, :class => 'after-login-icon' %>
       </div>
     <% else %>
       <!--After login right section-->

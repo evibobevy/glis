@@ -5,7 +5,7 @@
     <div class="fixed-wrapper">
       <div class="inbox">
         <div class="corner"></div>
-        <h1>Inbox</h1>
+        <h1 style="margin-top: 5px;">Inbox</h1>
         <div class="mail">
           <% if @email_message_recipients.present? %>
             <% @email_message_recipients.each do |emr| %>
@@ -82,8 +82,7 @@
     <div class="fixed-wrapper">
       <div class="inbox">
         <div class="corner"></div>
-        <h1>New Message</h1>
-
+        <h1 style="margin-top: 5px;">New Message</h1>
         <div class="newMess">
           <%= form_for @email_message, url: email_messages_path do |f| %>
             <%# flash.each do |key, value| %>
@@ -108,7 +107,7 @@
     <div class="fixed-wrapper">
       <div class="inbox">
         <div class="corner"></div>
-        <h1>Notifications</h1>
+        <h1 style="margin-top: 5px;">Notifications</h1>
         <div class="noteBox">
           <div id="accordion">
             <% if @email_message_recipients.present? %>
@@ -143,10 +142,8 @@
 //		var timeout = setInterval(autoRefresh_div, 10000);
 //		function autoRefresh_div()
 //		{
-////			$(".messCont").load(location.href+" .messCont");
-////			$(".messCont").load(location.href+" .messCont >*","");
-//
-////			$(".messDesc").load(location.href+" .messDesc");
+//			$(".messCont").load(location.href+" .messCont");
+//			$(".messCont").load(location.href+" .messCont >*","");
 //		}
 //	});
 

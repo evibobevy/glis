@@ -132,7 +132,7 @@ a.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; 
 .unsupport.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-top: 40px;}
 .spread.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-top: 40px;}
 
-.support.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-top: 40px;}
+.support.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-top: 40px; margin-bottom: 20px;}
 .join.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom:15px;}
 .spread.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom:15px;margin-top: 0;}
 .support-btn {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom:15px;}
@@ -285,7 +285,7 @@ button{-moz-border:0px;}
 .messCont {width: 100%; height: 170px;    overflow-y:scroll;}
 .messReply form {overflow: auto; padding:10px;border-radius: 0 0 10px 15px;border-top:3px solid #67AA4D;}
 .messReply form textarea {width:75%; height: 41px;border:none; font-size: 14px; padding: 10px;}
-.messSend input[type=submit] {float: right; margin-top:-58px; border: none; border-radius: 0 0 0px 0;margin-right: -10px;width:25%; height: 94px; font-family: "GothamRndBold"; color: #fff;font-size: 16px;background-color:#67AA4D;}
+.messSend input[type=submit] {float: right; margin-top:-58px; border: none; border-radius: 0 0 0px 0;margin-right: -10px;width:25%; height: 90px; font-family: "GothamRndBold"; color: #fff;font-size: 16px;background-color:#67AA4D;}
 .line {border-bottom: 3px solid #5c5b5c; margin: 0 auto;margin-top: 10%; margin-bottom:10%; width:870px; height:350px;}
 
 .newmess-sec { width: 100%; background: #fff; padding: 60px 0 0 0;}

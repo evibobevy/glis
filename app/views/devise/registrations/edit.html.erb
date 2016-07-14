@@ -48,10 +48,10 @@
                 <% @hours << volunteers_works_hours(event).first %>
               <% end %>
               <% end %>
-            <%= @hours.join("','") %>
+            <%= @hours.join("','").present? ? @hours.join("','") : 0 %>
           </span> hours
           </p><br/>
-          <p><span><% if user_signed_in? %><%= current_user.friends.count %><% end %></span> Supporters </p>
+          <p><span><% if user_signed_in? %><%= @supporters.present? ? @supporters.count : 0 %><% end %></span> Supporters </p>
         </div>
         <div class="foundCreate">
           <button>CREATE YOUR<br/>FOUNDATION PROFILE</button>
@@ -282,6 +282,15 @@
 		window.location.href='/users/edit';
 		return false;
 	})
+	$('.user_new_images').submit(function(){
+		var val = $(".upload_new_image").val();
+		if(val == ''){
+			alert("Please uploads User image");
+			return false;
+		}
+		else
+			return true;
+	});
 </script>
 <style>
 	#error_explanation h2 {
