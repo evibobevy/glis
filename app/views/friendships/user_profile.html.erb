@@ -12,37 +12,47 @@
             <% else %>
               <i class="add-icon"><img src="/assets/addIcon.jpg" alt=""></i>
             <% end %>
-            <span>Los Angeles, CA</span>
+            <span><%= @user.full_address %></span>
             <p style="font-family: 'GothamRndBook'";>
               <%= @user.description.present? ? @user.description : 'Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola brisket prosciutto sausage ball tip salami pork chop cupim shank swine. Ball tip meatball jowl pork chop picanha. Andouille beef leberkas ham hock pancetta. Ball tip salami jowl meatloaf beef rump pork belly tongue shank boudin pancetta.'  %>
             </p>
           </div>
         </div>
         <div class="user-prf-rgt"> <strong>Volunteered:</strong>
-          <p><span>300</span> times</p>
-          <p><span>1000</span> hours</p><br/>
-          <p><span>2136</span> Supporters </p>
+          <p><span><% if user_signed_in? %><%= current_user.events.count %><% end %></span> times</p>
+          <p><span>
+            <% if user_signed_in? %>
+		          <% @hours = [] %>
+              <% current_user.events. each do |event| %>
+                <% @hours << volunteers_works_hours(event).first %>
+              <% end %>
+              <% end %>
+            <%= @hours.join("','") %>
+          </span> hours
+          </p><br/>
+          <p><span><% if user_signed_in? %><%= current_user.friends.count %><% end %></span> Supporters </p>
         </div>
       </div>
+      <div class="user-photos-row">
+        <ul>
+          <% user_image_counter = 4 - @user.user_pictures.size %>
+          <% if @user.user_pictures.present? %>
+            <% @user.user_pictures.last(4).each do |user_image|%>
+              <li><%= image_tag user_image.image.url, style: "height: 130px;width: 100%;" %></li>
+            <% end %>
+          <% end %>
+          <% 1.upto(user_image_counter) do |i| %>
+            <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
+  </div>
   </div>
   <!--photo section ends-->
   <% if @user.everyone_view_your_profile? %>
     <div class="volunteer-full float-full user-prf-vol">
       <div class="fixed-wrapper">
-        <div class="user-photos-row">
-          <ul>
-            <% user_image_counter = 4 - @user.user_pictures.size %>
-            <% if @user.user_pictures.present? %>
-              <% @user.user_pictures.last(4).each do |user_image|%>
-                <li><%= image_tag user_image.image.url, style: "height: 130px;width: 100%;" %></li>
-              <% end %>
-            <% end %>
-            <% 1.upto(user_image_counter) do |i| %>
-              <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
-            <% end %>
-          </ul>
-        </div>
         <div id="volunteers">
           <div class="corner"></div>
           <h1>My Supporters</h1><br/>
@@ -167,6 +177,6 @@
       <% end %>
       </div>
       </div>
+      </div>
   <% end %>
-  </div>
 </section>

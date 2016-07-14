@@ -5,11 +5,11 @@
     <div class="fixed-wrapper">
       <div class="user-prf-row1">
         <div class="user-prf-left">
-	          <div class="vol-img-lft"> <% if @foundation.foundation_pictures.first.image.url.present? %> <%= image_tag @foundation.foundation_pictures.first.image.url(:medium), alt: '', style: 'height: 120px; width: 120px' %><% else %><img src="/assets/stayIcon.png" alt=""> <% end %></div>
+          <div class="vol-img-lft"> <% if @foundation.foundation_pictures.first.image.url.present? %> <%= image_tag @foundation.foundation_pictures.first.image.url(:medium), alt: '', style: 'height: 123px; width: 140px' %><% else %><img src="/assets/stayIcon.png" alt=""> <% end %></div>
           <div class="user-prf-left-cont">
             <h2><%= @foundation.name.present? ? @foundation.name.titleize : 'Stay Inspired ' %> Foundation</h2>
             <i class="add-icon"><img src="/assets/addIcon.jpg" alt=""></i> <span><%= @foundation.city.present? ? @foundation.full_address.titleize : 'Los Angeles, CA' %></span>
-            <p><%=@foundation.description.present? ? @foundation.description.titleize : 'Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola brisket prosciutto sausage ball tip salami pork chop cupim shank swine. Ball tip meatball jowl pork chop picanha. Andouille beef leberkas ham hock pancetta. Ball tip salami jowl meatloaf beef rump pork belly tongue shank boudin pancetta.' %> </p>
+            <p style="font-family: 'GothamRndBook';color: #474747;"><%=@foundation.description.present? ? @foundation.description.titleize : 'Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola brisket prosciutto sausage ball tip salami pork chop cupim shank swine. Ball tip meatball jowl pork chop picanha. Andouille beef leberkas ham hock pancetta. Ball tip salami jowl meatloaf beef rump pork belly tongue shank boudin pancetta.' %> </p>
           </div>
         </div>
         <div class="user-prf-rgt">
@@ -36,7 +36,7 @@
   <div class="fixed-wrapper">
     <div id="slider1">
       <div class="corner2"></div>
-      <h1>Upcoming Volunteer Opportunities</h1>
+      <h1 style="margin-left: -30px;">Upcoming Volunteer Opportunities</h1>
       <a class="buttons prev" href="#">&#60;</a>
       <div class="viewport">
         <ul class="overview">
@@ -107,27 +107,26 @@
               <div style="float:left; width:19%;">
                 <div class="vol-img-lft"><% if !post.nil? %> <%= image_tag post.user.image.url(:medium), style: 'height: 180px; width: 180px;' %></div> <% end %>
                   <% if user_signed_in? %>
-                    <% unless current_user.friendships.exists?(friend_id:post.user) %>
-                      <%= button_to 'Support', :method => :post, :class=>"btn-black support"%>
-                    <% else %>
-                      <%= button_to 'Unsupport',unsupport_path(:friend_id => post.user), :method => :post, :class=>"btn-black support"%>
-                    <% end %>
-                  <% else %>
-                    <%= button_to 'Support', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                    <%# unless current_user.friendships.exists?(friend_id:post.user) %>
+                      <%= button_to 'Message', inbox_notifications_path(:page=> "inbox_notifications"), :method => :post, :class=>"btn-black support-btn"%>
+                    <%# end %>
+                  <%# else %>
+                    <%#= button_to 'Message', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
                   <% end %>
                   <% if user_signed_in? %>
-                    <%= button_to ' Spread ', spread_post_path(:post_id => post.id), :method => :post, :class=>"btn-black support"%>
+                    <%= button_to ' Spread ', spread_user_post_path(:post_id => post.id), :method => :post, :class=>"btn-black spread"%>
                   <% else %>
-                    <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black support", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                    <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black spread", :onclick => 'alert("Please Sign Up to support this user.");'%>
                   <% end %>
-                  <% if user_signed_in? && post.event.present? && post.event.open_to_the_public? %>
-                    <%= link_to 'Join', support_path(:friend_id => post.user), :method => :post, :class=>"btn-black join"%>
-                  <% else %>
-                    <%= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black join'%>
-                  <% end %>
+                  <%# if user_signed_in? && post.foundation.present?  %>
+                    <%= link_to 'Join', user_support_path(:friend_id => post.user), :method => :post, :class=>"btn-black join"%>
+                  <%# else %>
+                    <%#= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black join'%>
+                    <%#= link_to 'Join', user_support_path(:friend_id => Post.last.user), :method => :post, :class=>"btn-black join"%>
+                  <%# end %>
                   </div>
               <div class="vol-user-comment">
-                <% if !post.user.nil? %> <h4><%=post.user.full_name %> <% end %><span>posted for</span> <% if post.event.present? %><%= post.event.title %><% end %></h4>
+                <% if !post.user.nil? %> <h4><%=post.user.full_name %> <% end %><span>posted for</span> <%= @post.postable.present? ?  @post.postable.name.titleize : 'Kaohsiung Relief' %></h4>
                 <span class="day-time-row"><strong><%= "%d " % "#{time_diff_for_post(post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(post)[1]}" %></strong>hours</span>
                 <p class="vol-desc"><%= post.name %></p>
                 <div class="vol-reply-sec">
@@ -135,7 +134,7 @@
                     <% unless post.blank?  %>
                       <% @comments = post.comments.last(2) %>
                       <% @comments.each do |comment|%>
-                        <%= render "/events/comment", :comment => comment %>
+                        <%= render "events/comment", :comment => comment %>
                       <% end %>
                     <% end %>
                   </ul>
@@ -147,7 +146,7 @@
                         <% if user_signed_in? %>
                           <%= f.button 'Reply', :class => 'btn-reply' %>
                         <% else %>
-                          <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this event.");' %>
+                          <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this foundation.");' %>
                         <% end %>
                       </div>
                     <% end %>
@@ -161,29 +160,30 @@
             <div class="vol-lft">
               <div class="vol-img-lft"><% if @post.user.user_pictures.first.image.present? %> <%= image_tag @post.user.user_pictures.first.image.url(:medium), style: 'height: 180px; width: 180px;'  %><% else %><%= image_tag 'no-img.jpg' %></div> <% end %>
                 <% if user_signed_in? %>
-                  <% unless current_user.friendships.exists?(friend_id:@post.user) %>
-                    <%= button_to 'Support', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black support"%>
-                  <% else %>
-                    <%= button_to 'Unsupport',unsupport_path(:friend_id => @post.user), :method => :post, :class=>"btn-black unsupport"%>
-                  <% end %>
-                <% else %>
-                  <%= button_to 'Support', 'javascript:;', :class=>"btn-black support", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <%# unless current_user.friendships.exists?(friend_id:post.user) %>
+                    <%= button_to 'Message', inbox_notifications_path(:page=> "inbox_notifications"), :method => :post, :class=>"btn-black support-btn "%>
+                  <%# end %>
+                <%# else %>
+                  <%#= button_to 'Message', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                <%# end %>
+                <%# else %>
+                  <%#= button_to ' Message ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
                 <% end %>
-                <% if user_signed_in? && current_user.posts.present? %>
-                  <%= button_to ' Spread ', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black support"%>
+                <% if user_signed_in? %>
+                  <%= button_to ' Spread ', spread_user_post_path(:post_id => @post.id), :method => :post, :class=>"btn-black spread"%>
                 <% else %>
-                  <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black spread", :onclick => 'alert("Please Sign Up to support this user.");'%>
                 <% end %>
-                <% if user_signed_in? && @post.event.open_to_the_public? && @post.user != current_user %>
-                  <%= link_to 'Join', support_path(:friend_id => @post.user), :class=>"btn-black join"%>
-                <% else %>
-                  <%= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black'%>
-                <% end %>
+                <%# if user_signed_in? && @post.foundation.present? %>
+                  <%= link_to 'Join', user_support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black join"%>
+                <%# else %>
+                  <%#= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black join'%>
+                  <%#= link_to 'Join', user_support_path(:friend_id => Post.last.user), :method => :post, :class=>"btn-black join"%>
+                <%# end %>
                 </div>
           </div>
           <div class="vol-user-comment">
-            <!--<h4>Jameson Welch <span>volunteered for</span> Habitat for Humanity</h4>-->
-            <% if !@post.user.nil? %> <h4><%=@post.user.full_name %> <% end %><span>posted for</span> <%= @post.event.title %></h4>
+            <% if !@post.user.nil? %> <h4><%=@post.user.full_name %> <% end %><span>posted for</span> <%= @post.postable.present? ?  @post.postable.name.titleize : 'Kaohsiung Relief' %></h4>
             <span class="day-time-row"><strong><%= "%d " % "#{time_diff_for_post(@post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(@post)[1]}" %></strong>hours</span>
             <p class="vol-desc"><%= @post.name %></p>
             <div class="vol-reply-sec">
@@ -192,7 +192,7 @@
                   <% unless @post.blank?  %>
                     <% @comments = @post.comments.last(2) %>
                     <% @comments.each do |comment|%>
-                      <%= render "comment", :comment => comment %>
+                      <%= render "events/comment", :comment => comment %>
                     <% end %>
                   <% end %>
                 </li>
@@ -204,7 +204,7 @@
                     <% if user_signed_in? %>
                       <%= f.button 'Reply', :class => 'btn-reply' %>
                     <% else %>
-                      <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this event.");' %>
+                      <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this foundation.");' %>
                     <% end %>
                   </div>
                 <% end %>

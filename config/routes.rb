@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   post 'removed_user' => 'friendships#removed_user', as: :removed_user
   post 'remove_friend' => 'friendships#remove_friend', as: :remove_friend
 
+  post 'user_support' => 'foundation_friendships#user_support', as: :user_support
+  post 'user_unsupport' => 'foundation_friendships#user_unsupport', as: :user_unsupport
+  post 'spread_user_post' => 'foundation_friendships#spread_user_post', as: :spread_user_post
+
   resources :posts do
     resources :comments
   end
@@ -31,13 +35,13 @@ Rails.application.routes.draw do
   end
 
   resources :volunteers
-  resources :foundations, except: [:index, :show]
- # resources :foundations
+  resources :foundations, except: :show
+ #resources :foundations
   resources :foundation_pictures
   post 'foundation_pictures/update' => 'foundation_pictures#update', as: :foundations_update
   get 'foundation_calendar', :to => 'foundations#foundation_calendar'
   # get 'foundations/:id' => 'foundations#foundation_profile', as: :foundation_profile
-  get 'foundations/:id' => 'foundations#show', as: :show
+  # get 'foundations/:id' => 'foundations#show', as: :show
 
   resources :user_pictures
   post 'user_pictures/update' => 'user_pictures#update', as: :update
@@ -76,7 +80,8 @@ Rails.application.routes.draw do
   post 'accept_friend_request' => 'friendships#accept_friend_request', as: :accept_friend_request
   post 'deny_friend_request' => 'friendships#deny_friend_request', as: :deny_friend_request
   get 'contacts/new', :to => 'contacts#new'
-  get 'inbox_notifications' => 'email_messages#index', as: :inbox_notifications
+  # get 'inbox_notifications' => 'email_messages#index', as: :inbox_notifications
+  match 'inbox_notifications' => 'email_messages#index', as: :inbox_notifications, :via => [:get, :post]
   post 'email_messages' => 'email_messages#email_message'
   post 'contact', :to => 'contacts#contact'
   get 'event_list', :to => 'events#event_list'

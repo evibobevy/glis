@@ -86,11 +86,11 @@
 
         <div class="newMess">
           <%= form_for @email_message, url: email_messages_path do |f| %>
-            <% flash.each do |key, value| %>
-              <div class="<%= flash_class(key) %>">
-                <%= value %>
-              </div>
-            <% end %>
+            <%# flash.each do |key, value| %>
+              <!--<div class="<%#= flash_class(key) %>">-->
+                <%#= value %>
+              <!--</div>-->
+            <%# end %>
             <!--<input type="text" placeholder="To:"/><br/>-->
             <%= email_field_tag :email, nil, :required => true, :multiple => true, :placeholder => "To:" %> <br/>
             <%= f.text_field :subject, :required => true, :placeholder => "Subject:" %>

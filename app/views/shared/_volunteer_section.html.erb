@@ -6,7 +6,7 @@
         <div class="user-prf-left">
           <div class="vol-img-lft"> <% if current_user.user_pictures.present? %> <%= image_tag current_user.user_pictures.first.image.url, style: "height: 140px;width: 100%;" %><% else %><%= image_tag 'vol-img.jpg', alt: '' %> <% end %> </div>
           <div class="user-prf-left-cont">
-           <% if user_signed_in? %> <h2><%= current_user.full_name.present? ? current_user.full_name : 'Jameson Welch'  %></h2> <% end %>
+            <% if user_signed_in? %> <h2><%= current_user.full_name.present? ? current_user.full_name : 'Jameson Welch'  %></h2> <% end %>
             <i class="add-icon"><img src="/assets/addIcon.jpg" alt=""></i> <span><% if user_signed_in? %> <%= current_user.full_address.present? ? current_user.full_address : 'Los Angeles, CA'  %> <% end %></span>
             <p style="font-family: 'GothamRndBook'";>
               <% if user_signed_in? %>
@@ -15,9 +15,18 @@
           </div>
         </div>
         <div class="user-prf-rgt"> <strong>Volunteered:</strong>
-          <p><span>300</span> times</p>
-          <p><span>1000</span> hours</p><br/>
-          <p><span>2136</span> Supporters </p>
+          <p><span><% if user_signed_in? %><%= current_user.events.count %><% end %></span> times</p>
+          <p><span>
+            <% if user_signed_in? %>
+		          <% @hours = [] %>
+              <% current_user.events. each do |event| %>
+                <% @hours << volunteers_works_hours(event).first %>
+              <% end %>
+              <% end %>
+	          <%= @hours.join("','").present? ? @hours.join("','") : 0  %>
+          </span> hours
+          </p><br/>
+          <p><span><% if user_signed_in? %><%= current_user.friends.count %><% end %></span> Supporters </p>
         </div>
       </div>
       <div class="user-photos-row">

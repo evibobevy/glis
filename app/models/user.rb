@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   has_many :friendships, dependent: :destroy
   has_many :friends, :through => :friendships
+  has_many :foundation_friendships, dependent: :destroy
+  has_many :friends, :through => :foundation_friendships
   has_many :user_pictures, :dependent => :destroy
   has_attached_file :image, styles: { medium: "150x200#", thumb: "100x100#", default_url: "noImg.jpg" }
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
@@ -21,11 +23,23 @@ class User < ActiveRecord::Base
   USER_PRIVACY_SETTINGS = {"Who can see my profile" => 'user_profile_settings', "Who can comment on my posts" => 'user_post_comments_settings', "Who can message me" => 'user_message_settings', "Who can invite me to events" => 'user_events_invite_settings'}
 
   def full_name
-    self.first_name.capitalize + " " + self.last_name.capitalize  if self.first_name.present? || self.last_name.present?
+    if self.first_name.present? && self.last_name.present?
+      self.first_name.capitalize + " " + self.last_name.capitalize  if self.first_name.present? || self.last_name.present?
+    elsif  self.first_name.present?
+      self.first_name.capitalize
+    else
+      self.last_name.capitalize
+    end
   end
 
   def full_address
-    self.city.capitalize + ", " + self.state.upcase  if self.city.present? || self.state.present?
+    if self.city.present? && self.state.present?
+      self.city.capitalize + ", " + self.state.upcase
+    elsif self.city.present?
+      self.city.capitalize
+    else
+      self.state.upcase
+    end
   end
 
   def last_name_initial

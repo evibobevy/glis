@@ -12,6 +12,7 @@ class FoundationsController < ApplicationController
     @foundation = Foundation.new(foundation_params)
     @foundation.user_role = Foundation.user_roles[params[:user_role].downcase.to_sym]
     @foundation.type_of_foundation = Foundation.type_of_foundations[params[:type_of_foundation].downcase.to_sym]
+    @foundation.user_id = current_user.id
     if @foundation.save
       if params[:images].present?
         params[:images].each do |image|

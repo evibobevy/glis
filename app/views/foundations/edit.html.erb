@@ -11,7 +11,7 @@
           <%= form_for @foundation do |f| %>
             <div class="found-img-lft"> <div class="photoSettings">
               <li>
-                <% if @foundation.image_file_name.present? %><%= image_tag @foundation.image.url, style: "height: 150px;width: 150px;border: 4px solid #67aa4d;border-radius: 6px;" %>
+                <% if @foundation.image_file_name.present? %><%= image_tag @foundation.image.url, style: "height: 142px;width: 162px;border: 4px solid #67aa4d;border-radius: 6px;" %>
                 <% else %> <%= image_tag 'no-img.jpg', style: "height: 150px;width: 150px;border: 4px solid #67aa4d;border-radius: 6px;" %>
                 <% end %>
                 <%= f.file_field :image, value: "CHANGE LOGO"  %>
@@ -34,7 +34,7 @@
               <%= f.submit "Save" %>
             </div>
           <% end %>
-            </div>
+        </div>
       </div>
       <div class="user-photos-row">
         <ul>
@@ -49,8 +49,9 @@
                     <%= hidden_field_tag :foundation_id, @foundation.id %>
                     <%= f.hidden_field :user_foundation_picture_id, :value => foundation_picture.id %>
                     <br><%= f.file_field :image, :class=>"upload_image" %> <br>
-                    <span><%= f.submit "Save", :class=>"save_user_image" %>
-                      <%= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %></span>
+                    <span><%= f.submit "Save", :class=>"save_user_image" %></span>
+                      <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>
+		                <span><input class="cancle_foundation_image" type="submit" value="Cancle"></span>
                     </li>
                   <% end %>
               <% end %>
@@ -60,8 +61,9 @@
                   <%= form_for @picture, url: foundations_update_path, :html => {:class => 'new_user_foundation_images', :id=> "new_foundation_picture_#{i}" }  do |f| %>
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
                     <%= hidden_field_tag :foundation_id, @foundation.id %>
-                    <%= f.submit "Save", :class=>"save_new_foundation_image" %>
-                    <%= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>
+                    <span> <%= f.submit "Save", :class=>"save_new_foundation_image" %>
+                      <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>  </span>
+		                <span><input class="cancle_foundation_image" type="submit" value="Cancle"></span>
                   <% end %>
                 </li>
               <% end %>
@@ -73,8 +75,9 @@
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
                     <%= hidden_field_tag :foundation_id, @foundation.id %>
                     <%#= button_to "Cancel", 'javascript:;', :class=>"cancle_foundation_image" %>
-                    <%= f.submit "Save", :class=>"save_new_user_image" %>
-                    <%= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>
+                    <span> <%= f.submit "Save", :class=>"save_new_user_image" %>
+                      <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>  </span>
+		                <span><input class="cancle_foundation_image" type="submit" value="Cancle"></span>
                   <% end %>
                 </li>
               <% end %>

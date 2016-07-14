@@ -12,7 +12,7 @@
             <i><%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day, next_link:  "next_link")), remote: true, class:'flaticon-arrows-1', style: 'float: left; margin-top: 3px;"' %></i>
           </div>
           <div class="sched"><h4>Today's Schedule</h4><hr>
-	          <!-- Start todays events -->
+            <!-- Start todays events -->
             <% if params[:action] =='event_list' && params[:controller] =='events' %>
               <% if @today_gigs.present? %>
                 <% @today_gigs.each do |today_gig|%>
@@ -61,7 +61,7 @@
             <!-- END todays events -->
             <!-- Start todays foundations -->
             <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>
-                 <% if @today_foundation.present? %>
+              <% if @today_foundation.present? %>
                 <% @today_foundation.each do |today_foundation|%>
                   <b style ="font-size: x-small;"> <%= today_foundation.start_time.try(:strftime, "%I:%M %p") %>  -
                     <%= today_foundation.end_time.try(:strftime, "%I:%M %p") %> </b><br>
@@ -118,14 +118,14 @@
             <div class="sched2">
               <% if !params[:start_date].present? && params[:action] =='event_list' && params[:controller] =='events' %>
                 <div class="border"><h4>Upcoming Gigs</h4></div>
-                  <% if @latest_month_gigs.present? %>
-                    <% @latest_month_gigs.each do |next_event|%>
-                      <b style ="font-size: x-small;"><% if next_event.event_date.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
-                        <% if next_event.title.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.title.titleize %></b><hr /><% end %>
-                    <% end %>
-                  <% else %>
-                    <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:next_month_no_event)%>  <% end %>
+                <% if @latest_month_gigs.present? %>
+                  <% @latest_month_gigs.each do |next_event|%>
+                    <b style ="font-size: x-small;"><% if next_event.event_date.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
+                      <% if next_event.title.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.title.titleize %></b><hr /><% end %>
                   <% end %>
+                <% else %>
+                  <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:next_month_no_event)%>  <% end %>
+                <% end %>
               <% else %>
                 <% if @next_month_event.present? %>
                   <% @next_month_event.each do |next_event|%>
@@ -148,18 +148,18 @@
                     <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>  <%= t(:next_month_no_foundation)%>  <% end %>
                   <% end %>
               <% else %>
-                <div class="border"><h4>Upcoming Foundation</h4>
                 <% if @next_month_foundation.present? %>
-                  <% @next_month_foundation.each do |next_foundation|%>
-                    <% if next_foundation.start_date.present? %><b style ="font-size: x-small;"><%= next_foundation.start_date.try(:strftime, '%b %dth, %Y') %> - <% end %> <br>
-                    <% if next_foundation.name.present? %><%= next_foundation.name.titleize %></b><% end %><hr />
-                  <% end %>
+                  <div class="border"><h4>Upcoming Foundation</h4>
+                    <% @next_month_foundation.each do |next_foundation|%>
+                      <% if next_foundation.start_date.present? %><b style ="font-size: x-small;"><%= next_foundation.start_date.try(:strftime, '%b %dth, %Y') %> - <% end %> <br>
+                      <% if next_foundation.name.present? %><%= next_foundation.name.titleize %></b><% end %><hr />
+                    <% end %>
                 <% else %>
                   <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>  <%= t(:next_month_no_foundation)%>  <% end %>
                 <% end %>
               <% end %>
               <!-- End latest month foundations -->
-            </div>
+              </div>
           <% end %>
           </div>
 
@@ -200,8 +200,8 @@
                   <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %><%= t(:past_month_no_foundation)%>  <% end %>
                 <% end %>
               <% else  %>
-                <div class="border"><h4>Past Foundation</h4></div>
                 <% if @next_month_foundation.present? && !params[:next_link].present? %>
+                  <div class="border"><h4>Past Foundation</h4></div>
                   <% @next_month_foundation.each do |past_foundation|%>
                     <b style ="font-size: x-small;"><% if past_foundation.start_date.present? %> <%= past_foundation.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
                       <% if past_foundation.name.present? %><%= past_foundation.name.titleize %></b> <hr /><% end %>
@@ -213,15 +213,15 @@
               <!-- End latest month foundation -->
           <% end %>
           </div>
-        </div>
+          </div>
 
-        <% if user_signed_in? && params[:action] == 'event_list' %>
-          <%= render 'events/form' %>
-        <% end %>
-        <% if user_signed_in? && params[:action] == 'foundation_calendar' %>
-          <%= render 'foundations/volunteer_list' %>
-          <%= render 'foundations/form' %>
-        <% end %>
+          <% if user_signed_in? && params[:action] == 'event_list' %>
+            <%= render 'events/form' %>
+          <% end %>
+          <% if user_signed_in? && params[:action] == 'foundation_calendar' %>
+            <%= render 'foundations/volunteer_list' %>
+            <%= render 'foundations/form' %>
+          <% end %>
 </section>
 <script>
 	$(document).ready(function(){

@@ -2,21 +2,21 @@ class UserPicturesController < ApplicationController
   before_filter :authorize, only: :update
 
   def update
-    if params[:user_picture][:user_picture_id].present? && user_signed_in?
+    if params[:user_picture][:user_picture_id].present? && user_signed_in? && params[:user_picture][:image].present?
       @user_picture = current_user.user_pictures.find_by_id(params[:user_picture][:user_picture_id])
       if @user_picture.update_attributes(image:params[:user_picture][:image])
         flash[:notice] = "Picture Update."
-        redirect_to :back and return
       else
-        redirect_to edit_user_registration_path
+        flash[:notice] = "Someting went wrong for User Picture."
       end
+      redirect_to :back and return
     else
       @user_picture = current_user.user_pictures.build(user_picture_params)
-      if @user_picture.save!
+      if @user_picture.save
         flash[:notice] = "Picture Created."
         redirect_to :back and return
       else
-        redirect_to edit_user_registration_path
+        redirect_to :back and return
       end
     end
   end

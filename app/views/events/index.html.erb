@@ -82,15 +82,15 @@
                   <% unless current_user.friendships.exists?(friend_id:post.user) %>
                     <%= button_to 'Support', support_path(:friend_id => post.user), :method => :post, :class=>"btn-black support"%>
                   <% else %>
-                    <%= button_to 'Unsupport',unsupport_path(:friend_id => post.user), :method => :post, :class=>"btn-black support"%>
+                    <%= button_to 'Unsupport',unsupport_path(:friend_id => post.user), :method => :post, :class=>"btn-black unsupport"%>
                   <% end %>
                 <% else %>
                   <%= button_to 'Support', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
                 <% end %>
                 <% if user_signed_in? %>
-                  <%= button_to ' Spread ', spread_post_path(:post_id => post.id), :method => :post, :class=>"btn-black support"%>
+                  <%= button_to ' Spread ', spread_post_path(:post_id => post.id), :method => :post, :class=>"btn-black support-btn"%>
                 <% else %>
-                  <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black support", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
                 <% end %>
                 <% if user_signed_in? && post.event.present? && post.event.open_to_the_public? %>
                   <%= link_to 'Join', support_path(:friend_id => post.user), :method => :post, :class=>"btn-black join"%>

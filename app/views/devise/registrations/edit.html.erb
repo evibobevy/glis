@@ -39,13 +39,19 @@
             </div>
           <% end %>
         </div>
-        <div class="user-prf-rgt"><strong>Volunteered:</strong>
-
-          <p><span>300</span> times</p>
-
-          <p><span>1000</span> hours</p><br/>
-
-          <p><span>2136</span> Supporters </p>
+        <div class="user-prf-rgt"> <strong>Volunteered:</strong>
+          <p><span><% if user_signed_in? %><%= current_user.events.count %><% end %></span> times</p>
+          <p><span>
+            <% if user_signed_in? %>
+		          <% @hours = [] %>
+              <% current_user.events. each do |event| %>
+                <% @hours << volunteers_works_hours(event).first %>
+              <% end %>
+              <% end %>
+            <%= @hours.join("','") %>
+          </span> hours
+          </p><br/>
+          <p><span><% if user_signed_in? %><%= current_user.friends.count %><% end %></span> Supporters </p>
         </div>
         <div class="foundCreate">
           <button>CREATE YOUR<br/>FOUNDATION PROFILE</button>
@@ -64,7 +70,8 @@
                     <%= f.hidden_field :user_picture_id, :value => user_picture.id %>
                     <br><%= f.file_field :image, :class=>"upload_image" %> <br>
                     <span><%= f.submit "Save", :class=>"save_user_image" %>
-                    <%= button_to "Cancle", "javascript;;",:class=> "cancle_user_image" %></span>
+                    <%#= button_to "Cancle", "javascript;;",:class=> "cancle_user_image" %></span>
+		                <span><input class="cancle_user_image" type="submit" value="Cancle"></span>
                     </li>
                   <% end %>
               <% end %>
@@ -74,7 +81,8 @@
                   <%= form_for @picture, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
                     <%= f.submit "Save", :class=>"save_new_user_image" %>
-                    <%= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
+                    <%#= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
+                    <span><input class="cancle_user_image" type="submit" value="Cancle"></span>
                   <% end %>
                 </li>
               <% end %>
@@ -86,7 +94,8 @@
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
                     <%#= button_to "Cancel", 'javascript:;', :class=>"cancle_user_image" %>
                     <%= f.submit "Save", :class=>"save_new_user_image" %>
-                    <%= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
+                    <%#= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
+                    <span><input class="cancle_user_image" type="submit" value="Cancle"></span>
                   <% end %>
                 </li>
               <% end %>
