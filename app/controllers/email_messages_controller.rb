@@ -11,7 +11,7 @@ class EmailMessagesController < ApplicationController
 
   def email_message
     emails = params[:email].split(',') if params[:email].present?
-    permitted_emails = User.where(email: emails, everyone_message_you: false).map(&:email)
+    permitted_emails = User.where(email: emails, everyone_message_you: true).map(&:email)
     not_permitted_email = emails - permitted_emails
     @email_message = current_user.email_messages.build(email_message_params)
     if @email_message.save
