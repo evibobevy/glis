@@ -23,20 +23,20 @@
                     <div class="gig_info" style="display:none">
                       <% if today_gig.location.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3><%= today_gig.location.titleize %><% end %>
                       <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Details:</b> <%= today_gig.full_description %><% end %>
-                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <%= link_to 'View GIG', "javascript:void(0)" %> <br><% end %>
-                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> <% end %>
+                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <div><%= link_to 'View GIG', "javascript:void(0)" %> </div><% end %>
+                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %><div><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> </div><% end %>
                     </div>
-                    <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br><hr> <% end %>
+                    <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn", :id =>"#{today_gig.id}" %>  </h2></br><hr> <% end %>
                   <% end %>
                   <% if !user_signed_in? %>
-                    <% if today_gig.event_date == Time.zone.now.beginning_of_day%><%= link_to 'Join', new_user_session_path %> <br><hr> <% end %>
+                    <% if today_gig.event_date == Time.zone.now.beginning_of_day %><%= link_to 'Join', new_user_session_path %> <br><hr> <% end %>
                   <% end %>
                 <% end %>
               <% else %>
                 <%= t(:today_no_event)%>
               <% end %>
             <% else %>
-              <% if @today_gigs.present? %>
+              <% if @today_s.present? %>
                 <% @today_gigs.each do |today_gig|%>
                   <b style ="font-size: x-small;"> <% if today_gig.event_start_time.present? %><%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %><% end %> -
                     <% if today_gig.event_end_time.present? %><%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %><% end %> </b><br>
@@ -48,7 +48,7 @@
                       <%= link_to 'View GIG', "javascript:void(0)" %> <br>
                       <%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %>
                     </div>
-                    <br> <%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br><hr>
+                    <br> <%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn", :id => "#{today_gig.id}" %>  </h2></br><hr>
                   <% end %>
                   <% if !user_signed_in? %>
                     <%= link_to 'Join', new_user_session_path %> <br><hr>
@@ -126,7 +126,18 @@
                 <% else %>
                   <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:next_month_no_event)%>  <% end %>
                 <% end %>
+              <% elsif params[:start_date].present? && params[:previous_link].present? && params[:next_link].present? && params[:action] =='event_list' && params[:controller] =='events'  %>
+                <div class="border"><h4>Upcoming Gigs</h4></div>
+                <% if @next_month_event.next_months_gigs.present? %>
+                  <% @next_month_event.next_months_gigs.each do |past_gig|%>
+                    <b style ="font-size: x-small;"><% if past_gig.event_date.present? %> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
+                      <% if past_gig.title.present? %><%= past_gig.title.titleize %></b> <hr /><% end %>
+                  <% end %>
+                <% else %>
+                  <% if params[:action] =='event_list' && params[:controller] =='events' %>  <%= t(:next_month_no_event)%>   <% end %>
+                <% end %>
               <% else %>
+                <div class="border"><h4>Upcoming Gigs</h4></div>
                 <% if @next_month_event.present? %>
                   <% @next_month_event.each do |next_event|%>
                     <% if next_event.event_date.present? %><b style ="font-size: x-small;"><%= next_event.event_date.try(:strftime, '%b %dth, %Y') %> - <% end %> <br>
@@ -176,7 +187,18 @@
                 <% else %>
                   <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:past_month_no_event)%>   <% end %>
                 <% end %>
+              <% elsif params[:start_date].present? && params[:previous_link].present? && params[:next_link].present? && params[:action] =='event_list' && params[:controller] =='events'  %>
+                <div class="border"><h4>Past Gigs</h4></div>
+                <% if @next_month_event.past_months_gigs.present? %>
+                  <% @next_month_event.past_months_gigs.each do |past_gig|%>
+                    <b style ="font-size: x-small;"><% if past_gig.event_date.present? %> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
+                      <% if past_gig.title.present? %><%= past_gig.title.titleize %></b> <hr /><% end %>
+                  <% end %>
+                <% else %>
+                  <%= t(:past_month_no_event)%>
+                <% end %>
               <% else  %>
+                <div class="border"><h4>Past Gigs</h4></div>
                 <% if @next_month_event.present? && !params[:next_link].present? %>
                   <% @next_month_event.each do |past_gig|%>
                     <b style ="font-size: x-small;"><% if past_gig.event_date.present? %> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>

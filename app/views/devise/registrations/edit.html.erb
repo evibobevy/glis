@@ -70,8 +70,8 @@
                     <%= f.hidden_field :user_picture_id, :value => user_picture.id %>
                     <br><%= f.file_field :image, :class=>"upload_image" %> <br>
                     <span><%= f.submit "Save", :class=>"save_user_image" %>
-                    <%#= button_to "Cancle", "javascript;;",:class=> "cancle_user_image" %></span>
-		                <span><input class="cancle_user_image" type="submit" value="Cancle"></span>
+                      <%#= button_to "Cancle", "javascript;;",:class=> "cancel_user_image" %></span>
+                    <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
                     </li>
                   <% end %>
               <% end %>
@@ -82,7 +82,7 @@
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
                     <%= f.submit "Save", :class=>"save_new_user_image" %>
                     <%#= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
-                    <span><input class="cancle_user_image" type="submit" value="Cancle"></span>
+                    <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
                   <% end %>
                 </li>
               <% end %>
@@ -95,7 +95,7 @@
                     <%#= button_to "Cancel", 'javascript:;', :class=>"cancle_user_image" %>
                     <%= f.submit "Save", :class=>"save_new_user_image" %>
                     <%#= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
-                    <span><input class="cancle_user_image" type="submit" value="Cancle"></span>
+                    <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
                   <% end %>
                 </li>
               <% end %>
@@ -202,7 +202,7 @@
                 <h2>Email Notifications?</h2>
 
                 <div class="notificationSettings">
-                  <%= f.text_field :phone_number, :maxlength => "10", :pattern => "[0-9]{10}", :placeholder => "Phone" %>
+                  <%= f.text_field :phone_number, :maxlength => "10",  :placeholder => "Phone" %>
                 </div>
                 <h2>Text/SMS Notifications?</h2>
 
@@ -222,7 +222,7 @@
               </div>
             </div>
           </div>
-	        <div class="cleat"></div>
+          <div class="cleat"></div>
           <div class="fixed-wrapper">
             <div class="saveSettings">
               <!--<input type="submit" value="Save Privacy Settings">-->
@@ -243,8 +243,10 @@
 		$("input[type=text], textarea").val("");
 	});
 	$('.reset-privacy-setting-btn').click(function () {
-		$('#user_supporters_need_approval_to_comment').attr('checked', 'checked');
-		$("#user_email").val(" ");
+		$("#user_email").val("");
+		$("#user_phone_number").val("");
+		$('input[type=checkbox]').prop('checked', true);
+		window.location.reload();
 	});
 	$(".change_user_image").click(function(){
 		$("#edit_user_picture_"+this.id).show();
@@ -271,10 +273,12 @@
 				alert("Password & Confirm Password doesn't match");
 			}
 		}
+		$("#password").val("");
+		$("#password_confirmation").val("");
+		alert("Password successfully updated!");
 		return false;
 	}
 	$('.cancle_user_image').click(function(){
-//		window.location.href='/users/edit';
 		window.location.reload();
 		return false;
 	})
@@ -303,15 +307,3 @@
 		display: none;
 	}
 </style>
-<script>
-//	$('.save_user_image').click( function() {
-//		//check whether browser fully supports all File API
-//		if (window.File && window.FileReader && window.FileList && window.Blob)
-//		{
-//			//get the file size and file type from file input field
-//			var fsize = $('#user_picture_image')[0].files[0].size;
-//		}else{
-//			alert("Please upgrade your browser, because your current browser lacks some new features we need!");
-//		}
-//	});
-</script>

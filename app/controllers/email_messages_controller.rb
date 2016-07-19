@@ -13,21 +13,23 @@ class EmailMessagesController < ApplicationController
     emails = params[:email].split(',') if params[:email].present?
     permitted_emails = User.where(email: emails, everyone_message_you: true).map(&:email)
     not_permitted_email = emails - permitted_emails
+    p "========="
+    p "permitted_emails": permitted_emails.inspect
+    p "not_permitted_email": not_permitted_email.inspect
     @email_message = current_user.email_messages.build(email_message_params)
-    if @email_message.save
+    if @email_message.save  && permitted_emails.present?
       permitted_emails.each do |email|
         @email_message.email_message_recipients.build(:email=> email)
-        if @email_message.save
-          flash[:success] = "Email Message saved"
+        if @email_message.save && not_permitted_email.present?
+          flash[:alert] = "Email send to #{permitted_emails.join(",")} and  #{not_permitted_email.join(",")} EmailId is not permitted or not exist.."
         else
-          flash[:error] = "Error occurred when Sending message."
+          flash[:alert] = "Email send to #{permitted_emails.join(",")}.."
         end
       end
-      if not_permitted_email.present?
-        flash[:alert] =  "This #{not_permitted_email.join("','")} is not permitted for email  "
-      end
-      redirect_to :back and return
+    else
+      flash[:alert] = "#{not_permitted_email.join(",")} email is not permitted or not exist.."
     end
+    redirect_to :back and return
   end
 
   def email_message_detail

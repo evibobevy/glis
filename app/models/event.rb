@@ -8,7 +8,10 @@ class Event < ActiveRecord::Base
   validates :title,  :presence => true
   validate :validate_git_start_date
   validate :validate_gig_end_date
+
   scope :latest_months_event, lambda { where("event_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_month, Time.zone.now.end_of_month) }
+  scope :past_months_gigs, lambda { where("event_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_month, Time.zone.now.beginning_of_day) }
+  scope :next_months_gigs, lambda { where("event_date >= ? AND end_date <= ?", Time.zone.now.end_of_day, Time.zone.now.end_of_month ) }
   scope :today_event, lambda { where("event_date = ? ", Time.zone.now.beginning_of_day) }
   scope :by_year, lambda { |year| where('extract(year from event_date) = ?', year) }
   scope :by_month, lambda { |year| where('extract(month from event_date) = ?', month) }

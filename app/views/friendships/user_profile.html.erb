@@ -138,9 +138,9 @@
               <% else %>
                 <%= button_to 'Unsupport',unsupport_path(:friend_id => @post.user), :method => :post, :class=>"btn-black unsupport"%>
               <% end %>
-              <%= button_to 'Spread', spread_post_path(:post_id => @post.id), :method => :post, :class=>"btn-black support"%>
+              <%= button_to 'Spread', spread_post_path(:post_id => @post.id), :method => :post, :class=>"btn-black spread"%>
               <% if @post.event.open_to_the_public? %>
-                <%= link_to 'Join', support_path(:friend_id => @post.user), :class=>"btn-black join"%>
+                <%= button_to 'Join', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black join"%>
               <% end %>
               </div>
         </div>

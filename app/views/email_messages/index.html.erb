@@ -26,24 +26,24 @@
               <br/>
             <% end %>
           <% else %>
-            <h2><b>No user Notification </b></h2>
+            <h1 style="text-align: center;"><b>No user notification </b></h1>
           <% end %>
         </div>
         <div class="email_message">
           <div class="message">
             <% if @email_message_recipients.present? %>
-                <% if @email_message_recipients.last.email_message.user.profile_image.present? %>
-                  <%= @email_message_recipients.last.email_message.user.profile_image %>
-                <% else %>
-                  <img src="/assets/volImg.jpg"/>
-		            <% end %>
+              <% if @email_message_recipients.last.email_message.user.profile_image.present? %>
+                <%= @email_message_recipients.last.email_message.user.profile_image %>
+              <% else %>
+                <img src="/assets/volImg.jpg"/>
+              <% end %>
             <% end %>
             <div class="messDesc">
               <% if @email_message_recipients.present? %>
                 <h2>
                   <%= @email_message_recipients.last.email_message.user.last_name_initial.capitalize %>
                 </h2>
-		          <% end %>
+              <% end %>
               <h3><% if @email_message_recipients.present? %> <%= @email_message_recipients.last.email_message.subject %><% end %></h3>
               <h4>
                 <% if @email_message_recipients.present? %>
@@ -59,21 +59,21 @@
             <br/>
 
             <div class="messCont">
-	          <% if @email_message_recipients.present? %>
-              <h3><%= @email_message_recipients.last.email_message.message if @email_message_recipients.present? %></h3>
-            </div>
-            <div class="messReply">
-              <%= form_tag send_message_reply_path do %>
-                <%= hidden_field_tag :email_message_id, @email_message_recipients.last.email_message.id if @email_message_recipients.present? %>
-                <%= text_area_tag :message, nil, :required => true, :placeholder=> "Send A Reply...", :rows=> "4",  :columns=> "100" %>
-                <div class="messSend">
-                  <%= submit_tag "Reply", :onclick => 'if($("#message").val() == ""){alert("Please fill out this message box.")}' %></div>
+              <% if @email_message_recipients.present? %>
+                <h3><%= @email_message_recipients.last.email_message.message if @email_message_recipients.present? %></h3>
+                </div>
+                <div class="messReply">
+                  <%= form_tag send_message_reply_path do %>
+                    <%= hidden_field_tag :email_message_id, @email_message_recipients.last.email_message.id if @email_message_recipients.present? %>
+                    <%= text_area_tag :message, nil, :required => true, :placeholder=> "Send A Reply...", :rows=> "4",  :columns=> "100" %>
+                    <div class="messSend">
+                      <%= submit_tag "Reply", :onclick => 'if($("#message").val() == ""){alert("Please fill out this message box.")}' %></div>
+                  <% end %>
+                </div>
+              <% else %>
+                <h1 style="text-align: center;"><b><%=t :no_user_notification %></b></h1>
               <% end %>
-            </div>
-		       <% else %>
-	            <h1><b>No user notification</b></h1>
-		      <% end %>
-          </div>
+              </div>
         </div>
       </div>
 </section>
@@ -85,16 +85,13 @@
         <h1 style="margin-top: 5px;">New Message</h1>
         <div class="newMess">
           <%= form_for @email_message, url: email_messages_path do |f| %>
-            <%# flash.each do |key, value| %>
-              <!--<div class="<%#= flash_class(key) %>">-->
-                <%#= value %>
-              <!--</div>-->
-            <%# end %>
+            <% flash.each do |name, msg| %>
+              <%= content_tag :div, msg, class: "alert alert-info" %>
+            <% end %>
             <!--<input type="text" placeholder="To:"/><br/>-->
             <%= email_field_tag :email, nil, :required => true, :multiple => true, :placeholder => "To:" %> <br/>
             <%= f.text_field :subject, :required => true, :placeholder => "Subject:" %>
             <%= f.text_area :message, :required => true, :placeholder => "Send A Reply..."%>
-            <!--<input type="submit" value="Send">-->
             <%= f.submit "Send" %>
           <% end %>
         </div>
@@ -138,14 +135,14 @@
 </section>
 <!--Middle content ends here-->
 <script language="javascript" type="text/javascript">
-//	$(document).ready(function() {
-//		var timeout = setInterval(autoRefresh_div, 10000);
-//		function autoRefresh_div()
-//		{
-//			$(".messCont").load(location.href+" .messCont");
-//			$(".messCont").load(location.href+" .messCont >*","");
-//		}
-//	});
+	//	$(document).ready(function() {
+	//		var timeout = setInterval(autoRefresh_div, 10000);
+	//		function autoRefresh_div()
+	//		{
+	//			$(".messCont").load(location.href+" .messCont");
+	//			$(".messCont").load(location.href+" .messCont >*","");
+	//		}
+	//	});
 
 	$("#accordion").accordion({
 		active: false,

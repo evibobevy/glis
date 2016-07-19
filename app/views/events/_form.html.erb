@@ -1,10 +1,15 @@
 <link href="/assets/bootstrap.min.css" rel="stylesheet">
+<!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>-->
+<script src="/assets/jquery.validate.min.js"></script>
 <div class="newgig-sec">
   <div class="fixed-wrapper">
     <div class="inbox">
       <div class="corner3"></div>
       <h1>Create A Gig</h1>
       <%= form_for @event, :html => { :multipart => true } do |f| %>
+        <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, class: "alert alert-info" %>
+        <% end %>
         <div class="createGig-left">
           <% if @event.errors.any? %>
             <div id="error_explanation">
@@ -25,6 +30,7 @@
             </ul>
             <%= hidden_field_tag :user_role %>
           </div>
+          <label id="user_role_error" for="user_role" generated="true" class="error">This field is required.</label>
           <div class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle gig"><span id="dropdown_gig">Type of Gig<span>*</span><b class="caret"></b>
             <%#= f.select :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), {}, :include_blank => true %> </a>
@@ -38,12 +44,19 @@
             </ul>
             <%= hidden_field_tag :type_of_gig %>
           </div>
+          <label id="type_of_gig_error" for="user_role" generated="true" class="error">This field is required.</label>
           <%= f.text_field :location, :placeholder => 'Location *', :required => true %> <br/>
-          <%= f.text_field :event_date, :id=> "datepicker", :placeholder=> "Start Date *" %><br/>
-          <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" %><br/>
+          <%= f.text_field :event_date, :id=> "datepicker", :placeholder=> "Start Date *", :required => true %><br/>
+          <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" , :required => true %><br/>
           <div class="time">
-            <%= f.text_field :event_start_time, :class=> "timepicker", :placeholder=> "Start Time *" %>
-            <%= f.text_field :event_end_time, :class => "timepicker1", :placeholder=> "End Time *"  %>
+            <span style="float: left; width: 50%;">
+              <%= f.text_field :event_start_time, :class=> "timepicker", :placeholder=> "Start Time *" %> <br />
+              <label id="start_time_error" for="user_role" generated="true" class="error">This field is required.</label>
+            </span>
+            <span style="float: right; width: 50%;">
+              <%= f.text_field :event_end_time, :class => "timepicker1", :placeholder=> "End Time *" %> <br />
+              <label id="end_time_error" for="user_role" generated="true" class="error">This field is required.</label>
+            </span>
           </div>
           <div class='switchQuestions'>
             <div class="questions">
@@ -70,7 +83,7 @@
           <%= f.text_area :basic_info, :placeholder => 'Basic Info *', :required => true %>
           <%= f.text_area :full_description, :placeholder => 'Full Description *', :required => true %><br/>
           <div class="upload">
-            <span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload" %></span>
+            <span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload", :required => true %></span>
           </div>
           <div class="submitCancel">
             <input type="button" value="Cancel", class="btn-cancel"/>
@@ -82,6 +95,7 @@
   </div>
   <!--</div>-->
   <script>
+	  $('#new_event').validate();
 	  $(function() {
 		  $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
 		  $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd' });
@@ -131,11 +145,59 @@
 			select_value = $('#dropdown_gig').text();
 			$('#type_of_gig').val(select_value);
 		});
-
+	  $('#new_event').submit(function(){
+		  if ($('#user_role').val() == "") {
+			  $('#user_role_error').show();
+		  }
+	  });
+		// START SHOW THE VALIDATION OF DROP DOWN
+		$('#new_event').submit(function(){
+			if ($('#user_role').val() == "") {
+				$('#type_of_gig_error').show();
+			}
+		});
+		$('#new_event').submit(function(){
+			if ($('#type_of_gig').val() == "") {
+				$('#type_of_gig_error').show();
+			}
+		});
+	  $('#new_event').submit(function(){
+		  if ($('#event_event_start_time').val() == "") {
+			  $('#start_time_error').show();
+		  }
+	  });
+	  $('#new_event').submit(function(){
+		  if ($('#event_event_end_time').val() == "") {
+			  $('#end_time_error').show();
+		  }
+	  });
+// END SHOW THE VALIDATION OF DROP DOWN
 	</script>
   <style>
+	  .error{
+		  color: red;
+	  }
+	  #user_role_error{
+		  display: none;
+	  }
+	  #type_of_gig_error{
+		  display: none;
+	  }
+	  #start_time_error{
+		  display: none;
+	  }
+	  #end_time_error{
+		  display: none;
+	  }
 	  #event_full_description{
 		  height: 150px;
+	  #event_full_description{
+		  height: 150px;
+	  }
+	  .flash-notice {
+		  color: #4F8A10;
+		  background-color: #DFF2BF;
+		  width: 50%;
 	  }
   </style>
 
