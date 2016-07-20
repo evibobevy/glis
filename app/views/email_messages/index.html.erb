@@ -47,10 +47,6 @@
               <h3><% if @email_message_recipients.present? %> <%= @email_message_recipients.last.email_message.subject %><% end %></h3>
               <h4>
                 <% if @email_message_recipients.present? %>
-                  <%# seconds = (TimeDifference.between(Time.now, @email_message_recipients.last.email_message.created_at).in_seconds.to_i) %>
-                  <%# mm, ss = seconds.divmod(60) %>
-                  <%# hh, mm = mm.divmod(60) %>
-                  <%# dd, hh = hh.divmod(24) %>
                   <% if time_diff_for_email_message(@email_message_recipients.last.email_message)[0] > 0 %><span><%= "%d " % "#{time_diff_for_email_message(@email_message_recipients.last.email_message)[0]}" %></span> days
                   <% end %>
                 <% end %>
@@ -88,8 +84,8 @@
             <% flash.each do |name, msg| %>
               <%= content_tag :div, msg, class: "alert alert-info" %>
             <% end %>
-            <!--<input type="text" placeholder="To:"/><br/>-->
             <%= email_field_tag :email, nil, :required => true, :multiple => true, :placeholder => "To:" %> <br/>
+            <%= hidden_field_tag :foundation_user_email, @foundation if @foundation.present? %>
             <%= f.text_field :subject, :required => true, :placeholder => "Subject:" %>
             <%= f.text_area :message, :required => true, :placeholder => "Send A Reply..."%>
             <%= f.submit "Send" %>
@@ -135,14 +131,14 @@
 </section>
 <!--Middle content ends here-->
 <script language="javascript" type="text/javascript">
-	//	$(document).ready(function() {
-	//		var timeout = setInterval(autoRefresh_div, 10000);
-	//		function autoRefresh_div()
-	//		{
-	//			$(".messCont").load(location.href+" .messCont");
-	//			$(".messCont").load(location.href+" .messCont >*","");
-	//		}
-	//	});
+//	$(document).ready(function() {
+//		var timeout = setInterval(autoRefresh_div, 10000);
+//		function autoRefresh_div()
+//		{
+//			$(".messCont").load(location.href+" .messCont");
+//			$(".messCont").load(location.href+" .messCont >*","");
+//		}
+//	});
 
 	$("#accordion").accordion({
 		active: false,
@@ -151,6 +147,8 @@
 		collapsible: true,
 		create: function(event, ui) { $("#accordion").show(); }
 	});
+	select_value = $('#foundation_user_email').val();
+	$('#email').val(select_value);
 </script>
 <style>
 	#ui-id-4 .note{

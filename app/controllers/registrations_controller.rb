@@ -91,6 +91,7 @@ class RegistrationsController < Devise::RegistrationsController
     @user.password = params[:password] if params[:password].present?
     @user.password_confirmation = params[:password_confirmation] if params[:password].present?
     @user.save
+    flash[:alert] = "Password successfully update. "
     redirect_to new_user_session_path
   end
 

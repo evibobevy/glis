@@ -1,6 +1,7 @@
 class EmailMessagesController < ApplicationController
   respond_to :html,:js
   before_action :authenticate_user!, only: [:index]
+  before_action :foundation_detail, only: [:index]
 
   def index
     @email_message = EmailMessage.new
@@ -21,19 +22,23 @@ class EmailMessagesController < ApplicationController
       permitted_emails.each do |email|
         @email_message.email_message_recipients.build(:email=> email)
         if @email_message.save && not_permitted_email.present?
-          flash[:alert] = "Email send to #{permitted_emails.join(",")} and  #{not_permitted_email.join(",")} EmailId is not permitted or not exist.."
+          flash[:alert] = "Email is successfully send to #{permitted_emails.join(",")} and  #{not_permitted_email.join(",")} EmailId is not permitted or not exist.."
         else
-          flash[:alert] = "Email send to #{permitted_emails.join(",")}.."
+          flash[:alert] = "Email is successfully send to #{permitted_emails.join(",")}.."
         end
       end
     else
-      flash[:alert] = "#{not_permitted_email.join(",")} email is not permitted or not exist.."
+      flash[:alert] = "#{not_permitted_email.join(",")} EmailId is not permitted or not exist.."
     end
     redirect_to :back and return
   end
 
   def email_message_detail
     @email_message  = EmailMessage.find(params[:email_message_id])
+  end
+
+  def foundation_detail
+    @foundation  = Foundation.find(params[:foundation_id]).user.email if params[:foundation_id].present?
   end
 
   def send_message_reply
@@ -48,10 +53,8 @@ class EmailMessagesController < ApplicationController
         if @recipent_data.valid?
           @recipent_data.save
         end
-        flash[:notice] = "Email Message saved"
         redirect_to :back and return
       else
-        flash[:error] = "Error occurred when Sending message."
         redirect_to :back and return
       end
     end

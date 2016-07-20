@@ -78,7 +78,6 @@
           </div>
         </div>
         <div class="createGig-right">
-          <!--<input type="text" placeholder="Foundation Name (Optional)"/><br/>-->
           <%= f.text_field :foundation_name, :placeholder => 'Foundation Name (Optional)' %><br/>
           <%= f.text_area :basic_info, :placeholder => 'Basic Info *', :required => true %>
           <%= f.text_area :full_description, :placeholder => 'Full Description *', :required => true %><br/>
@@ -171,6 +170,11 @@
 			  $('#end_time_error').show();
 		  }
 	  });
+	  $('#new_event').submit(function(){
+		  if ($('#event_event_end_time').val() == "") {
+			  $('#fileuplode_error').show();
+		  }
+	  });
 // END SHOW THE VALIDATION OF DROP DOWN
 	</script>
   <style>
@@ -184,6 +188,9 @@
 		  display: none;
 	  }
 	  #start_time_error{
+		  display: none;
+	  }
+	  #fileuplode_errors{
 		  display: none;
 	  }
 	  #end_time_error{

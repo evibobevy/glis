@@ -14,8 +14,8 @@
                 <% if @foundation.image_file_name.present? %><%= image_tag @foundation.image.url, style: "height: 142px;width: 162px;border: 4px solid #67aa4d;border-radius: 6px;" %>
                 <% else %> <%= image_tag 'no-img.jpg', style: "height: 150px;width: 150px;border: 4px solid #67aa4d;border-radius: 6px;" %>
                 <% end %>
-                <%= f.file_field :image, value: "CHANGE LOGO"  %>
-                <!--<img src="/assets/stayIcon.png" alt=""><button>CHANGE LOGO</button>-->
+                <%= f.file_field :image, value: "CHANGE LOGO", :style=> "display:none;"  %>
+	              <button id="logo_btn">CHANGE LOGO</button>
               </li></div> </div>
             <div class="found-prf-left-cont">
               <div class="nameSettings">
@@ -264,7 +264,10 @@
 		else
 			return true;
 	});
-
+	$('#logo_btn').click(function(){
+		$("#foundation_image").click();
+		return false;
+	});
 </script>
 <style>
 	#error_explanation h2 {

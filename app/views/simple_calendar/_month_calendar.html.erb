@@ -20,8 +20,8 @@
                     <%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %> </b><br>
                   <b style ="font-size: x-small;"><%= today_gig.title.titleize %> </b>
                   <% if user_signed_in? %>
-                    <div class="gig_info" style="display:none">
-                      <% if today_gig.location.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3><%= today_gig.location.titleize %><% end %>
+                    <div class="gig_info" style="display:none; width: 95%;">
+                      <% if today_gig.location.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3 style="width: 80%;"><%= today_gig.location.titleize %><% end %>
                       <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Details:</b> <%= today_gig.full_description %><% end %>
                       <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <div><%= link_to 'View GIG', "javascript:void(0)" %> </div><% end %>
                       <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %><div><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> </div><% end %>
@@ -42,8 +42,8 @@
                     <% if today_gig.event_end_time.present? %><%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %><% end %> </b><br>
                   <b style ="font-size: x-small;"><% if today_gig.title.present? %><%= today_gig.title.titleize %> <% end %></b>
                   <% if user_signed_in? %>
-                    <div class="gig_info" style="display:none">
-                      <% if today_gig.location.present? %> <b>Address:</b></h3> <h3><%= today_gig.location.titleize %><% end %>
+                    <div class="gig_info" style="display:none; width: 95%;">
+                      <% if today_gig.location.present? %> <b>Address:</b></h3> <h3 style="width: 80%;"><%= today_gig.location.titleize %><% end %>
                       <% if today_gig.full_description.present? %> <b>Details:</b> <%= today_gig.full_description %><% end %>
                       <%= link_to 'View GIG', "javascript:void(0)" %> <br>
                       <%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %>
@@ -67,8 +67,8 @@
                     <%= today_foundation.end_time.try(:strftime, "%I:%M %p") %> </b><br>
                   <b style ="font-size: x-small;"><%= today_foundation.name.titleize %> </b>
                   <% if user_signed_in? %>
-                    <div class="gig_info" style="display:none">
-                      <% if today_foundation.city.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3><%= today_foundation.city.titleize %><% end %>
+                    <div class="gig_info" style="display:none; width: 95%; ">
+                      <% if today_foundation.city.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3 style="width: 80%;"><%= today_foundation.city.titleize %><% end %>
                       <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <b>Details:</b> <%= today_foundation.description %><% end %>
                       <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <%= link_to 'View GIG', "javascript:void(0)" %> <br><% end %>
                       <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> <% end %>
