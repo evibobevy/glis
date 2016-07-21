@@ -18,9 +18,7 @@ class FoundationsController < ApplicationController
         params[:images].each do |image|
           @picture = @foundation.foundation_pictures.create(:image => image)
         end
-        flash[:notice] = "Event Added."
-      else
-        flash[:notice] = "Some thing went Wrong......."
+        #flash[:notice] = "Event Added."
       end
       redirect_to :back and return
     end
@@ -46,7 +44,7 @@ class FoundationsController < ApplicationController
 
   def show
     @posts = @foundation.posts
-    @post = Post.first
+    @post = Post.foundation_posts
   end
 
   private
@@ -61,6 +59,6 @@ class FoundationsController < ApplicationController
 
   def foundation_params
 # params.require(:foundation).permit(:name, :city, :state, :description, :everyone_view_profile, :everyone_view_calendar, :everyone_invite_you_to_events, :everyone_view_posts, :everyone_message_you, :volunteers_need_approval_to_join_your_gigs, :supporters_need_approval_to_comment_on_your_posts, :phone_number, :email_notifications, :text_notifications, :mobile_ping_notifications, :image)
-  params.require(:foundation).permit(:name, :city, :description, :start_date, :end_date, :start_time, :end_time, :anyone_volunteer, :open_to_the_public, :recurring, :basic_info, :description, :everyone_view_profile, :everyone_view_calendar, :everyone_invite_you_to_events, :everyone_view_posts, :everyone_message_you, :volunteers_need_approval_to_join_your_gigs, :supporters_need_approval_to_comment_on_your_posts, :phone_number, :email_notifications, :text_notifications, :mobile_ping_notifications, :image, :user_role, :type_of_foundation)
+    params.require(:foundation).permit(:name, :city, :description, :start_date, :end_date, :start_time, :end_time, :anyone_volunteer, :open_to_the_public, :recurring, :basic_info, :description, :everyone_view_profile, :everyone_view_calendar, :everyone_invite_you_to_events, :everyone_view_posts, :everyone_message_you, :volunteers_need_approval_to_join_your_gigs, :supporters_need_approval_to_comment_on_your_posts, :phone_number, :email_notifications, :text_notifications, :mobile_ping_notifications, :image, :user_role, :type_of_foundation, :state)
   end
 end

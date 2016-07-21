@@ -1,3 +1,4 @@
+<script src="/assets/jquery.validate.min.js"></script>
 <div class="fixed-wrapper">
   <div class="createGig">
     <div class="corner3"></div>
@@ -23,9 +24,9 @@
           </ul>
           <%= hidden_field_tag :user_role %>
         </div>
+        <label id="foundation_user_role_error" for="user_role" generated="true" class="error">This field is required.</label>
         <div class="dropdown">
           <a href="#" data-toggle="dropdown" class="dropdown-toggle foundation"><span id="dropdown_foundation">Type of Gig<span>*</span><b class="caret"></b>
-            <%#= f.select :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), {}, :include_blank => true %> </a>
           <ul class="dropdown-menu foundation">
             <li><a>Community</a></li>
             <li><a>Environment</a></li>
@@ -34,16 +35,29 @@
             <li><a>Faith</a></li>
             <li><a>Other</a></li>
           </ul>
-          <%= hidden_field_tag :type_of_foundation %>
+            <%= hidden_field_tag :type_of_foundation %>
         </div>
+        <label id="foundation_event_type_error" for="type_of_foundation" generated="true" class="error">This field is required.</label>
         <%= f.text_field :city, :placeholder => 'Location *', :required => true %> <br/>
-        <div class="date">
-          <%= f.text_field :start_date, :id=> "datepicker", :placeholder=> "Start Date *" %>
-          <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" %>
+        <div class="date_foundation">
+	        <span style="float: left; width: 50%;">
+            <%= f.text_field :start_date, :id=> "datepicker", :placeholder=> "Start Date *" %>
+	          <label id="foundation_start_date_error" for="start_date" generated="true" class="error">This field is required.</label>
+		      </span>
+	        <span style="float: right; width: 50%;">
+            <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" %>
+	          <label id="foundation_end_date_error" for="end_date" generated="true" class="error">This field is required.</label>
+		      </span>
         </div>
-        <div class="time">
-          <%= f.text_field :start_time, :class=> "timepicker", :placeholder=> "Start Time *" %>
-          <%= f.text_field :end_time, :class => "timepicker1", :placeholder=> "End Time *"  %>
+        <div class="time_foundation">
+	        <span style="float: left; width: 50%;">
+            <%= f.text_field :start_time, :class=> "timepicker", :placeholder=> "Start Time *" %> <br />
+	          <label id="foundation_start_time_error" for="start_time" generated="true" class="error">This field is required.</label>
+		      </span>
+	        <span style="float: right; width: 50%;">
+            <%= f.text_field :end_time, :class => "timepicker1", :placeholder=> "End Time *"  %>
+	          <label id="foundation_end_time_error" for="end_time" generated="true" class="error">This field is required.</label>
+		      </span>
         </div>
         <div class='switchQuestions'>
           <div class="questions">
@@ -53,26 +67,29 @@
           </div>
           <div class="switch">
             <div>
-              <%= f.check_box :anyone_volunteer, :class=>"form-control" %>
+              <%= f.check_box :recurring, :class=>"form-control" %>
             </div>
             <div>
               <%= f.check_box :open_to_the_public, :class=>"form-control" %>
             </div>
             <div>
-              <%= f.check_box :recurring, :class=>"form-control" %>
+              <%= f.check_box :anyone_volunteer, :class=>"form-control" %>
             </div>
           </div>
         </div>
       </div>
       <div class="createGig-right">
-        <%#= f.text_field :name, :placeholder => 'Foundation Name (Optional)' %>
-        <input type="text" placeholder="Foundation Name (Optional)"/><br/>
+        <%= f.text_field :name, :placeholder => 'Foundation Name (Optional)' %>
+        <!--<input type="text" placeholder="Foundation Name (Optional)"/>-->
+        <br/>
         <%= f.text_area :basic_info, :placeholder => 'Basic Info *', :required => true %>
         <%= f.text_area :description, :placeholder => 'Full Description *', :required => true %><br/>
-        <div class="upload"><span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload" %></span><h5>Upload a photo:</h5></div>
+        <div class="upload">
+          <span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload", :required => true  %></span>
+        </div>
         <div class="submitCancel">
           <input type="button" value="Cancel", class="btn-cancel"/>
-          <%= f.submit "Create Gig" %>
+          <%= f.submit "Create Foundation" %>
         </div>
       </div>
     <% end %>
@@ -80,6 +97,7 @@
 </div>
 
 <script>
+	$('#new_foundation').validate();
 	$(function(argument) {
 		$('[type="checkbox"]').bootstrapSwitch();
 	})
@@ -126,10 +144,62 @@
 		select_value = $('#dropdown_foundation').text();
 		$('#type_of_foundation').val(select_value);
 	});
+	//	Show and hide the validation message
+	$('#new_foundation').submit(function(){
+		if ($('#user_role').val() == "") {
+			$('#foundation_user_role_error').show();
+		}
+	});
+	$('#new_foundation').submit(function(){
+		if ($('#type_of_foundation').val() == "") {
+			$('#foundation_event_type_error').show();
+		}
+	});
+	$('#new_foundation').submit(function(){
+		if ($('#foundation_start_time').val() == "") {
+			$('#foundation_start_time_error').show();
+		}
+	});
+	$('#new_foundation').submit(function(){
+		if ($('#foundation_end_time').val() == "") {
+			$('#foundation_end_time_error').show();
+		}
+	});
+	$('#new_foundation').submit(function(){
+		if ($('#datepicker').val() == "") {
+			$('#foundation_start_date_error').show();
+		}
+	});
+	$('#new_foundation').submit(function(){
+		if ($('#datepicker1').val() == "") {
+			$('#foundation_end_date_error').show();
+		}
+	});
 </script>
 <style>
 	#foundation_description{
 		height: 110px;
+	}
+	.error{
+		color: red;
+	}
+	#foundation_user_role_error{
+		display: none;
+	}
+	#foundation_event_type_error{
+		display: none;
+	}
+	#foundation_start_time_error{
+		display: none;
+	}
+	#foundation_end_time_error{
+		display: none;
+	}
+	#foundation_start_date_error{
+		display: none;
+	}
+	#foundation_end_date_error{
+		display: none;
 	}
 </style>
 

@@ -100,7 +100,7 @@ class FriendshipsController < ApplicationController
       @user_supporters = @user.friendships.find_unremove_friend.uniq.reject{|user| user.user_id == @user.id}
       @post = Post.first
       @posts = @user.posts if @user.posts.present?
-      @comments = Post.first.comments
+      @comments = @post.comments if @post.present?
     end
   end
 

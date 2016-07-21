@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
     elsif self.state.present?
       self.state.capitalize
     elsif !self.city.present? && !self.state.present?
-      'Los Angeles, CA'
+      ' '
     else
       'Los Angeles, CA'
     end
@@ -48,12 +48,6 @@ class User < ActiveRecord::Base
 
   def last_name_initial
     self.first_name + " " + self.last_name[0] + '.'
-  end
-
-  def self.search(search)
-    if search
-      where('first_name LIKE ?', "%#{search}%")
-    end
   end
 
   def self.email_notification?

@@ -140,4 +140,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  match "*path", to: "welcome#catch_404", via: :all
 end

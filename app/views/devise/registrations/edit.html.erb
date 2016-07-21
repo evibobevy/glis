@@ -229,7 +229,6 @@
           <div class="cleat"></div>
           <div class="fixed-wrapper">
             <div class="saveSettings">
-              <!--<input type="submit" value="Save Privacy Settings">-->
               <%= f.submit "Save Privacy Settings" %>
               <input type="button" value="Reset Privacy Settings" class="reset-privacy-setting-btn">
             </div>
@@ -318,6 +317,16 @@
 		else
 			return true;
 	});
+	$('.user_images').submit(function(){
+		var val = $(".upload_image").val();
+		if(val == ''){
+			alert("Please uploads User image");
+			return false;
+		}
+		else
+			return true;
+	});
+
 	$('#button').click(function () {
 		$("input[type='file']").trigger('click');
 	})

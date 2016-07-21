@@ -131,15 +131,14 @@
 </section>
 <!--Middle content ends here-->
 <script language="javascript" type="text/javascript">
-//	$(document).ready(function() {
-//		var timeout = setInterval(autoRefresh_div, 10000);
-//		function autoRefresh_div()
-//		{
-//			$(".messCont").load(location.href+" .messCont");
-//			$(".messCont").load(location.href+" .messCont >*","");
-//		}
-//	});
-
+	$(document).ready(function() {
+		var timeout = setInterval(autoRefresh_div, 10000);
+		function autoRefresh_div()
+		{
+			$(".messCont").load(location.href+" .messCont");
+			$(".messCont").load(location.href+" .messCont >*","");
+		}
+	});
 	$("#accordion").accordion({
 		active: false,
 		autoHeight: false,

@@ -13,14 +13,18 @@ class FoundationPicturesController < ApplicationController
       redirect_to :back and return
     else
       @foundation = Foundation.find(params[:foundation_id])
-      @foundation_pictures = @foundation.foundation_pictures.build(foundation_picture_params)
-      if @foundation_pictures.save
-        flash[:notice] = "Foundation picture Added."
-        redirect_to :back and return
-      else
-        flash[:notice] = "Error Foundation picture."
-        redirect_to :back and return
-      end
+     if !params[:foundation_picture][:user_foundation_picture_id].present?
+        @foundation_pictures = @foundation.foundation_pictures.build(foundation_picture_params)
+        if @foundation_pictures.save
+          flash[:notice] = "Foundation picture Added."
+          redirect_to :back and return
+        else
+          flash[:notice] = "Error Foundation picture."
+          redirect_to :back and return
+        end
+     else
+       redirect_to :back and return
+     end
     end
   end
 
