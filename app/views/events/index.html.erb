@@ -55,42 +55,23 @@
           <h3 class="rgt-hd">Top 6 Glis Volunteers</h3>
           <% if @last_six_users.present? %>
             <% last_six_user = 6 - @last_six_users.size %>
-            <% if @last_six_users.count == 1 %>
-			        <% last_six_user = last_six_user -1 %>
               <% @last_six_users.in_groups_of(2, false) do |volunteer| %>
                 <% for vol in volunteer %>
-                  <ul>
-                    <li>
-                      <% if vol.user_pictures.first.present? %>
-                        <%= image_tag vol.user_pictures.first.image.url(:medium), alt: '', style: 'height: 149px; width: 141px' %>
-                      <% else %>
-                        <%= image_tag '/assets/noImg.jpg', alt: '' %>
-                      <% end %>
-                      <span class="vol-name-over"> <%= vol.last_name_initial %> </span>
-                    </li>
-                    <li> <img src="/assets/noImg.jpg" alt="" > <span class="vol-name-over"> </span> </li>
-                  </ul>
+                <ul>
+                  <li style="margin-right: 10px;">
+                    <% if vol.user_pictures.first.present? %>
+                      <%= image_tag vol.user_pictures.first.image.url(:medium), alt: '', style: 'height: 149px; width: 141px' %>
+                    <% else %>
+                      <%= image_tag '/assets/noImg.jpg', alt: '' %>
+                    <% end %>
+                    <span class="vol-name-over"> <%= vol.last_name_initial %> </span>
+                  </li>
+                </ul>
                 <% end %>
               <% end %>
-            <% else %>
-              <% @last_six_users.in_groups_of(2, false) do |volunteer| %>
-                <% for vol in volunteer %>
-                  <ul>
-                    <li>
-                      <% if vol.user_pictures.first.present? %>
-                        <%= image_tag vol.user_pictures.first.image.url(:medium), alt: '', style: 'height: 149px; width: 141px' %>
-                      <% else %>
-                        <%= image_tag '/assets/noImg.jpg', alt: '' %>
-                      <% end %>
-                      <span class="vol-name-over"> <%= vol.last_name_initial %> </span>
-                    </li>
-                  </ul>
-                <% end %>
-              <% end %>
-            <% end %>
             <ul>
               <% 1.upto(last_six_user) do |i| %>
-                <li> <img src="/assets/noImg.jpg" alt="" > <span class="vol-name-over"> </span> </li>
+                <li style="margin-right: 10px;"><img src="/assets/noImg.jpg" alt="" > <span class="vol-name-over"> </span> </li>
               <% end %>
             </ul>
           <% else %>
@@ -222,7 +203,7 @@
             <div class="vol-reply-sec" style="margin-top: 30px;">
               <ul>
                 <li>
-                  <% if @post.present?  %>
+                  <% if @post.present? %>
                     <% @comments = @post.comments.last(2) %>
                     <% @comments.each do |comment|%>
                       <%= render "comment", :comment => comment %>
