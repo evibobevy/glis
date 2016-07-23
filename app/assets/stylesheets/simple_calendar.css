@@ -29,7 +29,7 @@
 .simple-calendar td {
     vertical-align: top;
     /*width: 80px;*/
-    overflow: hidden;s
+    overflow: hidden;
 }
 .simple-calendar .day {
     margin: 12px 12px 12px 12px;
