@@ -38,7 +38,7 @@ a.btn-join {font-size:26px; height: 50px;line-height: 52px;}
 .vol-left-main {width:100%;}
 .volunteer-lft {margin-bottom:20px;}
 .volunteer-rgt {width:100%; float:left;}
-.volunteer-rgt ul li {width:140px; margin-right:}
+.volunteer-rgt ul li {width:140px; margin-right:0px;}
 .volunteer-rgt ul li:nth-child(2n) {margin-right:0px;}
 .volunteer-rgt ul {width:300px; margin:0 auto; float:none; word-wrap: break-word;}
 .vol-name-over {width:125px; min-height:60px; font-size:12px;}
