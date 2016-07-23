@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 
+ruby '2.2.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
 # Use sqlite3 as the database for Active Record
@@ -22,6 +23,7 @@ gem 'omniauth-facebook'
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
 gem 'time_difference', '~> 0.4.2'
 gem 'fancybox2-rails'
+gem 'rails_12factor', group: "production"
 gem "simple_calendar", "~> 2.0"
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -45,5 +47,5 @@ gem 'spring',        group: :development
 # gem 'capistrano-rails', group: :development
 
 # Use debugger
-gem 'debugger2'
+gem 'debugger2', group: :development
 
