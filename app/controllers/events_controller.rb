@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 
   def index
     @events         = Event.includes(:posts).last(3)
-    @post           = Post.first
+    @post           = Post.event_posts
     @posts          = current_user.friends.collect {|i| i.posts}.flatten.uniq if user_signed_in?
     @comments       = @post.comments if @post.present?
     @last_six_users = User.last(6)
@@ -44,7 +44,7 @@ class EventsController < ApplicationController
       if @event.save && params[:images].present?
         params[:images].each do |image|
           @picture = @event.pictures.create(:image => image)
-          flash[:success] = "Event successfully created"
+          flash[:success] = "Event successfully created.."
         end
         redirect_to event_list_path
       end
@@ -103,8 +103,8 @@ class EventsController < ApplicationController
 
   def search_users
     if params[:search_user].present? || params[:search_location].present? || params[:type_of_gig].present?
-      #@users = User.includes(:events).where("lower(first_name) LIKE ? AND lower(city) LIKE ? OR events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig]])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
-      @users = User.includes(:events).where("lower(city) LIKE ? AND lower(first_name) LIKE ?" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
+      #@users = User.joins(:events).where("lower(first_name) LIKE ? OR lower(city) LIKE ? AND events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig].downcase])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
+      @users = User.includes(:events).where("lower(city) LIKE ? OR lower(first_name) LIKE ?" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
     end
   end
 

@@ -22,13 +22,13 @@ class EmailMessagesController < ApplicationController
       permitted_emails.each do |email|
         @email_message.email_message_recipients.build(:email=> email)
         if @email_message.save && not_permitted_email.present?
-          flash[:alert] = "Email is successfully send to #{permitted_emails.join(",")} and  #{not_permitted_email.join(",")} EmailId is not permitted or not exist.."
+          flash[:alert] = "Email is successfully send to #{permitted_emails.join(",")} and  #{not_permitted_email.join(",")} Email ID is not permitted or does not exist.."
         else
           flash[:alert] = "Email is successfully send to #{permitted_emails.join(",")}.."
         end
       end
     else
-      flash[:alert] = "#{not_permitted_email.join(",")} EmailId is not permitted or not exist.."
+      flash[:alert] = "#{not_permitted_email.join(",")} Email ID is not permitted or does not exist.."
     end
     redirect_to :back and return
   end

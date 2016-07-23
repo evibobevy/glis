@@ -35,8 +35,7 @@ Rails.application.routes.draw do
   end
 
   resources :volunteers
-  resources :foundations, except: :show
- #resources :foundations
+  resources :foundations, except: :index
   resources :foundation_pictures
   post 'foundation_pictures/update' => 'foundation_pictures#update', as: :foundations_update
   get 'foundation_calendar', :to => 'foundations#foundation_calendar'

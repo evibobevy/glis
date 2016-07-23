@@ -9,13 +9,9 @@
       <ul>
         <li><a href="#">Home</a></li>
         <% if user_signed_in? %>
-          <!--<li><a href="#">Settings</a></li>-->
           <li><%= link_to "Inbox", inbox_notifications_path(:page=> "inbox_notifications") %></li>
-          <!--<li><a href="#">Settings</a></li>-->
           <li><%= link_to 'Settings',"#" %></li>
-          <!--<li><a href="#">Inbox</a></li>-->
         <% end %>
-        <!--<li><a href="#">Sitemap</a></li>-->
         <li><%= link_to 'Sitemap', events_sitemap_path %></li>
         <% if user_signed_in? %>
           <li><a href="#">Gigs</a></li>

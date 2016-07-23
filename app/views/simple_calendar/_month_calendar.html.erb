@@ -164,7 +164,7 @@
                 <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>
                   <% if @next_month_foundation.present? %>
                     <div class="border"><h4>Upcoming Foundation</h4>
-                      <% @next_month_foundation.each do |next_foundation|%>
+                      <% @next_month_foundation.past_months_foundations.each do |next_foundation|%>
                         <% if next_foundation.start_date.present? %><b style ="font-size: x-small;"><%= next_foundation.start_date.try(:strftime, '%b %dth, %Y') %> - <% end %> <br>
                         <% if next_foundation.name.present? %><%= next_foundation.name.titleize %></b><% end %><hr />
                       <% end %>
@@ -193,8 +193,8 @@
                 <% end %>
               <% elsif params[:start_date].present? && params[:previous_link].present? && params[:next_link].present? && params[:action] =='event_list' && params[:controller] =='events'  %>
                 <div class="border"><h4>Past Gigs</h4></div>
-                <% if @next_month_event.present? %>
-                  <% @next_month_event.each do |past_gig|%>
+                <% if @next_month_event.past_months_gigs.present? %>
+                  <% @next_month_event.past_months_gigs.each do |past_gig|%>
                     <b style ="font-size: x-small;"><% if past_gig.event_date.present? %> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
                       <% if past_gig.title.present? %><%= past_gig.title.titleize %></b> <hr /><% end %>
                   <% end %>

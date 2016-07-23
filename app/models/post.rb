@@ -11,4 +11,10 @@ class Post < ActiveRecord::Base
   def self.foundation_posts
     where(postable_type:'Foundation')
   end
+  def postable_type_event?
+    self.postable_type == 'Event'
+  end
+  def postable_type_foundation?
+    self.postable_type == 'Foundation'
+  end
 end

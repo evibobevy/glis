@@ -1,4 +1,5 @@
 <link href="http://getbootstrap.com/assets/css/docs.min.css" rel="stylesheet">
+<script src="/assets/jquery.validate.min.js"></script>
 <link href="/assets/main.css" rel="stylesheet">
 <!--Middle content starts here-->
 <section id="midd-container">
@@ -12,6 +13,9 @@
       <div class="user-prf-row1">
         <div class="user-prf-left">
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <% flash.each do |name, msg| %>
+              <%= content_tag :div, msg, class: "alert alert-info" %>
+            <% end %>
             <div class="vol-img-lft">
               <div class="photoSettings">
                 <li>
@@ -26,10 +30,20 @@
             <div class="user-prf-left-cont">
               <div class="nameSettings"> <%= f.text_field :first_name, :required => true, :placeholder => "First Name" %> </div>
               <br/>
+              <!--<div class="city"><%#= f.text_field :city, :required => true, :placeholder => "City" %></div>-->
+              <!--<div class="state"><%#= f.text_field :state, :required => true, :placeholder => "State" %></div>-->
 
-              <div class="city"><%= f.text_field :city, :required => true, :placeholder => "City" %></div>
-              <div class="state"><%= f.text_field :state, :required => true, :placeholder => "State" %></div>
-              <br/>
+              <div class="city">
+              <span style="float: left; width: 50%;">
+              <%= f.text_field :city, :placeholder => "City" %>
+              <label id="city_error" for="city" generated="true" class="error">This field is required.</label>
+              </span>
+              </div>
+              <div class="state">
+              <span style="float: right; width: 50%;">
+              <%= f.text_field :state, :placeholder => "State", :required => true %>
+              </span>
+              </div>
 
               <div class="description">
                 <%= f.text_area :description, :placeholder => "Description", :required => true %>
@@ -206,7 +220,7 @@
                 <h2>Email Notifications?</h2>
 
                 <div class="notificationSettings">
-                  <%= f.text_field :phone_number, :maxlength => "10",  :placeholder => "Phone" %>
+                  <%= f.text_field :phone_number, :required => true, :maxlength => "10",  :placeholder => "Phone" %>
                 </div>
                 <h2>Text/SMS Notifications?</h2>
 
@@ -239,6 +253,12 @@
 </section>
 <!--Middle content ends here-->
 <script>
+	$('#edit_user').validate();
+	$('#edit_user').submit(function(){
+		if ($('#user_city').val() == "") {
+			$('#city_error').show();
+		}
+	});
 	$(function (argument) {
 		$('[type="checkbox"]').bootstrapSwitch();
 	})
@@ -270,6 +290,11 @@
 			$('#blank_message_password').show();
 		}
 		else {
+			if($('#password').val().length < 8 || $('#password_confirmation').val().length < 8){
+				alert("password size should be min 8 char..");
+				$('#password').focus();
+				return false;
+			}
 			if ($('#password').val() == $('#password_confirmation').val()) {
 				$.ajax({
 					type: 'post',
@@ -318,7 +343,7 @@
 			return true;
 	});
 	$('.user_images').submit(function(){
-		var val = $(".upload_image").val();
+		var val = $("#user_picture_user_picture_+this.id").val();
 		if(val == ''){
 			alert("Please uploads User image");
 			return false;
@@ -356,6 +381,14 @@
 	}
 	#not_match_message_password{
 		display: none;
+	}
+	#city_error{
+		display: none;
+	}
+	.error{
+		color: red;
+	}
+	.user-prf-left-cont span{
 	}
 </style>
 <script>

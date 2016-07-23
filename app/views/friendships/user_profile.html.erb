@@ -64,7 +64,7 @@
                     <% if user.friend.present? && user.friend.user_pictures.first.present? %>
                       <%= image_tag user.friend.user_pictures.first.image.url(:medium), style: "height: 65px;" %>
                     <% else %>
-                      <img src="/assets/noImg.jpg"/>
+                      <img src="/assets/no-img.jpg"/>
                     <% end %>
                     <h2><% if user.friend.present? && user.friend.first_name.present? %>
                         <%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %>
@@ -130,22 +130,22 @@
           </div>
         <% end %>
       <% else %>
-        <div style="float:left; width:100%; padding:64px 0 0 0;">
+        <div class="vol-detail-row">
           <div style="float:left; width:19%;">
-            <div class="vol-img-lft"><% if @post.user.user_pictures.first.image.present? %> <%= image_tag @post.user.user_pictures.first.image.url(:medium), style: 'height: 180px; width: 170px;' %><% else %><%= image_tag 'no-img.jpg' %></div> <% end %>
+            <div class="vol-img-lft"><% if @post.user.present? && @post.user.user_pictures.present? && @post.user.user_pictures.first.image.present? %> <%= image_tag @post.user.user_pictures.first.image.url(:medium), style: 'height: 180px; width: 170px;' %><% else %><%= image_tag 'noImg.jpg' %></div> <% end %>
               <% unless @user.friendships.exists?(friend_id:@post.user) %>
                 <%= button_to 'Support', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black support"%>
               <% else %>
                 <%= button_to 'Unsupport',unsupport_path(:friend_id => @post.user), :method => :post, :class=>"btn-black unsupport"%>
               <% end %>
               <%= button_to 'Spread', spread_post_path(:post_id => @post.id), :method => :post, :class=>"btn-black spread"%>
-              <% if @post.event.open_to_the_public? %>
+              <% if @post.present? && @post.postable_type_event? %>
                 <%= button_to 'Join', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black join"%>
               <% end %>
               </div>
         </div>
         <div class="vol-user-comment">
-          <% if !@post.user.nil? %> <h4><%=@post.user.full_name %> <% end %><span>volunteered for</span> <%= @post.event.title %></h4>
+          <% if @post.present? && @post.postable.present? %> <h4><%=@post.user.full_name %> <% end %><span>volunteered for</span> <% if @post.present? && @post.postable_type_event? %><%= @post.postable.title %><% end %></h4>
           <span class="day-time-row"><strong><%= "%d " % "#{time_diff_for_post(@post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(@post)[1]}" %></strong>hours</span>
           <p class="vol-desc"><%= @post.name %></p>
           <div class="vol-reply-sec">

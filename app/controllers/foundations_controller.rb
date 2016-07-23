@@ -8,6 +8,10 @@ class FoundationsController < ApplicationController
     respond_with(@foundation)
   end
 
+  def index
+    redirect_to root_path
+  end
+
   def create
     @foundation = Foundation.new(foundation_params)
     @foundation.user_role = Foundation.user_roles[params[:user_role].downcase.to_sym]
@@ -17,10 +21,12 @@ class FoundationsController < ApplicationController
       if params[:images].present?
         params[:images].each do |image|
           @picture = @foundation.foundation_pictures.create(:image => image)
+          flash[:success] = "Foundation successfully created.."
         end
-        #flash[:notice] = "Event Added."
       end
       redirect_to :back and return
+    else
+      flash[:alert] ="#{@event.errors.full_messages}"
     end
   end
 

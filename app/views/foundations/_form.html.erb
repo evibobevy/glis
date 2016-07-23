@@ -4,6 +4,9 @@
     <div class="corner3"></div>
     <h1>Create A Foundation</h1>
     <%= form_for @foundation, :html => { :multipart => true } do |f| %>
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, class: "alert alert-info" %>
+      <% end %>
       <div class="createGig-left">
         <% if @foundation.errors.any? %>
           <div id="error_explanation">

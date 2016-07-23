@@ -1,4 +1,5 @@
 <!--Register Popup starts here-->
+<script src="/assets/jquery.validate.min.js"></script>
 <%= javascript_include_tag 'user.js'%>
 <div class="register-popup">
   <h3>Register</h3>
@@ -7,7 +8,7 @@
               :html => {:id => "sign_up_user"},
               :format => :json,
               :remote => true ) do |f| %>
-    <%= devise_error_messages! %>
+    <%#= devise_error_messages! %>
     <div class="form-row">
       <div class="col-reg-lft">
         <%= f.text_field :first_name, :placeholder=>"First Name", :required => true %>
@@ -64,3 +65,11 @@
     </div>
   <% end %>
 </div>
+<script>
+//	$('#sign_up_user').validate();
+</script>
+<style>
+	.error{
+		color: red;
+	}
+</style>

@@ -13,8 +13,8 @@ class UserPicturesController < ApplicationController
     else
       @user_picture = current_user.user_pictures.build(user_picture_params)
       if @user_picture.save
-        flash[:notice] = "Picture Created."
         redirect_to :back and return
+        flash[:notice] = "Picture Created."
       else
         redirect_to :back and return
       end

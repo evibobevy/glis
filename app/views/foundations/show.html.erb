@@ -116,7 +116,7 @@
           <% @posts.each do |post|%>
             <div style="float:left; width:100%; padding:64px 0 0 0;">
               <div style="float:left; width:19%;">
-                <div class="vol-img-lft"><% if post.present? %> <%= image_tag post.user.image.url(:medium), style: 'height: 180px; width: 180px;' %></div> <% end %>
+                <div class="vol-img-lft"><% if post.present? && post.user.image.present? %> <%= image_tag post.user.image.url(:medium), style: 'height: 180px; width: 180px;' %><% else %><%= image_tag 'noImg.jpg' %> <% end %></div>
                   <% if user_signed_in? %>
                     <%# unless current_user.friendships.exists?(friend_id:post.user) %>
                       <%= button_to 'Message', inbox_notifications_path(:page=> "inbox_notifications"), :method => :post, :class=>"btn-black support-btn"%>
