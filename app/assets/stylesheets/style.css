@@ -48,7 +48,7 @@ input:-moz-placeholder {opacity:1 !important;}
 
 
 /** CUSTOM SELECT BOX *************************/
-.custom-select-box:before  { position:absolute; right:10px; content:''; height:9px; width:16px; top:14px;background:url(select-down-arrow.png) no-repeat center;}
+.custom-select-box:before  { position:absolute; right:10px; content:''; height:9px; width:16px; top:14px;background:image-url('select-down-arrow.png') no-repeat center;}
 .custom-select-box { position: relative; height:38px; line-height: 37px; width:100%; border-bottom:3px solid #474747; padding:0px 6px; box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; background:#fff;}
 .custom-select-box select { height: 100%; left: 0; top: 0px; position: absolute; width: 100%; z-index: 11;
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=00)"; filter: alpha(opacity=00); -moz-opacity:0.0; -khtml-opacity: 0.0; opacity: 0.0; zoom: 1;-webkit-appearance: none;}
@@ -59,10 +59,10 @@ input:-moz-placeholder {opacity:1 !important;}
 /* CUSTOM CHECKBOX AND RADIO *************************/
 .custom-chk input[type="checkbox"], .custom-opt input[type="radio"] { left:-9999px; position:absolute; }
 .custom-chk label, .custom-opt label { padding-left:30px; min-height:22px; display:block; margin-bottom:10px; }
-.custom-chk label { background:url(chk-uncheck.png) no-repeat;  }
-.custom-chk label.checked { background:url(chk-checked.png) no-repeat; }
-.custom-opt label { background:url(radio-uncheck.png) no-repeat;  }
-.custom-opt label.checked { background:url(radio-checked.png) no-repeat; }
+.custom-chk label { background:image-url('chk-uncheck.png') no-repeat;  }
+.custom-chk label.checked { background:image-url('chk-checked.png') no-repeat; }
+.custom-opt label { background:image-url('radio-uncheck.png') no-repeat;  }
+.custom-opt label.checked { background:image-url('radio-checked.png') no-repeat; }
 .list-view label { float:none; }
 .form-row .thumb-view label { float:left; margin-right:30px; }
 /* ENDED *********************************************/
@@ -80,7 +80,7 @@ input:-moz-placeholder {opacity:1 !important;}
 .hd-search-box {float:left; width:100%; position:relative;}
 .hd-search-box input{border:4px solid #93c281; border-radius:8px; height:44px; padding:0 10px; font-size:20px; width:100%;}
 .header-search {width:483px; float:left; margin:0 27px 0 23px;}
-.search-icon {position:absolute; right:10px; top:5px; background:url("/assets/searchIcon.png") no-repeat; width:32px; height:32px; cursor:pointer;}
+.search-icon {position:absolute; right:10px; top:5px; background:image-url("/assets/searchIcon.png") no-repeat; width:32px; height:32px; cursor:pointer;}
 .inspire-text {font-size:33px; font-family:'GothamRndBold'; color:#5c5b5c; margin:10px 0 0 5px; display:inline-block;}
 
 .header-rgt-btn {float:right; margin:0 0 0 0; width:auto;}
@@ -204,7 +204,7 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 /*register popup css*/
 .register-popup {width:585px; border:6px solid #67aa4d; border-radius:0 12px 12px 12px; margin:10px auto; padding:32px 32px 15px; box-sizing:border-box; overflow:hidden;}
 .register-popup h3 {font-size:26px; color:#5c5b5c; font-family:'GothamRndMedium'; position:relative; margin-bottom:15px; padding-left:20px;}
-.register-popup h3:after {content:""; background:url(regCrnr.png) no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
+.register-popup h3:after {content:""; background:image-url('regCrnr.png') no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
 .form-row {float:left; width:100%; margin-bottom:13px;}
 .col-reg-lft {float:left; width:49%;}
 .col-reg-lft-contact {float:left; width:93%;}
@@ -218,7 +218,7 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 button{-moz-border:0px;}
 .contact-popup {width:580px; height: 600px; border:6px solid #67aa4d; border-radius:0 12px 12px 12px; margin:10px; padding:32px 32px 15px; box-sizing:border-box; overflow:hidden;}
 .contact-popup h3 {font-size:26px; color:#5c5b5c; font-family:'GothamRndMedium'; position:relative; margin-bottom:15px; padding-left:20px; padding-top: 5px;}
-.contact-popup h3:after {content:""; background:url(regCrnr.png) no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
+.contact-popup h3:after {content:""; background:image-url('regCrnr.png') no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
 .contact-popup input[type="text"], .contact-popup textarea, .contact-popup input[type="email"], .contact-popup input[type="password"] {border:3px solid #979797; border-radius:8px; height:46px; padding:0 13px; font-size:16px; width:100%;}
 .contact-popup .modal-body {padding:0px;}
 .contact-popup .modal-header {padding:15px 0; border:none;}
