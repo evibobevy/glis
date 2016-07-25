@@ -49,6 +49,7 @@ class EventsController < ApplicationController
         redirect_to event_list_path
       end
     else
+      redirect_to event_list_path
       flash[:alert] ="#{@event.errors.full_messages}"
     end
   end

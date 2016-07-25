@@ -266,10 +266,8 @@
 		$("input[type=text], textarea").val("");
 	});
 	$('.reset-privacy-setting-btn').click(function () {
-		$('input[type=checkbox]').prop('checked', true);
-		$("#user_email").val("");
-		$("#user_phone_number").val("");
-		window.location.reload();
+		$("input[type=checkbox]").bootstrapSwitch('state', true);
+
 	});
 	$(".change_user_image").click(function(){
 		$("#edit_user_picture_"+this.id).show();

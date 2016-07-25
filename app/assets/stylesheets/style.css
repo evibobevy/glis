@@ -292,7 +292,7 @@ button{-moz-border:0px;}
 .newMess input[type=email]{font-size:16px; width: 100%; padding: 10px;margin-bottom:20px;border:none;border-bottom:1px solid #5c5b5c;}
 .newMess form textarea {width: 85%;height:250px; font-size: 16px;border:none; border-bottom:1px solid #5c5b5c;}
 .newMess input[type=submit] {margin-top:200px; padding-bottom:20px;float: right; border: none; border-bottom: 1px solid #5c5b5c; margin-right: 0px;width:15%; font-family: "GothamRndBold";font-size: 20px; background-color: #fff; color:#67AA4D;}
-.newMess input[type=submit]:focus {margin-top:203px; padding-bottom:20px;float: right; border: none; border-bottom: 1px solid #5c5b5c; margin-right: 0px;width:15%; font-family: "GothamRndBold";font-size: 20px; background-color: #fff; color:#67AA4D;}
+.newMess input[type=submit]:focus {margin-top:200px; padding-bottom:20px;float: right; border: none; border-bottom: 1px solid #5c5b5c; margin-right: 0px;width:15%; font-family: "GothamRndBold";font-size: 20px; background-color: #fff; color:#67AA4D;}
 
 .note-sec {width: 100%; background: #fff; padding: 60px 0 0 0;}
 .noteBox {width: 100%; height:300px; border: 3px solid #5c5b5c; border-radius: 10px; overflow: auto; }

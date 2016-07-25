@@ -5,9 +5,11 @@ class Event < ActiveRecord::Base
   has_many :pictures, :dependent => :destroy
   has_attached_file :image, styles: { medium: "200x200#", thumb: "100x100>" }
   #validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
-  validates :title,  :presence => true
+  validates :title,:location,  :presence => true
   validate :validate_git_start_date
   validate :validate_gig_end_date
+  validates :user_role, presence: true
+  validates :type_of_gig, presence: true
 
   scope :latest_months_event, lambda { where("event_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_month, Time.zone.now.end_of_month) }
   scope :past_months_gigs, lambda { where("event_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_month, Time.zone.now.beginning_of_day) }

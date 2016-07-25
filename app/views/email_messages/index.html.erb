@@ -1,4 +1,5 @@
 <link href="/assets/jquery-ui.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
+<script src="/assets/jquery.validate.min.js"></script>
 <script src="/assets/jquery-ui.js"></script>
 <section id="midd-container">
   <div class="message-sec">
@@ -84,11 +85,14 @@
             <% flash.each do |name, msg| %>
               <%= content_tag :div, msg, class: "alert alert-info" %>
             <% end %>
-            <%= email_field_tag :email, nil, :required => true, :multiple => true, :placeholder => "To:" %> <br/>
+            <%= email_field_tag :email, nil, :multiple => true, :placeholder => "To:" %> <br/>
+            <label id="email_error" for="email" generated="true" class="error">This field is required.</label>
             <%= hidden_field_tag :foundation_user_email, @foundation if @foundation.present? %>
-            <%= f.text_field :subject, :required => true, :placeholder => "Subject:" %>
-            <%= f.text_area :message, :required => true, :placeholder => "Send A Reply..."%>
+            <%= f.text_field :subject, :placeholder => "Subject:" %>
+            <label id="subject_error" for="email_message_subject" generated="true" class="error">This field is required.</label>
+            <%= f.text_area :message,  :placeholder => "Send A Reply..."%>
             <%= f.submit "Send" %>
+            <label id="message_error" for="email_message_message" generated="true" class="error">This field is required.</label>
           <% end %>
         </div>
       </div>
@@ -131,14 +135,14 @@
 </section>
 <!--Middle content ends here-->
 <script language="javascript" type="text/javascript">
-	$(document).ready(function() {
-		var timeout = setInterval(autoRefresh_div, 10000);
-		function autoRefresh_div()
-		{
-			$(".messCont").load(location.href+" .messCont");
-			$(".messCont").load(location.href+" .messCont >*","");
-		}
-	});
+		$(document).ready(function() {
+			var timeout = setInterval(autoRefresh_div, 10000);
+			function autoRefresh_div()
+			{
+				$(".messCont").load(location.href+" .messCont");
+				$(".messCont").load(location.href+" .messCont >*","");
+			}
+		});
 	$("#accordion").accordion({
 		active: false,
 		autoHeight: false,
@@ -148,10 +152,45 @@
 	});
 	select_value = $('#foundation_user_email').val();
 	$('#email').val(select_value);
+
+	$('#new_email_message').submit(function(){
+		if ($('#email_message_message').val() == "") {
+			$('#message_error').show();
+			return false;
+		}
+	});
+	$('#new_email_message').submit(function(){
+		if ($('#email_message_subject').val() == "") {
+			$('#subject_error').show();
+			return false;
+		}
+	});
+		$('#new_email_message').submit(function(){
+			if ($('#email').val() == "") {
+				$('#email_error').show();
+				return false;
+			}
+		});
+		$('#new_email_message').validate();
 </script>
 <style>
 	#ui-id-4 .note{
 		background-color: white;
 		border-bottom: none;
+	}
+	email:valid {
+		border: 1px solid green;
+	}
+	.error{
+		color: red;
+	}
+	#message_error{
+		display: none;
+	}
+	#email_error{
+		display: none;
+	}
+	#subject_error{
+		display: none;
 	}
 </style>

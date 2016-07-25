@@ -44,7 +44,7 @@
             </ul>
             <%= hidden_field_tag :type_of_gig %>
           </div>
-          <label id="type_of_gig_error" for="user_role" generated="true" class="error">This field is required.</label>
+          <label id="type_of_gig_error" for="type_of_gig" generated="true" class="error">This field is required.</label>
           <%= f.text_field :location, :placeholder => 'Location *', :required => true %> <br/>
           <%= f.text_field :event_date, :id=> "datepicker", :placeholder=> "Start Date *", :required => true %><br/>
           <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" , :required => true %><br/>
