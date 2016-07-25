@@ -1,4 +1,3 @@
-<style>
 @font-face { font-family: 'GothamRndBold'; src: url('/assets/GothamRnd-Bold.otf') format('OpenType');}
 @font-face { font-family: 'GothamRndBook'; src: url('/assets/GothamRnd-Book.otf') format('OpenType');}
 @font-face { font-family: 'GothamRndMedium'; src: url('/assets/GothamRnd-Medium.otf') format('OpenType');}
@@ -276,4 +275,3 @@
   visibility: hidden;
 }    
 }
-  </style>

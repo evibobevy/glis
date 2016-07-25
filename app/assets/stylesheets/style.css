@@ -259,8 +259,8 @@ button{-moz-border:0px;}
 .event_title {  float: left;  color: black;  margin-left: 20px;  margin-right: 320px;  padding: 5px;  border-left: 3px solid gray;  position: relative;  padding-right:3px;  color: gray;  margin-top: 25px;  font-family: GothamRndMedium;  font-size: 14px;  }
 .event_title:after {  content: "";  display:block;  width:18%;  height:3px;  padding:0;  margin:0;  background-color:gray;  position: absolute;  left:-3px;;  top:-1px;  }
 .event_title h1{  color: black;  }
-.arrow_right {  width: 0;  height: 0;  border-bottom: 5px solid transparent;  /* left arrow slant */  border-top: 10px solid transparent; /* right arrow slant */  border-left: 21px solid green; /* bottom, add background color here */  font-size: 0;  line-height: 0;  margin-left: 10px;  }
-.arrow_left {  width: 0;  height: 0;  border-bottom: 5px solid transparent;  /* left arrow slant */  border-top: 10px solid transparent; /* right arrow slant */  border-right: 21px solid green; /* bottom, add background color here */  font-size: 0;  line-height: 0;  margin-right: 10px;  }
+.arrow_right {  width: 0;  height: 0;  border-bottom: 5px solid transparent;  /* left arrow slant */  border-top: 10px solid transparent; /* right arrow slant */  border-left: 21px solid green; /* bottom, add background color here */  font-size: 0px;  line-height: 0;  margin-left: 10px;  }
+.arrow_left {  width: 0;  height: 0;  border-bottom: 5px solid transparent;  /* left arrow slant */  border-top: 10px solid transparent; /* right arrow slant */  border-right: 21px solid green; /* bottom, add background color here */  font-size: 0px;  line-height: 0;  margin-right: 10px;  }
 .supports-block {float:left; width:100%; margin:0; padding:40px 0 0 0; border-top: 4px solid #4a4a4a;}
 .supports-block h3 {font-size:32px; margin-bottom:20px;}
 .prf-suppo-list {float:left; width:100%; border:3px solid #67aa4d; border-radius:6px; padding:15px 15px 0 15px; margin-bottom:60px;}

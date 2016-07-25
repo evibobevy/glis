@@ -27,7 +27,7 @@ button{-moz-border:none;}
 .gray-box-row p {font-size:20px;}
 .gray-box-row {padding:10px 0;}
 .volunteer-full {padding:40px 0;}
-.supporters h2{float:right;margin-right: 10px; color:#67AA4D;margin-top:10px; font-size:;}
+.supporters h2{float:right;margin-right: 10px; color:#67AA4D;margin-top:10px; font-size:0;}
 .volunteer-full h3 {font-size:22px; margin-bottom:20px;margin-top: 0px}
 .volunteer-full h3::after {width:40px; height:40px;}
 .stay-icon {width:170px; margin:0 auto; float:none;}
@@ -38,7 +38,7 @@ a.btn-join {font-size:26px; height: 50px;line-height: 52px;}
 .vol-left-main {width:100%;}
 .volunteer-lft {margin-bottom:20px;}
 .volunteer-rgt {width:100%; float:left;}
-.volunteer-rgt ul li {width:140px; margin-right:}
+.volunteer-rgt ul li {width:140px; margin-right:0px;}
 .volunteer-rgt ul li:nth-child(2n) {margin-right:0px;}
 .volunteer-rgt ul {width:300px; margin:0 auto; float:none; word-wrap: break-word;}
 .vol-name-over {width:125px; min-height:60px; font-size:12px;}
