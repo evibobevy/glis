@@ -10,17 +10,18 @@
         <% flash.each do |name, msg| %>
           <%= content_tag :div, msg, class: "alert alert-info" %>
         <% end %>
+        <% if @event.errors.any? %>
+          <div id="errorExplanation">
+            <h2><%= pluralize(@event.errors.count, "error") %> prohibited
+              this post from being saved:</h2>
+            <ul>
+              <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
         <div class="createGig-left">
-          <% if @event.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
-              <ul>
-                <% @event.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
           <%= f.text_field :title, :placeholder => 'Gig Name *', :required => true %><br/>
           <div class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle role"><span id="dropdown_role">Your Role<span>*</span><b class="caret"></b></a>
@@ -48,14 +49,15 @@
           <%= f.text_field :location, :placeholder => 'Location *', :required => true %> <br/>
           <%= f.text_field :event_date, :id=> "datepicker", :placeholder=> "Start Date *", :required => true %><br/>
           <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" , :required => true %><br/>
+          <label id="end_date_error" for="end_date" generated="true" class="error">End date must be greater then start date</label>
           <div class="time">
             <span style="float: left; width: 50%;">
               <%= f.text_field :event_start_time, :class=> "timepicker", :placeholder=> "Start Time *" %> <br />
-              <label id="start_time_error" for="user_role" generated="true" class="error">This field is required.</label>
+              <label id="start_time_error" for="event_start_time" generated="true" class="error">This field is required.</label>
             </span>
             <span style="float: right; width: 50%;">
               <%= f.text_field :event_end_time, :class => "timepicker1", :placeholder=> "End Time *" %> <br />
-              <label id="end_time_error" for="user_role" generated="true" class="error">This field is required.</label>
+              <label id="end_time_error" for="event_end_time" generated="true" class="error">This field is required.</label>
             </span>
           </div>
           <div class='switchQuestions'>
@@ -95,10 +97,6 @@
   <!--</div>-->
   <script>
 	  $('#new_event').validate();
-	  $(function() {
-		  $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-		  $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd' });
-	  });
 	  $(function(){
 		  $('.multi').MultiFile({
 			  accept:'gif|jpg',
@@ -147,34 +145,56 @@
 	  $('#new_event').submit(function(){
 		  if ($('#user_role').val() == "") {
 			  $('#user_role_error').show();
+			  return false;
 		  }
 	  });
 		// START SHOW THE VALIDATION OF DROP DOWN
 		$('#new_event').submit(function(){
 			if ($('#user_role').val() == "") {
 				$('#type_of_gig_error').show();
+				return false;
 			}
 		});
 		$('#new_event').submit(function(){
 			if ($('#type_of_gig').val() == "") {
 				$('#type_of_gig_error').show();
+				return false;
 			}
 		});
 	  $('#new_event').submit(function(){
 		  if ($('#event_event_start_time').val() == "") {
 			  $('#start_time_error').show();
+			  return false;
 		  }
 	  });
 	  $('#new_event').submit(function(){
 		  if ($('#event_event_end_time').val() == "") {
 			  $('#end_time_error').show();
+			  return false;
 		  }
 	  });
 	  $('#new_event').submit(function(){
 		  if ($('#event_event_end_time').val() == "") {
 			  $('#fileuplode_error').show();
+			  return false;
 		  }
 	  });
+	  $('#new_event').submit(function(){
+		  var startDate = new Date($('#datepicker').val());
+		  var endDate = new Date($('#datepicker1').val());
+		  if (endDate < startDate){
+			  $('#end_date_error').show();
+			  return false;
+		  }
+	  });
+//	  $('#new_event').submit(function() {
+//		  var startDate = new Date($('#datepicker').val());
+//		  var endDate = new Date($('#datepicker1').val());
+//		  if ((startDate - endDate === 0)) {
+//			  alert("true");
+//			  return false;
+//	    }
+//	  });
 // END SHOW THE VALIDATION OF DROP DOWN
 	</script>
   <style>
@@ -194,6 +214,9 @@
 		  display: none;
 	  }
 	  #end_time_error{
+		  display: none;
+	  }
+	  #end_date_error {
 		  display: none;
 	  }
 	  #event_full_description{
