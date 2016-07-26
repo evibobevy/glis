@@ -33,7 +33,9 @@
             <% end %>
             <% 1.upto(default_event) do |i| %>
               <div class="volunteer-lft">
-                <div class="stay-icon"><img src="/assets/stayIcon.png" alt=""></div>
+                <div class="stay-icon"><%= image_tag 'stayIcon.png', alt: '' %>
+                  <!--<img src="/assets/stayIcon.png" alt="">-->
+                </div>
                 <div class="stay-detail">
                   <h5> </h5>
                   <span class="date-small"> </span> </div>
@@ -42,7 +44,10 @@
           <% else %>
             <% 1.upto(3) do |i| %>
               <div class="volunteer-lft">
-                <div class="stay-icon"><img src="/assets/stayIcon.png" alt=""></div>
+                <div class="stay-icon">
+                  <%= image_tag 'stayIcon.png', alt: '' %>
+                  <!--<img src="/assets/stayIcon.png" alt="">-->
+                </div>
                 <div class="stay-detail">
                   <h5> </h5>
                   <span class="date-small"> </span>  </div>
@@ -71,13 +76,19 @@
               <% end %>
             <ul>
               <% 1.upto(last_six_user) do |i| %>
-                <li style="margin-right: 10px;"><img src="/assets/noImg.jpg" alt="" > <span class="vol-name-over"> </span> </li>
+                <li style="margin-right: 10px;">
+                  <%= image_tag 'noImg.jpg', alt: '' %>
+                  <!--<img src="/assets/noImg.jpg" alt="" >-->
+                  <span class="vol-name-over"> </span> </li>
               <% end %>
             </ul>
           <% else %>
             <ul>
               <% 1.upto(6) do |i| %>
-                <li> <img src="/assets/noImg.jpg" alt=""> <span class="vol-name-over"> </span> </li>
+                <li>
+                  <%= image_tag 'noImg.jpg', alt: '' %>
+                  <!--<img src="/assets/noImg.jpg" alt="">-->
+                  <span class="vol-name-over"> </span> </li>
               <% end %>
             </ul>
           <% end %>
@@ -95,7 +106,8 @@
                   <% if user.friend.present? && user.friend.user_pictures.first.present? %>
                     <%= image_tag user.friend.user_pictures.first.image.url(:medium), style: "height: 65px;" %>
                   <% else %>
-                    <img src="/assets/noImg.jpg"/>
+                    <%= image_tag 'noImg.jpg', alt: '' %>
+                    <!--<img src="/assets/noImg.jpg"/>-->
                   <% end %>
                   <h2><% if user.friend.present? && user.friend.first_name.present? %>
                       <%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %>
