@@ -40,14 +40,12 @@ class EventsController < ApplicationController
     @event.user_role = Event.user_roles[params[:user_role].downcase.to_sym]
     @event.type_of_gig = Event.type_of_gigs[params[:type_of_gig].downcase.to_sym]
     @event.user_id = current_user.id
-    if @event.valid?
-      if @event.save && params[:images].present?
-        params[:images].each do |image|
-          @picture = @event.pictures.create(:image => image)
-          flash[:success] = "Event successfully created.."
-        end
-        redirect_to event_list_path
+    if @event.save && params[:images].present?
+      params[:images].each do |image|
+        @picture = @event.pictures.create(:image => image)
+        flash[:success] = "Event successfully created.."
       end
+      redirect_to event_list_path
     else
       redirect_to event_list_path
       flash[:alert] ="#{@event.errors.full_messages}"

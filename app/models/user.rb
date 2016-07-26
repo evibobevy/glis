@@ -39,10 +39,8 @@ class User < ActiveRecord::Base
       self.city.capitalize
     elsif self.state.present?
       self.state.capitalize
-    elsif !self.city.present? && !self.state.present?
-      ' '
     else
-      'Los Angeles, CA'
+      ' '
     end
   end
 

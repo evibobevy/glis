@@ -1,9 +1,10 @@
 <div class="message">
-  <% if @email_message.user.profile_image.present? %>
-    <a href="#"><%= @email_message.user.profile_image %>
+  <% if @email_message.present? && @email_message.user.image_file_name.present? %>
+    <%= image_tag @email_message.user.image.url(:medium), style: "height: 105px;width: 100px;" %>
   <% else %>
-    <img src="/assets/volImg.jpg"/>
+    <%= image_tag '/assets/noImg.jpg'%>
   <% end %>
+
   <div class="messDesc">
     <h2><%= @email_message.user.full_name.capitalize %></h2>
     <h3><%= @email_message.subject %></h3>

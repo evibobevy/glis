@@ -78,7 +78,7 @@
               <% picture = 4 - @user_pictures.size %>
               <% @user_pictures.each do |user_picture|%>
                 <li>
-                  <%= image_tag user_picture.image.url, style: "height: 130px;width: 100%;" %>
+                  <%= image_tag user_picture.image.url, style: "height: 128px;width: 100%;" %>
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_image", :id=> "#{user_picture.id}" %>
                   <%= form_for user_picture, url: update_path, :html => {:class => 'user_images'}  do |f| %>
                     <%= f.hidden_field :user_picture_id, :value => user_picture.id %>

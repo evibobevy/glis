@@ -1,5 +1,5 @@
-<link href="/assets/jquery-ui.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
-<script src="/assets/jquery.validate.min.js"></script>
+<!--<link href="/assets/jquery-ui.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html">-->
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
 <script src="/assets/jquery-ui.js"></script>
 <section id="midd-container">
   <div class="message-sec">
@@ -10,33 +10,38 @@
         <div class="mail">
           <% if @email_message_recipients.present? %>
             <% @email_message_recipients.each do |emr| %>
-              <a href="#"><img src="/assets/volImg.jpg"/>
-                <div class="messDesc">
-                  <h2><% if emr.present? %>
-                      <%= link_to emr.email_message.user.last_name_initial, email_message_detail_path(:email_message_id => emr.email_message.id), remote: true %>
-                    <% end %>
-                  </h2>
-                  <h3><% if emr.present? %><%= h truncate(emr.email_message.subject, :length => 10) if emr.email_message.subject.present? %><% end %></h3>
-                  <h4>
+              <% if emr.present? && emr.email_message.present? && emr.email_message.user.image_file_name.present? %>
+                <%= link_to image_tag(emr.email_message.user.image.url(:medium), style: "height: 81px;width: 80px;") , user_profile_path(emr.email_message.user.id) %>
+              <% else %>
+                <%= link_to image_tag('/assets/noImg.jpg') , user_profile_path(emr.email_message.user.id) %>
+              <% end %>
+              <div class="messDesc">
+                <h2><% if emr.present? %>
+                    <%= link_to emr.email_message.user.last_name_initial, email_message_detail_path(:email_message_id => emr.email_message.id), remote: true %>
+                  <% end %>
+                </h2>
+                <h3><% if emr.present? %><%= h truncate(emr.email_message.subject, :length => 10) if emr.email_message.subject.present? %><% end %></h3>
+                <h4>
 	                  <span>
 		                  <% if emr.email_message.created_at.present? %>
 	                      <%= time_diff_for_email_message(emr.email_message)[0] > 0 ? ("%d " % "#{time_diff_for_email_message(emr.email_message)[0]}" + 'days') : '0 days'  %>
 	                    <% end %>
-	                  </span></h4>
-                </div></a>
+	                  </span>
+                </h4>
+              </div></a>
               <br/>
             <% end %>
           <% else %>
-            <h1 style="text-align: center;"><b>No user notification </b></h1>
+            <h1 style="text-align: center;"><b><%=t :no_user_notification %></b></h1>
           <% end %>
         </div>
         <div class="email_message">
           <div class="message">
             <% if @email_message_recipients.present? %>
-              <% if @email_message_recipients.last.email_message.user.profile_image.present? %>
-                <%= @email_message_recipients.last.email_message.user.profile_image %>
+              <% if @email_message_recipients.last.email_message.present? && @email_message_recipients.last.email_message.user.image_file_name.present? %>
+                <%= image_tag @email_message_recipients.last.email_message.user.image.url(:medium), style: "height: 105px;width: 100px;" %>
               <% else %>
-                <img src="/assets/volImg.jpg"/>
+                <%= image_tag '/assets/noImg.jpg'%>
               <% end %>
             <% end %>
             <div class="messDesc">
@@ -60,11 +65,13 @@
                 <h3><%= @email_message_recipients.last.email_message.message if @email_message_recipients.present? %></h3>
                 </div>
                 <div class="messReply">
-                  <%= form_tag send_message_reply_path do %>
+                  <%= form_tag send_message_reply_path , :id => 'message_form'  do %>
                     <%= hidden_field_tag :email_message_id, @email_message_recipients.last.email_message.id if @email_message_recipients.present? %>
-                    <%= text_area_tag :message, nil, :required => true, :placeholder=> "Send A Reply...", :rows=> "4",  :columns=> "100" %>
+                    <%= text_area_tag :message, nil, :placeholder=> "Send A Reply...", :rows=> "4",  :columns=> "100" %>
                     <div class="messSend">
-                      <%= submit_tag "Reply", :onclick => 'if($("#message").val() == ""){alert("Please fill out this message box.")}' %></div>
+                      <%= submit_tag "Reply", :onclick => 'if($("#message").val() == ""){alert("Please fill out this message box.")}' %>
+                    </div>
+                    <label id="message_error" for="message" generated="true" class="error">This field is required.</label>
                   <% end %>
                 </div>
               <% else %>
@@ -92,7 +99,7 @@
             <label id="subject_error" for="email_message_subject" generated="true" class="error">This field is required.</label>
             <%= f.text_area :message,  :placeholder => "Send A Reply..."%>
             <%= f.submit "Send" %>
-            <label id="message_error" for="email_message_message" generated="true" class="error">This field is required.</label>
+            <label id="send_reply_error" for="message" generated="true" class="error">This field is required.</label>
           <% end %>
         </div>
       </div>
@@ -135,14 +142,16 @@
 </section>
 <!--Middle content ends here-->
 <script language="javascript" type="text/javascript">
-		$(document).ready(function() {
-			var timeout = setInterval(autoRefresh_div, 10000);
-			function autoRefresh_div()
-			{
-				$(".messCont").load(location.href+" .messCont");
-				$(".messCont").load(location.href+" .messCont >*","");
-			}
-		});
+	$('#message_form').validate();
+	$('#new_email_message').validate();
+//		$(document).ready(function() {
+//			var timeout = setInterval(autoRefresh_div, 10000);
+//			function autoRefresh_div()
+//			{
+//				$(".messCont").load(location.href+" .messCont");
+//				$(".messCont").load(location.href+" .messCont >*","");
+//			}
+//		});
 	$("#accordion").accordion({
 		active: false,
 		autoHeight: false,
@@ -154,24 +163,23 @@
 	$('#email').val(select_value);
 
 	$('#new_email_message').submit(function(){
-		if ($('#email_message_message').val() == "") {
-			$('#message_error').show();
-			return false;
-		}
-	});
-	$('#new_email_message').submit(function(){
 		if ($('#email_message_subject').val() == "") {
 			$('#subject_error').show();
 			return false;
 		}
 	});
-		$('#new_email_message').submit(function(){
-			if ($('#email').val() == "") {
-				$('#email_error').show();
-				return false;
-			}
-		});
-		$('#new_email_message').validate();
+	$('#new_email_message').submit(function(){
+		if ($('#email_message_message').val() == "") {
+			$('#send_reply_error').show();
+			return false;
+		}
+	});
+	$('#message_form').submit(function(){
+		if ($('#message').val() == "") {
+			$('#message_error').show();
+			return false;
+		}
+	});
 </script>
 <style>
 	#ui-id-4 .note{
@@ -193,4 +201,7 @@
 	#subject_error{
 		display: none;
 	}
+ #send_reply_error{
+	 display: none;
+ }
 </style>

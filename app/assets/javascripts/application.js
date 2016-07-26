@@ -53,8 +53,9 @@ var isMobile = {
     }
 };
 $(function() {
-    $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-    $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd' });
+    var dateToday = new Date();
+    $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd', minDate: dateToday });
+    $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd',minDate: dateToday });
 });
 $(function(){
     $('.multi').MultiFile({
