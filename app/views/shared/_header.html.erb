@@ -14,17 +14,19 @@
       <div class="loged-rgt">
         <div class="after-login-icon">
           <ul>
-            <li><a href="/event_list"><img src="/assets/date-icon.png" alt=""></a></li>
-            <li>
-              <a href="/users/edit"><img src="/assets/setting-icon.png" alt=""></a>
-            </li>
-            <li><a href="/inbox_notifications"><img src="/assets/email-icon.png" alt=""></a></li>
-            <li><a href="#"><img src="/assets/add-icon.png" alt=""> </a></li>
+	          <li><%= link_to image_tag("date-icon.png"), event_list_path %></li>
+	          <li><%= link_to image_tag("setting-icon.png"), edit_user_registration_path %></li>
+            <li><%= link_to image_tag("email-icon.png"), inbox_notifications_path %></li>
+            <li><%= link_to image_tag("add-icon.png"), "#" %></li>
+            <!--<li><a href="/event_list"><img src="/assets/date-icon.png" alt=""></a></li>-->
+            <!--<li><a href="#"><img src="/assets/add-icon.png" alt=""> </a></li>-->
+            <!--<li><a href="/users/edit"><img src="/assets/setting-icon.png" alt=""></a></li>-->
+            <!--<li><a href="/inbox_notifications"><img src="/assets/email-icon.png" alt=""></a></li>-->
           </ul>
         </div>
         <div class="loged-user">
           <!--<link_to <img src="/assets/after-user-img.jpg" alt="">-->
-          <% if user_signed_in? && current_user.image_file_name.present? %><%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %><% else %><%= link_to image_tag("/assets/after-user-img.jpg", :alt => '', :title => ''), root_path %> <% end %>
+          <% if user_signed_in? && current_user.image_file_name.present? %><%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %><% else %><%= link_to image_tag("noImg.jpg", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %> <% end %>
           <span><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name ||= 'Jameson' %><% end %></span>
         </div>
 	      <%#= link_to "Change your password", edit_user_registration_path%>

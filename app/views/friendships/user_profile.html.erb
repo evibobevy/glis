@@ -4,13 +4,19 @@
     <div class="fixed-wrapper">
       <div class="user-prf-row1">
         <div class="user-prf-left">
-          <div class="vol-img-lft"> <img src="/assets/volImg.jpg" alt=""> </div>
+          <div class="vol-img-lft">
+            <!--<img src="/assets/volImg.jpg" alt="">-->
+            <%= image_tag 'noImg.jpg', alt: "" %>
+          </div>
           <div class="user-prf-left-cont">
             <h2><%= @user.full_name.present? ? @user.full_name : 'Jameson Welch'  %></h2>
             <% if user_signed_in? && !current_user.friendships.exists?(friend_id:@user) %>
               <i class="add-icon"> <%= link_to image_tag('addIcon.jpg'), support_path(:friend_id => @user), :method => :post %> </i>
             <% else %>
-              <i class="add-icon"><img src="/assets/addIcon.jpg" alt=""></i>
+              <i class="add-icon">
+                <!--<img src="/assets/addIcon.jpg" alt="">-->
+                <%= image_tag 'addIcon.jpg', alt: "" %>
+              </i>
             <% end %>
             <span><%= @user.full_address %></span>
             <p style="font-family: 'GothamRndBook'";>
@@ -64,12 +70,13 @@
                     <% if user.friend.present? && user.friend.user_pictures.first.present? %>
                       <%= image_tag user.friend.user_pictures.first.image.url(:medium), style: "height: 65px;" %>
                     <% else %>
-                      <img src="/assets/no-img.jpg"/>
+                      <!--<img src="/assets/no-img.jpg"/>-->
+                      <%= image_tag 'no-img.jpg' %>
                     <% end %>
                     <h2><% if user.friend.present? && user.friend.first_name.present? %>
                         <%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %>
                       <% else %>
-                        John Smith
+                        " "
                       <% end %>
                     </h2>
                   </div>

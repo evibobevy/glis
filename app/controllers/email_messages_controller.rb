@@ -36,7 +36,7 @@ class EmailMessagesController < ApplicationController
   end
 
   def email_message_detail
-    @email_message  = EmailMessage.find(params[:email_message_id])
+    @email_message  = EmailMessage.find(params[:email_message_id]) if params[:email_message_id].present?
   end
 
   def foundation_detail
@@ -55,6 +55,7 @@ class EmailMessagesController < ApplicationController
         if @recipent_data.valid?
           @recipent_data.save
         end
+        flash[:success] = "Message successfully created.."
         redirect_to :back and return
       else
         redirect_to :back and return

@@ -51,6 +51,7 @@ class FoundationsController < ApplicationController
   def show
     @posts = @foundation.posts
     @post = Post.foundation_posts
+    @upcoming_gigs = Event.next_months_gigs
   end
 
   private

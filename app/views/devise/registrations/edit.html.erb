@@ -30,21 +30,18 @@
             <div class="user-prf-left-cont">
               <div class="nameSettings"> <%= f.text_field :first_name, :required => true, :placeholder => "First Name" %> </div>
               <br/>
-              <!--<div class="city"><%#= f.text_field :city, :required => true, :placeholder => "City" %></div>-->
-              <!--<div class="state"><%#= f.text_field :state, :required => true, :placeholder => "State" %></div>-->
-
               <div class="city">
-              <span style="float: left; width: 50%;">
-              <%= f.text_field :city, :placeholder => "City" %>
-              <label id="city_error" for="city" generated="true" class="error">This field is required.</label>
+                <span style="float: left; width: 50%;">
+                <%= f.text_field :city, :placeholder => "City" %> <br />
+                <label id="city_error" for="city" generated="true" class="error">This field is required.</label>
               </span>
               </div>
               <div class="state">
-              <span style="float: right; width: 50%;">
-              <%= f.text_field :state, :placeholder => "State", :required => true %>
-              </span>
+                <span style="float: right; width: 50%;">
+                  <%= f.text_field :state, :placeholder => "State" %><br />
+	                <label id="state_error" for="state" generated="true" class="error">This field is required.</label>
+                </span>
               </div>
-
               <div class="description">
                 <%= f.text_area :description, :placeholder => "Description", :required => true %>
               </div>
@@ -89,25 +86,23 @@
                   <% end %>
               <% end %>
               <% 1.upto(picture) do |i| %>
-                <li><img src="/assets/photoImg.jpg" alt="">
+                <li><%= image_tag 'photoImg.jpg', alt: "" %>
+                  <!--<img src="/assets/photoImg.jpg" alt="">-->
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_user_new_image", :id => "#{i}" %>
                   <%= form_for @picture, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
                     <%= f.submit "Save", :class=>"save_new_user_image" %>
-                    <%#= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
                     <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
                   <% end %>
                 </li>
               <% end %>
             <% else %>
               <% 1.upto(4) do |i| %>
-                <li><img src="/assets/photoImg.jpg" alt="">
+                <li><%= image_tag 'photoImg.jpg', alt: "" %>
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_user_new_image", :id => "#{i}" %>
                   <%= form_for @picture, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
-                    <%#= button_to "Cancel", 'javascript:;', :class=>"cancle_user_image" %>
                     <%= f.submit "Save", :class=>"save_new_user_image" %>
-                    <%#= button_to "Cancle", "javascript;;",:class=> "cancle_new_user_image" %>
                     <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
                   <% end %>
                 </li>
@@ -259,6 +254,11 @@
 			$('#city_error').show();
 		}
 	});
+	$('#edit_user').submit(function(){
+		if ($('#user_state').val() == "") {
+			$('#state_error').show();
+		}
+	});
 	$(function (argument) {
 		$('[type="checkbox"]').bootstrapSwitch();
 	})
@@ -362,6 +362,19 @@
 	});
 </script>
 <style>
+	.error{
+		color: red;
+	}
+	#city_error{
+		font-size: 14px;
+		font-weight: normal;
+		display: none;
+	}
+	#state_error{
+		font-size: 14px;
+		font-weight: normal;
+		display: none;
+	}
 	#error_explanation h2 {
 		display: none;
 	}
@@ -379,14 +392,6 @@
 	}
 	#not_match_message_password{
 		display: none;
-	}
-	#city_error{
-		display: none;
-	}
-	.error{
-		color: red;
-	}
-	.user-prf-left-cont span{
 	}
 </style>
 <script>

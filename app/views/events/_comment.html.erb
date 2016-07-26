@@ -1,5 +1,5 @@
 <li class="comments_<%=comment.id%>">
-  <% if @post.present? && @post.user.present?  %>
+  <% if @post.present? %>
     <div class="reply-img">
       <% if comment.user.present? && comment.present? && comment.user.user_pictures.present? %><%=image_tag comment.user.user_pictures.first.image.url, style: "height: 75px;width: 100%;" %><% else %><%= image_tag 'no-img.jpg', style: 'height: 70px; width: 90px;' %><% end %>
     </div>

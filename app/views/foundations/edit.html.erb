@@ -56,7 +56,8 @@
                   <% end %>
               <% end %>
               <% 1.upto(picture) do |i| %>
-                <li><img src="/assets/photoImg.jpg" alt="">
+                <li><%= image_tag 'photoImg.jpg', alt: "" %>
+                  <!--<img src="/assets/photoImg.jpg" alt="">-->
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_new_user_foundation_image", :id => "#{i}" %>
                   <%= form_for @picture, url: foundations_update_path, :html => {:class => 'new_user_foundation_images', :id=> "new_foundation_picture_#{i}" }  do |f| %>
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
@@ -69,7 +70,8 @@
               <% end %>
             <% else %>
               <% 1.upto(4) do |i| %>
-                <li><img src="/assets/photoImg.jpg" alt="">
+                <!--<li><img src="/assets/photoImg.jpg" alt="">-->
+                <li><%= image_tag 'photoImg.jpg', alt: "" %>
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_new_user_foundation_image", :id => "#{i}" %>
                   <%= form_for @picture, url: foundations_update_path, :html => {:class => 'new_user_foundation_images', :id=> "new_foundation_picture_#{i}" }  do |f| %>
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
