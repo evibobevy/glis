@@ -13,7 +13,7 @@
               <% if emr.present? && emr.email_message.present? && emr.email_message.user.image_file_name.present? %>
                 <%= link_to image_tag(emr.email_message.user.image.url(:medium), style: "height: 81px;width: 80px;") , user_profile_path(emr.email_message.user.id) %>
               <% else %>
-                <%= link_to image_tag('/assets/noImg.jpg') , user_profile_path(emr.email_message.user.id) %>
+                <%= link_to image_tag('noImg.jpg') , user_profile_path(emr.email_message.user.id) %>
               <% end %>
               <div class="messDesc">
                 <h2><% if emr.present? %>
@@ -41,7 +41,7 @@
               <% if @email_message_recipients.last.email_message.present? && @email_message_recipients.last.email_message.user.image_file_name.present? %>
                 <%= image_tag @email_message_recipients.last.email_message.user.image.url(:medium), style: "height: 105px;width: 100px;" %>
               <% else %>
-                <%= image_tag '/assets/noImg.jpg'%>
+                <%= image_tag 'noImg.jpg'%>
               <% end %>
             <% end %>
             <div class="messDesc">

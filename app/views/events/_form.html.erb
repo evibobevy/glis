@@ -10,17 +10,6 @@
         <% flash.each do |name, msg| %>
           <%= content_tag :div, msg, class: "alert alert-info" %>
         <% end %>
-        <% if @event.errors.any? %>
-          <div id="errorExplanation">
-            <h2><%= pluralize(@event.errors.count, "error") %> prohibited
-              this post from being saved:</h2>
-            <ul>
-              <% @event.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
         <div class="createGig-left">
           <%= f.text_field :title, :placeholder => 'Gig Name *', :required => true %><br/>
           <div class="dropdown">
@@ -60,6 +49,7 @@
               <label id="end_time_error" for="event_end_time" generated="true" class="error">This field is required.</label>
             </span>
             <label id="time_error" for="event_end_time" generated="true" class="error">Start Time is greater then End time.</label>
+            <label id="current_time_error" for="event_start_time" generated="true" class="error">Start and End time should be greater than current time for today's date.</label>
           </div>
           <div class='switchQuestions'>
             <div class="questions">
@@ -85,8 +75,9 @@
           <%= f.text_area :basic_info, :placeholder => 'Basic Info *', :required => true %>
           <%= f.text_area :full_description, :placeholder => 'Full Description *', :required => true %><br/>
           <div class="upload">
-            <span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload", :required => true %></span>
+            <span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload" %></span>
           </div>
+          <label id="image_error" for="image" generated="true" class="error">This field is required.</label>
           <div class="submitCancel">
             <input type="button" value="Cancel", class="btn-cancel"/>
             <%= f.submit "Create Gig" %>
@@ -151,12 +142,6 @@
 	  });
 		// START SHOW THE VALIDATION OF DROP DOWN
 		$('#new_event').submit(function(){
-			if ($('#user_role').val() == "") {
-				$('#type_of_gig_error').show();
-				return false;
-			}
-		});
-		$('#new_event').submit(function(){
 			if ($('#type_of_gig').val() == "") {
 				$('#type_of_gig_error').show();
 				return false;
@@ -174,12 +159,7 @@
 			  return false;
 		  }
 	  });
-	  $('#new_event').submit(function(){
-		  if ($('#event_event_end_time').val() == "") {
-			  $('#fileuplode_error').show();
-			  return false;
-		  }
-	  });
+
 	  $('#new_event').submit(function(){
 		  var startDate = new Date($('#datepicker').val());
 		  var endDate = new Date($('#datepicker1').val());
@@ -197,6 +177,29 @@
 			  $('#time_error').show();
 			  return false;
 	    }
+	  });
+
+	  $('#new_event').submit(function() {
+		  now = new Date();
+		  current_time = now.toLocaleTimeString().replace(/:\d+ /, ' ');
+		  var startDate = new Date($('#datepicker').val());
+		  var endDate = new Date($('#datepicker1').val());
+		  var startTime = $('#event_event_start_time').val();
+		  var endTime = $('#event_event_end_time').val();
+		  if ((startDate.getDate() && endDate.getDate()) == now.getDate() && !($('#event_event_end_time').val() == "" && !($('#event_event_end_time').val()))) {
+			  if ((startTime || endTime) < current_time ){
+				  $('#current_time_error').show();
+				  return false;
+			  }
+			  return false;
+		  }
+	  });
+
+	  $('#new_event').submit(function(){
+		  if ($('.multi').val() == "") {
+			  $('#image_error').show();
+			  return false;
+		  }
 	  });
 // END SHOW THE VALIDATION OF DROP DOWN
 	</script>
@@ -227,13 +230,17 @@
 	  }
 	  #event_full_description{
 		  height: 150px;
-	  #event_full_description{
-		  height: 150px;
 	  }
 	  .flash-notice {
 		  color: #4F8A10;
 		  background-color: #DFF2BF;
 		  width: 50%;
 	  }
+	  #image_error{
+		  display: none;
+	  }
+		#current_time_error{
+			display: none;
+		}
   </style>
 

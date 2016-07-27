@@ -9,10 +9,10 @@
             <% if user_signed_in? %> <h2><%= current_user.full_name.present? ? current_user.full_name : 'Jameson Welch'  %></h2> <% end %>
             <i class="add-icon">
               <%= image_tag 'addIcon.jpg', alt: "" %>
-              <!--<img src="/assets/addIcon.jpg" alt="">-->
             </i> <span>
             <% if user_signed_in? && current_user.full_address.present? %>
-              <%=current_user.full_address %> <% end %>
+              <%=current_user.full_address %>
+            <% end %>
           </span>
             <p style="font-family: 'GothamRndBook'";>
               <% if current_user.description.present? && user_signed_in? %><%= current_user.description %>  <% end %>

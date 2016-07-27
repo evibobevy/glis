@@ -112,7 +112,7 @@
                   <h2><% if user.friend.present? && user.friend.first_name.present? %>
                       <%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %>
                     <% else %>
-                      John Smith
+                      " "
                     <% end %>
                   </h2>
                 </div>

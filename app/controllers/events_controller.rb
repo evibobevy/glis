@@ -43,12 +43,12 @@ class EventsController < ApplicationController
     if @event.save && params[:images].present?
       params[:images].each do |image|
         @picture = @event.pictures.create(:image => image)
-        flash[:success] = "Event successfully created.."
       end
+      flash[:success] = "GIG successfully created.."
       redirect_to event_list_path
     else
+      # flash[:alert] ="#{@event.errors.full_messages.join(",")}"
       redirect_to event_list_path
-      flash[:alert] ="#{@event.errors.full_messages}"
     end
   end
 
