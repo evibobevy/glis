@@ -2,7 +2,27 @@
 <script src="/assets/jquery.validate.min.js"></script>
 <%= javascript_include_tag 'user.js'%>
 <div class="register-popup">
-  <h3>Register</h3>
+  <div class="login">
+    <h3>Log In</h3>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form-row">
+        <div class="col-reg-lft">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, placeholder: 'Email', autofocus: true %>
+        </div>
+
+        <div class="col-reg-lft">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, placeholder: 'Password', autocomplete: "off" %>
+        </div>
+
+        <div class="login-submit">
+          <%= f.submit "Your Account", :class => 'login-acct' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <h3>Not A Member?</h3>
   <%=form_for(resource, :as => resource_name,
               :url => registration_path(resource_name),
               :html => {:id => "sign_up_user"},
