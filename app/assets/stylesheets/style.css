@@ -202,6 +202,12 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 .send-feedback a i {background:none;}
 
 /*register popup css*/
+.close a {float:right; font-size:3em;font-family: "GothamRndMedium";text-decoration: none;color:#67aa4d;margin-top: -5%;margin-right: -4%;}
+.close a:hover {color:#979797;}
+.login {border-bottom:3px solid #979797;margin-bottom: 5%;height:180px;}
+.login-acct {background:#2b5d98; border:3px solid #979797; height:45px; color:#fff; font-size:16px; font-family:'GothamRndBold';padding:0 19px; width:100%; box-sizing:border-box; border-radius:8px; cursor:pointer;margin-top: 2%;}
+.login-submit {float:left;width:100%;}
+.register {margin-top: 5%;}
 .register-popup {width:585px; border:6px solid #67aa4d; border-radius:0 12px 12px 12px; margin:10px auto; padding:32px 32px 15px; box-sizing:border-box; overflow:hidden;}
 .register-popup h3 {font-size:26px; color:#5c5b5c; font-family:'GothamRndMedium'; position:relative; margin-bottom:15px; padding-left:20px;}
 .register-popup h3:after {content:""; background:url('regCrnr.png') no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
