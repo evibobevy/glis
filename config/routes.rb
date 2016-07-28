@@ -51,7 +51,7 @@ Rails.application.routes.draw do
   # get 'email_messages/new' => 'email_messages#new', as: :new_email_messages
   #post 'events/create'=> 'events#create'
   #get 'events/:id' => 'events#show', as: :event
-  devise_for :users, :controllers => {:registrations => "registrations", :omniauth_callbacks => "omniauth_callbacks"}
+  devise_for :users, :controllers => {:registrations => "registrations", :omniauth_callbacks => "omniauth_callbacks", :sessions => "users/sessions" }
   devise_scope :user do
     get 'registrations/edit_user' => 'registrations#edit_user'
     get 'registrations/edit_location' => 'registrations#edit_location'
