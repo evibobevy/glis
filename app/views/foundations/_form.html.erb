@@ -52,6 +52,7 @@
 	          <label id="foundation_end_date_error" for="end_date" generated="true" class="error">This field is required.</label>
 		      </span>
         </div>
+        <label id="end_date_is_greater_error" for="end_date" generated="true" class="error">End date must be greater then or equal start to date</label>
         <div class="time_foundation">
 	        <span style="float: left; width: 50%;">
             <%= f.text_field :start_time, :class=> "timepicker", :placeholder=> "Start Time *" %> <br />
@@ -61,6 +62,8 @@
             <%= f.text_field :end_time, :class => "timepicker1", :placeholder=> "End Time *"  %>
 	          <label id="foundation_end_time_error" for="end_time" generated="true" class="error">This field is required.</label>
 		      </span>
+          <label id="foundation_start_time_greater_error" for="start_time" generated="true" class="error">Start Time is greater then End time.</label>
+          <label id="foundation_current_time_error" for="start_time" generated="true" class="error">Start and End time should be greater than current time for today's date.</label>
         </div>
         <div class='switchQuestions'>
           <div class="questions">
@@ -90,6 +93,7 @@
         <div class="upload">
           <span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload", :required => true  %></span>
         </div>
+        <label id="foundation_image_error" for="image" generated="true" class="error">This field is required.</label>
         <div class="submitCancel">
           <input type="button" value="Cancel", class="btn-cancel"/>
           <%= f.submit "Create Foundation" %>
@@ -151,35 +155,90 @@
 	$('#new_foundation').submit(function(){
 		if ($('#user_role').val() == "") {
 			$('#foundation_user_role_error').show();
+			return false;
 		}
 	});
 	$('#new_foundation').submit(function(){
 		if ($('#type_of_foundation').val() == "") {
 			$('#foundation_event_type_error').show();
+			 return false;
+
 		}
 	});
 	$('#new_foundation').submit(function(){
 		if ($('#foundation_start_time').val() == "") {
 			$('#foundation_start_time_error').show();
+			return false;
 		}
 	});
 	$('#new_foundation').submit(function(){
 		if ($('#foundation_end_time').val() == "") {
 			$('#foundation_end_time_error').show();
+			return false;
 		}
 	});
 	$('#new_foundation').submit(function(){
 		if ($('#datepicker').val() == "") {
 			$('#foundation_start_date_error').show();
+			return false;
 		}
 	});
 	$('#new_foundation').submit(function(){
 		if ($('#datepicker1').val() == "") {
 			$('#foundation_end_date_error').show();
+			return false;
 		}
 	});
+	$('#new_foundation').submit(function(){
+		if ($('.multi').val() == "") {
+			$('#image_error').show();
+			return false;
+		}
+	});
+
+	$('#new_foundation').submit(function(){
+		var startDate = new Date($('#datepicker').val());
+		var endDate = new Date($('#datepicker1').val());
+		if (endDate < startDate){
+			$('#end_date_is_greater_error').show();
+			return false;
+		}
+	});
+	$('#new_foundation').submit(function() {
+		var startDate = new Date($('#datepicker').val());
+		var endDate = new Date($('#datepicker1').val());
+		var startTime = $('#foundation_start_time').val();
+		var endTime = $('#foundation_end_time').val();
+		if ((startDate - endDate === 0) && endTime < startTime ) {
+			$('#foundation_start_time_greater_error').show();
+			return false;
+		}
+	});
+
+	$('#new_foundation').submit(function() {
+		now = new Date();
+		current_time = now.toLocaleTimeString().replace(/:\d+ /, ' ');
+		var startDate = new Date($('#datepicker').val());
+		var endDate = new Date($('#datepicker1').val());
+		var startTime = $('#foundation_start_time').val();
+		var endTime = $('#foundation_end_time').val();
+		if ((startDate.getDate() && endDate.getDate()) == now.getDate() && !($('#foundation_end_time').val() == "" && !($('#foundation_end_time').val()))) {
+			if ((startTime || endTime) < current_time ){
+				$('#foundation_current_time_error').show();
+				return false;
+			}
+//			return false;
+		}
+	});
+
 </script>
 <style>
+	#foundation_current_time_error{
+		display: none;
+	}
+	#foundation_start_time_greater_error{
+		display: none;
+	}
 	#foundation_description{
 		height: 110px;
 	}
@@ -202,6 +261,12 @@
 		display: none;
 	}
 	#foundation_end_date_error{
+		display: none;
+	}
+	#foundation_image_error{
+		display: none;
+	}
+	#end_date_is_greater_error{
 		display: none;
 	}
 </style>
