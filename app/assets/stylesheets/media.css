@@ -69,7 +69,7 @@ a.btn-contact {width:220px;}
 .loged-rgt {float:none; margin:20px auto 0 auto; clear:both; overflow:hidden;}
 
 /*popup css*/
-.register-popup {width:96%; padding:15px; height: 405px;}
+ .register-popup {width:96%; padding:15px; height: 600px;}
 .register-popup h3:after {height:30px; width:30px; top: -7px;}
 .register-popup h3 {font-size:23px; margin-bottom: 7px;padding-left: 12px;}
 .register-popup input[type="text"], .register-popup input[type="email"], .register-popup input[type="password"] {width:100%; margin-bottom:7px; border: 2px solid #979797;font-size: 16px;height: 34px;}

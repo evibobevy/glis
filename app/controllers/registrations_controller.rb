@@ -55,6 +55,11 @@ class RegistrationsController < Devise::RegistrationsController
   def edit_phone
   end
 
+  def view_user_foundations
+    @user_foundations = current_user.foundations if user_signed_in?
+    render layout: 'fancybox'
+  end
+
   def update_user
     @user            = User.find_by_id(current_user.id)
     @user.first_name = params[:first_name] if params[:first_name].present?

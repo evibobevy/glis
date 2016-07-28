@@ -1,0 +1,23 @@
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+<div class="register-popup">
+  <!--<div class="close"><a href="#">X</a></div>-->
+  <div id="foundations">
+    <div class="corner"></div>
+    <h1>My Foundations</h1><br/>
+    <div class="volBox">
+      <% if @user_foundations.present? %>
+        <% @user_foundations.in_groups_of(2, false) do |user_foundation| %>
+          <% for foundation in user_foundation %>
+            <div class="supporters">
+              <% if foundation.present? %>
+                <%= image_tag foundation.foundation_pictures.first.image.url(:medium), style: "height: 64px;width :60px;" %>
+                <h2><%= link_to foundation.name.capitalize, foundation_path(:id => foundation.id) %></h2>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <h2 align="center" style="margin: 100px;"><b><%= t(:no_supporter) %></b></h2>
+      <% end %>
+    </div>
+    <!--ends here-->

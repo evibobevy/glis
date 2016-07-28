@@ -66,7 +66,7 @@
       <div class="viewport">
         <ul class="overview">
           <% @upcoming_gigs.each do |upcoming_gig|%>
-            <li><% if upcoming_gig.present? && upcoming_gig.pictures.first.image_file_name.present? %> <%= link_to image_tag(upcoming_gig.pictures.first.image.url(:medium), style: "height: 166px;width: 241px;"),"#" %> <% else %> <%= image_tag 'defaultGigSlide.png' %><% end %> <br/>
+            <li><% if upcoming_gig.present? && upcoming_gig.pictures.present? && upcoming_gig.pictures.first.image_file_name.present? %> <%= link_to image_tag(upcoming_gig.pictures.first.image.url(:medium), style: "height: 166px;width: 241px;"),"#" %> <% else %> <%= image_tag 'defaultGigSlide.png' %><% end %> <br/>
               <h2><%= upcoming_gig.title.present? ? upcoming_gig.title : " " %></h2>
               <h3><%= upcoming_gig.event_date.present? ? upcoming_gig.event_date.try(:strftime, '%B %d, %Y') : " " %></h3>
               <h4><%= upcoming_gig.type_of_gig.present? ? upcoming_gig.type_of_gig : " " %></h4>
@@ -185,9 +185,9 @@
             <div class="vol-detail-row">
               <div class="vol-lft">
                 <div class="vol-img-lft">
-                  <% if @post.present? && @post.user.user_pictures.first.image.present? %> <%= image_tag @post.user.user_pictures.first.image.url(:medium), style: 'height: 180px; width: 180px;'  %><% else %><%= image_tag 'no-img.jpg' %></div> <% end %>
+                  <% if @post.present? && @post.user.present? && @post.user.user_pictures.present? && @post.user.user_pictures.first.image.present? %> <%= image_tag @post.user.user_pictures.first.image.url(:medium), style: 'height: 180px; width: 180px;'  %><% else %><%= image_tag 'no-img.jpg' %></div> <% end %>
                   <% if user_signed_in? && @post.present? %>
-                    <% unless current_user.friendships.exists?(friend_id:post.user) %>
+                    <% unless current_user.friendships.exists?(friend_id:@post.user) %>
                       <%= button_to 'Message', inbox_notifications_path(:page=> "inbox_notifications"), :method => :post, :class=>"btn-black support-btn "%>
                     <% end %>
                   <% else %>

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   resources :foundation_pictures
   post 'foundation_pictures/update' => 'foundation_pictures#update', as: :foundations_update
   get 'foundation_calendar', :to => 'foundations#foundation_calendar'
+  # get 'foundations/user_foundations' => 'foundations#user_foundations'
   # get 'foundations/:id' => 'foundations#foundation_profile', as: :foundation_profile
   # get 'foundations/:id' => 'foundations#show', as: :show
 
@@ -66,6 +67,7 @@ Rails.application.routes.draw do
     post 'registrations/update_settings' => 'registrations#update_settings'
     post 'registrations/update' => 'registrations#update'
     post 'registrations/update_password' => 'registrations#update_password'
+    get 'registrations/view_user_foundations' => 'registrations#view_user_foundations', as: :user_foundations
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

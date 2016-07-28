@@ -24,6 +24,8 @@
                   <% end %>
                   <%= f.file_field :image, value: "CHANGE AVATAR", :class=> "user_image", :style=> "display:none;"%>
                   <button id="falseinput">CHANGE AVATAR</button>
+                  <button id="view_user_foundation">VIEW MY FOUNDATION PROFILES</button>
+                  <%= link_to 'VIEW MY FOUNDATION PROFILES', user_foundations_path, data: { fancybox_width: 600 }, class: 'fancybox view_foundation', :id => "view_foundation", :style=> "display:none;"%>
                 </li>
               </div>
             </div>
@@ -358,6 +360,10 @@
 	})
 	$('#falseinput').click(function(){
 		$("#user_image").click();
+		return false;
+	});
+	$('#view_user_foundation').click(function(){
+		 $("#view_foundation").click();
 		return false;
 	});
 </script>

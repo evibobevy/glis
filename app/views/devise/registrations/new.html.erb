@@ -8,12 +8,10 @@
     <%= form_for resource, url: session_path(:user), remote: true do |f| %>
       <div class="form-row">
         <div class="col-reg-lft">
-          <%= f.label :email %><br />
           <%= f.email_field :email, placeholder: 'Email', :required => true, autofocus: true  %>
         </div>
 
         <div class="col-reg-lft">
-          <%= f.label :password %><br />
           <%= f.password_field :password, placeholder: 'Password', :required => true, autocomplete: "off" %>
         </div>
 
@@ -82,10 +80,10 @@
 
     <div class="form-row">
       <div class="col-reg-lft">
-        <input type="button" class="reg-fb" value="Register with Facebook" onclick="window.location.href='/users/auth/facebook'"></input>
+        <%= f.submit "Submit Registration",:class=>"reg-fb sub-regis" %>
       </div>
       <div class="col-reg-lft">
-        <%= f.submit "Submit Registration",:class=>"reg-fb sub-regis" %>
+        <input type="button" class="reg-fb" value="Register with Facebook" onclick="window.location.href='/users/auth/facebook'"></input>
       </div>
     </div>
   <% end %>

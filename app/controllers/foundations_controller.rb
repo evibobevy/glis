@@ -49,9 +49,13 @@ class FoundationsController < ApplicationController
   end
 
   def show
-    @posts = @foundation.posts
-    @post = Post.foundation_posts
+    @posts = @foundation.posts if  @foundation.present?
+    @post = Post.find_by_postable_type("Foundation")
     @upcoming_gigs = Event.next_months_gigs
+  end
+
+  def user_foundations
+    # render layout: 'fancybox'
   end
 
   private
