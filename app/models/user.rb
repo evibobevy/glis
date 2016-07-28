@@ -64,6 +64,11 @@ class User < ActiveRecord::Base
     everyone_message_you == true
   end
 
+  def self.find_for_database_authentication(conditions={})
+    find_by(email: conditions[:email]) || find_by(email: conditions[:email])
+  end
+
+
   def update_with_password(params={})
     if params[:password].blank?
       params.delete(:password)

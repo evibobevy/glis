@@ -21,7 +21,7 @@ class RegistrationsController < Devise::RegistrationsController
     else
       puts resource.errors.full_messages.inspect
       clean_up_passwords resource
-      return render :json => { :success => false, :error => resource.errors.full_messages }
+      return render :json => { :success => false, :error => resource.errors.full_messages.join(",") }
     end
   end
 

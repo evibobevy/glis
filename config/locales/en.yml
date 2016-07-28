@@ -36,3 +36,4 @@ en:
   profile_setting: "Profile Settings"
   my_supporters: "My Supporters"
   privacy_setting: "Privacy Settings"
+  invalid: "Invalid email or password."

@@ -1,20 +1,23 @@
 <!--Register Popup starts here-->
 <script src="/assets/jquery.validate.min.js"></script>
-<%= javascript_include_tag 'user.js'%>
+<script src="/assets/user.js"></script>
+<%#= javascript_include_tag 'user.js'%>
 <div class="register-popup">
   <div class="login">
     <h3>Log In</h3>
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= form_for resource, url: session_path(:user), remote: true do |f| %>
       <div class="form-row">
         <div class="col-reg-lft">
           <%= f.label :email %><br />
-          <%= f.email_field :email, placeholder: 'Email', autofocus: true %>
+          <%= f.email_field :email, placeholder: 'Email', :required => true, autofocus: true  %>
         </div>
 
         <div class="col-reg-lft">
           <%= f.label :password %><br />
-          <%= f.password_field :password, placeholder: 'Password', autocomplete: "off" %>
+          <%= f.password_field :password, placeholder: 'Password', :required => true, autocomplete: "off" %>
         </div>
+
+        <label id="login_error" for="email" generated="true" class="error">Invalid email or password.</label>
 
         <div class="login-submit">
           <%= f.submit "Your Account", :class => 'login-acct' %>
@@ -28,7 +31,7 @@
               :html => {:id => "sign_up_user"},
               :format => :json,
               :remote => true ) do |f| %>
-    <%#= devise_error_messages! %>
+    <%= devise_error_messages! %>
     <div class="form-row">
       <div class="col-reg-lft">
         <%= f.text_field :first_name, :placeholder=>"First Name", :required => true %>
@@ -39,8 +42,9 @@
     </div>
     <div class="form-row">
       <div class="col-reg-lft">
-        <%= f.email_field :email, :placeholder=>"Email", :required => true  %>
+        <%= f.email_field :email, :placeholder=>"Email", :id=>"register_email",  :required => true  %>
       </div>
+
       <div class="col-reg-lft">
         <%= f.email_field :confirm_email, :placeholder=>"Confirm Email", :required => true, :oninput=>"check_confirm_email(this)" %>
         <script language='javascript' type='text/javascript'>
@@ -53,6 +57,7 @@
           }
         </script>
       </div>
+      <label id="email_exist_error" for="email" generated="true" class="error">Email and email confirm must be matching.</label>
     </div>
 
     <div class="form-row">
@@ -86,10 +91,29 @@
   <% end %>
 </div>
 <script>
-//	$('#sign_up_user').validate();
-</script>
+	$('#new_user').validate();
+	$('#sign_up_user').validate();
+	$('#sign_up_user').submit(function(){
+		if ($('#register_email').val() != $('#user_confirm_email').val() && !$('#register_email').val() == "" && !$('#user_confirm_email').val() == "") {
+			$('#email_exist_error').show();
+			return false;
+		}
+	});
+  </script>
 <style>
 	.error{
 		color: red;
+	}
+	#login_error{
+		display: none;
+	}
+	#email_not_same_error{
+		display: none;
+	}
+	#wrong_password_error{
+		display: none;
+	}
+	#email_exist_error{
+		display: none;
 	}
 </style>
