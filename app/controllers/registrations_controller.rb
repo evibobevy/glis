@@ -1,6 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
   before_action :set_user, only: [:edit, :update, :update_password]
   layout "fancybox", :only => [:new, :create]
+  before_filter :user_pictures, :only => :edit
 
   def new
     super
@@ -19,7 +20,6 @@ class RegistrationsController < Devise::RegistrationsController
         return render :json => { :success => true }
       end
     else
-      puts resource.errors.full_messages.inspect
       clean_up_passwords resource
       return render :json => { :success => false, :error => resource.errors.full_messages.join(",") }
     end
@@ -28,11 +28,21 @@ class RegistrationsController < Devise::RegistrationsController
   def edit
     @user_pictures  = current_user.user_pictures.last(4)  if user_signed_in?
     @supporters = current_user.friendships.find_unremove_friend.reject{|user| user.friend_id == current_user.id}  if user_signed_in?
-    @picture = UserPicture.new
+    # @picture = UserPicture.new
   end
 
   def update
-    super
+    if params[:user][:email].present?
+      if @user.update_attributes(:email => params[:user][:email])
+        flash[:success] = "User successfully updated.."
+        redirect_to edit_user_registration_path
+      else
+        flash[:notice] = "This Email Id already in used.."
+        redirect_to edit_user_registration_path
+      end
+    else
+      super
+    end
   end
 
   def profile_settings
@@ -67,6 +77,10 @@ class RegistrationsController < Devise::RegistrationsController
     @user.save
   end
 
+  def update_user_picture
+    @picture = UserPicture.new
+  end
+
   def update_location
     @user       = User.find_by_id(current_user.id)
     @user.city  = params[:city] if params[:city].present?
@@ -82,8 +96,14 @@ class RegistrationsController < Devise::RegistrationsController
 
   def update_email
     @user       = User.find_by_id(current_user.id)
-    @user.email = params[:email] if params[:email].present?
-    @user.save
+    if params[:email].present?
+      if @user.update_attributes(:email => params[:email])
+        flash[:success] = "Foundation successfully updated.."
+      else
+        flash[:notice] = "This Email Id already in used.."
+      end
+    end
+    redirect_to :back and return
   end
 
   def update_phone
@@ -127,5 +147,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   def after_update_path_for(resource)
     edit_user_registration_path
+  end
+
+  def user_pictures
+    @picture = UserPicture.new
   end
 end

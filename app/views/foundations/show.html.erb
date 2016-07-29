@@ -64,17 +64,21 @@
         <a class="buttons prev" href="#">&#60;</a>
       <% end %>
       <div class="viewport">
-        <ul class="overview">
-          <% @upcoming_gigs.each do |upcoming_gig|%>
-            <li><% if upcoming_gig.present? && upcoming_gig.pictures.present? && upcoming_gig.pictures.first.image_file_name.present? %> <%= link_to image_tag(upcoming_gig.pictures.first.image.url(:medium), style: "height: 166px;width: 241px;"),"#" %> <% else %> <%= image_tag 'defaultGigSlide.png' %><% end %> <br/>
-              <h2><%= upcoming_gig.title.present? ? upcoming_gig.title : " " %></h2>
-              <h3><%= upcoming_gig.event_date.present? ? upcoming_gig.event_date.try(:strftime, '%B %d, %Y') : " " %></h3>
-              <h4><%= upcoming_gig.type_of_gig.present? ? upcoming_gig.type_of_gig : " " %></h4>
-            </li>
-          <% end %>
-        </ul>
+        <% if @upcoming_gigs.present? %>
+          <ul class="overview">
+            <% @upcoming_gigs.each do |upcoming_gig|%>
+              <li><% if upcoming_gig.present? && upcoming_gig.pictures.present? && upcoming_gig.pictures.first.image_file_name.present? %> <%= link_to image_tag(upcoming_gig.pictures.first.image.url(:medium), style: "height: 166px;width: 241px;"),"#" %> <% else %> <%= image_tag 'defaultGigSlide.png' %><% end %> <br/>
+                <h2><%= upcoming_gig.title.present? ? upcoming_gig.title : " " %></h2>
+                <h3><%= upcoming_gig.event_date.present? ? upcoming_gig.event_date.try(:strftime, '%B %d, %Y') : " " %></h3>
+                <h4><%= upcoming_gig.type_of_gig.present? ? upcoming_gig.type_of_gig : " " %></h4>
+              </li>
+            <% end %>
+          </ul>
+		    <% else %>
+          <h2 style="margin: 100px;"><b><%= t(:no_upcomming_volunteer_opportunities) %></b></h2>
+        <% end %>
       </div>
-      <a class="buttons next" href="#">&#62;</a>
+      <% if @upcoming_gigs.present? %> <a class="buttons next" href="#">&#62;</a> <% end %>
     </div>
   </div>
   <div class="fixed-wrapper">

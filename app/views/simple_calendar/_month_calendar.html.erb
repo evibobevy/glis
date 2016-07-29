@@ -36,7 +36,7 @@
                 <%= t(:today_no_event)%>
               <% end %>
             <% else %>
-              <% if @today_s.present? %>
+              <% if @today_gigs.present? %>
                 <% @today_gigs.each do |today_gig|%>
                   <b style ="font-size: x-small;"> <% if today_gig.event_start_time.present? %><%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %><% end %> -
                     <% if today_gig.event_end_time.present? %><%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %><% end %> </b><br>
@@ -118,8 +118,8 @@
             <div class="sched2">
               <% if !params[:start_date].present? && params[:action] =='event_list' && params[:controller] =='events' %>
                 <div class="border"><h4>Upcoming Gigs</h4></div>
-                <% if @latest_month_gigs.present? %>
-                  <% @latest_month_gigs.each do |next_event|%>
+                <% if @latest_month_gigs.next_months_gigs.present? %>
+                  <% @latest_month_gigs.next_months_gigs.each do |next_event|%>
                     <b style ="font-size: x-small;"><% if next_event.event_date.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
                       <% if next_event.title.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.title.titleize %></b><hr /><% end %>
                   <% end %>
@@ -164,7 +164,7 @@
                 <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>
                   <% if @next_month_foundation.present? %>
                     <div class="border"><h4>Upcoming Foundation</h4>
-                      <% @next_month_foundation.past_months_foundations.each do |next_foundation|%>
+                      <% @next_month_foundation.next_months_foundations.each do |next_foundation|%>
                         <% if next_foundation.start_date.present? %><b style ="font-size: x-small;"><%= next_foundation.start_date.try(:strftime, '%b %dth, %Y') %> - <% end %> <br>
                         <% if next_foundation.name.present? %><%= next_foundation.name.titleize %></b><% end %><hr />
                       <% end %>

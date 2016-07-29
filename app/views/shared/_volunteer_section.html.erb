@@ -4,9 +4,17 @@
     <div class="fixed-wrapper">
       <div class="user-prf-row1">
         <div class="user-prf-left">
-          <div class="vol-img-lft"> <% if current_user.image_file_name.present? %> <%= image_tag current_user.image.url, style: "height: 140px;width: 100%;" %><% else %><%= image_tag 'noImg.jpg', alt: '' %> <% end %> </div>
+          <div class="vol-img-lft">
+            <% if current_user.image_file_name.present? || current_user.image.url.present? %>
+              <%= image_tag current_user.image.url, style: "height: 140px;width: 100%;" %>
+            <% else %>
+              <%= image_tag 'noImg.jpg', alt: '' %>
+            <% end %>
+          </div>
           <div class="user-prf-left-cont">
-            <% if user_signed_in? %> <h2><%= current_user.full_name.present? ? current_user.full_name : 'Jameson Welch'  %></h2> <% end %>
+            <% if user_signed_in? && current_user.full_name.present? %>
+              <h2><%= current_user.full_name %></h2>
+            <% end %>
             <i class="add-icon">
               <%= image_tag 'addIcon.jpg', alt: "" %>
             </i> <span>

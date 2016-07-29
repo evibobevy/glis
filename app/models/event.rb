@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   belongs_to :user
   has_many :posts, :as => :postable
   has_many :pictures, :dependent => :destroy
-  has_attached_file :image, styles: { medium: "200x200#", thumb: "100x100>" }
+  has_attached_file :image, styles: { medium: " 200x200#", thumb: "100x100>" } , default_url: "/assets/stayIcon.png"
   #validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   # validates :title, :presence => true
   # validate :validate_git_start_date

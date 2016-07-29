@@ -26,10 +26,9 @@
         </div>
         <div class="loged-user">
           <!--<link_to <img src="/assets/after-user-img.jpg" alt="">-->
-          <% if user_signed_in? && current_user.image_file_name.present? %><%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %><% else %><%= link_to image_tag("noImg.jpg", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %> <% end %>
+          <% if user_signed_in? && current_user.image_file_name.present? || current_user.image.url.present? %><%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %><% else %><%= link_to image_tag("noImg.jpg", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %> <% end %>
           <span><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name ||= 'Jameson' %><% end %></span>
         </div>
-	      <%#= link_to "Change your password", edit_user_registration_path%>
         <%= link_to 'Sign out', destroy_user_session_path, :method => :get, :class => 'after-login-icon' %>
       </div>
     <% else %>

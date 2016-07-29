@@ -24,6 +24,7 @@ en:
   request_not_found: "You have no request at this time. Use the resource below find some supporters who have mutual supporter and volounteer interest!"
   no_mutual_friend: "No mutual friend"
   no_supporter: "No Supporter"
+  no_upcomming_volunteer_opportunities: "Upcoming Volunteer Opportunities"
   no_user_find: "No friend..."
   today_no_event: "Today's No Gigs."
   today_no_foundation: "Today's No Foundation."
@@ -36,4 +37,4 @@ en:
   profile_setting: "Profile Settings"
   my_supporters: "My Supporters"
   privacy_setting: "Privacy Settings"
-  invalid: "Invalid email or password."
+#  invalid: "Invalid email or password."

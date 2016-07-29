@@ -198,7 +198,7 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 
 .loged-user {float:left; width:100px; border:4px solid #1b5506; background:#67aa4d; padding:7px 0 4px; border-radius:6px; text-align:center;}
 .loged-user img {border:2px solid #fff;}
-.loged-user span {display:inline-block; text-align:center; font-size:18px; color:#fff; width:100%; margin:5px 0 0 0;}
+.loged-user span {display:inline-block; text-align:center; font-size:13px; color:#fff; width:100%; margin:5px 0 0 0;}
 .send-feedback a i {background:none;}
 
 /*register popup css*/
@@ -863,7 +863,7 @@ button{-moz-border:0px;}
     float: left;
     margin-right: 0px;
     margin-top: 10px;
-    padding-left: 10px;
+    padding-left: 3px;
     color: #67AA4D;
 }
 #foundations .supporters {

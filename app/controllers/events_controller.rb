@@ -47,7 +47,6 @@ class EventsController < ApplicationController
       flash[:success] = "GIG successfully created.."
       redirect_to event_list_path
     else
-      # flash[:alert] ="#{@event.errors.full_messages.join(",")}"
       redirect_to event_list_path
     end
   end

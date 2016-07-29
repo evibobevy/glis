@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :foundation_friendships, dependent: :destroy
   has_many :friends, :through => :foundation_friendships
   has_many :user_pictures, :dependent => :destroy
-  has_attached_file :image, styles: { medium: "150x200#", thumb: "100x100#", default_url: "noImg.jpg" }
+  has_attached_file :image, styles: { medium: "150x200#", thumb: "100x100#" }, default_url: "/assets/noImg.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   # validates_attachment :image, presence: true, unless: -> { from_omniauth? }
   validates :first_name, :last_name, :confirm_email, :presence => true, unless: -> { from_omniauth? }
