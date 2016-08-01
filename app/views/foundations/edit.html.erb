@@ -15,7 +15,7 @@
             <% end %>
             <div class="found-img-lft"> <div class="photoSettings">
               <li>
-                <% if @foundation.image_file_name.present? %><%= image_tag @foundation.image.url, style: "height: 142px;width: 162px;border: 4px solid #67aa4d;border-radius: 6px;" %>
+                <% if @foundation.image_file_name.present? %><%= image_tag @foundation.image.url, style: "border: 4px solid #67aa4d;border-radius: 6px;" %>
                 <% else %> <%= image_tag 'no-img.jpg', style: "height: 150px;width: 150px;border: 4px solid #67aa4d;border-radius: 6px;" %>
                 <% end %>
                 <%= f.file_field :image, value: "CHANGE LOGO", :style=> "display:none;"  %>
@@ -28,17 +28,13 @@
               <label id="foundation_name_error" for="city" generated="true" class="error">This field is required.</label>
               <br/>
               <div class="city">
-                <span style="float: left; width: 50%;">
-                <%= f.text_field :city, :placeholder => "City" %> <br />
-                <label id="foundation_city_error" for="city" generated="true" class="error">This field is required.</label>
-              </span>
+                <%= f.text_field :city, :placeholder => "City" %>
               </div>
               <div class="state">
-                <span style="float: right; width: 50%;">
-                  <%= f.text_field :state, :placeholder => "State"  %><br />
-	                <label id="foundation_state_error" for="state" generated="true" class="error">This field is required.</label>
-                </span>
+                  <%= f.text_field :state, :placeholder => "State"  %>
               </div>
+              <span><label id="foundation_city_error" for="city" generated="true" class="error">This field is required.</label>
+              <label id="foundation_state_error" for="state" generated="true" class="error" >This field is required.</label><span>
               <div class="description">
                 <%= f.text_area :description, :placeholder => "Description", :required => true %>
               </div>
@@ -55,7 +51,7 @@
               <% picture = 4 - @foundation_pictures.size %>
               <% @foundation_pictures.each do |foundation_picture|%>
                 <li>
-                  <%= image_tag foundation_picture.image.url, style: "height: 130px;width: 100%;" %>
+                  <%= image_tag foundation_picture.image.url %>
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_foundation_image", :id=> "#{foundation_picture.id}"%>
                   <%= form_for foundation_picture, url: foundations_update_path, :html => {:class => 'foundation_images'}  do |f| %>
                     <%= hidden_field_tag :foundation_id, @foundation.id %>
@@ -234,7 +230,7 @@
     </div>
 </section>
 <script>
-	$('.edit_foundation').validate();
+	$('.foundation_edit').validate();
 
 	// Start Validation for update the foundation form
 
@@ -264,10 +260,10 @@ $('.foundation_edit').submit(function(){
 	$('.reset-btn').click(function () {
 		$("input[type=text], textarea").val("");
 	});
-	$('.reset-privacy-setting-btn').click(function () {
-		$("#foundation_phone_number").val("");
-		$("#email").val("");
-	});
+//	$('.reset-privacy-setting-btn').click(function () {
+//		$("#foundation_phone_number").val("");
+//		$("#email").val("");
+//	});
 	$('.reset-privacy-setting-btn').click(function () {
 		$("input[type=checkbox]").bootstrapSwitch('state', true);
 	});

@@ -204,10 +204,12 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 /*register popup css*/
 .close a {float:right; font-size:3em;font-family: "GothamRndMedium";text-decoration: none;color:#67aa4d;margin-top: -5%;margin-right: -4%;}
 .close a:hover {color:#979797;}
+/*.login {border-bottom:3px solid #979797;margin-bottom: 5%;height:180px;}*/
 .login {border-bottom:3px solid #979797;margin-bottom: 5%;height:180px;}
+
 .login-acct {background:#2b5d98; border:3px solid #979797; height:45px; color:#fff; font-size:16px; font-family:'GothamRndBold';padding:0 19px; width:100%; box-sizing:border-box; border-radius:8px; cursor:pointer;margin-top: 2%;}
 .login-submit {float:left;width:100%;}
-.register {margin-top: 5%;}
+.register {margin-top: 5%;padding-top: 15px;}
 .register-popup {width:585px; border:6px solid #67aa4d; border-radius:0 12px 12px 12px; margin:10px auto; padding:32px 32px 15px; box-sizing:border-box; overflow:hidden;}
 .register-popup h3 {font-size:26px; color:#5c5b5c; font-family:'GothamRndMedium'; position:relative; margin-bottom:15px; padding-left:20px;}
 .register-popup h3:after {content:""; background:url('regCrnr.png') no-repeat; width:40px; height:42px; position:absolute; left:0; top:-10px;}
@@ -238,7 +240,14 @@ button{-moz-border:0px;}
 .user-prf-left-cont h2 {font-size:28px; color:#78b55f; font-family:'GothamRndBold'; margin-bottom:10px; display:inline-block; width:80%;}
 .add-icon {float:right; margin:0 0 0 0;}
 .user-prf-left .vol-img-lft {float:left; width:140px; margin-right:20px;}
-.user-prf-left-cont span {font-family: "GothamRndBold";font-size: 25px;width: 100%; margin-bottom:10px; display:inline-block;}
+/*.user-prf-left-cont span {font-family: "GothamRndBold";font-size: 25px;width: 100%; margin-bottom:10px; display:inline-block;}*/
+.user-prf-left-cont span {
+    display: inline-block;
+    font-family: "GothamRndBold";
+    font-size: 25px;
+    margin-bottom: 10px;
+    width: 101%;
+}
 .user-prf-left-cont p{font-size:14px;}
 .user-prf-rgt {float:right; width:200px; border:2px solid #67aa4d; border-radius:6px; padding:15px; box-sizing:border-box; text-align:center; min-height:150px;}
 .user-prf-rgt strong {font-size:25px; font-family: "GothamRndBold";}
@@ -248,7 +257,7 @@ button{-moz-border:0px;}
 .user-photos-row {border-bottom: 4px solid #4a4a4a;border-top: 4px solid #4a4a4a;float: left;padding:20px 0 0 0;width: 100%; margin:30px 0 0 0;}
 .user-photos-row ul {margin:0; padding:0;}
 .user-photos-row ul li {padding:0; list-style:none; float:left; width:23%; margin:0 1% 2.5% 1%;}
-.user-photos-row ul li img {max-width:100%; border:1px solid #979797;}
+.user-photos-row ul li img {max-width:100%; border:1px solid #979797;height: 130px;}
 .user-photos-row ul li:nth-child(4n) {margin-right:0px;}
 .user-prf-vol {}
 
@@ -510,7 +519,7 @@ button{-moz-border:0px;}
 .city input[type="text"]{
     position:relative!important;
     border: 2px solid #979797!important;
-    width: 95% !important;
+    width: 55% !important;
     border-radius: 5px!important;
     padding: 5px!important;
     margin-bottom: 10px!important;
@@ -521,7 +530,7 @@ button{-moz-border:0px;}
 .state input[type="text"]{
     position:relative!important;
     border: 2px solid #979797!important;
-    width: 95% !important;
+    width: 40% !important;
     border-radius: 5px!important;
     padding: 5px!important;
     margin-bottom: 10px!important;
@@ -538,7 +547,6 @@ button{-moz-border:0px;}
     padding: 5px;
     margin-bottom: 3px;
     font-size:14px;
-    height: 100px;
 }
 .foundCreate button {
     float: right;
@@ -590,6 +598,11 @@ button{-moz-border:0px;}
     color: #fff;
     font-family: "GothamRndMedium";
     background-color: #67aa4d;
+}
+.photoSettings li img {
+    height: 148px;
+    margin-left: 0;
+    width: 100%;
 }
 /*Start Css for IMage uploader user edit page */
 .photoSettings li #user_image {
@@ -670,6 +683,18 @@ button{-moz-border:0px;}
     color: #fff;
     font-family: "GothamRndMedium";
     background-color: #67aa4d;
+}
+.saveSettings input[type="button"] {
+    background-color: #5b9ebd;
+    border: medium none;
+    border-radius: 5px;
+    color: #fff;
+    float: left;
+    font-size: 18px;
+    margin-left: 2%;
+    padding: 5px;
+    position: relative;
+    width: 48%;
 }
 
 .supporters a button {
@@ -871,4 +896,15 @@ button{-moz-border:0px;}
     padding: 9px;
     display: block;
     float: left;
+}
+#state_error {
+    display: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding-left: 120px;
+}
+#foundation_state_error  {
+    display: none;
+    font-size: 14px;
+    padding-left: 260px;
 }

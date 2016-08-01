@@ -16,9 +16,9 @@ class EventsController < ApplicationController
 
   def index
     @events         = Event.includes(:posts).last(3)
-    @post           = Post.event_posts
+    @post           = Post.event_posts.first
     @posts          = current_user.friends.collect {|i| i.posts}.flatten.uniq if user_signed_in?
-    @comments       = @post.comments if @post.present?
+    @comments       = @post.comments if @post.comments.present?
     @last_six_users = User.last(6)
     respond_with(@events)
   end

@@ -7,7 +7,7 @@
         <div class="user-prf-left">
           <div class="vol-img-lft">
             <% if @foundation.foundation_pictures.present? && @foundation.foundation_pictures.first.image.url.present? %>
-              <%= image_tag @foundation.foundation_pictures.first.image.url(:medium), alt: '', style: 'height: 123px; width: 140px' %>
+              <%= image_tag @foundation.foundation_pictures.first.image.url(:medium), alt: '', style: 'width: 100%' %>
             <% else %>
               <%= image_tag 'stayIcon.png', alt: "" %>
             <% end %>

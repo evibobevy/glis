@@ -3,7 +3,6 @@
 <link href="/assets/main.css" rel="stylesheet">
 <!--Middle content starts here-->
 <section id="midd-container">
-  <!--new volunteer section-->
   <div class="user-prf-sec">
     <div class="fixed-wrapper">
       <div class="inbox">
@@ -19,7 +18,7 @@
             <div class="vol-img-lft">
               <div class="photoSettings">
                 <li>
-                  <% if current_user.image_file_name.present? %><%= image_tag current_user.image.url, style: "height: 150px;width: 150px;" %>
+                  <% if current_user.image_file_name.present? %><%= image_tag current_user.image.url, style: "border: 4px solid #67aa4d;border-radius: 6px;" %>
                   <% else %> <%= image_tag 'no-img.jpg', style: "height: 150px;width: 150px;" %>
                   <% end %>
                   <%= f.file_field :image, value: "CHANGE AVATAR", :class=> "user_image", :style=> "display:none;"%>
@@ -33,17 +32,13 @@
               <div class="nameSettings"> <%= f.text_field :first_name, :required => true, :placeholder => "First Name" %> </div>
               <br/>
               <div class="city">
-                <span style="float: left; width: 50%;">
-                <%= f.text_field :city, :placeholder => "City" %> <br />
-                <label id="city_error" for="city" generated="true" class="error">This field is required.</label>
-              </span>
+                <%= f.text_field :city, :placeholder => "City" %>
               </div>
               <div class="state">
-                <span style="float: right; width: 50%;">
-                  <%= f.text_field :state, :placeholder => "State" %><br />
-	                <label id="state_error" for="state" generated="true" class="error">This field is required.</label>
-                </span>
+                <%= f.text_field :state, :placeholder => "State" %><br />
               </div>
+              <span><label id="city_error" for="city" generated="true" class="error">This field is required.</label>
+              <label id="state_error" for="state" generated="true" class="error">This field is required.</label> </span>
               <div class="description">
                 <%= f.text_area :description, :placeholder => "Description", :required => true %>
               </div>
@@ -67,8 +62,7 @@
           <p><span><% if user_signed_in? %><%= @supporters.present? ? @supporters.count : 0 %><% end %></span> Supporters </p>
         </div>
         <div class="foundCreate">
-          <button id="foundation_profile">CREATE YOUR<br/>FOUNDATION PROFILE</button>
-	        <%= link_to "CREATE YOUR FOUNDATION PROFILE", foundation_calendar_path, id: "create_foundation", style: "display: none;" %>
+          <button>CREATE YOUR<br/>FOUNDATION PROFILE</button>
         </div>
       </div>
       <div class="user-photos-row">
@@ -78,7 +72,7 @@
               <% picture = 4 - @user_pictures.size %>
               <% @user_pictures.each do |user_picture|%>
                 <li>
-                  <%= image_tag user_picture.image.url, style: "height: 128px;width: 100%;" %>
+                  <%= image_tag user_picture.image.url, style: "width: 100%;" %>
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_image", :id=> "#{user_picture.id}" %>
                   <%= form_for user_picture, url: update_path, :html => {:class => 'user_images'}  do |f| %>
                     <%= f.hidden_field :user_picture_id, :value => user_picture.id %>
@@ -103,7 +97,7 @@
               <% 1.upto(4) do |i| %>
                 <li><%= image_tag 'photoImg.jpg', alt: "" %>
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_user_new_image", :id => "#{i}" %>
-                  <%= form_for UserPicture.new, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
+                  <%= form_for @picture, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
                     <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
                     <%= f.submit "Save", :class=>"save_new_user_image" %>
                     <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
@@ -195,6 +189,9 @@
               <h3>Change your password:</h3>
               <%#= devise_error_messages! %>
               <%= hidden_field_tag :reset_password_token %>
+              <%# flash.each do |name, msg| %>
+              <%#= content_tag :div, msg, class: "alert alert-info" %>
+              <%# end %>
               <label id="success_message_password"><div class="alert alert-info">Password successfully updated.</div></label>
               <label id="blank_message_password"><div class="alert alert-warning">Password & Confirm Password can't be blank.</div></label>
               <label id="not_match_message_password"><div class="alert alert-warning">Password & Confirm Password doesn't match.</div></label>
@@ -211,7 +208,6 @@
 
                 <div class="notificationSettings">
                   <%= f.email_field :email, :required => true, :placeholder => "Email" %>
-                  <%#= email_field_tag :email, nil, :required => true, :placeholder => "Email" %>
                 </div>
                 <h2>Email Notifications?</h2>
 
@@ -257,11 +253,13 @@
 	$('#edit_user').submit(function(){
 		if ($('#user_city').val() == "") {
 			$('#city_error').show();
+			return false;
 		}
 	});
 	$('#edit_user').submit(function(){
 		if ($('#user_state').val() == "") {
 			$('#state_error').show();
+			return false;
 		}
 	});
 	$(function (argument) {
@@ -283,7 +281,7 @@
 		$(this).toggle();
 	});
 
-//	Start Validate passsword
+	//	Start Validate passsword
 	function update_password() {
 		if ($('#password').val() == '' || $('#password_confirmation').val() == '') {
 			if($('#success_message_password').is(':visible')){
@@ -370,23 +368,22 @@
 		return false;
 	});
 	$('#view_user_foundation').click(function(){
-		 $("#view_foundation").click();
+		$("#view_foundation").click();
 		return false;
 	});
 </script>
 <style>
 	.error{
 		color: red;
+		font-size: 12px;
 	}
 	#city_error{
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: normal;
 		display: none;
 	}
 	#state_error{
-		font-size: 14px;
-		font-weight: normal;
-		display: none;
+		font-size: 12px;
 	}
 	#error_explanation h2 {
 		display: none;

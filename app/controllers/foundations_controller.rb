@@ -36,7 +36,7 @@ class FoundationsController < ApplicationController
   end
 
   def update
-    @foundation.update!(foundation_params)
+    @foundation.update(foundation_params)
     if params[:email].present?
       if @foundation.user.update_attributes(:email => params[:email])
         flash[:success] = "Foundation successfully updated.."

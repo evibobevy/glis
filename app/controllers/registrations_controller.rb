@@ -32,17 +32,18 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def update
-    if params[:user][:email].present?
-      if @user.update_attributes(:email => params[:user][:email])
-        flash[:success] = "User successfully updated.."
-        redirect_to edit_user_registration_path
-      else
-        flash[:notice] = "This Email Id already in used.."
-        redirect_to edit_user_registration_path
-      end
-    else
-      super
-    end
+    # if params[:user][:email].present?
+    #   if @user.update_attributes(:email => params[:user][:email])
+    #     flash[:success] = "User successfully updated.."
+    #     redirect_to edit_user_registration_path
+    #   else
+    #     flash[:notice] = "This Email Id already in used.."
+    #     redirect_to edit_user_registration_path
+    #   end
+    # else
+    #   super
+    # end
+    super
   end
 
   def profile_settings
