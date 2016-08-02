@@ -183,10 +183,10 @@
             <div class="sched3">
               <% if !params[:start_date].present?  && params[:action] =='event_list' && params[:controller] =='events'%>
                 <div class="border"><h4>Past Gigs</h4></div>
-                <% if @latest_month_gigs.present? %>
-                  <% @latest_month_gigs.each do |past_gig|%>
-                    <% if past_gig.event_date.present? && past_gig.event_date < Time.zone.now.beginning_of_day %><b style ="font-size: x-small;"> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
-                    <% if past_gig.title.present? && past_gig.event_date < Time.zone.now.beginning_of_day  %><%= past_gig.title.titleize %></b><hr /><% end %>
+                <% if @latest_month_gigs.past_months_gigs.present? %>
+                  <% @latest_month_gigs.past_months_gigs.each do |past_gig|%>
+                    <% if past_gig.event_date.present? && past_gig.event_date < Time.zone.now.end_of_day %><b style ="font-size: x-small;"> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
+                    <% if past_gig.title.present? && past_gig.event_date < Time.zone.now.end_of_day  %><%= past_gig.title.titleize %></b><hr /><% end %>
                   <% end %>
                 <% else %>
                   <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:past_month_no_event)%>   <% end %>
