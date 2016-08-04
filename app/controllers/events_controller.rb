@@ -15,6 +15,7 @@ class EventsController < ApplicationController
     end
   end
 
+
   def index
     @events         = Event.includes(:posts).last(3)
     @post           = Post.event_posts.first if Post.event_posts.first.present?
