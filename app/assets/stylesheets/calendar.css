@@ -31,8 +31,20 @@
       color: #67AA4D;
       padding-top: 5px;
     }
+    .calHead_mob h2 {
+        font-family: "GothamRndBook";
+        font-size: 14px !important;
+        font-weight: 700;
+        margin: 0 0 -30px;
+        text-align: center;
+        color: #67AA4D;
+        padding-top: 5px;
+    }
     .calHead span h2 {
       visibility: hidden;
+    }
+    .calHead_mob span h2 {
+        visibility: hidden;
     }
     h2 {
       font-family: "GothamRndBook";
@@ -186,6 +198,12 @@
     width: 95%;
     margin: 0 auto;
 }
+.calHead_mob {
+    overflow: clear;
+    position: relative;
+    width: 95%;
+    margin: 0 auto;
+}
 .sched {
     width: 95%;
     height: 365px;
@@ -271,7 +289,17 @@
       padding-top: 5px;
       visibility: visible;
     }
-.calHead h2{
-  visibility: hidden;
-}    
+.calHead_mob span h2 {
+    font-family: "GothamRndBook";
+    font-size: 22px !important;
+    font-weight: 700;
+    margin: 0 0 -35px;
+    text-align: center;
+    color: #67AA4D;
+    padding-top: 5px;
+    visibility: visible;
+}
+/*.calHead h2{*/
+  /*visibility: hidden;*/
+/*}    */
 }
