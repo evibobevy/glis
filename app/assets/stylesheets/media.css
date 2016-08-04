@@ -677,6 +677,9 @@
     .contact-popup{
         height: 450px;
     }
+    .calHead{
+        display: none;
+    }
     /*foundations setting page*/
     .saveSettings input[type="button"] {
         background-color: #5b9ebd;
@@ -691,6 +694,12 @@
         width: 100%;
         margin-bottom: 10px;
     }
+    #event_date_picker{
+        padding-top: 0px;
+    }
+    /*.sched{*/
+        /*display: none;*/
+    /*}*/
 }
 
 

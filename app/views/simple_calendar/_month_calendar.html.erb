@@ -6,16 +6,35 @@
         <div class="corner3"></div>
         <h1><%= user_signed_in? ? "My Calendar" : "Event Calendar" %></h1>
         <div id="myCalendar">
+          <!--Start mobile-->
+          <div class="calHead_mob">
+            <!--<i class="flaticon-arrows"></i>-->
+            <span id="event_date_picker" %><h2 class="show_date_time"><%= start_date.day %>
+              <%= I18n.t("date.abbr_month_names")[start_date.month] %> <%= start_date.year %>  </h2>
+            </span>
+            <div  id="datepicker3"></div>
+            <h2 class="show_date_time1"></h2>
+            <!--<i class="flaticon-arrows-1"></i>-->
+          </div>
+	        <br /><br />
+          <!-- END mobile-->
+          <!-- Start todays events web -->
           <div class="calHead">
             <i><%= link_to "", url_for(params.merge(start_date: date_range.first - 1.day, previous_link:  "previous_link") ), remote: true, class:'flaticon-arrows', style: 'float: left; margin-top: 3px;"' %></i>
             <h2><%= I18n.t("date.abbr_month_names")[start_date.month] %> <%= start_date.year %> </h2>
             <i><%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day, next_link:  "next_link")), remote: true, class:'flaticon-arrows-1', style: 'float: left; margin-top: 3px;"' %></i>
           </div>
+	        <!-- Start Mobile calender -->
+          <div class="sched_mobile">
+              <%= render partial: "events/mobile_calendar", locals: {today_gig_mobile: @today_gig_mobile} %>
+          </div>
+          <!-- End Mobile calender -->
+	         <!-- Start Web calender-->
           <div class="sched"><h4>Today's Schedule</h4><hr>
             <!-- Start todays events -->
-            <% if params[:action] =='event_list' && params[:controller] =='events' %>
-              <% if @today_gigs.present? %>
-                <% @today_gigs.each do |today_gig|%>
+            <% if params[:action] =='event_list' && params[:controller] =='events'  %>
+              <% if @today_gigs_mobile.present? %>
+                <% @today_gigs_mobile.each do |today_gig|%>
                   <b style ="font-size: x-small;"> <%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %>  -
                     <%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %> </b><br>
                   <b style ="font-size: x-small;"><%= today_gig.title.titleize %> </b>
@@ -83,9 +102,10 @@
                 <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %><%= t(:today_no_foundation)%> <% end %>
               <% end %>
             <% end %>
-
             <!-- End todays foundations -->
           </div>
+	        <!--End Web calender -->
+
           <div class="calendar">
             <table>
               <tr>
@@ -177,7 +197,6 @@
               <!-- End latest month foundations -->
           <% end %>
           </div>
-
           <!-- Start latest month events -->
           <% if user_signed_in? %>
             <div class="sched3">
@@ -276,10 +295,54 @@
 		$(".gig_info").show();
 		$(".basic_btn").hide();
 	});
+	//	Start onclick span hide the time picker
+	$("#datepicker3" ).datepicker({
+		onSelect: function (date, instance) {
+			$("#datepicker3").hide();
+			 var new_date = date
+			var new_date1 = new Date(new_date)
+			var month = new_date1.toDateString().substring(4,7);
+			var date = new_date1.toDateString().substring(8,10);
+			var year = new_date1.toDateString().substring(11,15);
+			var finaldateString = date+" "+month+" "+year;
+			$(".show_date_time").html(finaldateString);
+			$.ajax({
+				type: "GET",
+				url: "/event_list",
+				data: {date: new_date, is_mobile: true},
+				format: 'json',
+				success: function (result) {
+//						alert(date);
+				}
+			});
+		}
+	});
+	$("span#event_date_picker").click(function() {
+		$("#datepicker3").show();
+	});
+	//	END onclick span hide the time picker
+
+	//	$("span#event_date_picker").click(function() {
+	//		$("#datepicker").show();
+	//	});
+	//		$("#datepicker").datepicker({
+	//			onSelect: function (date, instance) {
+	//				$.ajax({
+	//					type: "GET",
+	//					url: "/event_list",
+	//					data: "date=" + date,
+	//					success: function (result) {
+	//						alert(date);
+	//					}
+	//				});
+	//			}
+	//		});
 </script>
 <style>
-	.gig_info {
-		/*border: 2px solid #979797;*/
-		/*border-radius: 5px;*/
+	#datepicker3{
+		display: none;
+	}
+	#show_date_time1{
+		display: none;
 	}
 </style>

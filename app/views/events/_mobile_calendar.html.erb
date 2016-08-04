@@ -1,0 +1,20 @@
+<% if params[:date].present? %>
+  <div class="border"><h4>Today's Schedule</h4></div>
+  <% if @today_gigs_mobile.present? %>
+    <% @today_gigs_mobile.each do |today_gig|%>
+      <b style ="font-size: x-small;"> <% if today_gig.event_start_time.present? %><%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %><% end %> -
+        <% if today_gig.event_end_time.present? %><%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %><% end %> </b><br>
+      <b style ="font-size: x-small;"><% if today_gig.title.present? %><%= today_gig.title.titleize %> <% end %></b>
+      <% if user_signed_in? %>
+        <div class="gig_info" style="display:none; width: 95%;">
+          <% if today_gig.location.present? %> <b>Address:</b></h3> <h3 style="width: 80%;"><%= today_gig.location.titleize %><% end %>
+          <% if today_gig.full_description.present? %> <b>Details:</b> <%= today_gig.full_description %><% end %>
+          <%= link_to 'View GIG', "javascript:void(0)" %> <br>
+          <%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= t(:today_no_event)%>
+  <% end %>
+<% end %>

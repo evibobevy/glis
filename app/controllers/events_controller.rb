@@ -6,7 +6,8 @@ class EventsController < ApplicationController
   before_filter :find_mutual_friends ,only: :friendsearch_request
   before_filter :login_user_friend ,only: :index
   before_filter :checkuser_for_calendar ,only: :event_list
-  respond_to :html, :js
+  respond_to :html, :js, :json
+  # layout "fancybox", only: :event_list
 
   def authorize
     unless user_signed_in?
@@ -77,14 +78,26 @@ class EventsController < ApplicationController
   # end
 
   def event_list
-    @event = Event.new
+    p "--------------------------"
+    p params[:is_mobile]
+    p "--------------------------"
+    if params[:date].present? && params[:is_mobile] == "true"
+      @today_gigs_mobile = Event.where('event_date = ?',Date.strptime(params[:date], "%m/%d/%Y"))
+    end
     if params[:start_date].present?
       @next_month_event = Event.where('extract(year from event_date) = ? AND extract(month from event_date) = ?', Date.parse(params[:start_date]).year, Date.parse(params[:start_date]).month)
     end
-    #@today_gigs = Event.where("start_time = ?", Time.zone.now.beginning_of_day)
     @today_gigs = Event.today_event
+    @event = Event.new
     layout = user_signed_in? ? 'application' : 'fancybox'
-    render layout: layout
+    if params[:is_mobile] == "true" && user_signed_in?
+      respond_to do |format|
+        format.js  { render layout: false }
+        format.html
+      end
+    else
+      render layout: layout
+    end
   end
 
   def join_event
