@@ -180,18 +180,21 @@
 	  });
 
 	  $('#new_event').submit(function() {
-		  now = new Date();
-		  current_time = now.toLocaleTimeString().replace(/:\d+ /, ' ');
+		  var now = new Date();
+		  var current_time = now.toLocaleTimeString().replace(/:\d+ /, ' ');
 		  var startDate = new Date($('#datepicker').val());
 		  var endDate = new Date($('#datepicker1').val());
 		  var startTime = $('#event_event_start_time').val();
 		  var endTime = $('#event_event_end_time').val();
-		  if ((startDate.getDate() && endDate.getDate()) == now.getDate() && !($('#event_event_end_time').val() == "" && !($('#event_event_end_time').val()))) {
-			  if ((startTime || endTime) < current_time ){
+		  if ((startDate.getDate() == now.getDate()) && (endDate.getDate() == now.getDate())) {
+			  if ((startTime < current_time || endTime < current_time) && !($('#event_event_end_time').val() == "") && !($('#event_event_end_time').val() == "")) {
+//				if (startTime < current_time || endTime < current_time) {
 				  $('#current_time_error').show();
 				  return false;
 			  }
-			  return false;
+		  }
+		  else{
+			  return true;
 		  }
 	  });
 
