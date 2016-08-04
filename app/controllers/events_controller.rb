@@ -78,9 +78,6 @@ class EventsController < ApplicationController
   # end
 
   def event_list
-    p "--------------------------"
-    p params[:is_mobile]
-    p "--------------------------"
     if params[:date].present? && params[:is_mobile] == "true"
       @today_gigs_mobile = Event.where('event_date = ?',Date.strptime(params[:date], "%m/%d/%Y"))
     end
@@ -90,7 +87,7 @@ class EventsController < ApplicationController
     @today_gigs = Event.today_event
     @event = Event.new
     layout = user_signed_in? ? 'application' : 'fancybox'
-    if params[:is_mobile] == "true" && user_signed_in?
+    if params[:is_mobile] == "true"
       respond_to do |format|
         format.js  { render layout: false }
         format.html

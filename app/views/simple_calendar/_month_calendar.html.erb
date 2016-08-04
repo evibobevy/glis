@@ -32,9 +32,9 @@
 	         <!-- Start Web calender-->
           <div class="sched"><h4>Today's Schedule</h4><hr>
             <!-- Start todays events -->
-            <% if params[:action] =='event_list' && params[:controller] =='events'  %>
-              <% if @today_gigs_mobile.present? %>
-                <% @today_gigs_mobile.each do |today_gig|%>
+            <% if params[:action] =='event_list' && params[:controller] =='events' %>
+              <% if @today_gigs.present? %>
+                <% @today_gigs.each do |today_gig|%>
                   <b style ="font-size: x-small;"> <%= today_gig.event_start_time.try(:strftime, "%I:%M %p") %>  -
                     <%= today_gig.event_end_time.try(:strftime, "%I:%M %p") %> </b><br>
                   <b style ="font-size: x-small;"><%= today_gig.title.titleize %> </b>
