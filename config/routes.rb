@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   end
 
   get 'events/sitemap' => 'events#sitemap'
+  get 'join_gigs' => 'events#join_gigs', as: :join_gigs
 
   resources :events  do
     resources :posts
@@ -86,6 +87,7 @@ Rails.application.routes.draw do
   post 'email_messages' => 'email_messages#email_message'
   post 'contact', :to => 'contacts#contact'
   get 'event_list', :to => 'events#event_list'
+  post 'event_list', :to => 'events#event_list'
   post 'email_message_detail' => 'email_messages#email_message_detail', as: :email_message_detail
   post 'send_message_reply' => 'email_messages#send_message_reply', as: :send_message_reply
   get 'email_message_detail' => 'email_messages#email_message_detail'

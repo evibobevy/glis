@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join_volunteer, :disjoin_volunteers]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join_volunteer, :disjoin_volunteers, :join_gigs]
   before_filter :authorize, only: [:join_volunteer, :disjoin_volunteers, :list_users, :find_mutual_friends]
   before_filter :glis_support ,except: [:support, :unsupport]
   before_filter :find_latest_month_gigs, :only => :event_list
@@ -62,12 +62,9 @@ class EventsController < ApplicationController
     respond_with(@event)
   end
 
-  # def join_volunteer
-  #   event = Event.find(params[:id])
-  #   current_user.events << event
-  #   flash[:notice] = "Successfully Join"
-  #   redirect_to event_path(event)
-  # end
+  def join_gigs
+    render layout: 'fancybox'
+  end
   #
   # def disjoin_volunteer
   #   event = Event.find(params[:id])

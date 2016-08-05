@@ -102,7 +102,7 @@ a.join-today {padding-top:20px;}
 
 .volunteer-full {padding:50px 0 0 0;}
 .volunteer-full h3 {font-size:25px; color:#5c5b5c; font-family:'GothamRndBook'; position:relative; margin-bottom:40px; padding-left:20px; width:100%;}
-.volunteer-full h3:after {content:""; width:50px; height:50px; position:absolute; left:0; top:-10px;}
+.volunteer-full h3:after {content:""; background:url(headingCrnr.png) no-repeat; width:50px; height:50px; position:absolute; left:0; top:-10px;}
 .volunteer-row {float:left; width:100%; margin-bottom:0px;}
 .volunteer-lft {float:left; width:100%; margin-bottom:65px;}
 .stay-icon {float:left; margin:0 10px 0 0; width: 42%; border: 5px solid #67aa4d; border-radius: 6px;}
@@ -908,3 +908,54 @@ button{-moz-border:0px;}
     font-size: 14px;
     padding-left: 260px;
 }
+/*Add new style css */
+.header-rgt-btn h1 {
+    font-size: 28px;
+    font-family: 'GothamRndMedium';
+    text-align:center;
+}
+.header-rgt-btn h2 {
+    font-size: 20px;
+    font-family: 'GothamRndBold';
+    text-align:center;
+    padding-top:5%;
+}
+
+/*Start tgigPopup css*/
+.gig {margin-bottom: 5%;height:40px;}
+.gigLeft {width:30%;float:left;}
+.gigRight {width:70%;float:right;}
+.gigName {font-size: 1.5em; color:#67aa4d;font-family: "GothamRndMedium";float:left;width:100%;}
+.foundationName {font-size: 1.5em; color:#5c5b5c;font-family: "GothamRndMedium";float:left;width:100%;}
+.gigDate {font-size: 1.5em; color:#5c5b5c;font-family: "GothamRndBook";float:left;width:100%;}
+.gigCreator {font-size: 1.5em; color:#5c5b5c;font-family: "GothamRndBook";float:left;width:100%;}
+.gigCreator span {color:#67aa4d;}
+.gigLocationName {margin-top:1em;font-size: 1em; color:#67aa4d;font-family: "GothamRndMedium";float:left;width:75%;}
+.gigLocationName span {color:#5c5b5c;}
+.mapButton{width:25%; float:right;margin-top: 1em;}
+.gigDescription {font-size: .85em; color:#5c5b5c;font-family: "GothamRndBook";float:left;width:100%;margin-top: 1em;}
+/*End tgigPopup css*/
+#volunteers1 h1{margin-left:20px!important;margin-bottom: 20px; margin-top:-20px;font-size:22px !important;}
+
+/*Start myFoundations popout CSS */
+#foundations {margin:0 auto; padding-top:50px;margin-top:5px;}
+#foundations .volBox {overflow: auto; margin-bottom:45px;width:100%; height:210px; border:3px solid #5c5b5c; border-radius:5px;}
+#foundations h1{font-family: "GothamRndMedium";margin-left:20px!important;margin-bottom: 20px; margin-top:-20px;font-size:26px!important;}
+#foundations .supporters h2 {
+    float: right;
+    margin-right: 0px;
+    color: #67AA4D;
+    font-size: 16px;
+    margin-left: 5px;
+
+}
+#foundations .supporters {
+    width: 48%;
+    padding: 20px;
+    display: block;
+    float: left;
+}
+/* End myFoundations popout CSS */
+#requests2 h1 {margin-left: 20px; font-size:28px; margin-top:-20px;}
+#requests2 {margin:0 auto; margin-top:5px;}
+#requests2.volBox {overflow: auto; margin-bottom:45px;width:100%; height:310px; border:3px solid #5c5b5c; border-radius:5px;}

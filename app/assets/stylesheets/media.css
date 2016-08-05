@@ -76,7 +76,8 @@
         margin-bottom: 0%;
         height: 230px;
     }
-    .register-popup {width:96%; padding:15px; height: 100%; overflow: scroll;}
+    /*.register-popup {width:96%; padding:15px; height: 100%; overflow: scroll;}*/
+    .register-popup {width:96%; padding:15px; height: 80%; overflow: scroll;}
     .register-popup h3:after {height:30px; width:30px; top: -7px;}
     .register-popup h3 {font-size:20px; margin-bottom: 15px;padding-left: 12px;}
     .register-popup input[type="text"], .register-popup input[type="email"], .register-popup input[type="password"] {width:100%; margin-bottom:7px; border: 2px solid #979797;font-size: 16px;height: 34px;}
@@ -102,7 +103,21 @@
         display: block;
         float: left;
     }
+    /*gigPopup css*/
+    .gig {margin-bottom: 5%;height:40px;}
+    .gigLeft {width:100%;float:left;margin-top: 1em;}
+    .gigRight {width:100%;float:right;}
+    .gigName {font-size: 1.5em; color:#67aa4d;font-family: "GothamRndMedium";float:left;width:100%;margin-top:1em;}
+    .foundationName {font-size: 1.5em; color:#5c5b5c;font-family: "GothamRndMedium";float:left;width:100%;}
+    .gigDate {font-size: 1.5em; color:#5c5b5c;font-family: "GothamRndBook";float:left;width:100%;}
+    .gigCreator {font-size: 1.5em; color:#5c5b5c;font-family: "GothamRndBook";float:left;width:100%;}
+    .gigCreator span {color:#67aa4d;}
+    .gigLocationName {margin-top:1em;font-size: 1.25em; color:#67aa4d;font-family: "GothamRndMedium";float:left;width:75%;}
+    .gigLocationName span {color:#5c5b5c;}
+    .mapButton{width:25%; float:right;margin-top: 1em;}
+    .gigDescription {font-size: 1em; color:#5c5b5c;font-family: "GothamRndBook";float:left;width:100%;margin-top: 1em;}
     /* gigsPopout CSS */
+
     /*user profile page css*/
     .user-prf-sec {padding-top:10%;}
     .user-prf-left {width:100%; margin:0 auto;}
@@ -642,11 +657,11 @@
     margin-top: 0px;
 }
 /*#foundation_city_error  {*/
-    /*display: none;*/
-    /*font-size: 14px;*/
-    /*font-weight: normal;*/
-    /*padding-left: 180px;*/
-    /*width: 30%;*/
+/*display: none;*/
+/*font-size: 14px;*/
+/*font-weight: normal;*/
+/*padding-left: 180px;*/
+/*width: 30%;*/
 /*}*/
 
 /*@media (min-width: 1024px) and (max-width: 1060px) {
@@ -698,7 +713,7 @@
         padding-top: 0px;
     }
     /*.sched{*/
-        /*display: none;*/
+    /*display: none;*/
     /*}*/
 }
 
@@ -726,3 +741,59 @@
 @media screen and (max-width: 1300px) {
 }
 */
+/*New Change in media.css*/
+@media (min-width: 320px) and (max-width: 375px) {
+    .inspire-text {
+        font-size: 20px;
+        text-align: center;
+        margin: 0 0 10px 0;
+        display: block;
+    }
+
+    .supporters h2 {
+        float: left;
+        margin-left: 25px;
+        color: #67AA4D;
+        margin-top: 0px;
+        font-size: 18px;
+        font-family: "GothamRndMedium";
+    }
+
+    .supporters2 h2 span {
+        font-size: 11px !important;
+    }
+
+    .privacyQuestion-left {
+        float: left;
+        width: 66%;
+    }
+
+    .switch2 {
+        margin-top: 21px;
+    }
+
+    #settings h2 {
+        margin-left: 0px !important;
+        margin-bottom: 6px;
+        font-size: 16px !important;
+        padding-bottom: 1px;
+        border-bottom: 2px solid #979797;
+    }
+
+    .notificationQuestion {
+        float: left;
+        width: 66%;
+    }
+
+    .switch3 {
+        width: 100px;
+        display: block;
+        float: right;
+        margin-top: 41px;
+    }
+
+    .btn-accept, .btn-deny {
+        width: 105px;
+        margin-top: 2%;
+    }
+}
