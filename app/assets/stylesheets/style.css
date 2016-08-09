@@ -921,8 +921,8 @@ button{-moz-border:0px;}
     padding-top:5%;
 }
 
-/*Start tgigPopup css*/
-.gig {margin-bottom: 5%;height:40px;}
+/*Start gigPopup css*/
+.gig {margin-bottom: 5%;}
 .gigLeft {width:30%;float:left;}
 .gigRight {width:70%;float:right;}
 .gigName {font-size: 1.5em; color:#67aa4d;font-family: "GothamRndMedium";float:left;width:100%;}
