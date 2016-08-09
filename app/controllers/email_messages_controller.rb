@@ -30,7 +30,7 @@ class EmailMessagesController < ApplicationController
       end
       redirect_to :back and return
     else
-      flash[:alert] = "Someting Went to Wrong"
+      flash[:alert] = "Someting Went Wrong"
       redirect_to :back and return
     end
   end

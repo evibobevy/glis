@@ -23,13 +23,3 @@
 # #  ### Comment ##
 # #  Comment.create(commenter:"Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola brisket.", post_id: 1, created_at: Time.now - 5.days)
 # #  Comment.create(commenter:"prosciutto sausage ball tip salami pork chop cupim shank swine. [...].", post_id: 1, created_at: Time.now - 4.days)
-# #
-# #
-# #
-#
-# post = Post.create!(name:'Shankle biltong short loin, rump t-bone salami drumstick chuck doner pastrami ham hock spare ribs frankfurter. Pancetta swine picanha filet mignon sirloin.
-#  Shankle biltong short loin, rump t-bone salami drumstick chuck doner.', user_id: 23 ,foundation_id:1 , created_at: Time.now - 5.days)
-# ### Comment ##
-# Comment.create(commenter:"Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola brisket.", post_id: post.id, created_at: Time.now - 5.days)
-# Comment.create(commenter:"prosciutto sausage ball tip salami pork chop cupim shank swine. [...].", post_id: post.id, created_at: Time.now - 4.days)
-#
