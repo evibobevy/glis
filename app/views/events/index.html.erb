@@ -158,7 +158,14 @@
                   <% end %>
                   </div>
               <div class="vol-user-comment">
-                <% if post.user.present? && post.present? %> <h4><%=post.user.full_name %> <% end %><span>volunteered for</span> <% if post.postable.present? %><%= post.postable.title %><% end %></h4>
+                <% if post.user.present? && post.present? %> <h4><%=post.user.full_name %> <% end %><span>volunteered for</span>
+                <% if post.postable.present? %>
+                  <% if post.postable_type_foundation? %>
+                    <%= post.postable.name %>
+                  <% else %>
+                    <%= post.postable.title %>
+                  <% end %>
+                <% end %></h4>
                 <span class="day-time-row"><strong><%= "%d " % "#{time_diff_for_post(post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(post)[1]}" %></strong>hours</span>
                 <p class="vol-desc"><%= post.name %></p>
                 <div class="vol-reply-sec">

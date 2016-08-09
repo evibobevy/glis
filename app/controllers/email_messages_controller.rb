@@ -55,7 +55,7 @@ class EmailMessagesController < ApplicationController
         if @recipent_data.valid?
           @recipent_data.save
         end
-        flash[:success] = "Message successfully created.."
+        # flash[:success] = "Message successfully created.."
         redirect_to :back and return
       else
         redirect_to :back and return

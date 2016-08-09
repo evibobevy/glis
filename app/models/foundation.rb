@@ -2,6 +2,7 @@ class Foundation < ActiveRecord::Base
   has_many :foundation_pictures, :dependent => :destroy
   has_many :posts , :as => :postable
   belongs_to :user
+  has_and_belongs_to_many :users, join_table: :foundations_users
   has_attached_file :image, :path => ":rails_root/public/images/:id/:filename", :url  => "/images/:id/:filename", default_url: "/assets/stayIcon.png"
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   scope :today_foundation, lambda { where("start_date = ? ", Time.zone.now.beginning_of_day) }

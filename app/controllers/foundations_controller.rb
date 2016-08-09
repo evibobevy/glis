@@ -14,10 +14,10 @@ class FoundationsController < ApplicationController
   end
 
   def create
-    @foundation = Foundation.new(foundation_params)
-    @foundation.user_role = Foundation.user_roles[params[:user_role].downcase.to_sym]
+    @foundation                    = Foundation.new(foundation_params)
+    @foundation.user_role          = Foundation.user_roles[params[:user_role].downcase.to_sym]
     @foundation.type_of_foundation = Foundation.type_of_foundations[params[:type_of_foundation].downcase.to_sym]
-    @foundation.user_id = current_user.id
+    @foundation.user_id            = current_user.id
     if @foundation.save && params[:images].present?
       params[:images].each do |image|
         @picture = @foundation.foundation_pictures.create(:image => image)
@@ -31,8 +31,8 @@ class FoundationsController < ApplicationController
   end
 
   def edit
-    @foundation_pictures  = @foundation.foundation_pictures.last(4)
-    @picture = FoundationPicture.new
+    @foundation_pictures = @foundation.foundation_pictures.last(4)
+    @picture             = FoundationPicture.new
   end
 
   def update
@@ -47,6 +47,15 @@ class FoundationsController < ApplicationController
     redirect_to :back and return
   end
 
+  def support_foundation
+    if params[:foundation_id].present?
+      @foundation  = Foundation.find(params[:foundation_id])
+      current_user.foundations << @foundation
+      flash[:notice] = "Successfully Join Foundation"
+      redirect_to :back and return
+    end
+  end
+
   def foundation_calendar
     @foundation = Foundation.new
     if params[:start_date].present?
@@ -56,8 +65,8 @@ class FoundationsController < ApplicationController
   end
 
   def show
-    @posts = @foundation.posts if  @foundation.present?
-    @post = Post.find_by_postable_type("Foundation")
+    @posts         = @foundation.posts if @foundation.present?
+    @post          = Post.find_by_postable_type("Foundation")
     @upcoming_gigs = Event.next_months_gigs
   end
 
@@ -68,8 +77,8 @@ class FoundationsController < ApplicationController
   private
 
   def set_foundation
-    @foundation = Foundation.find(params[:id])
-    @foundation_user =  @foundation.user if @foundation.present?
+    @foundation      = Foundation.find(params[:id])
+    @foundation_user = @foundation.user if @foundation.present?
   end
 
   def find_latest_month_foundation

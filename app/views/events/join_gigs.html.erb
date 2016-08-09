@@ -19,11 +19,11 @@
   <div class="gigRight">
     <div class="gigName"><% if @event.present? && @event.title.present? %><%= @event.title.titleize %><% end %></div>
     <div class="foundationName">Foundation Name</div>
-    <div class="gigDate">Month 1st 2016</div>
-    <div class="gigDate">@ 12:00am - 12:00pm</div>
-    <div class="gigCreator">BY: <span>USER NAME</span></div>
-    <div class="gigLocationName">Location: Location Name<br/><span>100 Street Name Street<br/>City Name, ST, 90210</span></div>
+    <div class="gigDate"><%= @event.event_date.try(:strftime, '%B %d, %Y')%></div>
+    <div class="gigDate"><% if @event.event_start_time.present? %><%= @event.event_start_time.to_time.strftime("%I:%M%p")%> <% end %> - <% if @event.event_end_time.present? %><%= @event.event_end_time.to_time.strftime("%I:%M%p")%><% end %></div>
+    <div class="gigCreator">BY: <span><% if @event.present? && @event.user.present? %><%= @event.user.full_name.titleize %><% end %></span></div>
+    <div class="gigLocationName">Location: <% if @event.present? && @event.location.present? %><%= @event.location.titleize %><% end %> <br/><span>100 Street Name Street<br/>City Name, ST, 90210</span></div>
     <div class="mapButton"><a href="#"><%= image_tag "mapButton.png", alt: "" %></a></div>
-    <div class="gigDescription">Bacon ipsum dolor amet chuck flank meatloaf frankfurter beef ball tip cupim filet mignon landjaeger prosciutto shank meatball biltong pork loin. Shoulder pork loin cupim pancetta doner short loin swine prosciutto short ribs pastrami.</div>
+    <div class="gigDescription"><% if @event.present? && @event.full_description.present? %><%= @event.full_description.titleize %><% end %></div>
   </div>
 </div>

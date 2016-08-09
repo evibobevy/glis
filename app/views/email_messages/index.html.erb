@@ -69,7 +69,7 @@
                     <%= hidden_field_tag :email_message_id, @email_message_recipients.last.email_message.id if @email_message_recipients.present? %>
                     <%= text_area_tag :message, nil, :placeholder=> "Send A Reply...", :rows=> "4",  :columns=> "100" %>
                     <div class="messSend">
-                      <%= submit_tag "Reply", :onclick => 'if($("#message").val() == ""){alert("Please fill out this message box.")}' %>
+                      <%= submit_tag "Reply", :class =>"submit_message"%>
                     </div>
                     <label id="message_error" for="message" generated="true" class="error">This field is required.</label>
                   <% end %>
@@ -176,10 +176,17 @@
 	});
 	$('#message_form').submit(function(){
 		if ($('#message').val() == "") {
-			$('#message_error').show();
+			alert("Please fill out this message box.")
 			return false;
 		}
 	});
+
+//	$('#message_form').submit(function(){
+//		if ($('#message').val() == "") {
+//			$('#message_error').show();
+//			return false;
+//		}
+//	});
 //	$('#new_email_message').submit(function(){
 //		if ($('#email').val() == "") {
 //			$('#email_error').show();
