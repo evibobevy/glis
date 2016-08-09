@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627113704) do
+ActiveRecord::Schema.define(version: 20160805142440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
-    t.string   "commenter"
+    t.text     "commenter"
     t.integer  "post_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
@@ -73,17 +74,76 @@ ActiveRecord::Schema.define(version: 20160627113704) do
     t.time     "event_end_time"
     t.integer  "user_role"
     t.integer  "type_of_gig"
+    t.integer  "user_id"
   end
 
   create_table "events_users", force: true do |t|
     t.integer "event_id"
     t.integer "user_id"
-    t.integer "role"
+    t.boolean "join_event", default: false
   end
 
   create_table "events_volunteers", force: true do |t|
     t.integer "event_id"
     t.integer "volunteer_id"
+  end
+
+  create_table "foundation_friendships", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "accepted"
+  end
+
+  create_table "foundation_pictures", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "foundation_id"
+  end
+
+  create_table "foundations", force: true do |t|
+    t.string   "name"
+    t.string   "city"
+    t.string   "state"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "everyone_view_profile",                             default: true
+    t.boolean  "everyone_view_calendar",                            default: true
+    t.boolean  "everyone_invite_you_to_events",                     default: true
+    t.boolean  "everyone_view_posts",                               default: true
+    t.boolean  "everyone_message_you",                              default: true
+    t.boolean  "volunteers_need_approval_to_join_your_gigs",        default: true
+    t.boolean  "supporters_need_approval_to_comment_on_your_posts", default: true
+    t.boolean  "email_notifications",                               default: true
+    t.boolean  "text_notifications",                                default: true
+    t.boolean  "mobile_ping_notifications",                         default: true
+    t.string   "phone_number"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "type_of_foundation"
+    t.integer  "user_role"
+    t.integer  "user_id"
+    t.boolean  "recurring",                                         default: true
+    t.boolean  "open_to_the_public",                                default: true
+    t.boolean  "anyone_volunteer",                                  default: true
+    t.text     "basic_info"
+  end
+
+  create_table "foundations_users", force: true do |t|
+    t.integer "foundation_id"
+    t.integer "user_id"
   end
 
   create_table "friendships", force: true do |t|
@@ -112,7 +172,11 @@ ActiveRecord::Schema.define(version: 20160627113704) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "event_id"
+    t.integer  "postable_id"
+    t.string   "postable_type"
   end
+
+  add_index "posts", ["postable_type", "postable_id"], name: "index_posts_on_postable_type_and_postable_id", using: :btree
 
   create_table "user_pictures", force: true do |t|
     t.string   "image_file_name"
