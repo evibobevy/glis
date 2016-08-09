@@ -77,6 +77,9 @@ Rails.application.routes.draw do
   root 'events#index'
   # get 'events/join_volunteer'=> 'events#join_volunteer', as: :join_volunteer
   post 'join_event' => 'events#join_event', as: :join_event
+  # get 'foundations/:id/support_foundation' => 'foundations#support_foundation', as: :support_foundation
+  get 'foundations/:id/support_foundation', :to => 'foundations#support_foundation', as: :support_foundation
+  # match 'support_foundation' => 'foundations#support_foundation', as: :support_foundation, :via => [:get, :post]
   # get 'join_volunteer' => 'events#join_volunteer', as: :join_volunteer
   # get 'disjoin_volunteer' => 'events#disjoin_volunteer', as: :disjoin_volunteer
   post 'accept_friend_request' => 'friendships#accept_friend_request', as: :accept_friend_request

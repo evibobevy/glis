@@ -40,7 +40,8 @@
               <span><label id="city_error" for="city" generated="true" class="error">This field is required.</label>
               <label id="state_error" for="state" generated="true" class="error">This field is required.</label> </span>
               <div class="description">
-                <%= f.text_area :description, :placeholder => "Description", :required => true %>
+                <%#= f.text_area :description, :placeholder => "Description", :required => true %>
+                <%= f.text_area :description, :placeholder => "Description",:rows=> "4", :columns=>"100",  :required => true %>
               </div>
               <input type="button" value="Reset" class="reset-btn">
               <%= f.submit "Save" %>

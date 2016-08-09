@@ -102,7 +102,7 @@ a.join-today {padding-top:20px;}
 
 .volunteer-full {padding:50px 0 0 0;}
 .volunteer-full h3 {font-size:25px; color:#5c5b5c; font-family:'GothamRndBook'; position:relative; margin-bottom:40px; padding-left:20px; width:100%;}
-.volunteer-full h3:after {content:""; background:url(headingCrnr.png) no-repeat; width:50px; height:50px; position:absolute; left:0; top:-10px;}
+.volunteer-full h3:after {content:""; width:50px; height:50px; position:absolute; left:0; top:-10px;}
 .volunteer-row {float:left; width:100%; margin-bottom:0px;}
 .volunteer-lft {float:left; width:100%; margin-bottom:65px;}
 .stay-icon {float:left; margin:0 10px 0 0; width: 42%; border: 5px solid #67aa4d; border-radius: 6px;}
@@ -133,7 +133,7 @@ a.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; 
 .spread.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-top: 40px;}
 
 .support.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom: 20px;}
-.join.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom:15px;}
+.join.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:38px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom:15px;}
 .spread.btn-black {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom:15px;margin-top: 0;}
 .support-btn {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom:15px;}
 .join-btn {width:100%; display:inline-block; background:#4a4a4a; height:48px; line-height:48px; border-radius:6px; color:#fff; font-size:18px; font-family:'GothamRndBold'; font-size:23px; text-align:center; margin-bottom:15px;}

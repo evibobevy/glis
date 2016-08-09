@@ -35,8 +35,9 @@
           <a href="#">
             <%= image_tag 'checkCalendar.png' %>
           </a><br/><br/>
-          <a href="#">
-            <%= image_tag 'supportUs.png' %>
+          <%= link_to image_tag("supportUs.png"), support_foundation_path(:foundation_id=> @foundation.id) %> <br/>
+          <!--<a href="#">-->
+            <%#= image_tag 'supportUs.png' %>
           </a>
           <br/>
         </div>
