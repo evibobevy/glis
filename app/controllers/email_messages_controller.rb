@@ -6,7 +6,10 @@ class EmailMessagesController < ApplicationController
   def index
     @email_message = EmailMessage.new
     @email_message_recipients = EmailMessageRecipients.includes(:email_message).where(:email=> current_user.email)
-    @email_message_detail = EmailMessage.last
+    # @current_user_message = current_user.email_messages.where("parent_id IS ?", nil).group_by{|em| em.subject}.to_a.flatten if user_signed_in?
+    #@current_user_message = current_user.email_messages.where("parent_id IS ?", nil) if user_signed_in?
+    @current_user_message = EmailMessage.where("(user_id = ?  OR recipient_id = ?) AND parent_id IS ?", current_user.id, current_user.id, nil) if user_signed_in?
+    @email_message_detail = current_user.email_messages  if user_signed_in? && current_user.email_messages.present?
     @user_friendrequests = Friendship.includes(:friend).where(:friend_id => current_user.id)
   end
 
@@ -15,10 +18,12 @@ class EmailMessagesController < ApplicationController
       emails = params[:email].split(',') if params[:email].present?
       permitted_emails = User.where(email: emails, everyone_message_you: true).map(&:email)
       not_permitted_email = emails - permitted_emails
-      @email_message = current_user.email_messages.build(email_message_params)
-      if @email_message.save  && permitted_emails.present?
+      #@email_message = current_user.email_messages.build(email_message_params)
+      if permitted_emails.present?
         permitted_emails.each do |email|
-          @email_message.email_message_recipients.build(:email=> email)
+          recipient_id = User.find_by_email(email).id
+          @email_message = current_user.email_messages.build(email_message_params)
+          @email_message.recipient_id =  recipient_id
           if @email_message.save && not_permitted_email.present?
             flash[:alert] = "Email is successfully send to #{permitted_emails.join(",")} and  #{not_permitted_email.join(",")} Email ID is not permitted or does not exist.."
           else
@@ -37,6 +42,8 @@ class EmailMessagesController < ApplicationController
 
   def email_message_detail
     @email_message  = EmailMessage.find(params[:email_message_id]) if params[:email_message_id].present?
+    @email_message_with_parent = EmailMessage.where('parent_id = ?', @email_message.id)
+    @email_message_id = params[:email_message_id] if params[:email_message_id].present?
   end
 
   def foundation_detail
@@ -46,7 +53,8 @@ class EmailMessagesController < ApplicationController
   def send_message_reply
     if params[:email_message_id].present?
       email_message  = EmailMessage.find(params[:email_message_id])
-      @message = current_user.email_messages.build(:parent_id => email_message.id, :subject=> "#{email_message.subject}", :message=> params[:message]) if user_signed_in?
+      parent = EmailMessage.where(subject:email_message.subject).first
+      @message = current_user.email_messages.build(:parent_id => parent.id, :subject=> "#{email_message.subject}", :message=> params[:message]) if user_signed_in?
       if @message.valid?
         @message.save
         user = EmailMessage.find(@message.parent_id).user_id
@@ -55,10 +63,13 @@ class EmailMessagesController < ApplicationController
         if @recipent_data.valid?
           @recipent_data.save
         end
+        respond_to do |format|
+          format.js { render layout: false }
+        end
         # flash[:success] = "Message successfully created.."
-        redirect_to :back and return
-      else
-        redirect_to :back and return
+      #   redirect_to :back and return
+      # else
+      #   redirect_to :back and return
       end
     end
   end
@@ -66,6 +77,6 @@ class EmailMessagesController < ApplicationController
   private
 
   def email_message_params
-    params.require(:email_message).permit(:subject, :message)
+    params.require(:email_message).permit(:subject, :message, :recipient_id)
   end
 end

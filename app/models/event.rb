@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
   # validates :title, :presence => true
   # validate :validate_git_start_date
   # validate :validate_gig_end_date
-  validates :type_of_gig, :location, :user_role, :title, presence: true
+  validates :location, :title, presence: true
   validate :date_validation, :on => [ :create, :update ]
 
   scope :latest_months_event, lambda { where("event_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_month, Time.zone.now.end_of_month) }

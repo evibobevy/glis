@@ -17,7 +17,8 @@
 	          <li><%= link_to image_tag("date-icon.png"), event_list_path %></li>
 	          <li><%= link_to image_tag("setting-icon.png"), edit_user_registration_path %></li>
             <li><%= link_to image_tag("email-icon.png"), inbox_notifications_path %></li>
-            <li><%= link_to image_tag("add-icon.png"), "#" %></li>
+            <li><%= link_to image_tag("add-icon.png"), "#", :id=> "add-user-btn" %></li>
+            <%= link_to image_tag(''), support_path(:friend_id => @user), :method => :post, :id=> "add-user-as-friend" %>
           </ul>
         </div>
         <div class="loged-user">
@@ -35,3 +36,15 @@
       </div>
   </div>
 </header>
+<style>
+#add-user-as-friend
+{
+	display: none
+}
+</style>
+<script>
+	$('#add-user-btn').click(function(){
+		$("#add-user-as-friend").click();
+		return false;
+	});
+</script>

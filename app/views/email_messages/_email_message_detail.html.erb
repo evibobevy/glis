@@ -1,27 +1,60 @@
 <div class="message">
-  <% if @email_message.present? && @email_message.user.image_file_name.present? %>
-    <%= image_tag @email_message.user.image.url(:medium), style: "height: 105px;width: 100px;" %>
+  <% if @email_message.present? && find_user_by_message(@email_message.user_id).image.present? %>
+    <%= image_tag find_user_by_message(@email_message.user_id).image.url(:medium), style: "height: 105px;width: 100px;" %>
   <% else %>
     <%= image_tag 'noImg.jpg' %>
   <% end %>
 
   <div class="messDesc">
-    <h2><%= @email_message.user.full_name.capitalize %></h2>
+    <h2><%= find_user_by_message(@email_message.user_id).full_name %></h2>
     <h3><%= @email_message.subject %></h3>
     <h4><% if time_diff_for_email_message(@email_message)[0] > 0 %><span><%= "%d " % "#{time_diff_for_email_message(@email_message)[0]}" %></span> days <% end %>
     </h4>
   </div><br/>
-  <div class="messCont">
-    <h3><%= @email_message.message %></h3>
-  </div>
+  <div class="messCont" id="login_user_<%=@email_message.id %>">
+    <% if @email_message_with_parent.present? %>
+      <% @email_message_with_parent.each do |parent_message|%>
+        <h3><% if parent_message.message.present? %><b><%=parent_message.user.full_name %></b>: <%= parent_message.message %><% end %></h3>
+      <% end %>
+    <% end %>
+   </div>
   <div class="messReply">
-    <%= form_tag send_message_reply_path do |f| %>
+    <%= form_tag send_message_reply_path , :remote => true, :id => 'message_form1'  do %>
       <%= hidden_field_tag :email_message_id, @email_message.id %>
-      <%= text_area_tag :message, nil, :required => true, :placeholder=> "Send A Reply..." %>
+      <%= text_area_tag :message, nil, :placeholder=> "Send A Reply..." %>
       <!--<div class="messSend"><input type="submit" value="Reply"></div>-->
       <div class="messSend">
-        <%= submit_tag "Reply", :onclick => 'if($("#message").val() == ""){alert("Please fill out this message box.")}' %>
+        <%= submit_tag "Reply" %>
       </div>
     <% end %>
   </div>
+  <label id="message_error" for="message" generated="true" class="error">This field is required.</label>
 </div>
+
+
+
+<script>
+	$('#message_form1').validate();
+	$("#message_form1").submit(function(e) {
+
+		var url = "email_messages/send_message_reply"; // the script where you handle the form input.
+
+		$.ajax({
+			type: "post",
+			url: url,
+			data: {reciever_id: $('#reciever_id').val(), email_message_id: $('#email_message_id').val()},
+			format: 'json',
+			success: function(data)
+			{
+				return false;
+			}
+		});
+	});
+	$('#message_form1').submit(function(){
+		if ($('#message').val() == "") {
+//			alert("Please fill out this message box.")
+			$('#message_error').show();
+			return false;
+		}
+	});
+</script>

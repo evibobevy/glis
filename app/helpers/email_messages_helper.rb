@@ -18,4 +18,11 @@ module EmailMessagesHelper
     User.find(friend).full_name
   end
 
+  def find_username_of_sender(sender)
+      User.find(sender).last_name_initial
+  end
+
+  def find_user_by_message(user)
+    User.find_by_id(user)
+  end
 end
