@@ -205,7 +205,7 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 .close a {float:right; font-size:3em;font-family: "GothamRndMedium";text-decoration: none;color:#67aa4d;margin-top: -5%;margin-right: -4%;}
 .close a:hover {color:#979797;}
 /*.login {border-bottom:3px solid #979797;margin-bottom: 5%;height:180px;}*/
-.login {border-bottom:3px solid #979797;margin-bottom: 5%;height:180px;}
+.login {border-bottom:3px solid #979797;margin-bottom: 5%;height:210px;}
 
 .login-acct {background:#2b5d98; border:3px solid #979797; height:45px; color:#fff; font-size:16px; font-family:'GothamRndBold';padding:0 19px; width:100%; box-sizing:border-box; border-radius:8px; cursor:pointer;margin-top: 2%;}
 .login-submit {float:left;width:100%;}
