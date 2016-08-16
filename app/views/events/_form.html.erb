@@ -23,7 +23,7 @@
           <label id="user_role_error" for="user_role" generated="true" class="error">This field is required.</label>
           <div class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle gig"><span id="dropdown_gig">Type of Gig<span>*</span><b class="caret"></b>
-            <%#= f.select :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), {}, :include_blank => true %> </a>
+              <%#= f.select :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), {}, :include_blank => true %> </a>
             <ul class="dropdown-menu gig">
               <li><a>Community</a></li>
               <li><a>Environment</a></li>
@@ -121,32 +121,32 @@
 		  window.location.href='/event_list';
 	  })
 
-		$('.role').dropdown();
-		$('.role li').on('click', function() {
-			$('#dropdown_role').html($(this).find('a').html());
-			select_value = $('#dropdown_role').text();
-			$('#user_role').val(select_value);
-		});
+	  $('.role').dropdown();
+	  $('.role li').on('click', function() {
+		  $('#dropdown_role').html($(this).find('a').html());
+		  select_value = $('#dropdown_role').text();
+		  $('#user_role').val(select_value);
+	  });
 
-		$('.gig').dropdown();
-		$('.gig li').on('click', function() {
-			$('#dropdown_gig').html($(this).find('a').html());
-			select_value = $('#dropdown_gig').text();
-			$('#type_of_gig').val(select_value);
-		});
+	  $('.gig').dropdown();
+	  $('.gig li').on('click', function() {
+		  $('#dropdown_gig').html($(this).find('a').html());
+		  select_value = $('#dropdown_gig').text();
+		  $('#type_of_gig').val(select_value);
+	  });
 	  $('#new_event').submit(function(){
 		  if ($('#user_role').val() == "") {
 			  $('#user_role_error').show();
 			  return false;
 		  }
 	  });
-		// START SHOW THE VALIDATION OF DROP DOWN
-		$('#new_event').submit(function(){
-			if ($('#type_of_gig').val() == "") {
-				$('#type_of_gig_error').show();
-				return false;
-			}
-		});
+	  // START SHOW THE VALIDATION OF DROP DOWN
+	  $('#new_event').submit(function(){
+		  if ($('#type_of_gig').val() == "") {
+			  $('#type_of_gig_error').show();
+			  return false;
+		  }
+	  });
 	  $('#new_event').submit(function(){
 		  if ($('#event_event_start_time').val() == "") {
 			  $('#start_time_error').show();
@@ -176,7 +176,7 @@
 		  if ((startDate - endDate === 0) && endTime < startTime ) {
 			  $('#time_error').show();
 			  return false;
-	    }
+		  }
 	  });
 
 	  $('#new_event').submit(function() {
@@ -188,7 +188,6 @@
 		  var endTime = $('#event_event_end_time').val();
 		  if ((startDate.getDate() == now.getDate()) && (endDate.getDate() == now.getDate())) {
 			  if ((startTime < current_time || endTime < current_time) && !($('#event_event_end_time').val() == "") && !($('#event_event_end_time').val() == "")) {
-//				if (startTime < current_time || endTime < current_time) {
 				  $('#current_time_error').show();
 				  return false;
 			  }
@@ -204,8 +203,8 @@
 			  return false;
 		  }
 	  });
-// END SHOW THE VALIDATION OF DROP DOWN
-	</script>
+	  // END SHOW THE VALIDATION OF DROP DOWN
+  </script>
   <style>
 	  #time_error {
 		  display: none;
@@ -242,8 +241,8 @@
 	  #image_error{
 		  display: none;
 	  }
-		#current_time_error{
-			display: none;
-		}
+	  #current_time_error{
+		  display: none;
+	  }
   </style>
 

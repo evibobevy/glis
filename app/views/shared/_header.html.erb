@@ -18,12 +18,12 @@
 	          <li><%= link_to image_tag("setting-icon.png"), edit_user_registration_path %></li>
             <li><%= link_to image_tag("email-icon.png"), inbox_notifications_path %></li>
             <li><%= link_to image_tag("add-icon.png"), "#", :id=> "add-user-btn" %></li>
-            <%= link_to image_tag(''), support_path(:friend_id => @user), :method => :post, :id=> "add-user-as-friend" %>
+          <% if params[:id].present? && !current_user.friendships.exists?(friend_id:@user) && @user.present?  %> <%= link_to image_tag(''), support_path(:friend_id => @user), :method => :post, :id=> "add-user-as-friend" %> <% end %>
           </ul>
         </div>
         <div class="loged-user">
           <% if user_signed_in? && current_user.image_file_name.present? || current_user.image.url.present? %><%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %><% else %><%= link_to image_tag("noImg.jpg", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %> <% end %>
-          <span><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name ||= 'Jameson' %><% end %></span>
+          <span><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name %><% end %></span>
         </div>
         <%= link_to 'Sign out', destroy_user_session_path, :method => :get, :class => 'after-login-icon' %>
       </div>

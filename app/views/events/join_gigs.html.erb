@@ -7,10 +7,14 @@
       <div class="vol-img-lft">
         <div class="photoSettings">
           <li><%= image_tag 'stayIcon.png', alt: '' %>
-            <button>JOIN THIS GIG</button>
+            <% unless @event.users.include?(current_user) %>
+              <button id="join_gig_btn">JOIN THIS GIG</button>
+              <%= button_to "JOIN THIS GIG", join_event_path(:event_id=> @event.id), :id => "join_gig", style: 'display: none' %>
+            <% end %>
             <button>SHARE</button>
             <button>FOUNDATION</button>
-            <button>WHO'S GOING</button>
+            <button id ="view_gigs_user_btn">WHO'S GOING</button>
+            <%= link_to "WHO'S GOING", view_gigs_users_path(:event_id=> @event.id), data: { fancybox_width: 600 }, class: 'fancybox view_gigs_user', :id => "view_gigs_user", style: 'display: none'%>
           </li>
         </div>
       </div>
@@ -23,7 +27,18 @@
     <div class="gigDate"><% if @event.event_start_time.present? %><%= @event.event_start_time.to_time.strftime("%I:%M%p")%> <% end %> - <% if @event.event_end_time.present? %><%= @event.event_end_time.to_time.strftime("%I:%M%p")%><% end %></div>
     <div class="gigCreator">BY: <span><% if @event.present? && @event.user.present? %><%= @event.user.full_name.titleize %><% end %></span></div>
     <div class="gigLocationName">Location: <% if @event.present? && @event.location.present? %><%= @event.location.titleize %><% end %> <br/><span>100 Street Name Street<br/>City Name, ST, 90210</span></div>
-    <div class="mapButton"><a href="#"><%= image_tag "mapButton.png", alt: "" %></a></div>
+    <%= link_to image_tag('email-icon.png'), "http://maps.google.com/maps?q=#{@event.location}", :target => '_blank',:class=> "mapButton" %>
     <div class="gigDescription"><% if @event.present? && @event.full_description.present? %><%= @event.full_description.titleize %><% end %></div>
   </div>
 </div>
+<script>
+	$('#view_gigs_user_btn').click(function(){
+		$("#view_gigs_user").click();
+		return false;
+	});
+
+	$('#join_gig_btn').click(function(){
+		$("#join_gig").click();
+		return false;
+	});</script>
+

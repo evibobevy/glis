@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :foundations, join_table: :foundations_users
   has_many :posts, dependent: :destroy
   has_many :email_messages, dependent: :destroy
-  has_many :foundations, dependent: :destroy
+  # has_many :foundations, dependent: :destroy
 
   has_many :friendships, dependent: :destroy
   has_many :friends, :through => :friendships

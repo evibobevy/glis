@@ -8,7 +8,7 @@ class FoundationFriendshipsController < ApplicationController
       @user = User.find(params[:friend_id])
       if @friendship.save
         UserMailer.user_notification(@user,@friend_id).deliver!  if @user.email_notification
-        flash[:notice] = "Added friend."
+        flash.now[:notice] = "Added friend."
       else
         flash[:error] = "Error occur when adding friend."
       end
@@ -41,7 +41,7 @@ class FoundationFriendshipsController < ApplicationController
 
   def authorize
     unless user_signed_in?
-      redirect_to new_user_registration_path
+      redirect_to root_path
     end
   end
 

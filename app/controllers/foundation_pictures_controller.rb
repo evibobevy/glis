@@ -31,7 +31,7 @@ class FoundationPicturesController < ApplicationController
 
   def authorize
     unless user_signed_in?
-      redirect_to new_user_registration_path
+      redirect_to root_path
     end
   end
 

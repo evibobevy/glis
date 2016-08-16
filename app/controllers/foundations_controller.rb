@@ -2,7 +2,7 @@ class FoundationsController < ApplicationController
   before_action :set_foundation, only: [:show, :edit, :update, :destroy]
   before_filter :find_latest_month_foundation, :only => :foundation_calendar
   before_filter :authorize, only: [:foundation_calendar, :edit, :show]
-  respond_to :html, :js
+  respond_to :html, :js, :json
 
   def new
     @foundation = Foundation.new
@@ -48,18 +48,24 @@ class FoundationsController < ApplicationController
   end
 
   def support_foundation
-    if params[:foundation_id].present?
-      @foundation  = Foundation.find(params[:foundation_id])
+    if params[:id].present? && params[:support].present?
+     @foundation  = Foundation.find(params[:id])
       current_user.foundations << @foundation
       flash[:notice] = "Successfully Join Foundation"
-      redirect_to :back and return
+     redirect_to :back and return
     end
   end
 
   def foundation_calendar
     @foundation = Foundation.new
+    @upcoming_foundations = Foundation.next_months_foundations
     if params[:start_date].present?
       @next_month_foundation = Foundation.where('extract(year from start_date) = ? AND extract(month from end_date) = ?', Date.parse(params[:start_date]).year, Date.parse(params[:start_date]).month)
+    end
+    if params[:popout_calendar].present?
+      render layout: 'fancybox'
+    else
+      render layout: 'application'
     end
     @today_foundation = Foundation.today_foundation
   end
@@ -68,6 +74,7 @@ class FoundationsController < ApplicationController
     @posts         = @foundation.posts if @foundation.present?
     @post          = Post.find_by_postable_type("Foundation")
     @upcoming_gigs = Event.next_months_gigs
+    @foundation_supporters = @foundation.users  if @foundation.present?
   end
 
   def user_foundations

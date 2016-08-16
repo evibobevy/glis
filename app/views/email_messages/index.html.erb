@@ -17,7 +17,8 @@
               <% end %>
               <div class="messDesc">
                 <h2><% if emr.present? %>
-                    <%= link_to find_username_of_sender(emr.user_id), email_message_detail_path(:email_message_id => emr.id), id: emr.id  ,remote: true  %>
+                    <% @last_message_id = EmailMessage.where('parent_id = ?', emr.id) %>
+                    <%= link_to find_username_of_sender(emr.user_id), email_message_detail_path(:email_message_id => emr.id, :last_message_id => @last_message_id.last.id ), id: emr.id, :class => "msg_block", remote: true  %>
                   <% end %>
                 </h2>
                 <h3><% if emr.present? %><%= h truncate(emr.subject, :length => 10) if emr.subject.present? %><% end %></h3>
@@ -144,15 +145,15 @@
 <!--Middle content ends here-->
 <script language="javascript" type="text/javascript">
 	$('#message_form').validate();
-//	$('#new_email_message').validate();
-//		$(document).ready(function() {
-//			var timeout = setInterval(autoRefresh_div, 10000);
-//			function autoRefresh_div()
-//			{
-//				$(".messCont").load(location.href+" .messCont");
-//				$(".messCont").load(location.href+" .messCont >*","");
-//			}
-//		});
+	//	$('#new_email_message').validate();
+//	$(document).ready(function() {
+//		var timeout = setInterval(autoRefresh_div, 5000);
+//		function autoRefresh_div()
+//		{
+//			$(".messCont").load(location.href+" .messCont");
+//			$(".messCont").load(location.href+" .messCont >*","");
+//		}
+//	});
 	$("#accordion").accordion({
 		active: false,
 		autoHeight: false,
@@ -177,28 +178,28 @@
 	});
 	$('#message_form').submit(function(){
 		if ($('#message').val() == "") {
-//			alert("Please fill out this message box.")
 			$('#message_error').show();
 			return false;
 		}
 	});
 </script>
 <script>
-	$("#message_form").submit(function(e) {
+//	$("#message_form").submit(function(e) {
+//
+//		var url = "email_messages/send_message_reply"; // the script where you handle the form input.
+//
+//		$.ajax({
+//			type: "post",
+//			url: url,
+//			data: {reciever_id: $('#reciever_id').val(), email_message_id: $('#email_message_id').val()},
+//			format: 'json',
+//			success: function(data)
+//			{
+//				return false;
+//			}
+//		});
+//	});
 
-	var url = "email_messages/send_message_reply"; // the script where you handle the form input.
-
-	$.ajax({
-		type: "post",
-		url: url,
-		data: {reciever_id: $('#reciever_id').val(), email_message_id: $('#email_message_id').val()},
-		format: 'json',
-		success: function(data)
-			{
-				return false;
-			}
-		});
-	});
 </script>
 <style>
 	#ui-id-4 .note{
@@ -220,9 +221,9 @@
 	#subject_error{
 		display: none;
 	}
- #send_reply_error{
-	 display: none;
- }
+	#send_reply_error{
+		display: none;
+	}
 	#message_error{
 		display: none;
 	}

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   post 'user_support' => 'foundation_friendships#user_support', as: :user_support
   post 'user_unsupport' => 'foundation_friendships#user_unsupport', as: :user_unsupport
   post 'spread_user_post' => 'foundation_friendships#spread_user_post', as: :spread_user_post
-
+  get "/users/sign_in" => redirect("/")
   resources :posts do
     resources :comments
   end
@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   resources :foundation_pictures
   post 'foundation_pictures/update' => 'foundation_pictures#update', as: :foundations_update
   get 'foundation_calendar', :to => 'foundations#foundation_calendar'
+  # post 'foundation_calendar', :to => 'foundations#foundation_calendar'
   # get 'foundations/user_foundations' => 'foundations#user_foundations'
   # get 'foundations/:id' => 'foundations#foundation_profile', as: :foundation_profile
   # get 'foundations/:id' => 'foundations#show', as: :show
@@ -65,10 +66,12 @@ Rails.application.routes.draw do
     post 'registrations/update_description' => 'registrations#update_description'
     post 'registrations/update_email' => 'registrations#update_email'
     post 'registrations/update_phone' => 'registrations#update_phone'
-    post 'registrations/update_settings' => 'registrations#update_settings'
+    # post 'registrations/update_settings' => 'registrations#update_settings'
     post 'registrations/update' => 'registrations#update'
     post 'registrations/update_password' => 'registrations#update_password'
     get 'registrations/view_user_foundations' => 'registrations#view_user_foundations', as: :user_foundations
+    get 'registrations/view_gigs_users' => 'registrations#view_gigs_users', as: :view_gigs_users
+    get 'registrations/share_event' => 'registrations#share_event' , as: :share_event
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -76,7 +79,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'events#index'
   # get 'events/join_volunteer'=> 'events#join_volunteer', as: :join_volunteer
-  post 'join_event' => 'events#join_event', as: :join_event
+  post 'join_new_event' => 'registrations#join_new_event', as: :join_new_event
+  post 'join_event', :to => 'events#join_event'
+  get 'events/join_event' => 'events#join_event'
   # get 'foundations/:id/support_foundation' => 'foundations#support_foundation', as: :support_foundation
   get 'foundations/:id/support_foundation', :to => 'foundations#support_foundation', as: :support_foundation
   # match 'support_foundation' => 'foundations#support_foundation', as: :support_foundation, :via => [:get, :post]
@@ -93,6 +98,7 @@ Rails.application.routes.draw do
   post 'event_list', :to => 'events#event_list'
   post 'email_message_detail' => 'email_messages#email_message_detail', as: :email_message_detail
   post 'send_message_reply' => 'email_messages#send_message_reply', as: :send_message_reply
+  post 'add_notification_message' => 'email_messages#add_notification_message', as: :add_notification_message
   get 'email_message_detail' => 'email_messages#email_message_detail'
   get 'friendsearch_request' => 'events#friendsearch_request'
   get 'search_users' => 'events#search_users'

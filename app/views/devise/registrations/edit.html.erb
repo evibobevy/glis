@@ -63,7 +63,7 @@
           <p><span><% if user_signed_in? %><%= @supporters.present? ? @supporters.count : 0 %><% end %></span> Supporters </p>
         </div>
         <div class="foundCreate">
-          <button>CREATE YOUR<br/>FOUNDATION PROFILE</button>
+          <button id="foundation_cal">CREATE YOUR FOUNDATION PROFILE</button>
         </div>
       </div>
       <div class="user-photos-row">
@@ -123,11 +123,15 @@
             <% @user_supporters.in_groups_of(3, false) do |user_support| %>
               <% for user in user_support %>
                 <div class="supporters">
-                  <% if user.friend.present? && user.friend.image.present? && user.friend != current_user %>
-                    <%= image_tag user.friend.image.url(:medium), style: "height: 65px;" %>
-                    <h2><%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %></h2>
-                    <%= button_to 'Remove', remove_friend_path(:friend_id => user.friend.id, :user_id => current_user.id), :method => :post, :class=>"remove-btn" %>
+                  <% if user.present? && find_user_by_id(user.friend_id).user_pictures.present? %>
+                    <%= image_tag find_user_by_id(user.friend_id).user_pictures.first.image.url(:medium), style: "height: 65px;" %>
+                  <% else %>
+                    <%= image_tag 'noImg.jpg' %>
                   <% end %>
+                  <h2 style="float: left;margin-left: 20px;"><% if user.present? && find_user_by_id(user.friend_id).first_name.present? %>
+                      <%= link_to find_user_by_id(user.friend_id).last_name_initial.capitalize, user_profile_path(:id => user.friend_id) %>
+                    <% end %>
+                  </h2>
                 </div>
               <% end %>
             <% end %>
@@ -213,7 +217,8 @@
                 <h2>Email Notifications?</h2>
 
                 <div class="notificationSettings">
-                  <%= f.text_field :phone_number, :required => true, :maxlength => "10",  :placeholder => "Phone" %>
+                  <%#= f.text_field :phone_number, :required => true, :maxlength => "10",  :placeholder => "Phone" %>
+                  <%= f.text_field :phone_number, id: 'phone_number', :maxlength => "10", :required => true, :placeholder => "Phone", :onkeypress=> "return event.charCode >= 48 && event.charCode <= 57" %>
                 </div>
                 <h2>Text/SMS Notifications?</h2>
 
@@ -247,6 +252,10 @@
 <!--Middle content ends here-->
 <script>
 	$('#edit_user').validate();
+	$('#foundation_cal').click(function(){
+		window.location.href = '/foundation_calendar';
+		return false;
+	});
 	$('#foundation_profile').click(function () {
 		$("#create_foundation").click();
 		return false;
@@ -312,6 +321,7 @@
 							$('#not_match_message_password').hide();
 						}
 						$('#success_message_password').show();
+						window.location.href = "/";
 					}
 				});
 			}
@@ -404,12 +414,6 @@
 	#not_match_message_password{
 		display: none;
 	}
+
 </style>
-<script>
-	//	$(document).ready( function() {
-	//		$('#falseinput').click(function(){
-	//			$("#user_image").click();
-	//			return false;
-	//		});
-	//	});
-</script>
+

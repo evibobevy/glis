@@ -71,6 +71,14 @@ class RegistrationsController < Devise::RegistrationsController
     render layout: 'fancybox'
   end
 
+  def view_gigs_users
+    if params[:event_id].present? && !params[:join_gigs].present?
+      @gig = Event.find(params[:event_id])
+      @gig_users = @gig.users if @gig.present?
+      render layout: 'fancybox'
+    end
+  end
+
   def update_user
     @user            = User.find_by_id(current_user.id)
     @user.first_name = params[:first_name] if params[:first_name].present?
@@ -121,11 +129,11 @@ class RegistrationsController < Devise::RegistrationsController
     redirect_to new_user_session_path
   end
 
-  def update_settings
-    p "============================"
-    p params
-    p "============================"
-  end
+  # def update_settings
+  #   p "============================"
+  #   p params
+  #   p "============================"
+  # end
 
   private
 

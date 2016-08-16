@@ -104,15 +104,13 @@
             <% @user_supporters.in_groups_of(3, false) do |user_support| %>
               <% for user in user_support %>
                 <div class="supporters">
-                  <% if user.friend.present? && user.friend.user_pictures.first.present? %>
-                    <%= image_tag user.friend.user_pictures.first.image.url(:medium), style: "height: 65px;" %>
+                  <% if user.present? && find_user_by_id(user.friend_id).user_pictures.present? %>
+                    <%= image_tag find_user_by_id(user.friend_id).user_pictures.first.image.url(:medium), style: "height: 65px;" %>
                   <% else %>
-                    <%= image_tag 'noImg.jpg', alt: '' %>
+                    <%= image_tag 'noImg.jpg' %>
                   <% end %>
-                  <h2><% if user.friend.present? && user.friend.first_name.present? %>
-                      <%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %>
-                    <% else %>
-                      " "
+                  <h2 style="float: left;margin-left: 20px;"><% if user.present? && find_user_by_id(user.friend_id).first_name.present? %>
+                      <%= link_to find_user_by_id(user.friend_id).last_name_initial.capitalize, user_profile_path(:id => user.friend_id) %>
                     <% end %>
                   </h2>
                 </div>
@@ -152,9 +150,10 @@
                     <%= link_to ' Spread ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
                   <% end %>
                   <% if user_signed_in? && post.postable.present? && post.postable.open_to_the_public? %>
-                    <%= link_to 'Join', support_path(:friend_id => post.user), :method => :post, :class=>"btn-black join"%>
-                  <% else %>
-                    <%= link_to ' Join ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                    <%#= link_to 'Join', support_path(:friend_id => post.user), :method => :post, :class=>"btn-black join"%>
+                  <%= link_to 'Join', join_gigs_path(:id => post.postable.id), data: { fancybox_width: 600 }, :class=>"fancybox btn btn-success btn-black join "%>
+                  <%# else %>
+                    <%#= link_to ' Join ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
                   <% end %>
                   </div>
               <div class="vol-user-comment">
@@ -219,9 +218,9 @@
                 <% if user_signed_in? && @post.postable.open_to_the_public?  %>
                   <%#= link_to 'Join', support_path(:friend_id => @post.user), :class=>"btn-black join"%>
                   <%= link_to 'Join', join_gigs_path(:id => @post.postable.id), data: { fancybox_width: 600 }, :class=>"fancybox btn btn-success btn-black join "%>
-                <% else %>
+                <%# else %>
                   <%#= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black join'%>
-                  <%= button_to ' Join ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <%#= button_to ' Join ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
                 <% end %>
                 </div>
           </div>

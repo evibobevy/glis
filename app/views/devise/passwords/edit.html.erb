@@ -1,28 +1,71 @@
-<h2>Change your password</h2>
-
+<div class="password_change_form">
+<h2 style="font-family: 'GothamRndMedium';color: #5c5b5c;">Change your password</h2>
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, placeholder: 'Password', autocomplete: "off" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <%= f.password_field :password_confirmation,  placeholder: 'Password Confirmation', autocomplete: "off" %>
+      </div>
+    </div>
+      <br />
+    <div class="actions">
+      <%= f.submit "Change my password", :class=>"reg-fb sub-regis password-change-btn" %>
+    </div>
 <% end %>
-
-<%#= render "devise/shared/links" %>
+</div>
+<style>
+	#error_explanation ol, ul {
+		color: red;
+	}
+	#error_explanation li {
+		font-weight: 700;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+	}
+	h1 {
+		color : #000000;
+		text-align : center;
+		font-family: "SIMPSON";
+	}
+	.password_change_form {
+		width: 300px;
+		margin: 0 auto;
+	}
+	.password-change-btn{
+		font-size: 14px;
+	}
+	.password-change-btn {
+		font-size: 14px;
+	}
+	#user_password{
+		border: 3px solid #979797;
+		border-radius: 8px;
+		height: 46px;
+		width: 300px;
+		padding: 0 13px;
+		font-size: 16px;
+	}
+	#user_password_confirmation{
+		border: 3px solid #979797;
+		border-radius: 8px;
+		height: 46px;
+		padding: 0 13px;
+		font-size: 16px;
+		width: 300px;
+	}
+</style>
 
 
 

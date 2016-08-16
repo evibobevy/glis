@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy, :join_volunteer, :disjoin_volunteers, :join_gigs]
-  before_filter :authorize, only: [:join_volunteer, :disjoin_volunteers, :list_users, :find_mutual_friends]
+  before_filter :authorize, only: [:join_volunteer, :disjoin_volunteers, :list_users, :find_mutual_friends, :friendsearch_request]
   before_filter :glis_support ,except: [:support, :unsupport]
   before_filter :find_latest_month_gigs, :only => :event_list
   before_filter :find_mutual_friends ,only: :friendsearch_request
@@ -11,7 +11,7 @@ class EventsController < ApplicationController
 
   def authorize
     unless user_signed_in?
-      redirect_to new_user_registration_path
+      redirect_to root_path
     end
   end
 
@@ -96,21 +96,23 @@ class EventsController < ApplicationController
   end
 
   def join_event
-    event = Event.find(params[:event_id])
-    current_user.events << event
-    flash[:notice] = "Successfully Join Event"
-    redirect_to :back and return
+    if params[:event_id].present?
+      @event = Event.find(params[:event_id])
+      current_user.events << @event
+      flash[:notice] = "Successfully Join Event"
+      redirect_to root_path
+    end
   end
-
 
   def friendsearch_request
     #@type_of_gigs = Event.type_of_gigs
   end
 
   def search_users
-    if params[:search_user].present? || params[:search_location].present? || params[:type_of_gig].present?
-      #@users = User.joins(:events).where("lower(first_name) LIKE ? OR lower(city) LIKE ? AND events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig].downcase])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
+    if !params[:type_of_gig].present?
       @users = User.includes(:events).where("lower(city) LIKE ? OR lower(first_name) LIKE ?" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
+    else
+      @users = User.joins(:events).where("lower(first_name) LIKE ? OR lower(city) LIKE ? OR events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig].downcase])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
     end
   end
 

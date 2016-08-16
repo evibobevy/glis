@@ -4,35 +4,31 @@
     <h1>Upcoming Volunteer Opportunities</h1>
     <a href="#" class="buttons prev">&lt;</a>
     <div class="viewport">
-      <ul class="overview">
-        <li><img src="/assets/defaultGigSlideSettings.png"><a href="#"><button>Edit</button></a><br>
-          <h2>Gig Name</h2>
-          <h3>Date of Gig</h3>
-          <h4>Type of Gig</h4></li>
-        <li><img src="/assets/defaultGigSlideSettings.png"><a href="#"><button>Edit</button></a><br>
-          <h2>Gig Name</h2>
-          <h3>Date of Gig</h3>
-          <h4>Type of Gig</h4></li>
-        <li><img src="/assets/defaultGigSlideSettings.png"><a href="#"><button>Edit</button></a><br>
-          <h2>Gig Name</h2>
-          <h3>Date of Gig</h3>
-          <h4>Type of Gig</h4></li>
-        <li><img src="/assets/defaultGigSlideSettings.png"><a href="#"><button>Edit</button></a><br>
-          <h2>Gig Name</h2>
-          <h3>Date of Gig</h3>
-          <h4>Type of Gig</h4></li>
-        <li><img src="/assets/defaultGigSlideSettings.png"><a href="#"><button>Edit</button></a><br>
-          <h2>Gig Name</h2>
-          <h3>Date of Gig</h3>
-          <h4>Type of Gig</h4></li>
-      </ul>
+      <% if @upcoming_foundations.present? %>
+        <ul class="overview">
+          <% @upcoming_foundations.each do |upcoming_foundation|%>
+            <li><% if upcoming_foundation.present? && upcoming_foundation.foundation_pictures.present? && upcoming_foundation.foundation_pictures.first.present? %> <%= link_to image_tag(upcoming_foundation.foundation_pictures.first.image.url(:medium), style: "height: 166px;width: 241px;"),"#" %> <% else %> <%= image_tag 'defaultGigSlide.png' %><% end %> <br/>
+              <h2 class="foun_name"><% if upcoming_foundation.present? && upcoming_foundation.name.present? %><%= upcoming_foundation.name %><% end %></h2>
+              <h3 class="foun_start_date"><% if upcoming_foundation.present? && upcoming_foundation.start_date.present? %><%= upcoming_foundation.start_date.try(:strftime, '%B %d, %Y')%><% end %></h3>
+              <h4 class="foun_type"><% if upcoming_foundation.present? && upcoming_foundation.type_of_foundation.present? %><%=upcoming_foundation.type_of_foundation %><% end %></h4>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <h2 style="margin: 100px;"><b><%= t(:no_upcomming_volunteer_opportunities) %></b></h2>
+      <% end %>
     </div>
     <a href="#" class="buttons next">&gt;</a>
   </div>
 </div>
+<link rel="stylesheet" href="/assets/tinycarousel.css" type="text/css" media="screen"/>
+<script src="/assets/jquery.tinycarousel.js"></script>
 <script type="text/javascript">
 	$(document).ready(function()
 	{
 		$('#slider1').tinycarousel();
 	});
 </script>
+<style>
+
+</style>

@@ -1,22 +1,16 @@
 class FriendshipsController < ApplicationController
   before_filter :authorize, only: :support
 
-  def authorize
-    unless user_signed_in?
-      redirect_to new_user_registration_path
-    end
-  end
-
   def support
     if params[:friend_id].present?
       @friend_id = params[:friend_id] if params[:friend_id].present?
       @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending')
       @user = User.find(params[:friend_id])
       if @friendship.save
-        UserMailer.user_notification(@user,@friend_id).deliver!  if @user.email_notification?
-        flash[:notice] = "Added friend."
+        # UserMailer.user_notification(@user,@friend_id).deliver!  if @user.email_notification?
+        flash.now[:notice] = "Added friend."
       else
-        flash[:error] = "Error occur when adding friend."
+        flash.now[:error] = "Error occur when adding friend."
       end
       redirect_to :back and return
     end
@@ -26,7 +20,7 @@ class FriendshipsController < ApplicationController
     if current_user.friendships.find_by_friend_id(params[:friend_id]).present?
       @friendship = current_user.friendships.find_by_friend_id(params[:friend_id])
       @friendship.destroy
-      flash[:notice] = "Successfully destroyed friendship."
+      flash.now[:notice] = "Successfully destroyed friends."
       redirect_to :back and return
     end
   end
@@ -36,9 +30,9 @@ class FriendshipsController < ApplicationController
      post = Post.find(params[:post_id])
      @post = current_user.posts.build(:name=> post.name)
      if @post.save
-       flash[:notice] = "Shared post."
+       flash.now[:notice] = "Post Successfully Shared."
      else
-       flash[:error] = "Error occur when adding friend."
+       flash.now[:error] = "Error occur when adding friend."
      end
      redirect_to :back and return
    end
@@ -48,9 +42,9 @@ class FriendshipsController < ApplicationController
     if params[:friend_id].present?
       @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending')
       if @friendship.save
-        flash[:notice] = "Added friend."
+        flash.now[:notice] = "Added friend."
       else
-        flash[:error] = "Error occurred when adding friend."
+        flash.now[:error] = "Error occurred when adding friend."
       end
       redirect_to :back and return
     end
@@ -60,9 +54,9 @@ class FriendshipsController < ApplicationController
     if params[:friend_id].present?
       @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending', :removed_user=> true)
       if @friendship.save
-        flash[:notice] = "Removed friend."
+        flash.now[:notice] = "Removed friend."
       else
-        flash[:error] = "Error occurred when removing friend."
+        flash.now[:error] = "Error occurred when removing friend."
       end
       redirect_to :back and return
     end
@@ -99,13 +93,21 @@ class FriendshipsController < ApplicationController
       @user = User.find(params[:id])
       @user_supporters = @user.friendships.find_unremove_friend.uniq.reject{|user| user.user_id == @user.id}
       @post = Post.first
-      @posts = @user.posts if @user.posts.present?
+      @posts = @user.posts.uniq if @user.posts.present?
       @comments = @post.comments if @post.present?
     end
   end
 
   def glis_support
-    @friend_requests = Friendship.where('friend_id =? AND accepted=? AND user_id !=?', current_user.id,'pending',current_user.id) if user_signed_in?
+    @friend_requests = Friendship.where('user_id =? AND accepted=? AND friend _id !=?', current_user.id,'pending',current_user.id) if user_signed_in?
+  end
+
+  private
+
+  def authorize
+    unless user_signed_in?
+      redirect_to root_path
+    end
   end
 
 end

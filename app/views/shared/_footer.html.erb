@@ -10,7 +10,13 @@
         <li><a href="#">Home</a></li>
         <% if user_signed_in? %>
           <li><%= link_to "Inbox", inbox_notifications_path(:page=> "inbox_notifications") %></li>
-          <li><%= link_to 'Settings',"#" %></li>
+          <% if @foundation.present? && params[:id].present?  %>
+            <li><%= link_to 'Settings',edit_foundation_path(@foundation) %></li>
+          <% elsif @user.present? %>
+            <li><%= link_to 'Settings',edit_user_registration_path %></li>
+          <% else %>
+            <li><%= link_to 'Settings',"#" %></li>
+          <% end %>
         <% end %>
         <li><%= link_to 'Sitemap', events_sitemap_path %></li>
         <% if user_signed_in? %>
@@ -18,7 +24,7 @@
         <% end %>
         <li><a href="#">Partners</a></li>
         <% if user_signed_in? %>
-          <li><a href="#">My Profile</a></li>
+          <li><%= link_to 'My Profile', edit_user_registration_path %></a></li>
         <% end %>
         <li><a href="#">Privacy Policy</a></li>
       </ul>

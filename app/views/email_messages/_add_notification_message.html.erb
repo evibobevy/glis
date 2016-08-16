@@ -1,4 +1,3 @@
-<%# @email_message_detail.each do |message| %>
-  <!--<h3><b><%#=message.user.full_name %></b>: <%#= message.message if message.present? %></h3>-->
-  <%#= hidden_field_tag :reciever_id, message.email_message.user.id if message.email_message.user.present?  %>
-<%# end %>
+<% @email_message_with_parent.each do |parent_message|%>
+  <h3><% if parent_message.message.present? %><b><%=parent_message.user.full_name %></b>: <%= parent_message.message %><% end %></h3>
+<% end %>

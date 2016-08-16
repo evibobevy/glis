@@ -1,4 +1,7 @@
 class PasswordsController < Devise::PasswordsController
+  def index
+    redirect_to root_path
+  end
 
   def create
     super
@@ -9,12 +12,10 @@ class PasswordsController < Devise::PasswordsController
   end
 
   def edit
-    p "edit ======================"
     super
   end
 
   def update
-    p "update ======================"
     super
   end
 

@@ -9,6 +9,7 @@ class Foundation < ActiveRecord::Base
   scope :latest_months_foundation, lambda { where("start_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_month, Time.zone.now.end_of_month) }
   scope :next_months_foundations, lambda { where("start_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_day, Time.zone.now.end_of_month) }
   scope :past_months_foundations, lambda { where("start_date >= ? AND end_date <= ?", Time.zone.now.beginning_of_month, Time.zone.now.end_of_day) }
+  # scope :upcomming_foundation, lambda { where("start_date >= ? AND end_date <= ?", Time.zone.now.end_of_day, Time.zone.now.end_of_month) }
   enum type_of_foundation: [ :community, :environment, :health, :animals, :faith, :other ]
   enum user_roles: [ :group_leader, :volunteer ]
 

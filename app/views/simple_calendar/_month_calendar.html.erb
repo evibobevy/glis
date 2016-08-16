@@ -248,8 +248,8 @@
                 <% end %>
               <% elsif params[:start_date].present? && params[:previous_link].present? && params[:next_link].present? && params[:action] =='foundation_calendar' && params[:controller] =='foundations'  %>
                 <div class="border"><h4>Past Foundation</h4></div>
-                <% if @next_month_foundation.present? %>
-                  <% @next_month_foundation.each do |past_foundation|%>
+                <% if @next_month_foundation.past_months_foundations.present? %>
+                  <% @next_month_foundation.past_months_foundations.each do |past_foundation|%>
                     <b style ="font-size: x-small;"><% if past_foundation.start_date.present? %> <%= past_foundation.start_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
                       <% if past_foundation.name.present? %><%= past_foundation.name.titleize %></b> <hr /><% end %>
                   <% end %>
@@ -272,10 +272,11 @@
           </div>
           </div>
 
-          <% if user_signed_in? && params[:action] == 'event_list' %>
+          <% if user_signed_in? && params[:action] == 'event_list' && !params[:popout_calendar].present? %>
             <%= render 'events/form' %>
           <% end %>
-          <% if user_signed_in? && params[:action] == 'foundation_calendar' &&  params[:controller] == "foundations" %>
+
+          <% if user_signed_in? && params[:action] == 'foundation_calendar' &&  params[:controller] == "foundations" && !params[:popout_calendar].present? %>
             <%= render 'foundations/volunteer_list' %>
             <%= render 'foundations/form' %>
           <% end %>

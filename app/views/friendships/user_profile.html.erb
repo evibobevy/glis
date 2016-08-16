@@ -20,7 +20,9 @@
             <% end %>
             <span><%= @user.full_address %></span>
             <p style="font-family: 'GothamRndBook'";>
-              <%= @user.description.present? ? @user.description : 'Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola brisket prosciutto sausage ball tip salami pork chop cupim shank swine. Ball tip meatball jowl pork chop picanha. Andouille beef leberkas ham hock pancetta. Ball tip salami jowl meatloaf beef rump pork belly tongue shank boudin pancetta.'  %>
+              <% if @user.description.present?  %>
+                <%= @user.description %>
+              <% end %>
             </p>
           </div>
         </div>

@@ -1,6 +1,8 @@
 $('.email_message').html('<%= j render("email_message_detail") %>')
-//var timeout = setInterval(autoRefresh_div, 10000);
-//function autoRefresh_div()
-//{
-//	$("#login_user_<%#=@email_message.id %>").load(location.href+" #login_user_<%#=@email_message.id %>");
-//}
+var timeout = setInterval(autoRefresh_div, 5000);
+function autoRefresh_div()
+{
+//	if ($('#last_message_id').val() > $('#last_current_message_id').val()) {
+		$('.login_user_<%= @email_message.id %>').append('<%= j render("add_notification_message") %>');
+//	}
+}
