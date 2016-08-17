@@ -19,16 +19,16 @@
   <div class="messReply">
     <%= form_tag send_message_reply_path , :remote => true, :id => 'message_form1'  do %>
       <%= hidden_field_tag :email_message_id, @email_message.id %>
-      <%= hidden_field_tag :last_message_id, params[:last_message_id].to_i %>
-      <%= hidden_field_tag :last_current_message_id, @email_message_with_parent.last.id %>
+      <%#= hidden_field_tag :last_message_id, params[:last_message_id].to_i %>
+      <%#= hidden_field_tag :last_current_message_id, @email_message_with_parent.last.id %>
       <%= text_area_tag :message, nil, :placeholder=> "Send A Reply..." %>
       <!--<div class="messSend"><input type="submit" value="Reply"></div>-->
       <div class="messSend">
-        <%= submit_tag "Reply" %>
+        <%= submit_tag "Reply", :class=>"email_message_btn" %>
       </div>
+      <label id="message_error1" for="message" generated="true" class="error">This field is required.</label>
     <% end %>
   </div>
-  <label id="message_error" for="message" generated="true" class="error">This field is required.</label>
 </div>
 <script>
 	$('#message_form1').validate();
@@ -46,9 +46,14 @@
 	});
 	$('#message_form1').submit(function(){
 		if ($('#message').val() == "") {
-			$('#message_error').show();
+			$('#message_error1').show();
 			return false;
 		}
 	});
 </script>
+<style>
+	#message_error1{
+		display: none;
+	}
+</style>
 

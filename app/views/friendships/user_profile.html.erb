@@ -77,15 +77,13 @@
                     <% end %>
                     <h2><% if user.friend.present? && user.friend.first_name.present? %>
                         <%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %>
-                      <% else %>
-                        " "
                       <% end %>
                     </h2>
                   </div>
                 <% end %>
               <% end %>
             <% else %>
-              <h2 align="center"> <b><%= t(:no_supporter) %></b> </h2>
+              <h2 align="center" style="margin: 95px;"><b><%= t(:no_supporter) %></b></h2>
             <% end %>
           </div>
         </div>

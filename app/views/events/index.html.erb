@@ -72,7 +72,7 @@
                     <% else %>
                       <%= image_tag 'noImg.jpg', alt: '' %>
                     <% end %>
-                    <span class="vol-name-over"> <%= vol.last_name_initial %> </span>
+                    <span class="vol-name-over"> <%= vol.full_name.first(10) %> </span>
                   </li>
                 </ul>
                 <% end %>

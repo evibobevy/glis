@@ -48,7 +48,7 @@
                     <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn", :id =>"#{today_gig.id}" %>  </h2></br><hr> <% end %>
                   <% end %>
                   <% if !user_signed_in? %>
-                    <% if today_gig.event_date == Time.zone.now.beginning_of_day %><br /><%= link_to 'Join', root_path %> <br><hr> <% end %>
+                    <% if today_gig.event_date == Time.zone.now.beginning_of_day %><br /><%= link_to 'Join', root_path, :onclick => 'alert("Please Sign Up or login  for join.");' %> <br><hr> <% end %>
                   <% end %>
                 <% end %>
               <% else %>

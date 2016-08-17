@@ -7,9 +7,9 @@
     </div>
     <div class="footer-link">
       <ul>
-        <li><a href="#">Home</a></li>
+        <li><%= link_to "Home",root_path %></li>
         <% if user_signed_in? %>
-          <li><%= link_to "Inbox", inbox_notifications_path(:page=> "inbox_notifications") %></li>
+          <li><%= link_to "InboxNotifications", inbox_notifications_path(:page=> "inbox_notifications") %></li>
           <% if @foundation.present? && params[:id].present?  %>
             <li><%= link_to 'Settings',edit_foundation_path(@foundation) %></li>
           <% elsif @user.present? %>
@@ -18,9 +18,9 @@
             <li><%= link_to 'Settings',"#" %></li>
           <% end %>
         <% end %>
-        <li><%= link_to 'Sitemap', events_sitemap_path %></li>
+        <li><%= link_to 'Sitemap', "#" %></li>
         <% if user_signed_in? %>
-          <li><a href="#">Gigs</a></li>
+          <li><%= link_to "My Gigs", event_list_path %></li>
         <% end %>
         <li><a href="#">Partners</a></li>
         <% if user_signed_in? %>

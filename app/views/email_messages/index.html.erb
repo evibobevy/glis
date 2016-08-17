@@ -18,7 +18,7 @@
               <div class="messDesc">
                 <h2><% if emr.present? %>
                     <% @last_message_id = EmailMessage.where('parent_id = ?', emr.id) %>
-                    <%= link_to find_username_of_sender(emr.user_id), email_message_detail_path(:email_message_id => emr.id, :last_message_id => @last_message_id.last.id ), id: emr.id, :class => "msg_block", remote: true  %>
+                    <%= link_to find_username_of_sender(emr.user_id), email_message_detail_path(:email_message_id => emr.id ), id: emr.id, :class => "msg_block", remote: true  %>
                   <% end %>
                 </h2>
                 <h3><% if emr.present? %><%= h truncate(emr.subject, :length => 10) if emr.subject.present? %><% end %></h3>
@@ -32,8 +32,6 @@
               </div></a>
               <br/>
             <% end %>
-          <% else %>
-            <h1 style="text-align: center;"><b><%=t :no_user_notification %></b></h1>
           <% end %>
         </div>
         <div class="email_message">
@@ -79,7 +77,7 @@
                 <h1 style="text-align: center;"><b><%=t :no_user_notification %></b></h1>
               <% end %>
               </div>
-          <label id="message_error" for="message" generated="true" class="error">This field is required.</label>
+          <!--<label id="message_error" for="message" generated="true" class="error">This field is required.</label>-->
         </div>
       </div>
 </section>
