@@ -54,9 +54,9 @@ class FriendshipsController < ApplicationController
     if params[:friend_id].present?
       @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending', :removed_user=> true)
       if @friendship.save
-        flash.now[:notice] = "Removed friend."
+        flash[:notice] = "Successfully Removed friend."
       else
-        flash.now[:error] = "Error occurred when removing friend."
+        flash[:error] = "Some went Wrong."
       end
       redirect_to :back and return
     end
@@ -76,6 +76,7 @@ class FriendshipsController < ApplicationController
     if params[:friend_id].present?
       @friendship = Friendship.find(params[:friend_id])
       @friendship.update_attributes(:accepted => 'approved')
+      flash[:notice] = "Accept friend request."
       redirect_to :back and return
     end
   end
@@ -84,6 +85,7 @@ class FriendshipsController < ApplicationController
     if params[:friend_id].present?
       @friendship = Friendship.find(params[:friend_id])
       @friendship.update_attributes(:accepted => 'unapproved')
+      flash[:notice] = "Deny friend request."
       redirect_to :back and return
     end
   end

@@ -110,9 +110,9 @@ class EventsController < ApplicationController
 
   def search_users
     if !params[:type_of_gig].present?
-      @users = User.includes(:events).where("lower(city) LIKE ? OR lower(first_name) LIKE ?" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
+      @users = User.includes(:events).where("(lower(city) LIKE ? OR lower(first_name) LIKE ?)" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
     else
-      @users = User.joins(:events).where("lower(first_name) LIKE ? OR lower(city) LIKE ? OR events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig].downcase])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
+      @users = User.joins(:events).where("(lower(first_name) LIKE ? OR lower(city) LIKE ?) OR events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig].downcase])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
     end
   end
 

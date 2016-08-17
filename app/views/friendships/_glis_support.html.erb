@@ -16,17 +16,27 @@
         <div class="fixed-wrapper">
           <div id="requests">
             <div class="corner"></div>
+            <div class ="notice_message">
+              <% if flash[:notice] %>
+                <% flash.each do |type, message| %>
+                  <div class="alert <%= bootstrap_class_for(type) %> fade in">
+                    <button class="close" data-dismiss="alert">×</button>
+                    <%= message %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
             <h1>My Requests</h1><br/>
             <div class="volBox">
               <% if @friend_requests.present? %>
-                <% @friend_requests.each do |friend_request| %>
+                <% @friend_requests.uniq.each do |friend_request| %>
                   <div class="supporters2">
                     <%= image_tag 'noImg.jpg', alt: "" %>
                     <% if find_fullname_by_user_id(friend_request).full_name.present? %><h2><%= find_fullname_by_user_id(friend_request).full_name %></h2> <% end %>
                     <% if find_fullname_by_user_id(friend_request).city.present? || find_fullname_by_user_id(friend_request).state.present? %><h2><span><%= find_fullname_by_user_id(friend_request).full_address %></span></h2><% end %>
                     <h2><span>300 Gigs 700 Hours</span></h2>
-                    <%= button_to 'Accept', accept_friend_request_path(:friend_id => friend_request), :method => :post, :class=> 'btn-accept' %>
-                    <%= button_to 'Deny', deny_friend_request_path(:friend_id => friend_request), :method => :post, :class=> 'btn-deny' %>
+                    <%= button_to 'Accept', accept_friend_request_path(:friend_id => friend_request), :method => :post, :data => {:confirm => 'Are you sure?'},  :class=> 'btn-accept' %>
+                    <%= button_to 'Deny', deny_friend_request_path(:friend_id => friend_request), :method => :post, :data => {:confirm => 'Are you sure?'}, :class=> 'btn-deny' %>
                   </div>
                 <% end %>
               <% else %>
@@ -48,7 +58,7 @@
                     </div>
                   <% end %>
                 <% else %>
-                  <h2 align="center" ><%= t(:no_mutual_friend) %></h2>
+                  <h1 align="center" style="margin: 98px;font-size: 22px;"><b><%= t(:no_mutual_friend) %></b></h1>
                 <% end %>
               </div>
               <div class="searchSupport">
@@ -98,3 +108,13 @@
 		$('#type_of_gig').val(select_value);
 	});
 </script>
+<style>
+	.alert {
+		border: 1px solid transparent;
+		border-radius: 4px;
+		color: green;
+		margin-bottom: 20px;
+		padding: 15px;
+		color: green;
+	}
+</style>

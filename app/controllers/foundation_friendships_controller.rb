@@ -30,10 +30,10 @@ class FoundationFriendshipsController < ApplicationController
       post = Post.find(params[:post_id])
       @post = current_user.posts.build(:name=> post.name)
       if @post.save
-        flash[:notice] = "Shared post."
+        flash[:notice] = "Successfully Shared post."
         redirect_to :back and return
       else
-        flash[:error] = "Error occur when adding friend."
+        flash[:error] = "Someting went wrong."
         redirect_to :back and return
       end
     end

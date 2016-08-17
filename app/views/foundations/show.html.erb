@@ -38,8 +38,18 @@
             <%#= link_to 'VIEW MY FOUNDATION PROFILES', user_foundations_path, data: { fancybox_width: 600 }, class: 'fancybox view_foundation', :id => "view_foundation", :style=> "display:none;"%>
           </a><br/><br/>
           <% unless @foundation.users.exists?(current_user)%>
-            <%= link_to image_tag("supportUs.png"), support_foundation_path(:support=> true ) %> <br/>
+            <%= link_to image_tag("supportUs.png"), support_foundation_path(:support=> true)  %> <br/>
             <br/>
+          <% end %>
+        </div>
+        <div class ="notice_message">
+          <% if flash[:notice] %>
+            <% flash.each do |type, message| %>
+              <div class="alert <%= bootstrap_class_for(type) %> fade in">
+                <button class="close" data-dismiss="alert">×</button>
+                <%= message %>
+              </div>
+            <% end %>
           <% end %>
         </div>
         <div class="user-photos-row">
@@ -246,3 +256,8 @@
 		$('#slider1').tinycarousel();
 	});
 </script>
+<style>
+	.notice{
+		color: green;
+	}
+</style>
