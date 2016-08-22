@@ -90,8 +90,8 @@
   <script>
 	  $('#new_event').validate();
 	  $(function() {
-		  $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd', minDate: dateToday  });
-		  $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd', minDate: dateToday  });
+		  $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd', minDate: 'now'});
+		  $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd', minDate: 'now'});
 	  });
 	  $(function(){
 		  $('.multi').MultiFile({
