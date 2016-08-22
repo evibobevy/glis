@@ -238,8 +238,8 @@
               <!-- Start latest month foundation -->
               <% if !params[:start_date].present?  && params[:action] =='foundation_calendar' && params[:controller] =='foundations'%>
                 <div class="border"><h4> Past Foundation</h4></div>
-                <% if @latest_month_foundation.present? %>
-                  <% @latest_month_foundation.each do |past_foundation|%>
+                <% if @latest_month_foundation.past_months_foundations.present? %>
+                  <% @latest_month_foundation.past_months_foundations.each do |past_foundation|%>
                     <% if past_foundation.start_date.present? && past_foundation.start_date < Time.zone.now.beginning_of_day %><b style ="font-size: x-small;"> <%= past_foundation.start_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
                     <% if past_foundation.name.present? && past_foundation.start_date < Time.zone.now.beginning_of_day  %><%= past_foundation.name.titleize %></b><hr /><% end %>
                   <% end %>
