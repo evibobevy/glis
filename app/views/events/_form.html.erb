@@ -1,4 +1,4 @@
-<link href="/assets/bootstrap.min.css" rel="stylesheet">
+<!--<link href="/assets/bootstrap.min.css" rel="stylesheet">-->
 <!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>-->
 <script src="/assets/jquery.validate.min.js"></script>
 <div class="newgig-sec">
@@ -89,6 +89,10 @@
   <!--</div>-->
   <script>
 	  $('#new_event').validate();
+	  $(function() {
+		  $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd', minDate: dateToday  });
+		  $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd', minDate: dateToday  });
+	  });
 	  $(function(){
 		  $('.multi').MultiFile({
 			  accept:'gif|jpg',

@@ -17,7 +17,7 @@
               <% end %>
               <div class="messDesc">
                 <h2><% if emr.present? %>
-                    <% @last_message_id = EmailMessage.where('parent_id = ?', emr.id) %>
+                    <%# @last_message_id = EmailMessage.where('parent_id = ?', emr.id) %>
                     <%= link_to find_username_of_sender(emr.user_id), email_message_detail_path(:email_message_id => emr.id ), id: emr.id, :class => "msg_block", remote: true  %>
                   <% end %>
                 </h2>
