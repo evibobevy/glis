@@ -15,7 +15,7 @@
         <br> <%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn", :id => "#{today_gig.id}" %>  </h2></br><hr>
       <% end %>
       <% if !user_signed_in? %>
-        <br /><%= link_to 'Join', root_path, :onclick => 'alert("Please Sign Up to for join GIG.");'%> <br><hr>
+        <br /><%= link_to 'Join', root_path, :onclick => 'alert("Please Sign Up for join GIG.");'%> <br><hr>
       <% end %>
     <% end %>
   <% else %>
