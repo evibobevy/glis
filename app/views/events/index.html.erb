@@ -20,9 +20,10 @@
             <% @events.each do |event| %>
               <div class="volunteer-lft">
                 <div class="stay-icon">
-                  <% if event.pictures.first.present? %>
+                  <% if event.pictures.present? && event.pictures.first.image.url.present? %>
                     <%= image_tag event.pictures.first.image.url(:medium), alt: '', style: 'height: 160px; width: 182px' %>
-                    <% else %><%= image_tag 'stay-icon.png', alt: '' %>
+                  <% else %>
+                    <%= image_tag 'stay-icon.png', alt: '' %>
                   <% end %>
                 </div>
                 <div class="stay-detail">
@@ -67,8 +68,8 @@
                 <% for vol in volunteer %>
                 <ul>
                   <li style="margin-right: 10px;">
-                    <% if vol.user_pictures.first.present? %>
-                      <%= image_tag vol.user_pictures.first.image.url(:medium), alt: '', style: 'height: 149px; width: 141px' %>
+                    <% if vol.image.present? && vol.image.url.present?  %>
+                      <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 148px; width: 141px' %>
                     <% else %>
                       <%= image_tag 'noImg.jpg', alt: '' %>
                     <% end %>
