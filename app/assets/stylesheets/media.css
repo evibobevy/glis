@@ -685,7 +685,10 @@
     .calHead{
         display: none;
     }
-    /*foundations setting page*/
+    .event_details{
+        margin-left: 40px;
+    }
+        /*foundations setting page*/
     .saveSettings input[type="button"] {
         background-color: #5b9ebd;
         border: medium none;
