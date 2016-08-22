@@ -6,7 +6,7 @@
         <div class="user-prf-left">
           <div class="vol-img-lft">
             <% if current_user.image_file_name.present? || current_user.image.url.present? %>
-              <%= image_tag current_user.image.url, style: "height: 140px;width: 100%;" %>
+              <%= image_tag current_user.image.url(:medium), style: "height: 189px;width: 140px;" %>
             <% else %>
               <%= image_tag 'noImg.jpg', alt: '' %>
             <% end %>
