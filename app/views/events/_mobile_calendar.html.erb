@@ -7,7 +7,7 @@
       <b style ="font-size: x-small;"><% if today_gig.title.present? %><%= today_gig.title.titleize %> <% end %></b>
       <% if user_signed_in? %>
         <div class="gig_info" style="display:none; width: 95%;">
-          <% if today_gig.location.present? %> <b>Address:</b></h3> <h3 style="width: 80%;"><%= today_gig.location.titleize %><% end %>
+          <% if today_gig.location.present? %> <b>Address:</b></h3> <h3 class="event_details", style="width: 80%;"><%= today_gig.location.titleize %><% end %>
           <% if today_gig.full_description.present? %> <br /><b>Details:</b> <%= today_gig.full_description %><% end %><br />
           <%= link_to 'View GIG', "javascript:void(0)" %> <br />
           <%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %>
@@ -15,7 +15,7 @@
         <br> <%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn", :id => "#{today_gig.id}" %>  </h2></br><hr>
       <% end %>
       <% if !user_signed_in? %>
-        <br /><%= link_to 'Join', root_path %> <br><hr>
+        <br /><%= link_to 'Join', root_path, :onclick => 'alert("Please Sign Up for join GIG.");'%> <br><hr>
       <% end %>
     <% end %>
   <% else %>

@@ -148,7 +148,7 @@
                   <% if user_signed_in? %>
                     <%= link_to ' Spread ', spread_post_path(:post_id => post.id), :method => :post, :class=>"btn-black support-btn"%>
                   <% else %>
-                    <%= link_to ' Spread ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                    <%= link_to ' Spread ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to Spread this GIG.");'%>
                   <% end %>
                   <% if user_signed_in? && post.postable.present? && post.postable.open_to_the_public? %>
                     <%#= link_to 'Join', support_path(:friend_id => post.user), :method => :post, :class=>"btn-black join"%>
@@ -212,9 +212,10 @@
                   <%= button_to 'Support', 'javascript:;', :class=>"btn-black support", :onclick => 'alert("Please Sign Up to support this user.");'%>
                 <% end %>
                 <% if user_signed_in? && current_user.posts.present? %>
-                  <%= button_to ' Spread ', support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black support-btn"%>
+                  <%= button_to ' Spread ', spread_post_path(:post_id => @post.id), :method => :post, :class=>"btn-black support-btn" %>
+                <%#= link_to ' Spread ', spread_post_path(:post_id => post.id), :method => :post, :class=>"btn-black support-btn"%>
                 <% else %>
-                  <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to Spread this GIG.");'%>
                 <% end %>
                 <% if user_signed_in? && @post.postable.open_to_the_public?  %>
                   <%#= link_to 'Join', support_path(:friend_id => @post.user), :class=>"btn-black join"%>
