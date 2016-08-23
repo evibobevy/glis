@@ -194,10 +194,7 @@
               <h3>Change your password:</h3>
               <%#= devise_error_messages! %>
               <%= hidden_field_tag :reset_password_token %>
-              <%# flash.each do |name, msg| %>
-              <%#= content_tag :div, msg, class: "alert alert-info" %>
-              <%# end %>
-              <label id="success_message_password"><div class="alert alert-info">Password successfully updated.</div></label>
+              <label id="success_message_password"><div class="alert alert-warning">Password successfully updated.</div></label>
               <label id="blank_message_password"><div class="alert alert-warning">Password & Confirm Password can't be blank.</div></label>
               <label id="not_match_message_password"><div class="alert alert-warning">Password & Confirm Password doesn't match.</div></label>
               <div class="passwordChange">
@@ -206,19 +203,19 @@
                 <%= submit_tag "Save", :onclick => "return update_password();" %>
               </div>
             </div>
-            <label id="success_message_password"><div class="alert alert-info">Password successfully updated.</div></label>
+            <label id="success_message_password"><div class="alert alert-warning">Password successfully updated.</div></label>
             <div class="notifications">
               <div class="notificationQuestion">
                 <h2>Notifications:</h2>
 
                 <div class="notificationSettings">
-                  <%= f.email_field :email, :required => true, :placeholder => "Email" %>
+                  <%= f.email_field :email, :required => true, :placeholder => "Email: email@email.com" %>
                 </div>
                 <h2>Email Notifications?</h2>
 
                 <div class="notificationSettings">
                   <%#= f.text_field :phone_number, :required => true, :maxlength => "10",  :placeholder => "Phone" %>
-                  <%= f.text_field :phone_number, id: 'phone_number', :maxlength => "10", :required => true, :placeholder => "Phone", :onkeypress=> "return event.charCode >= 48 && event.charCode <= 57" %>
+                  <%= f.text_field :phone_number, id: 'phone_number', :maxlength => "10", :required => true, :placeholder => "Phone: 555-555-555", :onkeypress=> "return event.charCode >= 48 && event.charCode <= 57" %>
                 </div>
                 <h2>Text/SMS Notifications?</h2>
 
@@ -321,6 +318,7 @@
 							$('#not_match_message_password').hide();
 						}
 						$('#success_message_password').show();
+						alert("Your password has been successfully updated.");
 						window.location.href = "/";
 					}
 				});
@@ -387,14 +385,16 @@
 	.error{
 		color: red;
 		font-size: 12px;
+		font-weight: 700!important;
 	}
 	#city_error{
 		font-size: 12px;
-		font-weight: normal;
+		font-weight: 700!important;
 		display: none;
 	}
 	#state_error{
 		font-size: 12px;
+		font-weight: 700!important;
 	}
 	#error_explanation h2 {
 		display: none;
