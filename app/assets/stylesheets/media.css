@@ -677,7 +677,6 @@
 @media screen and (max-width: 1300px) {
 }
 */
-
 @media (min-width: 320px) and (max-width: 460px) {
     .contact-popup{
         height: 560px;
@@ -688,6 +687,10 @@
     }
     .event_details{
         margin-left: 40px;
+    }
+    .password_form {
+        width: 300px;
+        margin: 25px auto;
     }
         /*foundations setting page*/
     .saveSettings input[type="button"] {
@@ -705,9 +708,6 @@
     }
     #event_date_picker{
         padding-top: 0px;
-    }
-    #foundation_state_error{
-
     }
     /*.sched{*/
     /*display: none;*/
