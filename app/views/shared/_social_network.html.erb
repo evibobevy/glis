@@ -1,18 +1,20 @@
-<div class="float-full social-network-row">
-  <div class="fixed-wrapper">
-    <div class="child-left"><%= image_tag('child-img.png', alt: '') %></div>
-    <div class="social-net-rgt">
-      <h1>A SOCIAL NETWORK</h1>
-      <h2>FOR VOLUNTEERS</h2>
-      <p>Here you can find new gigs to work on<br>
-        and friends to work with and support you.</p>
+<% unless params[:controller]=="friendships" && params[:action]=='user_profile'%>
+  <div class="float-full social-network-row">
+    <div class="fixed-wrapper">
+      <div class="child-left"><%= image_tag('child-img.png', alt: '') %></div>
+      <div class="social-net-rgt">
+        <h1>A SOCIAL NETWORK</h1>
+        <h2>FOR VOLUNTEERS</h2>
+        <p>Here you can find new gigs to work on<br>
+          and friends to work with and support you.</p>
+      </div>
     </div>
   </div>
-</div>
-<div class="float-full gray-box-row">
-  <div class="fixed-wrapper">
-    <p>“Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola
-      brisket prosciutto sausage ball tip salami pork chop cupim shank swine.”<br>
-      -Some Butcher</p>
+  <div class="float-full gray-box-row">
+    <div class="fixed-wrapper">
+      <p>“Bacon ipsum dolor amet boudin bacon pancetta drumstick capicola
+        brisket prosciutto sausage ball tip salami pork chop cupim shank swine.”<br>
+        -Some Butcher</p>
+    </div>
   </div>
-</div>
+<% end %>

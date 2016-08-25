@@ -8,7 +8,7 @@
       <form action="" method="get">
         <div class="hd-search-box">
           <input name="" type="text">
-          <button class="search-icon"></button>
+          <button class="search-icon"><img src="/assets/searchIcon.png"></button>
         </div>
         <span class="inspire-text">Inspire the world with good.</span>
       </form>
@@ -33,10 +33,11 @@
     <% else %>
       <!--After login right section-->
       <div class="header-rgt-btn">
-        <%= link_to raw("<small>CHECK</small><br /><strong>NEW</strong><br /><strong>GIGS</strong>"), event_list_path, data: {fancybox_width: 850}, class: 'fancybox btn btn-success', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
-        <%= link_to raw("<strong>JOIN</strong><br /><small>LOG IN</small>"), new_user_registration_path, data: { fancybox_width: 600, autoSize: false }, class: 'fancybox btn btn-success join-today', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
-        <% end %>
+        <%= link_to ("<h2>CHECK</h2><h1>NEW</h1><h2>EVENTS</h2>").html_safe, event_list_path, data: {fancybox_width: 850}, class: 'fancybox btn btn-success', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
+        <%= link_to ("<h1>JOIN</h1><h2>LOG IN</h2>").html_safe, new_user_registration_path, data: { fancybox_width: 600, autoSize: false }, class: 'fancybox btn btn-success join-today', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
+        <!--<a href="register.html" class="join-today"><h1>JOIN</h1> <h2>LOG IN</h2></a>-->
       </div>
+    <% end %>
   </div>
 </header>
 <style>

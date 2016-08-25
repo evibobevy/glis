@@ -87,7 +87,7 @@
             <% end %>
           </ul>
         <% else %>
-          <h2 style="margin: 100px;"><b><%= t(:no_upcomming_volunteer_opportunities) %></b></h2>
+          <h2 class ="no_upcom_vol"><b><%= t(:no_upcomming_volunteer_opportunities) %></b></h2>
         <% end %>
       </div>
       <% if @upcoming_gigs.present? %> <a class="buttons next" href="#">&#62;</a> <% end %>
@@ -103,7 +103,7 @@
             <% for user in foundation_support %>
               <div class="supporters">
                 <% if user.present? && user.user_pictures.present? %>
-                  <%= image_tag user.user_pictures.first.image.url(:medium), style: "height: 64px;" %>
+                  <%= image_tag user.user_pictures.first.image.url(:medium)%>
                 <% else %>
                   <%= image_tag 'noImg.jpg' %>
                 <% end %>

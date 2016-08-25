@@ -5,7 +5,7 @@ class UserPicturesController < ApplicationController
     if params[:user_picture][:user_picture_id].present? && user_signed_in? && params[:user_picture][:image].present?
       @user_picture = current_user.user_pictures.find_by_id(params[:user_picture][:user_picture_id])
       if @user_picture.update_attributes(image:params[:user_picture][:image])
-        flash[:notice] = "Picture Update."
+        flash[:notice] = "User Pictures Update."
       else
         flash[:notice] = "Someting went wrong for User Picture."
       end

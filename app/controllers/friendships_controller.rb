@@ -1,5 +1,5 @@
 class FriendshipsController < ApplicationController
-  before_filter :authorize, only: [:support,:user_profile]
+  before_filter :authorize, only: [:support]
 
   def support
     if params[:friend_id].present?

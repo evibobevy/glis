@@ -7,33 +7,49 @@
     </div>
     <div class="footer-link">
       <ul>
+	      <!-- Home link -->
         <li><%= link_to "Home",root_path %></li>
-        <% if user_signed_in? %>
-          <li><%= link_to "InboxNotifications", inbox_notifications_path(:page=> "inbox_notifications") %></li>
-          <% if @foundation.present? && params[:id].present?  %>
-            <li><%= link_to 'Settings',edit_foundation_path(@foundation) %></li>
-          <% elsif @user.present? %>
-            <li><%= link_to 'Settings',edit_user_registration_path %></li>
-          <% else %>
-            <li><%= link_to 'Settings',"#" %></li>
-          <% end %>
+        <!-- Settings link -->
+        <% if user_signed_in? && !@foundation.present? %>
+          <li><%= link_to 'Settings',edit_user_registration_path %></li>
+        <% elsif  user_signed_in? && @foundation.present? %>
+          <li><%= link_to 'Settings',edit_foundation_path(@foundation.id) %></li>
         <% end %>
+        <!-- My Inbox link -->
+        <% if user_signed_in? %>
+          <li><%= link_to "My Inbox", inbox_notifications_path(:page=> "inbox_notifications") %></li>
+        <% end %>
+        <!-- Sitemap link -->
         <li><%= link_to 'Sitemap', "#" %></li>
-        <% if user_signed_in? %>
-          <li><%= link_to "My Gigs", event_list_path %></li>
+        <!-- My Profile link -->
+        <% if user_signed_in? && !@foundation.present? %>
+          <li><%= link_to 'My Profile', user_profile_path(current_user.id) %></li>
+        <% elsif  user_signed_in? && @foundation.present? %>
+          <li><%= link_to 'My Profile', foundation_path(@foundation.id)  %></li>
         <% end %>
+        <!-- Partners link -->
         <li><a href="#">Partners</a></li>
-        <% if user_signed_in? %>
-          <li><%= link_to 'My Profile', edit_user_registration_path %></a></li>
+        <!-- My Gigs link -->
+        <% if user_signed_in? && !@foundation.present? %>
+          <li><%= link_to "My Calendar", event_list_path %></li>
+        <% elsif user_signed_in? && params[:id].present? %>
+          <li><%= link_to "My Calendar", foundation_calendar_path  %></li>
         <% end %>
+        <!-- Privacy Policy link -->
         <li><a href="#">Privacy Policy</a></li>
       </ul>
     </div>
     <div class="send-feedback">
       <a href="#">SEND US <br>
         FEEDBACK<br>
-        <%= image_tag 'feedbackIcon.png'%>
+        <%= image_tag 'feedbackIcon.png', :class=> "feedback_image"%>
     </div>
     <p class="cpy-full">Glis, Inc. &copy; <%= Time.now.year %> | Developed by evibobevy</p>
   </div>
 </footer>
+<style>
+	.feedback_image{
+		width: 51px;
+		height: 51px;
+	}
+</style>

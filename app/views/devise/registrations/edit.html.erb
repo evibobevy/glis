@@ -1,3 +1,4 @@
+<link href="/assets/bootstrap.min.css" rel="stylesheet">
 <link href="http://getbootstrap.com/assets/css/docs.min.css" rel="stylesheet">
 <script src="/assets/jquery.validate.min.js"></script>
 <link href="/assets/main.css" rel="stylesheet">
@@ -73,7 +74,7 @@
               <% picture = 4 - @user_pictures.size %>
               <% @user_pictures.each do |user_picture|%>
                 <li>
-                  <%= image_tag user_picture.image.url, style: "width: 100%;" %>
+                  <%= image_tag user_picture.image.url(:medium) %>
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_image", :id=> "#{user_picture.id}" %>
                   <%= form_for user_picture, url: update_path, :html => {:class => 'user_images'}  do |f| %>
                     <%= f.hidden_field :user_picture_id, :value => user_picture.id %>
@@ -214,12 +215,12 @@
                 <h2>Email Notifications?</h2>
 
                 <div class="notificationSettings">
-                  <%#= f.text_field :phone_number, :required => true, :maxlength => "10",  :placeholder => "Phone" %>
-                  <%= f.text_field :phone_number, id: 'phone_number', :maxlength => "10", :required => true, :placeholder => "Phone: 555-555-555", :onkeypress=> "return event.charCode >= 48 && event.charCode <= 57" %>
+                  <%= f.text_field :phone_number, id: 'phone_number', :maxlength => "10", :placeholder => "Phone: 555-555-555", :onkeypress=> "return event.charCode >= 48 && event.charCode <= 57" %>
                 </div>
+                <div><label id="phone_number_error" for="phone_number" generated="true" class="error"">This field is required.</label> </div>
                 <h2>Text/SMS Notifications?</h2>
 
-                <h2>Would you like mobile ping notifications?</h2>
+                <h2>Would you like mobile push notifications?</h2>
               </div>
 
               <div class="switch3">
@@ -238,7 +239,7 @@
           <div class="cleat"></div>
           <div class="fixed-wrapper">
             <div class="saveSettings">
-              <%= f.submit "Save Privacy Settings" %>
+              <%= f.submit "Save Privacy Settings", :class=>"save-setting" %>
               <input type="button" value="Reset Privacy Settings" class="reset-privacy-setting-btn">
             </div>
           </div>
@@ -248,6 +249,9 @@
 </section>
 <!--Middle content ends here-->
 <script>
+	$(function(argument) {
+		$('[type="checkbox"]').bootstrapSwitch();
+	})
 	$('#edit_user').validate();
 	$('#foundation_cal').click(function(){
 		window.location.href = '/foundation_calendar';
@@ -263,12 +267,12 @@
 			return false;
 		}
 	});
-	$('#edit_user').submit(function(){
-		if ($('#user_state').val() == "") {
-			$('#state_error').show();
-			return false;
-		}
-	});
+//	$('#edit_user').submit(function(){
+//		if ($('#user_state').val() == "") {
+//			$('#state_error').show();
+//			return false;
+//		}
+//	});
 	$(function (argument) {
 		$('[type="checkbox"]').bootstrapSwitch();
 	})
@@ -380,6 +384,14 @@
 		$("#view_foundation").click();
 		return false;
 	});
+	$('.save-setting').click(function(){
+		if ($('#user_sms_notification').bootstrapSwitch('state') == true) {
+			if ($('#phone_number').val() == "") {
+				$('#phone_number_error').show();
+				return false;
+			}
+		}
+	});
 </script>
 <style>
 	.error{
@@ -414,6 +426,8 @@
 	#not_match_message_password{
 		display: none;
 	}
-
+	#phone_number_error{
+		display: none;
+	}
 </style>
 

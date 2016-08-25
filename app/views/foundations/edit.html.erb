@@ -1,3 +1,4 @@
+<link href="/assets/bootstrap.min.css" rel="stylesheet">
 <script src="/assets/jquery.validate.min.js" xmlns="http://www.w3.org/1999/html"></script>
 <section id="midd-container">
   <!--new volunteer section-->
@@ -277,16 +278,16 @@ $('.foundation_edit').submit(function(){
 	// End Validation for reset check box
 
 // Start Validation for phone number
-	$('.submit_foundation').click(function () {
-		if ($('#foundation_phone_number').val()=="") {
-			$('#foundation_phone_number_error').show();
-			return false;
-		}
-		else {
-			$('#foundation_phone_number_error').hide();
-			return true;
-		}
-	});
+//	$('.submit_foundation').click(function () {
+//		if ($('#foundation_phone_number').val()=="") {
+//			$('#foundation_phone_number_error').show();
+//			return false;
+//		}
+//		else {
+//			$('#foundation_phone_number_error').hide();
+//			return true;
+//		}
+//	});
 
 	$(".change_user_foundation_image").click(function(){
 		$("#edit_foundation_picture_"+this.id).show();
@@ -383,9 +384,15 @@ $('.foundation_edit').submit(function(){
 		$("#password_confirmation").val("");
 		return false;
 	}
+	$('.submit_foundation').click(function(){
+		if ($('#foundation_text_notifications').bootstrapSwitch('state') == true) {
+			if ($('#foundation_phone_number').val() == "") {
+				$('#foundation_phone_number_error').show();
+				return false;
+			}
+		}
+	});
 	//	END  Validate passsword
-
-
 </script>
 <style>
 	#error_explanation h2 {
