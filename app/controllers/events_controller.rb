@@ -42,15 +42,15 @@ class EventsController < ApplicationController
     @event.user_role = Event.user_roles[params[:user_role].downcase.to_sym]
     @event.type_of_gig = Event.type_of_gigs[params[:type_of_gig].downcase.to_sym]
     @event.user_id = current_user.id
-    if @event.save! && params[:images].present?
+    if @event.save && params[:images].present?
       params[:images].each do |image|
         @picture = @event.pictures.create(:image => image)
       end
       flash[:success] = "GIG successfully created.."
-      redirect_to event_list_path
     else
-      redirect_to event_list_path
+      flash[:notice] = "Something went Wrong.."
     end
+    redirect_to event_list_path
   end
 
   def update
@@ -110,9 +110,9 @@ class EventsController < ApplicationController
 
   def search_users
     if !params[:type_of_gig].present?
-      @users = User.includes(:events).where("(lower(city) LIKE ? OR lower(first_name) LIKE ?)" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
+      @users = User.where("(lower(city) LIKE ? AND lower(first_name) LIKE ?)" ,"%#{params[:search_location].downcase}%", "%#{params[:search_user].downcase}%")
     else
-      @users = User.joins(:events).where("(lower(first_name) LIKE ? OR lower(city) LIKE ?) OR events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig].downcase])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
+      @users = User.joins(:events).where("(lower(first_name) LIKE ? AND lower(city) LIKE ?) AND events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig].downcase])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
     end
   end
 

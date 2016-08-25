@@ -1,6 +1,7 @@
 $("form#sign_up_user").bind("ajax:success", function(e, data, status, xhr) {
     if (data.success) {
-        location.reload();
+        //location.reload();
+        window.location.href='/users/edit';
     } else {
         alert(data['error']);
     }

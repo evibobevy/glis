@@ -21,13 +21,14 @@
               <div class="volunteer-lft">
                 <div class="stay-icon">
                   <% if event.pictures.present? && event.pictures.first.image.url.present? %>
-                    <%= image_tag event.pictures.first.image.url(:medium), alt: '', style: 'height: 160px; width: 182px' %>
+                    <%= link_to (image_tag event.pictures.first.image.url(:medium), alt: '', style: 'height: 160px; width: 182px'), join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn btn-success"%>
                   <% else %>
                     <%= image_tag 'stay-icon.png', alt: '' %>
                   <% end %>
                 </div>
                 <div class="stay-detail">
-                  <h5><% if event.title.present? %><%= event.title %><% end %></h5>
+                  <% if event.title.present? %><h5><%= link_to event.title, join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn-volunteer"%></h5><% end %>
+	                <%#= link_to event.title, join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn btn-success"%>
                   <span class="date-small"><%= event.event_date.try(:strftime, '%B %d, %Y') %></span>
                   <% if user_signed_in? && event.present? && post.event.open_to_the_public? %>
                     <%= link_to 'Join', join_event_path(:event_id => event.id), :method => :post, :class=> "btn-join"%>
@@ -67,14 +68,16 @@
               <% @last_six_users.in_groups_of(2, false) do |volunteer| %>
                 <% for vol in volunteer %>
                 <ul>
-                  <li style="margin-right: 10px;">
-                    <% if vol.image.present? && vol.image.url.present?  %>
-                      <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 148px; width: 141px' %>
-                    <% else %>
-                      <%= image_tag 'noImg.jpg', alt: '' %>
-                    <% end %>
-                    <span class="vol-name-over"> <%= vol.full_name.first(10) %> </span>
-                  </li>
+                  <%= link_to user_profile_path(vol) do %>
+                    <li style="margin-right: 10px;">
+                      <% if vol.image.present? && vol.image.url.present?  %>
+                        <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 148px; width: 141px' %>
+                      <% else %>
+                        <%= image_tag 'noImg.jpg', alt: '' %>
+                      <% end %>
+                      <span class="vol-name-over"> <%= vol.last_name_initial %> </span>
+                    </li>
+                  <% end %>
                 </ul>
                 <% end %>
               <% end %>
@@ -263,3 +266,11 @@
 <script>
 	var player = new MediaElementPlayer('#player1');
 </script>
+<style>
+	.btn-volunteer{
+		color: #78b55f;
+	}
+	.btn-volunteer:hover {
+		color: #78b55f;
+	}
+</style>

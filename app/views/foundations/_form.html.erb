@@ -3,16 +3,16 @@
   <div class="createGig">
     <div class="corner3"></div>
     <h1>Create A Foundation</h1>
-    <%= form_for @foundation, :html => { :multipart => true } do |f| %>
+    <%= form_for @new_foundation, :html => { :multipart => true } do |f| %>
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, class: "alert alert-info" %>
       <% end %>
       <div class="createGig-left">
-        <% if @foundation.errors.any? %>
+        <% if @new_foundation.errors.any? %>
           <div id="error_explanation">
-            <h2><%= pluralize(@foundation.errors.count, "error") %> prohibited this foundation from being saved:</h2>
+            <h2><%= pluralize(@new_foundation.errors.count, "error") %> prohibited this foundation from being saved:</h2>
             <ul>
-              <% @foundation.errors.full_messages.each do |message| %>
+              <% @new_foundation.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
               <% end %>
             </ul>
@@ -244,6 +244,7 @@
 	}
 	.error{
 		color: red;
+		font-size: 14px;
 	}
 	#foundation_user_role_error{
 		display: none;

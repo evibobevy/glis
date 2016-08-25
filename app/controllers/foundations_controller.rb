@@ -1,5 +1,5 @@
 class FoundationsController < ApplicationController
-  before_action :set_foundation, only: [:show, :edit, :update, :destroy]
+  before_action :set_foundation, only: [:show, :update, :destroy]
   before_filter :find_latest_month_foundation, :only => :foundation_calendar
   before_filter :authorize, only: [:foundation_calendar, :edit, :show]
   respond_to :html, :js, :json
@@ -23,16 +23,20 @@ class FoundationsController < ApplicationController
         @picture = @foundation.foundation_pictures.create(:image => image)
       end
       flash[:success] = "Foundation successfully created.."
-      redirect_to foundation_calendar_path
+      redirect_to edit_foundation_path(@foundation)
     else
-      # flash[:alert] ="#{@event.errors.full_messages}"
+      flash[:notice] = "Something went Wrong.."
       redirect_to foundation_calendar_path
     end
+
   end
 
   def edit
-    @foundation_pictures = @foundation.foundation_pictures.last(4)
-    @picture             = FoundationPicture.new
+    if params[:id].present?
+      @foundation      = Foundation.find(params[:id])
+      @foundation_pictures = @foundation.foundation_pictures.last(4)
+      @picture             = FoundationPicture.new
+    end
   end
 
   def update
@@ -41,7 +45,7 @@ class FoundationsController < ApplicationController
       if @foundation.user.update_attributes(:email => params[:email])
         flash[:success] = "Foundation successfully updated.."
       else
-        flash[:notice] = "This Email Id already in used.."
+        flash[:notice] = "Something went Wrong.."
       end
     end
     redirect_to :back and return
@@ -57,7 +61,7 @@ class FoundationsController < ApplicationController
   end
 
   def foundation_calendar
-    @foundation = Foundation.new
+    @new_foundation = Foundation.new
     @upcoming_foundations = Foundation.next_months_foundations
     if params[:start_date].present?
       @next_month_foundation = Foundation.where('extract(year from start_date) = ? AND extract(month from end_date) = ?', Date.parse(params[:start_date]).year, Date.parse(params[:start_date]).month)

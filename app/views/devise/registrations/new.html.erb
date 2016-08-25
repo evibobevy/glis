@@ -34,10 +34,10 @@
       <%= devise_error_messages! %>
       <div class="form-row">
         <div class="col-reg-lft">
-          <%= f.text_field :first_name, :placeholder=>"First Name", :required => true %>
+          <%= f.text_field :first_name, :placeholder=>"First Name", :maxlength=> "10", :required => true %>
         </div>
         <div class="col-reg-lft">
-          <%= f.text_field :last_name, :placeholder=>"Last Name", :required => true %>
+          <%= f.text_field :last_name, :placeholder=>"Last Name", :maxlength=> "10", :required => true %>
         </div>
       </div>
       <div class="form-row">
