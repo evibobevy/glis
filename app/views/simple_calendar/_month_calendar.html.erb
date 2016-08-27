@@ -4,7 +4,8 @@
     <div class="fixed-wrapper">
       <div class="inbox">
         <div class="corner3"></div>
-        <h1><%= user_signed_in? ? "My Calendar" : "Event Calendar" %></h1>
+        <!--<h1><%#= user_signed_in? ? "My Calendar" : "Event Calendar" %></h1>-->
+        <% if user_signed_in? %> <h1>My Calendar</h1><% else %><h1 class="event_cal">Event Calendar</h1><% end %>
         <div id="myCalendar">
           <!--Start mobile-->
           <div class="calHead_mob">
@@ -14,9 +15,8 @@
             </span>
             <div  id="datepicker3"></div>
             <h2 class="show_date_time1"></h2>
-            <!--<i class="flaticon-arrows-1"></i>-->
           </div>
-	        <br /><br />
+          <br /><br />
           <!-- END mobile-->
           <!-- Start todays events web -->
           <div class="calHead">
@@ -24,13 +24,13 @@
             <h2><%= I18n.t("date.abbr_month_names")[start_date.month] %> <%= start_date.year %> </h2>
             <i><%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day, next_link:  "next_link")), remote: true, class:'flaticon-arrows-1', style: 'float: left; margin-top: 3px;"' %></i>
           </div>
-	        <!-- Start Mobile calender -->
+          <!-- Start Mobile calender -->
           <div class="sched_mobile">
-              <%= render partial: "events/mobile_calendar", locals: {today_gig_mobile: @today_gig_mobile} %>
+            <%= render partial: "events/mobile_calendar", locals: {today_gig_mobile: @today_gig_mobile} %>
           </div>
           <!-- End Mobile calender -->
-	         <!-- Start Web calender-->
-          <div class="sched"><h4>Today's Schedule</h4><hr>
+          <!-- Start Web calender-->
+          <div class="sched"><h4>Today's Schedule</h4>
             <!-- Start todays events -->
             <% if params[:action] =='event_list' && params[:controller] =='events' %>
               <% if @today_gigs.present? %>
@@ -52,7 +52,7 @@
                   <% end %>
                 <% end %>
               <% else %>
-                <%= t(:today_no_event)%>
+                <div class="no_event"><%= t(:today_no_event)%></div>
               <% end %>
             <% else %>
               <% if @today_gigs.present? %>
@@ -99,23 +99,23 @@
                   <% end %>
                 <% end %>
               <% else %>
-                <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %><%= t(:today_no_foundation)%> <% end %>
+                <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %> <div class="no_event"><%= t(:today_no_foundation)%></div> <% end %>
               <% end %>
             <% end %>
             <!-- End todays foundations -->
           </div>
-	        <!--End Web calender -->
+          <!--End Web calender -->
 
           <div class="calendar">
             <table>
               <tr>
-                <td><h3>SUN</h3></td>
-                <td><h3>MON</h3></td>
-                <td><h3>TUE</h3></td>
-                <td><h3>WED</h3></td>
-                <td><h3>THURS</h3></td>
-                <td><h3>FRI</h3></td>
-                <td><h3>SAT</h3></td>
+                <td><h3 class="day_name">SUN</h3></td>
+                <td><h3 class="day_name">MON</h3></td>
+                <td><h3 class="day_name">TUE</h3></td>
+                <td><h3 class="day_name">WED</h3></td>
+                <td><h3 class="day_name">THURS</h3></td>
+                <td><h3 class="day_name">FRI</h3></td>
+                <td><h3 class="day_name">SAT</h3></td>
               </tr>
               <% date_range.each_slice(7) do |week| %>
                 <tr>
@@ -140,8 +140,15 @@
                 <div class="border"><h4>Upcoming Gigs</h4></div>
                 <% if @latest_month_gigs.next_months_gigs.present? %>
                   <% @latest_month_gigs.next_months_gigs.each do |next_event|%>
-                    <b style ="font-size: x-small;"><% if next_event.event_date.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
-                      <% if next_event.title.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.title.titleize %></b><hr /><% end %>
+                      <span class="upcom-foundation">
+                        <b style ="font-size: x-small;"><% if next_event.event_date.present? && next_event.event_date > Time.zone.now.beginning_of_day %><%= next_event.start_time.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
+                          <% if next_event.title.present? && next_event.event_date > Time.zone.now.beginning_of_day %>
+                            <%= link_to next_event.title.titleize, join_gigs_path(:id => next_event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn"%>
+                            <%#= next_event.title.titleize %>
+                            <hr />
+                          <% end %>
+                        </b>
+	                    </span>
                   <% end %>
                 <% else %>
                   <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:next_month_no_event)%>  <% end %>
@@ -151,10 +158,13 @@
                 <% if @next_month_event.next_months_gigs.present? %>
                   <% @next_month_event.next_months_gigs.each do |past_gig|%>
                     <b style ="font-size: x-small;"><% if past_gig.event_date.present? %> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
-                      <% if past_gig.title.present? %><%= past_gig.title.titleize %></b> <hr /><% end %>
+                      <% if past_gig.title.present? %>
+                        <%= link_to past_gig.title.titleize, join_gigs_path(:id => past_gig.id), data: { fancybox_width: 600 }, :class=>"fancybox btn"%>
+                        <%#= past_gig.title.titleize %>
+                        </b> <hr /><% end %>
                   <% end %>
                 <% else %>
-                  <% if params[:action] =='event_list' && params[:controller] =='events' %>  <%= t(:next_month_no_event)%>   <% end %>
+                  <% if params[:action] =='event_list' && params[:controller] =='events' %>  <div class="no_event"><%= t(:next_month_no_event)%> </div>  <% end %>
                 <% end %>
               <% else %>
                 <% if params[:action] =='event_list' && params[:controller] =='events' %>
@@ -162,23 +172,26 @@
                   <% if @next_month_event.present? %>
                     <% @next_month_event.each do |next_event|%>
                       <% if next_event.event_date.present? %><b style ="font-size: x-small;"><%= next_event.event_date.try(:strftime, '%b %dth, %Y') %> - <% end %> <br>
-                      <% if next_event.title.present? %><%= next_event.title.titleize %></b><% end %><hr />
+                      <% if next_event.title.present? %>
+                        <%= link_to next_event.title.titleize, join_gigs_path(:id => next_event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn"%>
+                        <%#= next_event.title.titleize %>
+                        </b><% end %><hr />
                     <% end %>
                   <% else %>
-                    <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:next_month_no_event)%>  <% end %>
+                    <% if params[:action] =='event_list' && params[:controller] =='events' %><div class="no_event"> <%= t(:next_month_no_event)%> </div> <% end %>
                   <% end %>
                 <% end %>
               <% end %>
               <!-- Start latest month foundations -->
               <% if !params[:start_date].present? && params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>
-                <div class="border"><h4>Upcoming Foundation</h4>
+                <div class="border"><h4>Upcoming Foundation</h4> </div>
                   <% if @latest_month_foundation.present? %>
                     <% @latest_month_foundation.each do |latest_foundation|%>
                       <b style ="font-size: x-small;"><% if latest_foundation.start_date.present? && latest_foundation.start_date > Time.zone.now.beginning_of_day %><%= latest_foundation.start_date.try(:strftime, '%b %dth, %Y') %> - <br><% end %>
                         <% if latest_foundation.name.present? && latest_foundation.start_date > Time.zone.now.beginning_of_day %><%= latest_foundation.name.titleize %></b><hr /><% end %>
                     <% end %>
                   <% else %>
-                    <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>  <%= t(:next_month_no_foundation)%>  <% end %>
+                    <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %><div class="no_event">  <%= t(:next_month_no_foundation)%> </div> <% end %>
                   <% end %>
               <% else %>
                 <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>
@@ -205,17 +218,23 @@
                 <% if @latest_month_gigs.past_months_gigs.present? %>
                   <% @latest_month_gigs.past_months_gigs.each do |past_gig|%>
                     <% if past_gig.event_date.present? && past_gig.event_date < Time.zone.now.end_of_day %><b style ="font-size: x-small;"> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
-                    <% if past_gig.title.present? && past_gig.event_date < Time.zone.now.end_of_day  %><%= past_gig.title.titleize %></b><hr /><% end %>
+                    <% if past_gig.title.present? && past_gig.event_date < Time.zone.now.end_of_day  %>
+                      <%= link_to past_gig.title.titleize, join_gigs_path(:id => past_gig.id), data: { fancybox_width: 600 }, :class=>"fancybox btn"%>
+                      <%#= past_gig.title.titleize %>
+                      </b><hr /><% end %>
                   <% end %>
                 <% else %>
-                  <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:past_month_no_event)%>   <% end %>
+                  <% if params[:action] =='event_list' && params[:controller] =='events' %> <div class="no_event"><%= t(:past_month_no_event)%> </div>  <% end %>
                 <% end %>
               <% elsif params[:start_date].present? && params[:previous_link].present? && params[:next_link].present? && params[:action] =='event_list' && params[:controller] =='events'  %>
                 <div class="border"><h4>Past Gigs</h4></div>
                 <% if @next_month_event.past_months_gigs.present? %>
                   <% @next_month_event.past_months_gigs.each do |past_gig|%>
                     <b style ="font-size: x-small;"><% if past_gig.event_date.present? %> <%= past_gig.event_date.try(:strftime, '%b %dth, %Y') %> <br> <% end %>
-                      <% if past_gig.title.present? %><%= past_gig.title.titleize %></b> <hr /><% end %>
+                      <% if past_gig.title.present? %>
+                        <%= link_to past_gig.title.titleize, join_gigs_path(:id => past_gig.id), data: { fancybox_width: 600 }, :class=>"fancybox btn"%>
+                        <%#= past_gig.title.titleize %>
+                        </b> <hr /><% end %>
                   <% end %>
                 <% else %>
                   <%= t(:past_month_no_event)%>
@@ -229,7 +248,7 @@
                         <% if past_gig.title.present? %><%= past_gig.title.titleize %></b> <hr /><% end %>
                     <% end %>
                   <% else %>
-                    <% if params[:action] =='event_list' && params[:controller] =='events' %> <%= t(:past_month_no_event)%>   <% end %>
+                    <% if params[:action] =='event_list' && params[:controller] =='events' %> <div class="no_event"><%= t(:past_month_no_event)%> </div>  <% end %>
                   <% end %>
                 <% end %>
               <% end %>
@@ -240,11 +259,11 @@
                 <div class="border"><h4> Past Foundation</h4></div>
                 <% if @latest_month_foundation.past_months_foundations.present? %>
                   <% @latest_month_foundation.past_months_foundations.each do |past_foundation|%>
-                    <% if past_foundation.start_date.present? && past_foundation.start_date < Time.zone.now.beginning_of_day %><b style ="font-size: x-small;"> <%= past_foundation.start_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
-                    <% if past_foundation.name.present? && past_foundation.start_date < Time.zone.now.beginning_of_day  %><%= past_foundation.name.titleize %></b><hr /><% end %>
+                    <% if past_foundation.start_date.present? && past_foundation.start_date < Time.zone.now.end_of_day %><b style ="font-size: x-small;"> <%= past_foundation.start_date.try(:strftime, '%b %dth, %Y') %>  <br><% end %>
+                    <% if past_foundation.name.present? && past_foundation.start_date < Time.zone.now.end_of_day  %><%= past_foundation.name.titleize %></b><hr /><% end %>
                   <% end %>
                 <% else %>
-                  <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %><%= t(:past_month_no_foundation)%>  <% end %>
+                  <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %><div class="no_event"><%= t(:past_month_no_foundation)%> </div>  <% end %>
                 <% end %>
               <% elsif params[:start_date].present? && params[:previous_link].present? && params[:next_link].present? && params[:action] =='foundation_calendar' && params[:controller] =='foundations'  %>
                 <div class="border"><h4>Past Foundation</h4></div>
@@ -254,7 +273,7 @@
                       <% if past_foundation.name.present? %><%= past_foundation.name.titleize %></b> <hr /><% end %>
                   <% end %>
                 <% else %>
-                  <%= t(:past_month_no_foundation)%>
+                  <div class="no_event"><%= t(:past_month_no_foundation)%> </div>
                 <% end %>
               <% else  %>
                 <% if @next_month_foundation.present? && !params[:next_link].present? && params[:action] =='foundation_calendar' && params[:controller] =='foundations'%>
@@ -300,7 +319,7 @@
 	$("#datepicker3" ).datepicker({
 		onSelect: function (date, instance) {
 			$("#datepicker3").hide();
-			 var new_date = date
+			var new_date = date
 			var new_date1 = new Date(new_date)
 			var month = new_date1.toDateString().substring(4,7);
 			var date = new_date1.toDateString().substring(8,10);
@@ -322,22 +341,6 @@
 		$("#datepicker3").show();
 	});
 	//	END onclick span hide the time picker
-
-	//	$("span#event_date_picker").click(function() {
-	//		$("#datepicker").show();
-	//	});
-	//		$("#datepicker").datepicker({
-	//			onSelect: function (date, instance) {
-	//				$.ajax({
-	//					type: "GET",
-	//					url: "/event_list",
-	//					data: "date=" + date,
-	//					success: function (result) {
-	//						alert(date);
-	//					}
-	//				});
-	//			}
-	//		});
 </script>
 <style>
 	#datepicker3{
@@ -345,5 +348,14 @@
 	}
 	#show_date_time1{
 		display: none;
+	}
+	.fancybox:hover {
+		color: #337ab7;
+	}
+	.event_cal{
+		padding-top: 10px;
+	}
+	.day_name{
+		font-size: 12px;
 	}
 </style>

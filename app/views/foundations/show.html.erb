@@ -57,7 +57,7 @@
             <% foundation_image_counter = 4 - @foundation.foundation_pictures.size %>
             <% if @foundation.foundation_pictures.present? %>
               <% @foundation.foundation_pictures.last(4).each do |foundation_image|%>
-                <li><%= image_tag foundation_image.image.url, style: "height: 130px;width: 100%;" %></li>
+                <li><%= image_tag foundation_image.image.url, style: "width: 100%;" %></li>
               <% end %>
             <% end %>
             <% 1.upto(foundation_image_counter) do |i| %>
@@ -79,7 +79,12 @@
         <% if @upcoming_gigs.present? %>
           <ul class="overview">
             <% @upcoming_gigs.each do |upcoming_gig|%>
-              <li><% if upcoming_gig.present? && upcoming_gig.pictures.present? && upcoming_gig.pictures.first.image_file_name.present? %> <%= link_to image_tag(upcoming_gig.pictures.first.image.url(:medium), style: "height: 166px;width: 241px;"),"#" %> <% else %> <%= image_tag 'defaultGigSlide.png' %><% end %> <br/>
+              <li>
+                <% if upcoming_gig.present? && upcoming_gig.pictures.present? && upcoming_gig.pictures.first.image_file_name.present? %>
+                  <%= link_to image_tag(upcoming_gig.pictures.first.image.url(:medium),  style: "height: 166px;width: 241px;"), foundation_path %>
+                <% else %>
+                  <%= image_tag 'defaultGigSlide.png' %>
+                <% end %><br/>
                 <h2><%= upcoming_gig.title.present? ? upcoming_gig.title : " " %></h2>
                 <h3><%= upcoming_gig.event_date.present? ? upcoming_gig.event_date.try(:strftime, '%B %d, %Y') : " " %></h3>
                 <h4><%= upcoming_gig.type_of_gig.present? ? upcoming_gig.type_of_gig : " " %></h4>

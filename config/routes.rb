@@ -103,6 +103,7 @@ Rails.application.routes.draw do
   get 'email_message_detail' => 'email_messages#email_message_detail'
   get 'friendsearch_request' => 'events#friendsearch_request'
   get 'search_users' => 'events#search_users'
+  get 'search_gigs' => 'events#search_gigs'
   get 'glis_support' =>  'friendships#glis_support', as: :glis_support
   get 'users/:id' => 'friendships#user_profile', as: :user_profile
 

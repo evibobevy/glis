@@ -183,7 +183,7 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 .footer-link ul li a:hover {color:#4a4a4a;}
 
 .send-feedback {float:left; width:170px; background:#fff; border:5px solid #399018; border-radius:10px; min-height:120px; padding:10px 9px; text-align:center; font-size:23px; text-transform:uppercase; font-family:'GothamRndMedium'; margin:0 0 0 35px;}
-.send-feedback a {color:#5c5b5c; display:block;height: 114px;}
+.send-feedback a {color:#5c5b5c; display:block;}
 .send-feedback a:hover{color:#67aa4d;}
 .send-feedback a i {width:51px; height:58px; background:#4a4a4a; display:inline-block;}
 .cpy-full {float:left; width:100%; text-align:center; font-size:14px; font-family:'GothamRndLight'; color:#fff; margin:20px 0 0 0;}
@@ -207,7 +207,7 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 .close a {float:right; font-size:3em;font-family: "GothamRndMedium";text-decoration: none;color:#67aa4d;margin-top: -5%;margin-right: -4%;}
 .close a:hover {color:#979797;}
 /*.login {border-bottom:3px solid #979797;margin-bottom: 5%;height:180px;}*/
-.login {border-bottom:3px solid #979797;margin-bottom: 5%;height:210px;}
+.login {border-bottom:3px solid #979797;margin-bottom: 5%;height:200px;}
 
 .login-acct {background:#2b5d98; border:3px solid #979797; height:45px; color:#fff; font-size:16px; font-family:'GothamRndBold';padding:0 19px; width:100%; box-sizing:border-box; border-radius:8px; cursor:pointer;margin-top: 2%;}
 .login-submit {float:left;width:100%;}
@@ -219,8 +219,8 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 .col-reg-lft {float:left; width:49%;}
 .col-reg-lft-contact {float:left; width:93%;}
 .col-reg-lft:nth-child(2n) {float:right;}
-.register-popup input[type="text"], .register-popup input[type="email"], .register-popup input[type="password"] {border:3px solid #979797; border-radius:8px; height:46px; padding:0 13px; font-size:16px; width:100%;}
-.reg-fb {background:#2b5d98; border:3px solid #979797; height:51px; color:#fff; font-size:16px; font-family:'GothamRndBold';padding:0 19px; width:100%; box-sizing:border-box; border-radius:8px; cursor:pointer;}
+.register-popup input[type="text"], .register-popup input[type="email"], .register-popup input[type="password"] {border:3px solid #979797; border-radius:8px; height:38px; padding:0 13px; font-size:16px; width:100%;}
+.reg-fb {background:#2b5d98; border:3px solid #979797; height:45px; color:#fff; font-size:16px; font-family:'GothamRndBold';padding:0 19px; width:100%; box-sizing:border-box; border-radius:8px; cursor:pointer;}
 .reg-fb:hover{background:#1b477b;}
 .sub-regis {background:#67aa4d;}
 .sub-regis:hover{background:#559a3a;}
@@ -251,7 +251,7 @@ button{-moz-border:0px;}
     width: 101%;
 }
 .user-prf-left-cont p{font-size:14px;}
-.user-prf-rgt {float:right; width:200px; border:2px solid #67aa4d; border-radius:6px; padding:15px; box-sizing:border-box; text-align:center; min-height:150px;}
+.user-prf-rgt {float:right; width:200px; border:2px solid #67aa4d; border-radius:6px; padding:15px; box-sizing:border-box; text-align:center; min-height:150px;height: auto;}
 .user-prf-rgt strong {font-size:25px; font-family: "GothamRndBold";}
 .user-prf-rgt p {color:#4a4a4a; font-size:18px; font-family: "GothamRndBold"; display:block; margin-bottom:0px; margin-top:5px;line-height:normal;}
 .user-prf-rgt p span {color:#67aa4d;}
@@ -305,8 +305,8 @@ button{-moz-border:0px;}
 .line {border-bottom: 3px solid #5c5b5c; margin: 0 auto;margin-top: 10%; margin-bottom:10%; width:870px; height:350px;}
 
 .newmess-sec { width: 100%; background: #fff; padding: 60px 0 0 0;}
-.newMess input[type=text]{font-size:16px; width: 100%; padding: 10px;margin-bottom:20px;border:none;border-bottom:1px solid #5c5b5c;}
-.newMess input[type=email]{font-size:16px; width: 100%; padding: 10px;margin-bottom:20px;border:none;border-bottom:1px solid #5c5b5c;}
+.newMess input[type=text]{font-size:16px; width: 100%; padding: 10px;margin-bottom:20px;border:none;border-bottom:1px solid #5c5b5c;height: 40px;}
+.newMess input[type=email]{font-size:16px; width: 100%; padding: 10px;margin-bottom:20px;border:none;border-bottom:1px solid #5c5b5c;height: 40px;}
 .newMess form textarea {width: 85%;height:250px; font-size: 16px;border:none; border-bottom:1px solid #5c5b5c;}
 .newMess input[type=submit] {margin-top:200px; padding-bottom:20px;float: right; border: none; border-bottom: 1px solid #5c5b5c; margin-right: 0px;width:15%; font-family: "GothamRndBold";font-size: 20px; background-color: #fff; color:#67AA4D;}
 .newMess input[type=submit]:focus {margin-top:200px; padding-bottom:20px;float: right; border: none; border-bottom: 1px solid #5c5b5c; margin-right: 0px;width:15%; font-family: "GothamRndBold";font-size: 20px; background-color: #fff; color:#67AA4D;}
@@ -319,7 +319,7 @@ button{-moz-border:0px;}
 .corner2 {width: 50px; height:50px; margin-bottom: -30px; margin-left: -50px; border-top:3px solid #979797; border-left: 3px solid #979797}
 #slider1 {margin:0 auto; border-bottom:4px solid #5c5b5c; padding-top:50px;margin-top:5px;}
 #volunteers {margin:0 auto; padding-top:50px;margin-top:5px;}
-#volunteers .volBox {overflow: auto; margin-bottom:45px;width:100%; height:220px; border:3px solid #5c5b5c; border-radius:5px;}
+#volunteers .volBox {overflow: auto; margin-bottom:45px;width:100%; height:210px; border:3px solid #5c5b5c; border-radius:5px;}
 .supporters {width:32%; padding: 20px; display: block; float:left;}
 .supporters img{width:60px;height: 64px; float: left;border:2px solid #5c5b5c; border-radius:5px;}
 .supporters h2{float:right;margin-right: 20px; color:#67AA4D;}
@@ -371,7 +371,7 @@ button{-moz-border:0px;}
     padding: 5px;
     margin-bottom: 10px;
     font-size:18px;
-    width:94.65%;
+    width:97.65%;
     display: inline;
 }
 .date input[type=text]{
@@ -391,7 +391,7 @@ button{-moz-border:0px;}
     padding: 5px;
     margin-bottom: 10px;
     font-size:18px;
-    width:94.65%;
+    width:97.65%;
     display: inline;
 }
 .submitCancel input[type=submit]{
@@ -621,7 +621,7 @@ button{-moz-border:0px;}
     background-color: #67aa4d;
 }
 .photoSettings li img {
-    height: 123px;
+    height: 142px;
     margin-left: 0;
     width: 100%;
 }
@@ -1000,3 +1000,7 @@ button{-moz-border:0px;}
 .user-prf-rgt h1 {font-family: "GothamRndBold";}
 #volunteers1 {margin:0 auto; padding-top:50px;margin-top:5px;}
 #volunteers1 .volBox {overflow: auto; margin-bottom:45px;width:100%; height:210px; border:3px solid #5c5b5c; border-radius:5px;}
+
+/*body{*/
+    /*overflow: hidden;*/
+/*}*/

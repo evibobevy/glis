@@ -1,0 +1,12 @@
+<% if @search_result.present? %>
+  <% @search_result.each do |result|%>
+    <div class="supporters">
+      <img src="/assets/noImg.jpg"/>
+      <h2><%= result.title %></h2>
+    </div>
+  <% end %>
+<% else %>
+  <div class ="no-result">
+    <h2 align="center"> No results found </h2>
+  </div>
+<% end %>
