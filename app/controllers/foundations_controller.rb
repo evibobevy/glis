@@ -43,11 +43,12 @@ class FoundationsController < ApplicationController
     @foundation.update(foundation_params)
     if params[:email].present?
       if @foundation.user.update_attributes(:email => params[:email])
-        flash[:success] = "Foundation successfully updated.."
+        flash[:alert] = "Foundation successfully updated.."
       else
         flash[:notice] = "Something went Wrong.."
       end
     end
+    flash[:alert] = "Foundation successfully updated.."
     redirect_to :back and return
   end
 
