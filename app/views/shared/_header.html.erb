@@ -5,13 +5,13 @@
       <%#= image_tag('logo.png', alt: '') %>
     </div>
     <div class="header-search">
-      <form action="" method="get">
+      <%= form_tag search_gigs_path, :method => 'get', :id => "gigs_search", :remote=> true do %>
         <div class="hd-search-box">
-          <input name="" type="text">
+          <%= text_field_tag :search_gigs, params[:search_gig] %> <br/>
           <button class="search-icon"><img src="/assets/searchIcon.png"></button>
         </div>
         <span class="inspire-text">Inspire the world with good.</span>
-      </form>
+      <% end %>
     </div>
     <% if user_signed_in? %>
       <div class="loged-rgt">
@@ -33,22 +33,30 @@
     <% else %>
       <!--After login right section-->
       <div class="header-rgt-btn">
-        <%= link_to ("<h2>CHECK</h2><h1>NEW</h1><h2>EVENTS</h2>").html_safe, event_list_path, data: {fancybox_width: 850}, class: 'fancybox btn btn-success', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
+        <%= link_to ("<h2>CHECK</h2><h1>NEW</h1><h2 class='event-pos'>EVENTS</h2>").html_safe, event_list_path, data: {fancybox_width: 850}, class: 'fancybox btn btn-success', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
         <%= link_to ("<h1>JOIN</h1><h2>LOG IN</h2>").html_safe, new_user_registration_path, data: { fancybox_width: 600, autoSize: false }, class: 'fancybox btn btn-success join-today', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
         <!--<a href="register.html" class="join-today"><h1>JOIN</h1> <h2>LOG IN</h2></a>-->
       </div>
     <% end %>
   </div>
+  <%= link_to " ", search_gigs_path, data: {fancybox_width: 600}, class: 'fancybox btn', id: "search-result", style: 'display: none' %>
 </header>
 <style>
 #add-user-as-friend
 {
 	display: none
 }
+/*.overflowhidden{*/
+	/*overflow: hidden;*/
+/*}*/
 </style>
 <script>
 	$('#add-user-btn').click(function(){
 		$("#add-user-as-friend").click();
 		return false;
+	});
+	$('#gigs_search').submit(function(){
+		$("#search-result").click();
+//				this.reset();
 	});
 </script>

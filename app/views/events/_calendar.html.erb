@@ -1,5 +1,14 @@
 <div id ="calendar_page">
-  <%= month_calendar do |date| %>
+  <%= month_calendar events: @events do |date, events| %>
     <%= date.strftime('%e') %>
+    <% events.each do |event| %>
+        <span>*</span>
+    <% end %>
   <% end %>
 </div>
+<%#= month_calendar events: @events do |date, events| %>
+<%#= date.strftime('%e') %>
+<%# end %>
+<%# events.each do |event| %>
+<!--<span>*</span>-->
+<%# end %>

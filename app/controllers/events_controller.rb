@@ -15,7 +15,6 @@ class EventsController < ApplicationController
     end
   end
 
-
   def index
     @events         = Event.includes(:posts).last(3)
     @post           = Post.event_posts.first if Post.event_posts.first.present?
@@ -100,7 +99,7 @@ class EventsController < ApplicationController
       @event = Event.find(params[:event_id])
       current_user.events << @event
       flash[:notice] = "Successfully Join Event"
-      redirect_to root_path
+      redirect_to :back and return
     end
   end
 
@@ -114,6 +113,13 @@ class EventsController < ApplicationController
     else
       @users = User.joins(:events).where("(lower(first_name) LIKE ? AND lower(city) LIKE ?) AND events.type_of_gig = '#{(Event.type_of_gigs[params[:type_of_gig].downcase])}'","%#{params[:search_user].downcase}%", "%#{params[:search_location].downcase}%")
     end
+  end
+
+  def search_gigs
+    if params[:search_gigs].present?
+      @search_result = Event.search(params[:search_gigs])
+    end
+    render layout: 'fancybox'
   end
 
   def sitemap
@@ -136,6 +142,8 @@ class EventsController < ApplicationController
 
   def find_latest_month_gigs
     @latest_month_gigs = Event.latest_months_event
+    @events = Event.all
+
   end
 
   def find_mutual_friends

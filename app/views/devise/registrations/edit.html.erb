@@ -38,8 +38,8 @@
               <div class="state">
                 <%= f.text_field :state, :placeholder => "State" %><br />
               </div>
-              <span><label id="city_error" for="city" generated="true" class="error">This field is required.</label>
-              <label id="state_error" for="state" generated="true" class="error">This field is required.</label> </span>
+              <label id="city_error" for="city" generated="true" class="error">This field is required.</label>
+              <label id="state_error" for="state" generated="true" class="error">This field is required.</label>
               <div class="description">
                 <%#= f.text_area :description, :placeholder => "Description", :required => true %>
                 <%= f.text_area :description, :placeholder => "Description",:rows=> "4", :columns=>"100",  :required => true %>
@@ -137,7 +137,7 @@
               <% end %>
             <% end %>
           <% else %>
-            <h2 align="center" style="margin: 98px;"><b><%= t(:no_supporter) %></b></h2>
+            <h2 align="center" class="no-supporter"><b><%= t(:no_supporter) %></b></h2>
           <% end %>
         </div>
       </div>
@@ -250,7 +250,8 @@
 <!--Middle content ends here-->
 <script>
 	$(function(argument) {
-		$('[type="checkbox"]').bootstrapSwitch();
+		$('[type="checkbox"]').bootstrapSwitch('onText', 'YES');
+		$('[type="checkbox"]').bootstrapSwitch('offText', 'NO');
 	})
 	$('#edit_user').validate();
 	$('#foundation_cal').click(function(){
@@ -267,20 +268,20 @@
 			return false;
 		}
 	});
-//	$('#edit_user').submit(function(){
-//		if ($('#user_state').val() == "") {
-//			$('#state_error').show();
-//			return false;
-//		}
-//	});
-	$(function (argument) {
-		$('[type="checkbox"]').bootstrapSwitch();
-	})
+	$('#edit_user').submit(function(){
+		if ($('#user_state').val() == "") {
+			$('#state_error').show();
+			return false;
+		}
+	});
+//	$(function (argument) {
+//		$('[type="checkbox"]').bootstrapSwitch('state', false);
+//	})
 	$('.reset-btn').click(function () {
 		$("input[type=text], textarea").val("");
 	});
 	$('.reset-privacy-setting-btn').click(function () {
-		$("input[type=checkbox]").bootstrapSwitch('state', true);
+		$("input[type=checkbox]").bootstrapSwitch('state', false);
 
 	});
 	$(".change_user_image").click(function(){
@@ -396,16 +397,16 @@
 <style>
 	.error{
 		color: red;
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: 700!important;
 	}
 	#city_error{
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: 700!important;
 		display: none;
 	}
 	#state_error{
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: 700!important;
 	}
 	#error_explanation h2 {
@@ -428,6 +429,9 @@
 	}
 	#phone_number_error{
 		display: none;
+	}
+	.no-supporter{
+		margin: 98px;
 	}
 </style>
 

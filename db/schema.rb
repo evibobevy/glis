@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810092950) do
+ActiveRecord::Schema.define(version: 20160827102522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20160810092950) do
     t.boolean  "open_to_the_public",                                default: true
     t.boolean  "anyone_volunteer",                                  default: true
     t.text     "basic_info"
+    t.string   "foundation_name"
   end
 
   create_table "foundations_users", force: true do |t|
@@ -188,18 +189,18 @@ ActiveRecord::Schema.define(version: 20160810092950) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                                   default: "",   null: false
-    t.string   "encrypted_password",                      default: "",   null: false
+    t.string   "email",                                   default: "",    null: false
+    t.string   "encrypted_password",                      default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                           default: 0,    null: false
+    t.integer  "sign_in_count",                           default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -215,16 +216,16 @@ ActiveRecord::Schema.define(version: 20160810092950) do
     t.text     "description"
     t.string   "state"
     t.string   "phone_number"
-    t.boolean  "everyone_view_your_profile",              default: true
-    t.boolean  "everyone_view_your_calendar",             default: true
-    t.boolean  "everyone_invite_you_to_events",           default: true
-    t.boolean  "everyone_view_your_post",                 default: true
-    t.boolean  "everyone_message_you",                    default: true
-    t.boolean  "volunteers_need_approval_join_your_gigs", default: true
-    t.boolean  "supporters_need_approval_to_comment",     default: true
-    t.boolean  "email_notification",                      default: true
-    t.boolean  "sms_notification",                        default: true
-    t.boolean  "mobile_ping_notifications",               default: true
+    t.boolean  "everyone_view_your_profile",              default: false
+    t.boolean  "everyone_view_your_calendar",             default: false
+    t.boolean  "everyone_invite_you_to_events",           default: false
+    t.boolean  "everyone_view_your_post",                 default: false
+    t.boolean  "everyone_message_you",                    default: false
+    t.boolean  "volunteers_need_approval_join_your_gigs", default: false
+    t.boolean  "supporters_need_approval_to_comment",     default: false
+    t.boolean  "email_notification",                      default: false
+    t.boolean  "sms_notification",                        default: false
+    t.boolean  "mobile_ping_notifications",               default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

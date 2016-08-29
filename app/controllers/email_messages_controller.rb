@@ -1,6 +1,6 @@
 class EmailMessagesController < ApplicationController
   respond_to :js,:json, :html
-  # before_action :authenticate_user!, only: [:index]
+  # before_action :authorize, only: [:index]
   before_action :foundation_detail, only: [:index]
 
   def index
@@ -82,5 +82,11 @@ class EmailMessagesController < ApplicationController
 
   def email_message_params
     params.require(:email_message).permit(:subject, :message, :recipient_id)
+  end
+
+  def authorize
+    unless user_signed_in?
+      redirect_to root_path
+    end
   end
 end

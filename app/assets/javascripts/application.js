@@ -74,4 +74,7 @@ $('.timepicker1').timepicker({
     scrollbar: true
 });
 
+$(function() {
+    $('body').scrollTop(0);
+});
 

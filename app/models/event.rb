@@ -16,7 +16,8 @@ class Event < ActiveRecord::Base
   scope :next_months_gigs, lambda { where("event_date >= ? AND end_date <= ?", Time.zone.now.end_of_day, Time.zone.now.end_of_month) }
   scope :today_event, lambda { where("event_date = ? ", Time.zone.now.beginning_of_day) }
   scope :by_year, lambda { |year| where('extract(year from event_date) = ?', year) }
-  scope :by_month, lambda { |year| where('extract(month from event_date) = ?', month) }
+  scope :by_month, lambda { |month| where('extract(month from event_date) = ?', month) }
+  scope :find_by_event_date, lambda { |gig_date| where('event_date = ?', gig_date) }
 
   enum type_of_gig: [:community, :environment, :health, :animals, :faith, :other]
   enum user_roles: [:group_leader, :volunteer]
@@ -46,5 +47,11 @@ class Event < ActiveRecord::Base
 
   before_save do
     self.start_time = self.event_date
+  end
+
+  def self.search(search)
+    if search
+      where('title LIKE ?', "%#{search}%")
+    end
   end
 end

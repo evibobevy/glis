@@ -262,7 +262,8 @@ $('.foundation_edit').submit(function(){
 	// End  Validation for update the foundation form
 	// Start Validation for reset check box
 	$(function (argument) {
-		$('[type="checkbox"]').bootstrapSwitch();
+		$('[type="checkbox"]').bootstrapSwitch('onText', 'YES');
+		$('[type="checkbox"]').bootstrapSwitch('offText', 'NO');
 	})
 	$('.reset-btn').click(function () {
 		$("input[type=text], textarea").val("");
