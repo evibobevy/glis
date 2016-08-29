@@ -59,7 +59,7 @@
     .foo-col-1 {width:100%; border:none; text-align:center; padding:15px 0 15px 0;}
     a.btn-contact {width:220px;}
     .footer-link {width:100%; padding:15px; min-height:inherit; border:none; border-top:2px solid #fff;}
-    .send-feedback {margin:0 auto; float:none; clear:both; padding:10px 15px 0;}
+    .send-feedback {margin:0 auto; float:none; clear:both; padding:10px 15px 0px;}
     .cpy-full {font-size:16px;}
     .social-net-rgt p {font-size:22px;}
     .social-net-rgt p br {display: none;}
