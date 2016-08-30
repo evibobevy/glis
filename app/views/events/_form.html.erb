@@ -1,4 +1,7 @@
-<link href="/assets/bootstrap.min.css" rel="stylesheet">
+<%= stylesheet_link_tag 'bootstrap.min' %>
+<%= javascript_include_tag 'jquery.validate.min' %>
+<!--<link href="/assets/bootstrap.min.css" rel="stylesheet">-->
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
 <!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>-->
 <div class="newgig-sec">
   <div class="fixed-wrapper">
@@ -86,7 +89,6 @@
     </div>
   </div>
   <!--</div>-->
-  <script src="/assets/jquery.validate.min.js"></script>
   <script>
 	  $('#new_event').validate();
 	  $(function() {
