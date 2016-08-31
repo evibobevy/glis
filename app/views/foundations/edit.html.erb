@@ -1,12 +1,14 @@
-<link href="/assets/bootstrap.min.css" rel="stylesheet">
-<script src="/assets/jquery.validate.min.js" xmlns="http://www.w3.org/1999/html"></script>
+<!--<link href="/assets/bootstrap.min.css" rel="stylesheet">-->
+<%= stylesheet_link_tag 'bootstrap.min' %>
+<%= javascript_include_tag 'jquery.validate.min' %>
+<!--<script src="/assets/jquery.validate.min.js" xmlns="http://www.w3.org/1999/html"></script>-->
 <section id="midd-container">
   <!--new volunteer section-->
   <div class="user-prf-sec">
     <div class="fixed-wrapper">
       <div class="inbox">
         <div class="corner"></div>
-        <h1 style="margin-top: 0px;">Profile Settings</h1>
+        <h1 class ="prof_sett">Profile Settings</h1>
       </div>
       <div class="user-prf-row1">
         <div class="found-prf-left">
@@ -20,7 +22,7 @@
                 <% else %> <%= image_tag 'stayIcon.png' %>
                 <% end %>
                 <%= f.file_field :image, value: "CHANGE LOGO", :style=> "display:none;"  %>
-	              <button id="logo_btn">CHANGE LOGO</button>
+                <button id="logo_btn">CHANGE LOGO</button>
               </li></div> </div>
             <div class="found-prf-left-cont">
               <div class="nameSettings">
@@ -32,11 +34,10 @@
                 <%= f.text_field :city, :placeholder => "City" %>
               </div>
               <div class="state">
-                  <%= f.text_field :state, :placeholder => "State"  %>
+                <%= f.text_field :state, :placeholder => "State"  %>
               </div>
               <span>
 	              <label id="foundation_city_error" for="city" generated="true" class="error", style="padding-left: 12px;">This field is required.</label>
-                <!--<label id="foundation_state_error" for="state" generated="true" class="error" >This field is required.</label>-->
               <span>
 	            <span>
                 <label id="foundation_state_error" for="state" generated="true" class="error", style="
@@ -46,7 +47,7 @@
                 <%= f.text_area :description, :placeholder => "Description",:rows=> "4", :columns=>"100",  :required => true %>
               </div>
               <input type="button" value="Reset" class="reset-btn">
-              <%= f.submit "Save" %>
+                <%= f.submit "Save" %>
             </div>
           <% end %>
         </div>
@@ -62,12 +63,12 @@
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_foundation_image", :id=> "#{foundation_picture.id}"%>
                   <%= form_for foundation_picture, url: foundations_update_path, :html => {:class => 'foundation_images'}  do |f| %>
                     <%= hidden_field_tag :foundation_id, @foundation.id %>
-                   <% if @foundation.user.email.present? %> <%= hidden_field_tag :email_id, @foundation.user.email %> <% end %>
+                    <% if @foundation.user.email.present? %> <%= hidden_field_tag :email_id, @foundation.user.email %> <% end %>
                     <%= f.hidden_field :user_foundation_picture_id, :value => foundation_picture.id %>
                     <br><%= f.file_field :image, :class=>"upload_image" %> <br>
                     <span><%= f.submit "Save", :class=>"save_user_image" %></span>
-                      <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>
-		                <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
+                    <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>
+                    <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
                     </li>
                   <% end %>
               <% end %>
@@ -80,7 +81,7 @@
                     <%= hidden_field_tag :foundation_id, @foundation.id %>
                     <span> <%= f.submit "Save", :class=>"save_new_foundation_image" %>
                       <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>  </span>
-		                <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
+                    <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
                   <% end %>
                 </li>
               <% end %>
@@ -95,7 +96,7 @@
                     <%#= button_to "Cancel", 'javascript:;', :class=>"cancle_foundation_image" %>
                     <span> <%= f.submit "Save", :class=>"save_new_user_image" %>
                       <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>  </span>
-		                <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
+                    <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
                   <% end %>
                 </li>
               <% end %>
@@ -247,18 +248,31 @@
 			return false;
 		}
 	});
-$('.foundation_edit').submit(function(){
-	if ($('#foundation_city').val() == "") {
-		$('#foundation_city_error').show();
-		return false;
-	}
-});
-$('.foundation_edit').submit(function(){
-	if ($('#foundation_state').val() == "") {
-		$('#foundation_state_error').show();
-		return false;
-	}
-});
+	$('.foundation_edit').submit(function(){
+		if ($('#foundation_city').val() == "") {
+			$('#foundation_city_error').show();
+			return false;
+		}
+	});
+
+	//	$('.foundation_edit').click(function(){
+	//		if ($('#foundation_state_error').is(':visible')){
+	////			$('#foundation_state_error').css('padding-left', '370px');
+	//			$('#foundation_state_error').animate({
+	//				paddingLeft: '370px'
+	//			}, 370);
+	//		}
+	//		if ($('#foundation_state_error').is(':visible') && $('#foundation_city_error').is(':visible') ){
+	//			$('#foundation_state_error').css('padding-left', '210px');
+	//		}
+	//	});
+
+	$('.foundation_edit').submit(function(){
+		if ($('#foundation_state').val() == "") {
+			$('#foundation_state_error').show();
+			return false;
+		}
+	});
 	// End  Validation for update the foundation form
 	// Start Validation for reset check box
 	$(function (argument) {
@@ -268,27 +282,27 @@ $('.foundation_edit').submit(function(){
 	$('.reset-btn').click(function () {
 		$("input[type=text], textarea").val("");
 	});
-//	$('.reset-privacy-setting-btn').click(function () {
-//		$("#foundation_phone_number").val("");
-//		$("#email").val("");
-//	});
+	//	$('.reset-privacy-setting-btn').click(function () {
+	//		$("#foundation_phone_number").val("");
+	//		$("#email").val("");
+	//	});
 	$('.reset-privacy-setting-btn').click(function () {
 		$("input[type=checkbox]").bootstrapSwitch('state', true);
 	});
 
 	// End Validation for reset check box
 
-// Start Validation for phone number
-//	$('.submit_foundation').click(function () {
-//		if ($('#foundation_phone_number').val()=="") {
-//			$('#foundation_phone_number_error').show();
-//			return false;
-//		}
-//		else {
-//			$('#foundation_phone_number_error').hide();
-//			return true;
-//		}
-//	});
+	// Start Validation for phone number
+	//	$('.submit_foundation').click(function () {
+	//		if ($('#foundation_phone_number').val()=="") {
+	//			$('#foundation_phone_number_error').show();
+	//			return false;
+	//		}
+	//		else {
+	//			$('#foundation_phone_number_error').hide();
+	//			return true;
+	//		}
+	//	});
 
 	$(".change_user_foundation_image").click(function(){
 		$("#edit_foundation_picture_"+this.id).show();
@@ -333,7 +347,7 @@ $('.foundation_edit').submit(function(){
 		return false;
 	});
 
-//  Start Set Email value
+	//  Start Set Email value
 	select_value = $('#email_id').val()
 	$('#email').val(select_value);
 	//  END Set Email value
@@ -412,7 +426,7 @@ $('.foundation_edit').submit(function(){
 		color: red;
 	}
 	#foundation_city_error{
-	 display: none;
+		display: none;
 	}
 	#foundation_state_error{
 		display: none;
@@ -423,7 +437,7 @@ $('.foundation_edit').submit(function(){
 	#foundation_phone_number_error{
 		display: none;
 	}
-/*password style */
+	/*password style */
 	#user_success_message_password{
 		display: none;
 	}
@@ -432,5 +446,8 @@ $('.foundation_edit').submit(function(){
 	}
 	#not_match_message_user_password{
 		display: none;
+	}
+	.prof_sett{
+		margin-top: 0px;
 	}
 </style>
