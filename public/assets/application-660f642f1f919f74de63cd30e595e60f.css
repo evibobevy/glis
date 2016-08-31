@@ -1374,19 +1374,19 @@ button{-moz-border:0px;}
     .cpy-full {font-size:20px;}
     .footer-link ul li a {font-size:20px;}
     /* index CSS */
-    /*.header-rgt-btn a {*/
-        /*width: 125px;*/
-        /*height: 110px;*/
-        /*border-radius: 10px;*/
-        /*border: 6px solid #4a4a4a;*/
-        /*text-align: center;*/
-        /*display: inline-block;*/
-        /*background: #67AA00;*/
-        /*color: #fff;*/
-        /*line-height: 30px;*/
-        /*float: left;*/
-        /*margin-right: 4px;*/
-    /*}*/
+    .header-rgt-btn a {
+        width: 125px;
+        height: 110px;
+        border-radius: 10px;
+        border: 6px solid #4a4a4a;
+        text-align: center;
+        display: inline-block;
+        background: #67AA00;
+        color: #fff;
+        line-height: 30px;
+        float: left;
+        margin-right: 4px;
+    }
     .header-rgt-btn h1 {
         font-size: 28px;
         font-family: 'GothamRndMedium';
