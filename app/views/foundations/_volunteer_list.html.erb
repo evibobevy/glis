@@ -1,4 +1,5 @@
-<link rel="stylesheet" href="/assets/bootstrap.min.css" type="text/css" media="screen"/>
+<!--<link rel="stylesheet" href="/assets/bootstrap.min.css" type="text/css" media="screen"/>-->
+<%= stylesheet_link_tag 'bootstrap.min' %>
 <div class="fixed-wrapper">
   <div id="slider1">
     <div class="corner2"></div>
@@ -17,14 +18,16 @@
           <% end %>
         </ul>
       <% else %>
-        <h2 style="margin: 100px;"><b><%= t(:no_upcomming_volunteer_opportunities) %></b></h2>
+        <h2 class="no_upcomming_volunteer"><b><%= t(:no_upcomming_volunteer_opportunities) %></b></h2>
       <% end %>
     </div>
     <a href="#" class="buttons next">&gt;</a>
   </div>
 </div>
-<link rel="stylesheet" href="/assets/tinycarousel.css" type="text/css" media="screen"/>
-<script src="/assets/jquery.tinycarousel.js"></script>
+<!--<link rel="stylesheet" href="/assets/tinycarousel.css" type="text/css" media="screen"/>-->
+<!--<script src="/assets/jquery.tinycarousel.js"></script>-->
+<%= stylesheet_link_tag 'tinycarousel' %>
+<%= javascript_include_tag 'jquery.tinycarousel' %>
 <script type="text/javascript">
 	$(document).ready(function()
 	{
@@ -32,8 +35,7 @@
 	});
 </script>
 <style>
-	.foun_name
-	{
+	.foun_name {
 		font-family: "GothamRndMedium";
 		color: #5c5b5c;
 		margin: 0px;;
@@ -43,5 +45,8 @@
 	}
 	.foun_start_date{
 		font-size: 14px!important;
+	}
+	.no_upcomming_volunteer{
+		margin: 100px;
 	}
 </style>

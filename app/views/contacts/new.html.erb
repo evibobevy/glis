@@ -1,4 +1,5 @@
-<script src="/assets/jquery.validate.min.js"></script>
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<%= javascript_include_tag 'jquery.validate.min' %>
 <div class="contact-popup">
   <div class="modal-header">
     <h3>Contact Us</h3>
@@ -6,25 +7,25 @@
       <div id="success_msg"></div>
       <%= form_for @contact, url: contact_path, html: {id: 'new_address', class: 'form-horizontal', role: 'form', data: {remote: true}} do |f| %>
         <div class="form-row">
-          <div style="float: left; width: 100%;">Name</div>
+          <div class="contact_label">Name</div>
           <div class="col-reg-lft-contact">
             <%= f.text_field :name, id: 'name', class: 'form-control', required: true,  maxlength: "30"%>
           </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100%;">Email</div>
+          <div class="contact_label">Email</div>
           <div class="col-reg-lft-contact">
             <%= f.email_field :email, id: 'email', class: 'form-control', required: true %>
           </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100%;">Company Name</div>
+          <div class="contact_label">Company Name</div>
           <div class="col-reg-lft-contact">
             <%= f.text_field :company_name, id: 'company_name', class: 'form-control', required: true %>
           </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100%;">Phone number</div>
+          <div class="contact_label">Phone number</div>
           <div class="col-reg-lft-contact">
             <%= f.text_field :phone_number, id: 'phone_number', :maxlength => "10", :onkeypress=>"return event.charCode >= 48 && event.charCode <= 57" %>
           </div>
@@ -32,7 +33,7 @@
         </div>
         <label id="phone_error" for="phone_number" generated="true" class="error">This field is required.</label>
         <div class="form-row">
-          <div style="float: left; width: 100%;">Description</div>
+          <div class="contact_label">Description</div>
           <div class="col-reg-lft-contact">
             <%= f.text_area :description, id: 'description', class: 'form-control', required: true %>
           </div>
@@ -58,6 +59,10 @@
 	}
 	#phone_error{
 		display: none;
+	}
+	.contact_label{
+		float: left;
+		width: 100%;
 	}
 </style>
 <script>

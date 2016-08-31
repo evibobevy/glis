@@ -63,6 +63,7 @@ class FoundationsController < ApplicationController
 
   def foundation_calendar
     @new_foundation = Foundation.new
+    @today_foundation = Foundation.today_foundation
     @upcoming_foundations = Foundation.next_months_foundations
     if params[:start_date].present?
       @next_month_foundation = Foundation.where('extract(year from start_date) = ? AND extract(month from end_date) = ?', Date.parse(params[:start_date]).year, Date.parse(params[:start_date]).month)
@@ -72,7 +73,6 @@ class FoundationsController < ApplicationController
     else
       render layout: 'application'
     end
-    @today_foundation = Foundation.today_foundation
   end
 
   def show

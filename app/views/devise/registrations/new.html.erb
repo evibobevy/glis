@@ -1,7 +1,8 @@
 <!--Register Popup starts here-->
-<script src="/assets/jquery.validate.min.js"></script>
-<script src="/assets/user.js"></script>
-<%#= javascript_include_tag 'user.js'%>
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<!--<script src="/assets/user.js"></script>-->
+<%= javascript_include_tag 'jquery.validate.min' %>
+<%= javascript_include_tag 'user'%>
 <div class="register-popup">
   <div class="login">
     <h3>Log In</h3>
@@ -100,6 +101,9 @@
 			return false;
 		}
 	});
+	$('.forgot_pass_link').click(function(){
+		window.location.href='/users/password/new';
+	})
   </script>
 <style>
 	.error{
@@ -118,5 +122,11 @@
 	}
 	#email_exist_error{
 		display: none;
+	}
+	/*.forgot_pass_link:hover {*/
+		/*color: #5b9ebd;*/
+	/*}*/
+	a:hover {
+		color: #5b9ebd;
 	}
 </style>

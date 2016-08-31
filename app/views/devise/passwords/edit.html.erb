@@ -1,6 +1,7 @@
-<script src="/assets/jquery.validate.min.js"></script>
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<%= javascript_include_tag 'jquery.validate.min' %>
 <div class="password_change_form">
-<h2 style="font-family: 'GothamRndMedium';color: #5c5b5c;">Change your password</h2>
+<h2 class="change_pass_lbl">Change your password</h2>
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
@@ -36,7 +37,7 @@
 		padding: 0;
 	}
 	h1 {
-		color : #000000;
+		/*color : #000000;*/
 		text-align : center;
 		font-family: "SIMPSON";
 	}
@@ -68,6 +69,11 @@
 	}
 	.error{
 		color: red;
+		ont-weight: 700;
+	}
+	.change_pass_lbl{
+		font-family: 'GothamRndMedium';
+		color: #5c5b5c;
 	}
 </style>
 <script>
