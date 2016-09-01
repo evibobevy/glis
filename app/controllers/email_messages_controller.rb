@@ -47,7 +47,9 @@ class EmailMessagesController < ApplicationController
   end
 
   def foundation_detail
-    @foundation  = Foundation.find(params[:foundation_id]).user.email if params[:foundation_id].present?
+    if params[:foundation_id].present?
+      @foundation  = Foundation.find(params[:foundation_id]).user.email
+    end
   end
 
   def send_message_reply

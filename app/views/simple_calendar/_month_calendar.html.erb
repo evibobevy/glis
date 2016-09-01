@@ -89,11 +89,11 @@
                   <% if user_signed_in? %>
                     <div class="gig_info" style="display:none; width: 95%; ">
                       <% if today_foundation.city.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3 style="width: 80%;"><%= today_foundation.city.titleize %><% end %>
-                      <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <b>Details:</b> <%= today_foundation.description %><% end %>
-                      <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <%= link_to 'View GIG', "javascript:void(0)" %> <br><% end %>
+                      <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <b>Details:</b> <%= today_foundation.description %><br /><% end %>
+                      <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <%= link_to 'View GIG', "javascript:void(0)", :class=>"view_gig" %> <br /><% end %>
                       <% if today_foundation.description.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> <% end %>
                     </div>
-                    <% if today_foundation.name.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br><hr> <% end %>
+                    <% if today_foundation.name.present? && today_foundation.start_date == Time.zone.now.beginning_of_day %> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn" %>  </h2></br> <% end %>
                   <% end %>
                   <% if !user_signed_in? %>
                     <% if today_foundation.start_date == Time.zone.now.beginning_of_day%><br /><%= link_to 'Join', root_path %> <br><hr> <% end %>
@@ -358,5 +358,14 @@
 	}
 	.day_name{
 		font-size: 12px;
+	}
+	.close_btn{
+		font-size: 14px;
+	}
+	.view_gig{
+		font-size: 14px;
+	}
+	a:hover {
+		color: #5b9ebd;
 	}
 </style>

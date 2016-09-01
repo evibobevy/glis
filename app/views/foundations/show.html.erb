@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="user-prf-rgt">
-          <%= link_to image_tag("messageUs.png"), inbox_notifications_path(:foundation_id=> @foundation.id) %> <br/><br/>
+          <%= link_to image_tag("messageUs.png"), inbox_notifications_path %> <br/><br/>
           <a href="#">
             <%#= image_tag 'checkCalendar.png' %>
             <%= link_to image_tag("checkCalendar.png"), foundation_calendar_path(:popout_calendar => true), data: {fancybox_width: 900}, class: 'fancybox view_foundation_calendar' %>
