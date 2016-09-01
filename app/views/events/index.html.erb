@@ -21,10 +21,11 @@
               <div class="volunteer-lft">
                 <div class="stay-icon">
                   <% if event.pictures.present? && event.pictures.first.image.url.present? %>
-                    <%= link_to (image_tag event.pictures.first.image.url(:medium), alt: '', style: 'height: 160px; width: 182px'), join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn btn-success"%>
+                    <%= link_to (image_tag event.pictures.first.image.url(:medium), alt: '', style: 'height: 160px; width: 182px;background:url(stay-icon.png) no-repeat;'), join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn btn-success"%>
                   <% else %>
                     <%= image_tag 'stay-icon.png', alt: '' %>
                   <% end %>
+                  <img border="0" style="display:block; width:120px; height:120px; background-color:red; padding:9px; background:url(http://www2.cnrs.fr/sites/communique/image/mona_unvarnish_web_image.jpg) no-repeat" />
                 </div>
                 <div class="stay-detail">
                   <% if event.title.present? %><h5><%= link_to event.title, join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn-volunteer"%></h5><% end %>
@@ -71,7 +72,7 @@
                   <%= link_to user_profile_path(vol) do %>
                     <li style="margin-right: 10px;">
                       <% if vol.image.present? && vol.image.url.present?  %>
-                        <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 148px; width: 141px' %>
+                        <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 148px; width: 141px;background:url(noImg.jpg) no-repeat;' %>
                       <% else %>
                         <%= image_tag 'noImg.jpg', alt: '' %>
                       <% end %>
@@ -109,7 +110,7 @@
               <% for user in user_support %>
                 <div class="supporters">
                   <% if user.present? && find_user_by_id(user.friend_id).user_pictures.present? %>
-                    <%= image_tag find_user_by_id(user.friend_id).user_pictures.first.image.url(:medium), style: "height: 65px;" %>
+                    <%= image_tag find_user_by_id(user.friend_id).user_pictures.first.image.url(:medium), style: "height: 65px;background:url(noImg.jpg) no-repeat;" %>
                   <% else %>
                     <%= image_tag 'noImg.jpg' %>
                   <% end %>
@@ -134,7 +135,7 @@
               <div style="float:left; width:19%;">
                 <div class="vol-img-lft">
                   <% if post.present? %>
-                    <%= image_tag post.user.image.url(:medium), style: 'height: 180px; width: 180px;' %>
+                    <%= image_tag post.user.image.url(:medium), style: 'height: 180px; width: 180px;background:url(noImg.jpg) no-repeat;' %>
                   <% else %>
                     <%= image_tag 'noImg.jpg' %>
                   <% end %>
