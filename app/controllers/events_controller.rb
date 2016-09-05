@@ -117,7 +117,9 @@ class EventsController < ApplicationController
 
   def search_gigs
     if params[:search_gigs].present?
-      @search_result = Event.search(params[:search_gigs])
+      @search_user = User.search(params[:search_gigs])
+      @search_foundation = Foundation.search(params[:search_gigs])
+      # @search_result = User.joins(:foundations).where("fo undations.name = '%#{params[:search_gigs]}%' OR users.first_name='%#{params[:search_gigs]}%'")
     end
     render layout: 'fancybox'
   end

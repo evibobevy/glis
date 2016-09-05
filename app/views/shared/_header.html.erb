@@ -7,7 +7,7 @@
     <div class="header-search">
       <%= form_tag search_gigs_path, :method => 'get', :id => "gigs_search", :remote=> true do %>
         <div class="hd-search-box">
-          <%= text_field_tag :search_gigs, params[:search_gig] %> <br/>
+          <%= text_field_tag :search_gigs, params[:search_gig], :placeholder => "search users and foundations" %> <br/>
           <button class="search-icon"><img src="/assets/searchIcon.png"></button>
         </div>
         <span class="inspire-text">Inspire the world with good.</span>

@@ -49,9 +49,4 @@ class Event < ActiveRecord::Base
     self.start_time = self.event_date
   end
 
-  def self.search(search)
-    if search
-      where('title LIKE ?', "%#{search}%")
-    end
-  end
 end

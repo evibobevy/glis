@@ -1,7 +1,7 @@
 class FoundationsController < ApplicationController
   before_action :set_foundation, only: [:show, :update, :destroy]
   before_filter :find_latest_month_foundation, :only => :foundation_calendar
-  before_filter :authorize, only: [:foundation_calendar, :edit, :show]
+  before_filter :authorize, only: [:edit, :support_foundation]
   respond_to :html, :js, :json
 
   def new

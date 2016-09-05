@@ -1,4 +1,3 @@
-
 @font-face{font-family:'GothamRndBold';src:url('../fonts/proximanova-bold-webfont.eot');src:url('../fonts/proximanova-bold-webfont.eot?#iefix') format('embedded-opentype'),
 url('../fonts/proximanova-bold-webfont.woff') format('woff'),
 url('../fonts/proximanova-bold-webfont.ttf') format('truetype'),
@@ -70,7 +69,7 @@ input:-moz-placeholder {opacity:1 !important;}
 
 /*common stuff*/
 #wrapper {max-width:100%; margin:0 auto;}
-#top-container {width:100%; float:left; padding:40px 0 20px 0;}
+#top-container {width:100%; float:left; padding:40px 0 20px 0;height: 181px;}
 #midd-container {width:100%; float:left;}
 #bott-container {width:100%; float:left; background:#67aa4d; padding:20px 0; margin-top:80px; box-shadow:0 -2px 16px 0 rgba(0,0,0,0.3);}
 .fixed-wrapper {margin:0 auto; max-width:800px;}
@@ -81,7 +80,7 @@ input:-moz-placeholder {opacity:1 !important;}
 .hd-search-box input{border:4px solid #93c281; border-radius:8px; height:44px; padding:0 10px; font-size:20px; width:100%;}
 .header-search {width:483px; float:left; margin:0 27px 0 23px;}
 .search-icon {position:absolute; right:10px; top:5px; background:url("img/searchIcon.png") no-repeat; width:32px; height:32px; cursor:pointer;}
-.inspire-text {font-size:33px; font-family:'GothamRndBold'; color:#5c5b5c; margin:10px 0 0 5px; display:inline-block;}
+.inspire-text {font-size:33px; font-family:'GothamRndBold'; color:#5c5b5c; margin:10px 0 0 5px; display:inline-block;height: 40px;}
 
 .header-rgt-btn {float:right; margin:0 0 0 0; width:auto;}
 .header-rgt-btn a{font-size:35px; font-family:'GothamRndMedium'; width:131px; height:110px; border-radius:10px; border:6px solid #4a4a4a; text-align:center; padding:0px 15px 10px 15px; display:inline-block; background:#67AA00; color:#fff; line-height:30px; float:left; margin-right:24px;}
@@ -200,7 +199,7 @@ a.btn-contact:hover {background:#67aa4d; color:#fff;}
 .loged-user {float:left; width:98px; border:4px solid #1b5506; background:#67aa4d; padding:7px 0 4px; border-radius:6px; text-align:center;}
 .loged-user img {border:2px solid #fff;}
 /*.loged-user span {display:inline-block; text-align:center; font-size:13px; color:#fff; width:50%; margin:5px 0 0 0;float: left;}*/
-.loged-user span {display:inline-block; text-align:center; color:#fff; margin:5px 0 0 0;}
+.loged-user span {display:inline-block; text-align:center; color:#fff; margin:5px 0 0 0;}*/
 .send-feedback a i {background:none;}
 
 /*register popup css*/
@@ -966,7 +965,7 @@ button{-moz-border:0px;}
 
 /*Start myFoundations popout CSS */
 #foundations {margin:0 auto; padding-top:50px;margin-top:5px;}
-#foundations .volBox {overflow: auto; margin-bottom:45px;width:100%; height:210px; border:3px solid #5c5b5c; border-radius:5px;}
+#foundations .volBox {margin-bottom:45px;width:100%; height:210px; border:3px solid #5c5b5c; border-radius:5px;}
 #foundations h1{font-family: "GothamRndMedium";margin-left:20px!important;margin-bottom: 20px; margin-top:-20px;font-size:26px!important;}
 
 
@@ -1004,3 +1003,9 @@ button{-moz-border:0px;}
 /*body{*/
     /*overflow: hidden;*/
 /*}*/
+.search_user_name:hover{
+    color: #5b9ebd;
+}
+.search_found_name:hover {
+    color: #5b9ebd;
+}

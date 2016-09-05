@@ -26,18 +26,18 @@
           </div>
         </div>
         <div class="user-prf-rgt"> <strong>Volunteered:</strong>
-          <p><span><% if user_signed_in? %><%= current_user.events.count %><% end %></span> times</p>
+          <p><span><% if user_signed_in? %><%= current_user.events.count %><% else %> <%= @user.events.count %><% end %></span> times</p>
           <p><span>
             <% if user_signed_in? %>
 		          <% @hours = [] %>
               <% current_user.events. each do |event| %>
                 <% @hours << volunteers_works_hours(event).first %>
               <% end %>
-             <% if @hours.present? %> <%= @hours.join("','") %><% else %> 0 <% end %>
+              <% if @hours.present? %> <%= @hours.join("','") %><% else %> 0 <% end %>
               </span> hours
 		          <% end %>
           </p><br/>
-          <p><span><% if user_signed_in? %><%= current_user.friendships.uniq.count %><% end %></span> Supporters </p>
+          <p><span><% if user_signed_in? %><%= current_user.friendships.uniq.count %><% else %><%= @user.friendships.uniq.count %><% end %></span> Supporters </p>
         </div>
       </div>
       <div class="user-photos-row">
