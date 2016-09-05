@@ -71,7 +71,7 @@
                   <%= link_to user_profile_path(vol) do %>
                     <li style="margin-right: 10px;">
                       <% if vol.image.present? && vol.image.url.present?  %>
-                        <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 148px; width: 141px;background:url(https://glis.herokuapp.com/assets/noImg-e73068d04051750734d3758e47214f46.jpg) no-repeat;' %>
+                        <%= image_tag vol.image.url(:medium), alt: '', style: 'height: 149px; width: 141px;background:url(https://glis.herokuapp.com/assets/noImg-e73068d04051750734d3758e47214f46.jpg) no-repeat;' %>
                       <% else %>
                         <%= image_tag 'noImg.jpg', alt: '' %>
                       <% end %>
