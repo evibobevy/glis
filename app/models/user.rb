@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def last_name_initial
-    self.first_name.first(8) + " " + self.last_name[0] + '.'
+    self.first_name.first(7) + " " + self.last_name[0] + '.'
   end
 
   def self.email_notification?
