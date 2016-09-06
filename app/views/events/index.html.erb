@@ -28,7 +28,6 @@
                 </div>
                 <div class="stay-detail">
                   <% if event.title.present? %><h5><%= link_to event.title, join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn-volunteer"%></h5><% end %>
-	                <%#= link_to event.title, join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn btn-success"%>
                   <span class="date-small"><%= event.event_date.try(:strftime, '%B %d, %Y') %></span>
                   <% if user_signed_in? && event.present? && post.event.open_to_the_public? %>
                     <%= link_to 'Join', join_event_path(:event_id => event.id), :method => :post, :class=> "btn-join"%>
