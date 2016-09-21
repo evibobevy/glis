@@ -96,10 +96,10 @@ class EventsController < ApplicationController
 
   def join_event
     if params[:event_id].present?
-      @event = Event.find(params[:event_id])
+      @event = Event.where(id:params[:event_id])
       current_user.events << @event
       flash[:notice] = "Successfully Join Event"
-      redirect_to :back and return
+      redirect_to event_list_path
     end
   end
 
@@ -144,8 +144,7 @@ class EventsController < ApplicationController
 
   def find_latest_month_gigs
     @latest_month_gigs = Event.latest_months_event
-    @events = Event.all
-
+    @events = Event.select('DISTINCT start_time')
   end
 
   def find_mutual_friends

@@ -1,9 +1,11 @@
 <div id ="calendar_page">
   <%= month_calendar events: @events do |date, events| %>
     <%= date.strftime('%e') %>
+		<% if events.present? %>
     <% events.each do |event| %>
-        <span>*</span>
+      <span>*</span>
     <% end %>
+		<% end %>
   <% end %>
 </div>
 <%#= month_calendar events: @events do |date, events| %>
@@ -12,3 +14,9 @@
 <%# events.each do |event| %>
 <!--<span>*</span>-->
 <%# end %>
+<style>
+	.current-month{
+		height: 75px;
+		width: 77px;
+	}
+</style>

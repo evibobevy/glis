@@ -78,7 +78,8 @@
               <% picture = 4 - @user_pictures.size %>
               <% @user_pictures.each do |user_picture|%>
                 <li>
-                  <%= image_tag user_picture.image.url(:medium) %>
+                  <%#= image_tag user_picture.image.url(:medium) %>
+                <%= image_tag user_picture.image.url, style: "width: 100%;" %>
                   <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_image", :id=> "#{user_picture.id}" %>
                   <%= form_for user_picture, url: update_path, :html => {:class => 'user_images'}  do |f| %>
                     <%= f.hidden_field :user_picture_id, :value => user_picture.id %>
@@ -278,15 +279,21 @@
 			return false;
 		}
 	});
-//	$(function (argument) {
-//		$('[type="checkbox"]').bootstrapSwitch('state', false);
-//	})
+	$(function (argument) {
+		$('#user_supporters_need_approval_to_comment').bootstrapSwitch('state', false);
+//		$('input[name="user[supporters_need_approval_to_comment]"]').bootstrapSwitch();
+	})
+
 	$('.reset-btn').click(function () {
 		$("input[type=text], textarea").val("");
 	});
-	$('.reset-privacy-setting-btn').click(function () {
-		$("input[type=checkbox]").bootstrapSwitch('state', false);
 
+	$('.reset-privacy-setting-btn').click(function () {
+		$("input[type=checkbox]").bootstrapSwitch('state', true);
+	});
+//	reset for supporters_need_approval_to_comment
+	$('.reset-privacy-setting-btn').click(function () {
+		$('#user_supporters_need_approval_to_comment').bootstrapSwitch('state', false);
 	});
 	$(".change_user_image").click(function(){
 		$("#edit_user_picture_"+this.id).show();
@@ -296,7 +303,6 @@
 		$("#new_user_picture_"+this.id).show();
 		$(this).toggle();
 	});
-
 	//	Start Validate passsword
 	function update_password() {
 		if ($('#password').val() == '' || $('#password_confirmation').val() == '') {

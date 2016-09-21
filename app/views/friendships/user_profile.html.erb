@@ -10,7 +10,7 @@
           </div>
           <div class="user-prf-left-cont">
             <h2><%= @user.full_name.present? ? @user.full_name : 'Jameson Welch'  %></h2>
-            <% if user_signed_in? && !current_user.friendships.exists?(friend_id:@user) %>
+            <% if user_signed_in? && !current_user.friendships.exists?(friend_id:@user) && !(current_user.id == params[:id].to_i )  %>
               <i class="add-icon"> <%= link_to image_tag('addIcon.jpg'), support_path(:friend_id => @user), :method => :post %> </i>
             <% else %>
               <i class="add-icon">
@@ -31,12 +31,14 @@
             <% if user_signed_in? %>
 		          <% @hours = [] %>
               <% current_user.events. each do |event| %>
-                <% @hours << volunteers_works_hours(event).first %>
+                <% @hours << volunteers_works_hours(event) %>
               <% end %>
-              <% if @hours.present? %> <%= @hours.join("','") %><% else %> 0 <% end %>
+              <%# if @hours.present? %> <%#= @hours.join("','") %><%#else %> <%# end %>
+              <%#= @hours[0].present? ? @hours[0] : 0  %>
+              <%= @hours.present? ? @hours.map {|i,j| i}.inject(:+) : 0  %>
               </span> hours
 		          <% end %>
-          </p><br/>
+            </p><br/>
           <p><span><% if user_signed_in? %><%= current_user.friendships.uniq.count %><% else %><%= @user.friendships.uniq.count %><% end %></span> Supporters </p>
         </div>
       </div>

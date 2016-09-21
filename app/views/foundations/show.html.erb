@@ -121,7 +121,7 @@
                 <% else %>
                   <%= image_tag 'noImg.jpg' %>
                 <% end %>
-                <h2 style="float: left;margin-left: 20px;"><% if user.present? && user.first_name.present? %>
+                <h2 style="float: initial;margin-left: 20px;"><% if user.present? && user.first_name.present? %>
                     <%= link_to user.first_name.capitalize, user_profile_path(:id => user.id) %>
                   <% end %>
                 </h2>

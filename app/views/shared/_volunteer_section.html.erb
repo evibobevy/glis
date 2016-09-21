@@ -33,10 +33,10 @@
             <% if user_signed_in? %>
 		          <% @hours = [] %>
               <% current_user.events. each do |event| %>
-                <% @hours << volunteers_works_hours(event).first %>
+                <% @hours << volunteers_works_hours(event) %>
               <% end %>
               <% end %>
-            <%= @hours[0].present? ? @hours[0] : 0  %>
+            <%= @hours.present? ? @hours.map {|i,j| i}.inject(:+) : 0  %>
           </span> hours
           </p><br/>
           <p><span><% if user_signed_in? %><%= current_user.friends.count %><% end %></span> Supporters </p>

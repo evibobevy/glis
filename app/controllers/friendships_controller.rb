@@ -8,9 +8,9 @@ class FriendshipsController < ApplicationController
       @user       = User.find(params[:friend_id])
       if @friendship.save
         # UserMailer.user_notification(@user,@friend_id).deliver!  if @user.email_notification?
-        flash.now[:notice] = "Added friend."
+        flash[:notice] = "Added friend."
       else
-        flash.now[:error] = "Error occur when adding friend."
+        flash[:error] = "Error occur when adding friend."
       end
       redirect_to :back and return
     end
@@ -32,7 +32,7 @@ class FriendshipsController < ApplicationController
       if @post.save
         flash.now[:notice] = "Post Successfully Shared."
       else
-        flash.now[:error] = "Error occur when adding friend."
+        flash.now[:error] = "Someting went to wrong."
       end
       redirect_to :back and return
     end

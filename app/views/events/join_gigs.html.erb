@@ -6,7 +6,12 @@
     <div class="user-prf-left">
       <div class="vol-img-lft">
         <div class="photoSettings">
-          <li><%= image_tag 'stayIcon.png', alt: '' %>
+          <li>
+            <% if @event.present? && @event.pictures.present? %>
+	          <%= image_tag @event.pictures.first.image.url(:medium), style: 'height: 123px; width: 142px;' %>
+            <% else %>
+              <%= image_tag 'stayIcon.png', alt: '' %>
+            <% end %>
             <% unless @event.users.include?(current_user) %>
               <% if user_signed_in? %>
                 <button id="join_gig_btn">JOIN THIS GIG</button>
