@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160827102522) do
+ActiveRecord::Schema.define(version: 20160921074210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -216,16 +216,16 @@ ActiveRecord::Schema.define(version: 20160827102522) do
     t.text     "description"
     t.string   "state"
     t.string   "phone_number"
-    t.boolean  "everyone_view_your_profile",              default: false
-    t.boolean  "everyone_view_your_calendar",             default: false
-    t.boolean  "everyone_invite_you_to_events",           default: false
-    t.boolean  "everyone_view_your_post",                 default: false
-    t.boolean  "everyone_message_you",                    default: false
-    t.boolean  "volunteers_need_approval_join_your_gigs", default: false
+    t.boolean  "everyone_view_your_profile",              default: true
+    t.boolean  "everyone_view_your_calendar",             default: true
+    t.boolean  "everyone_invite_you_to_events",           default: true
+    t.boolean  "everyone_view_your_post",                 default: true
+    t.boolean  "everyone_message_you",                    default: true
+    t.boolean  "volunteers_need_approval_join_your_gigs", default: true
     t.boolean  "supporters_need_approval_to_comment",     default: false
-    t.boolean  "email_notification",                      default: false
-    t.boolean  "sms_notification",                        default: false
-    t.boolean  "mobile_ping_notifications",               default: false
+    t.boolean  "email_notification",                      default: true
+    t.boolean  "sms_notification",                        default: true
+    t.boolean  "mobile_ping_notifications",               default: true
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
