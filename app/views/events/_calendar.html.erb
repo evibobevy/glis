@@ -1,12 +1,22 @@
 <div id ="calendar_page">
-  <%= month_calendar events: events do |date, events| %>
-  <div style="border-radius: 50%; width: 25px; height: 25px; background: white; padding: 4px;">
-      <%= date.strftime('%e') %>
-    </div>
-  <% events.each do |event| %>
-  <div>
-  <%#= event.title %>
-  </div>
+  <%= month_calendar events: @events do |date, events| %>
+    <%= date.strftime('%e') %>
+		<% if events.present? %>
+    <% events.each do |event| %>
+      <span>*</span>
+    <% end %>
+		<% end %>
   <% end %>
-  <% end %>
-  </div>
+</div>
+<%#= month_calendar events: @events do |date, events| %>
+<%#= date.strftime('%e') %>
+<%# end %>
+<%# events.each do |event| %>
+<!--<span>*</span>-->
+<%# end %>
+<style>
+	.current-month{
+		height: 75px;
+		width: 77px;
+	}
+</style>

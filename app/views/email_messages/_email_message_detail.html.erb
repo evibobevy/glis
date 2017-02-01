@@ -1,0 +1,59 @@
+<div class="message">
+  <% if @email_message.present? && find_user_by_message(@email_message.user_id).image.present? %>
+    <%= image_tag find_user_by_message(@email_message.user_id).image.url(:medium), style: "height: 105px;width: 100px;" %>
+  <% else %>
+    <%= image_tag 'noImg.jpg' %>
+  <% end %>
+
+  <div class="messDesc">
+    <h2><%= find_user_by_message(@email_message.user_id).full_name %></h2>
+    <h3><%= @email_message.subject %></h3>
+    <h4><% if time_diff_for_email_message(@email_message)[0] > 0 %><span><%= "%d " % "#{time_diff_for_email_message(@email_message)[0]}" %></span> days <% end %>
+    </h4>
+  </div><br/>
+  <div class="messCont" id="login_user_<%=@email_message.id %>">
+    <% if @email_message_with_parent.present? %>
+      <%= render partial: "add_notification_message", collections: @email_message_with_parent %>
+    <% end %>
+   </div>
+  <div class="messReply">
+    <%= form_tag send_message_reply_path , :remote => true, :id => 'message_form1'  do %>
+      <%= hidden_field_tag :email_message_id, @email_message.id %>
+      <%#= hidden_field_tag :last_message_id, params[:last_message_id].to_i %>
+      <%#= hidden_field_tag :last_current_message_id, @email_message_with_parent.last.id %>
+      <%= text_area_tag :message, nil, :placeholder=> "Send A Reply..." %>
+      <!--<div class="messSend"><input type="submit" value="Reply"></div>-->
+      <div class="messSend">
+        <%= submit_tag "Reply", :class=>"email_message_btn" %>
+      </div>
+      <label id="message_error1" for="message" generated="true" class="error">This field is required.</label>
+    <% end %>
+  </div>
+</div>
+<script>
+	$('#message_form1').validate();
+	$("#message_form1").submit(function(e) {
+		var url = "email_messages/send_message_reply"; // the script where you handle the form input.
+		$.ajax({
+			type: "post",
+			url: url,
+			data: {reciever_id: $('#reciever_id').val(), email_message_id: $('#email_message_id').val()},
+			format: 'json',
+			success: function(data)
+			{
+			}
+		});
+	});
+	$('#message_form1').submit(function(){
+		if ($('#message').val() == "") {
+			$('#message_error1').show();
+			return false;
+		}
+	});
+</script>
+<style>
+	#message_error1{
+		display: none;
+	}
+</style>
+

@@ -1,0 +1,37 @@
+<% if @search_user.present? %>
+  <h2 align="center"> Users </h2>
+  <% @search_user.each do |user|%>
+    <div class="supporters">
+      <% if user.present? %>
+        <%= image_tag user.image.url(:medium), style: "height: 64px;width :60px;" %>
+      <% end %>
+      <% if user.present? && user.first_name.present? %>
+        <h2><%= link_to user.first_name.first(12).capitalize, user_profile_path(user.id),  target: "_blank", :class=> "search_user_name" %></h2>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <div class ="no-result">
+    <h2 align="center"> No results for User </h2>
+  </div>
+<% end %>
+<div class="volBox search_foundation", style="border: 0px;">
+  <% if @search_foundation.present? %>
+    <h2 align="center"> Foundations </h2>
+    <% @search_foundation.each do |foundation|%>
+      <div class="supporters">
+        <% if foundation.present? && foundation.foundation_pictures.first.image.present? %>
+          <%= image_tag foundation.foundation_pictures.first.image.url(:medium), style: "height: 64px;width :60px;" %>
+        <% end %>
+        <% if foundation.present? && foundation.name.present? %>
+          <h2><%= link_to foundation.name.first(12).capitalize, foundation_path(foundation.id, :param_search=> "search_foundation"),  target: "_blank", :class=> "search_found_name"%></h2>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <div class ="no-result">
+      <h2 align="center"> No results for Foundation </h2>
+    </div>
+  <% end %>
+</div>
+</div>

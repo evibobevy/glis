@@ -1,54 +1,447 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autofocus: true %>
+<!--<link href="/assets/bootstrap.min.css" rel="stylesheet">-->
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<!--<link href="/assets/main.css" rel="stylesheet">-->
+<%= stylesheet_link_tag 'bootstrap.min' %>
+<link href="http://getbootstrap.com/assets/css/docs.min.css" rel="stylesheet">
+<%= javascript_include_tag 'jquery.validate.min' %>
+<%= stylesheet_link_tag 'main' %>
+<!--Middle content starts here-->
+<section id="midd-container">
+  <div class="user-prf-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner3"></div>
+        <h1><%=t (:profile_setting)%></h1>
+      </div>
+      <div class="user-prf-row1">
+        <div class="user-prf-left">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <% flash.each do |name, msg| %>
+              <%= content_tag :div, msg, class: "alert alert-info" %>
+            <% end %>
+            <div class="vol-img-lft">
+              <div class="photoSettings">
+                <li>
+                  <% if current_user.image_file_name.present? %><%= image_tag current_user.image.url, style: "border: 4px solid #67aa4d;border-radius: 6px;" %>
+                  <% else %> <%= image_tag 'no-img.jpg', style: "width: 100%;" %>
+                  <% end %>
+                  <%= f.file_field :image, value: "CHANGE AVATAR", :class=> "user_image", :style=> "display:none;"%>
+                  <button id="falseinput">CHANGE AVATAR</button>
+                  <button id="view_user_foundation">VIEW MY FOUNDATION PROFILES</button>
+                  <%= link_to 'VIEW MY FOUNDATION PROFILES', user_foundations_path, data: { fancybox_width: 600 }, class: 'fancybox view_foundation', :id => "view_foundation", :style=> "display:none;"%>
+                </li>
+              </div>
+            </div>
+            <div class="user-prf-left-cont">
+              <div class="nameSettings"> <%= f.text_field :first_name, :required => true, :placeholder => "First Name" %> </div>
+              <br/>
+              <div class="city">
+                <%= f.text_field :city, :placeholder => "City" %>
+              </div>
+              <div class="state">
+                <%= f.text_field :state, :placeholder => "State" %><br />
+              </div>
+              <label id="city_error" for="city" generated="true" class="error">This field is required.</label>
+              <label id="state_error" for="state" generated="true" class="error">This field is required.</label>
+              <div class="description">
+                <%#= f.text_area :description, :placeholder => "Description", :required => true %>
+                <%= f.text_area :description, :placeholder => "Description",:rows=> "4", :columns=>"100",  :required => true %>
+              </div>
+              <input type="button" value="Reset" class="reset-btn">
+              <%= f.submit "Save" %>
+            </div>
+          <% end %>
+        </div>
+        <div class="user-prf-rgt"> <strong>Volunteered:</strong>
+          <p><span><% if user_signed_in? %><%= current_user.events.count %><% end %></span> times</p>
+          <p><span>
+            <% if user_signed_in? %>
+		          <% @hours = [] %>
+              <% current_user.events. each do |event| %>
+                <% @hours << volunteers_works_hours(event).first %>
+              <% end %>
+              <% end %>
+            <%#= @hours.join("','").present? ? @hours.join("','") : 0 %>
+            <%= @hours[0].present? ? @hours[0] : 0  %>
+          </span> hours
+          </p><br/>
+          <p><span><% if user_signed_in? %><%= @supporters.present? ? @supporters.count : 0 %><% end %></span> Supporters </p>
+        </div>
+        <div class="foundCreate">
+          <button id="foundation_cal">CREATE YOUR FOUNDATION PROFILE</button>
+        </div>
+      </div>
+      <div class="user-photos-row">
+        <ul>
+          <div class="photoSettings">
+            <% if @user_pictures.present? %>
+              <% picture = 4 - @user_pictures.size %>
+              <% @user_pictures.each do |user_picture|%>
+                <li>
+                  <%#= image_tag user_picture.image.url(:medium) %>
+                <%= image_tag user_picture.image.url, style: "width: 100%;" %>
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_image", :id=> "#{user_picture.id}" %>
+                  <%= form_for user_picture, url: update_path, :html => {:class => 'user_images'}  do |f| %>
+                    <%= f.hidden_field :user_picture_id, :value => user_picture.id %>
+                    <br><%= f.file_field :image, :class=>"upload_image" %> <br>
+                    <span><%= f.submit "Save", :class=>"save_user_image" %></span>
+                    <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
+                    </li>
+                  <% end %>
+              <% end %>
+              <% 1.upto(picture) do |i| %>
+                <li><%= image_tag 'photoImg.jpg', alt: "" %>
+                  <!--<img src="/assets/photoImg.jpg" alt="">-->
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_user_new_image", :id => "#{i}" %>
+                  <%= form_for @picture, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
+                    <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
+                    <%= f.submit "Save", :class=>"save_new_user_image" %>
+                    <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
+                  <% end %>
+                </li>
+              <% end %>
+            <% else %>
+              <% 1.upto(4) do |i| %>
+                <li><%= image_tag 'photoImg.jpg', alt: "" %>
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_user_new_image", :id => "#{i}" %>
+                  <%= form_for @picture, url: update_path, :html => {:class => 'user_new_images', :id=> "new_user_picture_#{i}"}  do |f| %>
+                    <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
+                    <%= f.submit "Save", :class=>"save_new_user_image" %>
+                    <span><input class="cancle_user_image" type="submit" value="Cancel"></span>
+                  <% end %>
+                </li>
+              <% end %>
+            <% end %>
+          </div>
+        </ul>
+      </div>
+    </div>
   </div>
+  <!--photo section ends-->
+  <div class="volunteer-full float-full user-prf-vol">
+    <div class="fixed-wrapper">
+      <div id="volunteers">
+        <div class="corner"></div>
+        <h1><%=t (:my_supporters)%></h1><br/>
 
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </div>
+        <div class="volBox">
+          <% if @user_supporters.present? %>
+            <% @user_supporters.in_groups_of(3, false) do |user_support| %>
+              <% for user in user_support %>
+                <div class="supporters">
+                  <% if user.present? && find_user_by_id(user.friend_id).user_pictures.present? %>
+                    <%= image_tag find_user_by_id(user.friend_id).user_pictures.first.image.url(:medium), style: "height: 65px;" %>
+                  <% else %>
+                    <%= image_tag 'noImg.jpg' %>
+                  <% end %>
+                  <h2 style="float: left;margin-left: 20px;"><% if user.present? && find_user_by_id(user.friend_id).first_name.present? %>
+                      <%= link_to find_user_by_id(user.friend_id).last_name_initial.capitalize, user_profile_path(:id => user.friend_id) %>
+                    <% end %>
+                  </h2>
+                </div>
+              <% end %>
+            <% end %>
+          <% else %>
+            <h2 align="center" class="no-supporter"><b><%= t(:no_supporter) %></b></h2>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!--mysupporters section ends-->
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+    <div class="volunteer-full float-full user-prf-vol">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <div class="fixed-wrapper">
+          <div id="settings">
+            <div class="corner"></div>
+            <h1><%=t (:privacy_setting)%></h1><br/>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+            <div class="privacyQuestion-left">
+              <h2>Permissions:</h2>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+              <h2>Can everyone view your profile?</h2>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+              <h2>Can everyone view your calendar?</h2>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
+              <h2>Can everyone invite you to events?</h2>
 
-  <div class="field">
-    <%= f.label :image %><br />
-    <%= f.file_field :image %>
-  </div>
+              <h2>Can everyone view your posts?</h2>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
+              <h2>Can everyone message you?</h2>
 
-<h3>Cancel my account</h3>
+              <h2>Do volunteers need approval to join your gigs?</h2>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+              <h2>Do supporters need approval to comment on your posts?</h2>
+            </div>
+            <div class="switch2">
+              <div>
+                <%= f.check_box :everyone_view_your_profile, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :everyone_view_your_calendar, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :everyone_invite_you_to_events, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :everyone_view_your_post, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :everyone_message_you, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :volunteers_need_approval_join_your_gigs, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :supporters_need_approval_to_comment, :class => "form-control" %>
+              </div>
+            </div>
+            <div class="privacyQuestion">
+              <h3>Change your password:</h3>
+              <%#= devise_error_messages! %>
+              <%= hidden_field_tag :reset_password_token %>
+              <label id="success_message_password"><div class="alert alert-warning">Password successfully updated.</div></label>
+              <label id="blank_message_password"><div class="alert alert-warning">Password & Confirm Password can't be blank.</div></label>
+              <label id="not_match_message_password"><div class="alert alert-warning">Password & Confirm Password doesn't match.</div></label>
+              <div class="passwordChange">
+                <%= password_field_tag 'password', nil, :placeholder => "New Password" %>
+                <%= password_field_tag 'password_confirmation', nil, :placeholder => "Confirm Password" %>
+                <%= submit_tag "Save", :onclick => "return update_password();" %>
+              </div>
+            </div>
+            <label id="success_message_password"><div class="alert alert-warning">Password successfully updated.</div></label>
+            <div class="notifications">
+              <div class="notificationQuestion">
+                <h2>Notifications:</h2>
 
-<%= link_to "Back", :back %>
+                <div class="notificationSettings">
+                  <%= f.email_field :email, :required => true, :placeholder => "Email: email@email.com" %>
+                </div>
+                <h2>Email Notifications?</h2>
+
+                <div class="notificationSettings">
+                  <%= f.text_field :phone_number, id: 'phone_number', :maxlength => "10", :placeholder => "Phone: 555-555-555", :onkeypress=> "return event.charCode >= 48 && event.charCode <= 57" %>
+                </div>
+                <div><label id="phone_number_error" for="phone_number" generated="true" class="error"">This field is required.</label> </div>
+                <h2>Text/SMS Notifications?</h2>
+
+                <h2>Would you like mobile push notifications?</h2>
+              </div>
+
+              <div class="switch3">
+                <div>
+                  <%= f.check_box :email_notification, :class => "form-control" %>
+                </div>
+                <div>
+                  <%= f.check_box :sms_notification %>
+                </div>
+                <div>
+                  <%= f.check_box :mobile_ping_notifications %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cleat"></div>
+          <div class="fixed-wrapper">
+            <div class="saveSettings">
+              <%= f.submit "Save Privacy Settings", :class=>"save-setting" %>
+              <input type="button" value="Reset Privacy Settings" class="reset-privacy-setting-btn">
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+</section>
+<!--Middle content ends here-->
+<script>
+	$(function(argument) {
+		$('[type="checkbox"]').bootstrapSwitch('onText', 'YES');
+		$('[type="checkbox"]').bootstrapSwitch('offText', 'NO');
+	})
+	$('#edit_user').validate();
+	$('#foundation_cal').click(function(){
+		window.location.href = '/foundation_calendar';
+		return false;
+	});
+	$('#foundation_profile').click(function () {
+		$("#create_foundation").click();
+		return false;
+	});
+	$('#edit_user').submit(function(){
+		if ($('#user_city').val() == "") {
+			$('#city_error').show();
+			return false;
+		}
+	});
+	$('#edit_user').submit(function(){
+		if ($('#user_state').val() == "") {
+			$('#state_error').show();
+			return false;
+		}
+	});
+	$(function (argument) {
+		$('#user_supporters_need_approval_to_comment').bootstrapSwitch('state', false);
+//		$('input[name="user[supporters_need_approval_to_comment]"]').bootstrapSwitch();
+	})
+
+	$('.reset-btn').click(function () {
+		$("input[type=text], textarea").val("");
+	});
+
+	$('.reset-privacy-setting-btn').click(function () {
+		$("input[type=checkbox]").bootstrapSwitch('state', true);
+	});
+//	reset for supporters_need_approval_to_comment
+	$('.reset-privacy-setting-btn').click(function () {
+		$('#user_supporters_need_approval_to_comment').bootstrapSwitch('state', false);
+	});
+	$(".change_user_image").click(function(){
+		$("#edit_user_picture_"+this.id).show();
+		$(this).toggle();
+	});
+	$(".change_user_new_image").click(function(){
+		$("#new_user_picture_"+this.id).show();
+		$(this).toggle();
+	});
+	//	Start Validate passsword
+	function update_password() {
+		if ($('#password').val() == '' || $('#password_confirmation').val() == '') {
+			if($('#success_message_password').is(':visible')){
+				$('#success_message_password').hide();
+			}
+			if($('#not_match_message_password').is(':visible')){
+				$('#not_match_message_password').hide();
+			}
+			$('#blank_message_password').show();
+		}
+		else {
+			if($('#password').val().length < 8 || $('#password_confirmation').val().length < 8){
+				alert("password size should be min 8 char..");
+				$('#password').focus();
+				return false;
+			}
+			if ($('#password').val() == $('#password_confirmation').val()) {
+				$.ajax({
+					type: 'post',
+					url: '/registrations/update_password',
+					data: {password: $('#password').val(), password_confirmation: $('#password_confirmation').val()},
+					success: function(){
+						if($('#blank_message_password').is(':visible')){
+							$('#blank_message_password').hide();
+						}
+						if($('#not_match_message_password').is(':visible')){
+							$('#not_match_message_password').hide();
+						}
+						$('#success_message_password').show();
+						alert("Your password has been successfully updated.");
+						window.location.href = "/";
+					}
+				});
+			}
+			else {
+				if($('#blank_message_password').is(':visible')){
+					$('#blank_message_password').hide();
+				}
+				if($('#success_message_password').is(':visible')){
+					$('#success_message_password').hide();
+				}
+				$('#not_match_message_password').show();
+			}
+		}
+		$("#password").val("");
+		$("#password_confirmation").val("");
+		return false;
+	}
+	//	END  Validate passsword
+
+	$('.cancle_user_image').click(function(){
+		window.location.reload();
+		return false;
+	})
+	$('.cancle_new_user_image').click(function(){
+		window.location.href='/users/edit';
+		return false;
+	})
+	$('.user_new_images').submit(function(){
+		var val = $(".upload_new_image").val();
+		if(val == ''){
+			alert("Please uploads User image");
+			return false;
+		}
+		else
+			return true;
+	});
+	$('.user_images').submit(function(){
+		var val = $("#user_picture_user_picture_+this.id").val();
+		if(val == ''){
+			alert("Please uploads User image");
+			return false;
+		}
+		else
+			return true;
+	});
+
+	$('#button').click(function () {
+		$("input[type='file']").trigger('click');
+	})
+	$("input[type='file']").change(function () {
+		$('#val').text(this.value.replace(''))
+	})
+	$('#falseinput').click(function(){
+		$("#user_image").click();
+		return false;
+	});
+	$('#view_user_foundation').click(function(){
+		$("#view_foundation").click();
+		return false;
+	});
+	$('.save-setting').click(function(){
+		if ($('#user_sms_notification').bootstrapSwitch('state') == true) {
+			if ($('#phone_number').val() == "") {
+				$('#phone_number_error').show();
+				return false;
+			}
+		}
+	});
+</script>
+<style>
+	.error{
+		color: red;
+		font-size: 14px;
+		font-weight: 700!important;
+	}
+	#city_error{
+		font-size: 14px;
+		font-weight: 700!important;
+		display: none;
+	}
+	#state_error{
+		font-size: 14px;
+		font-weight: 700!important;
+	}
+	#error_explanation h2 {
+		display: none;
+	}
+	.user_images {
+		display: none;
+	}
+	.user_new_images {
+		display: none;
+	}
+	#success_message_password{
+		display: none;
+	}
+	#blank_message_password{
+		display: none;
+	}
+	#not_match_message_password{
+		display: none;
+	}
+	#phone_number_error{
+		display: none;
+	}
+	.no-supporter{
+		margin: 98px;
+	}
+</style>
+

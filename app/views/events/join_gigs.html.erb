@@ -1,0 +1,75 @@
+<div class="register-popup">
+  <div class="gig">
+    <h3> Gig Info</h3>
+  </div>
+  <div class="gigLeft">
+    <div class="user-prf-left">
+      <div class="vol-img-lft">
+        <div class="photoSettings">
+          <li>
+            <% if @event.present? && @event.pictures.present? %>
+	          <%= image_tag @event.pictures.first.image.url(:medium), style: 'height: 123px; width: 142px;' %>
+            <% else %>
+              <%= image_tag 'stayIcon.png', alt: '' %>
+            <% end %>
+            <% unless @event.users.include?(current_user) %>
+              <% if user_signed_in? %>
+                <button id="join_gig_btn">JOIN THIS GIG</button>
+              <% else %>
+                <button id="before_login_join_gig_btn">JOIN THIS GIG</button>
+              <% end %>
+              <%= button_to "JOIN THIS GIG", join_event_path(:event_id=> @event.id), :id => "join_gig", style: 'display: none' %>
+            <% end %>
+            <% if user_signed_in? %>
+              <button>SHARE</button>
+              <button>FOUNDATION</button>
+            <% else %>
+              <button class="share_gig_btn">SHARE</button>
+              <button class="foundation_btn">FOUNDATION</button>
+            <% end %>
+            <button id ="view_gigs_user_btn">WHO'S GOING</button>
+            <%= link_to "WHO'S GOING", view_gigs_users_path(:event_id=> @event.id), data: { fancybox_width: 600 }, class: 'fancybox view_gigs_user', :id => "view_gigs_user", style: 'display: none'%>
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gigRight">
+    <div class="gigName"><% if @event.present? && @event.title.present? %><%= @event.title.titleize %><% end %></div>
+    <div class="foundationName">Foundation Name</div>
+    <div class="gigDate"><%= @event.event_date.try(:strftime, '%B %d, %Y')%></div>
+    <div class="gigDate"><% if @event.event_start_time.present? %><%= @event.event_start_time.to_time.strftime("%I:%M%p")%> <% end %> - <% if @event.event_end_time.present? %><%= @event.event_end_time.to_time.strftime("%I:%M%p")%><% end %></div>
+    <div class="gigCreator">BY: <span><% if @event.present? && @event.user.present? %><%= @event.user.full_name.titleize %><% end %></span></div>
+    <div class="gigLocationName">Location: <% if @event.present? && @event.location.present? %><%= @event.location.titleize %><% end %> <br/><span>100 Street Name Street<br/>City Name, ST, 90210</span></div>
+    <%= link_to image_tag('mapButton.png'), "http://maps.google.com/maps?q=#{@event.location}", :target => '_blank',:class=> "mapButton" %>
+    <div class="gigDescription"><% if @event.present? && @event.full_description.present? %><%= @event.full_description.titleize %><% end %></div>
+  </div>
+</div>
+<script>
+	$('#view_gigs_user_btn').click(function(){
+		$("#view_gigs_user").click();
+		return false;
+	});
+	$('#join_gig_btn').click(function(){
+		$("#join_gig").click();
+		return false;
+	});
+	$('#before_login_join_gig_btn').click(function(){
+		alert("Please Sign Up to Join this GIG.")
+		return false;
+	});
+	$('.share_gig_btn').click(function(){
+		alert("Please sign up to share this GIG.")
+		return false;
+	});
+	$('.foundation_btn').click(function(){
+		alert("Please Sign Up to show foundation.")
+		return false;
+	});
+</script>
+<style>
+	/*.event_details{*/
+		/*height: 100px;*/
+		/*width: 125px;*/
+	/*}*/
+</style>

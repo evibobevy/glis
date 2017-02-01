@@ -1,0 +1,61 @@
+<!--new volunteer section-->
+<% if params[:controller]=="events" && params[:action]=='index'%>
+  <div class="user-prf-sec">
+    <div class="fixed-wrapper">
+      <div class="user-prf-row1">
+        <div class="user-prf-left">
+          <div class="vol-img-lft">
+            <% if current_user.image_file_name.present? || current_user.image.url.present? %>
+              <%= image_tag current_user.image.url %>
+            <% else %>
+              <%= image_tag 'noImg.jpg', alt: '' %>
+            <% end %>
+          </div>
+          <div class="user-prf-left-cont">
+            <% if user_signed_in? && current_user.full_name.present? %>
+              <h2><%= current_user.full_name %></h2>
+            <% end %>
+            <i class="add-icon">
+              <%= image_tag 'addIcon.jpg', alt: "" %>
+            </i> <span>
+            <% if user_signed_in? && current_user.full_address.present? %>
+              <%=current_user.full_address %>
+            <% end %>
+          </span>
+            <p style="font-family: 'GothamRndBook'";>
+              <% if current_user.description.present? && user_signed_in? %><%= current_user.description %>  <% end %>
+            </p>
+          </div>
+        </div>
+        <div class="user-prf-rgt"> <strong>Volunteered:</strong>
+          <p><span><% if user_signed_in? %><%= current_user.events.count %><% end %></span> times</p>
+          <p><span>
+            <% if user_signed_in? %>
+		          <% @hours = [] %>
+              <% current_user.events. each do |event| %>
+                <% @hours << volunteers_works_hours(event) %>
+              <% end %>
+              <% end %>
+            <%= @hours.present? ? @hours.map {|i,j| i}.inject(:+) : 0  %>
+          </span> hours
+          </p><br/>
+          <p><span><% if user_signed_in? %><%= current_user.friends.count %><% end %></span> Supporters </p>
+        </div>
+      </div>
+      <div class="user-photos-row">
+        <ul>
+          <% user_image_counter = 4 - current_user.user_pictures.size %>
+          <% if user_signed_in? && current_user.user_pictures.present? %>
+            <% current_user.user_pictures.last(4).each do |user_image|%>
+              <li><%= image_tag user_image.image.url, style: "width: 100%;" %></li>
+            <% end %>
+          <% end %>
+          <% 1.upto(user_image_counter) do |i| %>
+            <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!--new volunteer section ends-->

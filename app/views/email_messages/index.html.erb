@@ -1,0 +1,231 @@
+<!--<link href="/assets/jquery-ui.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html">-->
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<!--<link href="/assets/bootstrap.min.css" rel="stylesheet">-->
+<%= stylesheet_link_tag 'bootstrap.min' %>
+<%= javascript_include_tag 'jquery-ui' %>
+<!--<script src="/assets/jquery-ui.js"></script>-->
+<section id="midd-container">
+  <div class="message-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner"></div>
+        <h1 style="margin-top: 5px;">Inbox</h1>
+        <div class="mail">
+          <% if @current_user_message.present? %>
+            <% @current_user_message.each do |emr| %>
+              <% if emr.present? && find_user_by_message(emr.user_id).image.present? %>
+                <%= link_to image_tag(emr.user.image.url(:medium), style: "height: 81px;width: 80px;") , user_profile_path(emr.user.id) %>
+              <% else %>
+                <%= link_to image_tag('noImg.jpg') , user_profile_path(emr.user.id) %>
+              <% end %>
+              <div class="messDesc">
+                <h2><% if emr.present? %>
+                    <%# @last_message_id = EmailMessage.where('parent_id = ?', emr.id) %>
+                    <%= link_to find_username_of_sender(emr.user_id), email_message_detail_path(:email_message_id => emr.id ), id: emr.id, :class => "msg_block", remote: true  %>
+                  <% end %>
+                </h2>
+                <h3><% if emr.present? %><%= h truncate(emr.subject, :length => 10) if emr.subject.present? %><% end %></h3>
+                <h4>
+	                  <span>
+		                  <% if emr.created_at.present? %>
+	                      <%= time_diff_for_email_message(emr)[0] > 0 ? ("%d " % "#{time_diff_for_email_message(emr)[0]}" + 'days') : '0 days'  %>
+	                    <% end %>
+	                  </span>
+                </h4>
+              </div></a>
+              <br/>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="email_message">
+          <div class="message">
+            <% if @email_message_detail.present? %>
+              <% if @email_message_detail.last.present? && find_user_by_message(@email_message_detail.last.user_id).image.present? %>
+                <%= image_tag find_user_by_message(@email_message_detail.last.user_id).image.url(:medium), style: "height: 105px;width: 100px;" %>
+              <% else %>
+                <%= image_tag 'noImg.jpg'%>
+              <% end %>
+            <% end %>
+            <div class="messDesc">
+              <% if @email_message_detail.present? %>
+                <h2>
+                  <%= @email_message_detail.last.user.last_name_initial.capitalize %>
+                </h2>
+              <% end %>
+              <h3><% if @email_message_detail.present? %> <%= @email_message_detail.last.subject %><% end %></h3>
+              <h4>
+                <% if @email_message_recipients.present? && @email_message_recipients.last.email_message.present? %>
+                  <% if time_diff_for_email_message(@email_message_detail.last)[0] > 0 %><span><%= "%d " % "#{time_diff_for_email_message(@email_message_detail.last)[0]}" %></span> days
+                  <% end %>
+                <% end %>
+              </h4>
+            </div>
+            <br/>
+
+            <div class="messCont">
+              <% if @email_message_detail.present? %>
+                <%#= render partial: "add_notification_message", collections: @email_message_detail %>
+                </div>
+                <div class="messReply">
+                  <%= form_tag send_message_reply_path , :remote => true, :id => 'message_form'  do %>
+                    <%= hidden_field_tag :email_message_id, @email_message_recipients.last.email_message.id if @email_message_recipients.present? %>
+                    <%= text_area_tag :message, nil, :placeholder=> "Send A Reply...", :rows=> "4",  :columns=> "100" %>
+                    <div class="messSend">
+                      <%= submit_tag "Reply", :class =>"submit_message"%>
+                    </div>
+                    <label id="message_error" for="message" generated="true" class="error">This field is required.</label>
+                  <% end %>
+                </div>
+              <% else %>
+                <h1 style="text-align: center;"><b><%=t :no_user_notification %></b></h1>
+              <% end %>
+              </div>
+          <!--<label id="message_error" for="message" generated="true" class="error">This field is required.</label>-->
+        </div>
+      </div>
+</section>
+<section id="midd-container">
+  <div class="newmess-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner"></div>
+        <h1 style="margin-top: 5px;">New Message</h1>
+        <div class="newMess">
+          <%= form_for @email_message, url: email_messages_path do |f| %>
+            <% flash.each do |name, msg| %>
+              <%= content_tag :div, msg, class: "alert alert-info" %>
+            <% end %>
+            <%= email_field_tag :email, nil, :multiple => true, :placeholder => "To:" %> <br/>
+            <label id="email_error" for="email" generated="true" class="error">This field is required.</label>
+            <%= hidden_field_tag :foundation_user_email, @foundation if @foundation.present? %>
+            <%= f.text_field :subject, :placeholder => "Subject:" %>
+            <label id="subject_error" for="email_message_subject" generated="true" class="error">This field is required.</label>
+            <%= f.text_area :message,  :placeholder => "Send A Reply..."%>
+            <%= f.submit "Send" %>
+            <label id="send_reply_error" for="message" generated="true" class="error">This field is required.</label>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="midd-container">
+  <div class="note-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner"></div>
+        <h1 style="margin-top: 5px;">Notifications</h1>
+        <div class="noteBox">
+          <div id="accordion">
+            <% if @email_message_recipients.present? %>
+              <h3><%= image_tag("chat.svg", size: "20x20") %>&nbsp;&nbsp;&nbsp;You have a new message</h3>
+              <div>
+                <% @email_message_recipients.each do |user_notification| %>
+                  <% if user_notification.email_message.message.present? %>
+                    <h3>* <%= user_notification.email_message.message %><% end %>
+                  By <% if user_notification.email_message.user.full_name.present? %><b><%= user_notification.email_message.user.full_name.capitalize %></b>
+                  <% end %>
+                  </h3>
+                <% end %>
+              </div>
+            <% end %>
+            <% if @user_friendrequests.present? %>
+              <h3><%= image_tag("add-friend.svg", size: "20x20") %>&nbsp;&nbsp;&nbsp;You have a support request</h3>
+              <div>
+                <% @user_friendrequests.each do |user_friendrequest| %>
+                  <h3> <b>* <%= find_fullname_by_id(user_friendrequest.user_id) %></b> has send you friend request.
+                <% end %></h3>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Middle content ends here-->
+<script language="javascript" type="text/javascript">
+	$('#message_form').validate();
+	//	$('#new_email_message').validate();
+//	$(document).ready(function() {
+//		var timeout = setInterval(autoRefresh_div, 5000);
+//		function autoRefresh_div()
+//		{
+//			$(".messCont").load(location.href+" .messCont");
+//			$(".messCont").load(location.href+" .messCont >*","");
+//		}
+//	});
+	$("#accordion").accordion({
+		active: false,
+		autoHeight: false,
+		navigation: true,
+		collapsible: true,
+		create: function(event, ui) { $("#accordion").show(); }
+	});
+	select_value = $('#foundation_user_email').val();
+	$('#email').val(select_value);
+
+	$('#new_email_message').submit(function(){
+		if ($('#email_message_subject').val() == "") {
+			$('#subject_error').show();
+			return false;
+		}
+	});
+	$('#new_email_message').submit(function(){
+		if ($('#email_message_message').val() == "") {
+			$('#send_reply_error').show();
+			return false;
+		}
+	});
+	$('#message_form').submit(function(){
+		if ($('#message').val() == "") {
+			$('#message_error').show();
+			return false;
+		}
+	});
+</script>
+<script>
+//	$("#message_form").submit(function(e) {
+//
+//		var url = "email_messages/send_message_reply"; // the script where you handle the form input.
+//
+//		$.ajax({
+//			type: "post",
+//			url: url,
+//			data: {reciever_id: $('#reciever_id').val(), email_message_id: $('#email_message_id').val()},
+//			format: 'json',
+//			success: function(data)
+//			{
+//				return false;
+//			}
+//		});
+//	});
+
+</script>
+<style>
+	#ui-id-4 .note{
+		background-color: white;
+		border-bottom: none;
+	}
+	email:valid {
+		border: 1px solid green;
+	}
+	.error{
+		color: red;
+	}
+	#message_error{
+		display: none;
+	}
+	#email_error{
+		display: none;
+	}
+	#subject_error{
+		display: none;
+	}
+	#send_reply_error{
+		display: none;
+	}
+	#message_error{
+		display: none;
+	}
+</style>

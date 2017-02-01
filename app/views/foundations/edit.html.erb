@@ -1,0 +1,453 @@
+<!--<link href="/assets/bootstrap.min.css" rel="stylesheet">-->
+<%= stylesheet_link_tag 'bootstrap.min' %>
+<%= javascript_include_tag 'jquery.validate.min' %>
+<!--<script src="/assets/jquery.validate.min.js" xmlns="http://www.w3.org/1999/html"></script>-->
+<section id="midd-container">
+  <!--new volunteer section-->
+  <div class="user-prf-sec">
+    <div class="fixed-wrapper">
+      <div class="inbox">
+        <div class="corner"></div>
+        <h1 class ="prof_sett">Profile Settings</h1>
+      </div>
+      <div class="user-prf-row1">
+        <div class="found-prf-left">
+          <%= form_for @foundation, :html => {:class => "foundation_edit"} do |f| %>
+            <% flash.each do |name, msg| %>
+              <%= content_tag :div, msg, class: "alert alert-info" %>
+            <% end %>
+            <div class="found-img-lft"> <div class="photoSettings">
+              <li>
+                <% if @foundation.image_file_name.present? %><%= image_tag @foundation.image.url, style: "border: 4px solid #67aa4d;border-radius: 6px;" %>
+                <% else %> <%= image_tag 'stayIcon.png' %>
+                <% end %>
+                <%= f.file_field :image, value: "CHANGE LOGO", :style=> "display:none;"  %>
+                <button id="logo_btn">CHANGE LOGO</button>
+              </li></div> </div>
+            <div class="found-prf-left-cont">
+              <div class="nameSettings">
+                <%= f.text_field :name, :placeholder => "Foundation Name" %>
+              </div>
+              <label id="foundation_name_error" for="city" generated="true" class="error">This field is required.</label>
+              <br/>
+              <div class="city">
+                <%= f.text_field :city, :placeholder => "City" %>
+              </div>
+              <div class="state">
+                <%= f.text_field :state, :placeholder => "State"  %>
+              </div>
+              <span>
+	              <label id="foundation_city_error" for="city" generated="true" class="error", style="padding-left: 12px;">This field is required.</label>
+              <span>
+	            <span>
+                <label id="foundation_state_error" for="state" generated="true" class="error", style="
+                padding-left: 210px;" >This field is required.</label>
+              <span>
+              <div class="description">
+                <%= f.text_area :description, :placeholder => "Description",:rows=> "4", :columns=>"100",  :required => true %>
+              </div>
+              <input type="button" value="Reset" class="reset-btn">
+                <%= f.submit "Save" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="user-photos-row">
+        <ul>
+          <div class="photoSettings">
+            <% if @foundation_pictures.present? %>
+              <% picture = 4 - @foundation_pictures.size %>
+              <% @foundation_pictures.each do |foundation_picture|%>
+                <li>
+                  <%= image_tag foundation_picture.image.url %>
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=> "change_user_foundation_image", :id=> "#{foundation_picture.id}"%>
+                  <%= form_for foundation_picture, url: foundations_update_path, :html => {:class => 'foundation_images'}  do |f| %>
+                    <%= hidden_field_tag :foundation_id, @foundation.id %>
+                    <% if @foundation.user.email.present? %> <%= hidden_field_tag :email_id, @foundation.user.email %> <% end %>
+                    <%= f.hidden_field :user_foundation_picture_id, :value => foundation_picture.id %>
+                    <br><%= f.file_field :image, :class=>"upload_image" %> <br>
+                    <span><%= f.submit "Save", :class=>"save_user_image" %></span>
+                    <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>
+                    <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
+                    </li>
+                  <% end %>
+              <% end %>
+              <% 1.upto(picture) do |i| %>
+                <li><%= image_tag 'photoImg.jpg', alt: "" %>
+                  <!--<img src="/assets/photoImg.jpg" alt="">-->
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_new_user_foundation_image", :id => "#{i}" %>
+                  <%= form_for @picture, url: foundations_update_path, :html => {:class => 'new_user_foundation_images', :id=> "new_foundation_picture_#{i}" }  do |f| %>
+                    <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
+                    <%= hidden_field_tag :foundation_id, @foundation.id %>
+                    <span> <%= f.submit "Save", :class=>"save_new_foundation_image" %>
+                      <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>  </span>
+                    <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
+                  <% end %>
+                </li>
+              <% end %>
+            <% else %>
+              <% 1.upto(4) do |i| %>
+                <!--<li><img src="/assets/photoImg.jpg" alt="">-->
+                <li><%= image_tag 'photoImg.jpg', alt: "" %>
+                  <%= button_to "CHANGE PHOTO", 'javascript:;', :class=>"change_new_user_foundation_image", :id => "#{i}" %>
+                  <%= form_for @picture, url: foundations_update_path, :html => {:class => 'new_user_foundation_images', :id=> "new_foundation_picture_#{i}" }  do |f| %>
+                    <br><%= f.file_field :image, :class=>"upload_new_image" %> <br>
+                    <%= hidden_field_tag :foundation_id, @foundation.id %>
+                    <%#= button_to "Cancel", 'javascript:;', :class=>"cancle_foundation_image" %>
+                    <span> <%= f.submit "Save", :class=>"save_new_user_image" %>
+                      <%#= button_to "Cancle", "javascript;;",:class=> "cancle_foundation_image" %>  </span>
+                    <span><input class="cancle_foundation_image" type="submit" value="Cancel"></span>
+                  <% end %>
+                </li>
+              <% end %>
+            <% end %>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="volunteer-full float-full user-prf-vol">
+    <div class="fixed-wrapper">
+      <div id="volunteers">
+        <div class="corner"></div>
+        <h1><%=t (:my_supporters)%></h1><br/>
+
+        <div class="volBox">
+          <% if @user_supporters.present? %>
+            <% @user_supporters.in_groups_of(3, false) do |user_support| %>
+              <% for user in user_support %>
+                <div class="supporters">
+                  <% if user.friend.present? && user.friend.image.present? && user.friend != current_user %>
+                    <%= image_tag user.friend.image.url(:medium), style: "height: 65px;" %>
+                    <h2><%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %></h2>
+                    <%= button_to 'Remove', remove_friend_path(:friend_id => user.friend.id, :user_id => current_user.id), :method => :post, :class=>"remove-btn" %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          <% else %>
+            <h2 align="center" style="margin: 95px;"><b><%= t(:no_supporter) %></b></h2>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="volunteer-full float-full user-prf-vol">
+      <%= form_for @foundation do |f| %>
+        <div class="fixed-wrapper">
+          <div id="settings">
+            <div class="corner"></div>
+            <h1><%=t (:privacy_setting)%></h1><br/>
+
+            <div class="privacyQuestion-left">
+              <h2>Permissions:</h2>
+
+              <h2>Can everyone view your profile?</h2>
+
+              <h2>Can everyone view your calendar?</h2>
+
+              <h2>Can everyone invite you to events?</h2>
+
+              <h2>Can everyone view your posts?</h2>
+
+              <h2>Can everyone message you?</h2>
+
+              <h2>Do volunteers need approval to join your gigs?</h2>
+
+              <h2>Do supporters need approval to comment on your posts?</h2>
+            </div>
+            <div class="switch2">
+              <div>
+                <%= f.check_box :everyone_view_profile, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :everyone_view_calendar, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :everyone_invite_you_to_events, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :everyone_view_posts, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :everyone_message_you, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :volunteers_need_approval_to_join_your_gigs, :class => "form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :supporters_need_approval_to_comment_on_your_posts, :class => "form-control" %>
+              </div>
+            </div>
+            <div class="privacyQuestion">
+              <h3>Change your password:</h3>
+              <%#= devise_error_messages! %>
+              <%= hidden_field_tag :reset_password_token %>
+              <label id="user_success_message_password"><div class="alert alert-info">Password successfully updated.</div></label>
+              <label id="user_blank_message_password"><div class="alert alert-warning">Password & Confirm Password can't be blank.</div></label>
+              <label id="not_match_message_user_password"><div class="alert alert-warning">Password & Confirm Password doesn't match.</div></label>
+              <div class="passwordChange">
+                <%= password_field_tag 'password', nil, :placeholder => "New Password" %>
+                <%= password_field_tag 'password_confirmation', nil, :placeholder => "Confirm Password" %>
+                <%= submit_tag "Save", :onclick => "return update_password();" %>
+              </div>
+            </div>
+            <!--<label id="user_success_message_password"><div class="alert alert-info">Password successfully updated.</div></label>-->
+            <div class="notifications">
+              <div class="notificationQuestion">
+                <h2>Notifications:</h2>
+                <div class="notificationSettings">
+                  <%= email_field_tag :email, nil, :required => true, :placeholder => "Email" %>
+                </div>
+                <h2>Email Notifications?</h2>
+
+                <div class="notificationSettings">
+                  <%= f.text_field :phone_number, :maxlength => "10", :placeholder=>"Phone: 555-555-555", :onkeypress=>"return event.charCode >= 48 && event.charCode <= 57" %>
+                  <span> <label id="foundation_phone_number_error" for="phone_number" generated="true" class="error">This field is required.</label></span>
+                </div>
+
+                <h2>Text/SMS Notifications?</h2>
+
+                <h2>Would you like mobile ping notifications?</h2>
+              </div>
+
+              <div class="switch3">
+                <div>
+                  <%= f.check_box :email_notifications, :class => "form-control" %>
+                </div>
+                <div>
+                  <%= f.check_box :text_notifications %>
+                </div>
+                <div>
+                  <%= f.check_box :mobile_ping_notifications %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cleat"></div>
+          <div class="fixed-wrapper">
+            <div class="saveSettings">
+              <%= f.submit "Save Privacy Settings", :class=> "submit_foundation"  %>
+              <input type="button" value="Reset Privacy Settings" class="reset-privacy-setting-btn">
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+</section>
+<script>
+	$('.foundation_edit').validate();
+
+	// Start Validation for update the foundation form
+
+	$('.foundation_edit').submit(function(){
+		if ($('#foundation_name').val() == "") {
+			$('#foundation_name_error').show();
+			return false;
+		}
+	});
+	$('.foundation_edit').submit(function(){
+		if ($('#foundation_city').val() == "") {
+			$('#foundation_city_error').show();
+			return false;
+		}
+	});
+
+	//	$('.foundation_edit').click(function(){
+	//		if ($('#foundation_state_error').is(':visible')){
+	////			$('#foundation_state_error').css('padding-left', '370px');
+	//			$('#foundation_state_error').animate({
+	//				paddingLeft: '370px'
+	//			}, 370);
+	//		}
+	//		if ($('#foundation_state_error').is(':visible') && $('#foundation_city_error').is(':visible') ){
+	//			$('#foundation_state_error').css('padding-left', '210px');
+	//		}
+	//	});
+
+	$('.foundation_edit').submit(function(){
+		if ($('#foundation_state').val() == "") {
+			$('#foundation_state_error').show();
+			return false;
+		}
+	});
+	// End  Validation for update the foundation form
+	// Start Validation for reset check box
+	$(function (argument) {
+		$('[type="checkbox"]').bootstrapSwitch('onText', 'YES');
+		$('[type="checkbox"]').bootstrapSwitch('offText', 'NO');
+	})
+	$('.reset-btn').click(function () {
+		$("input[type=text], textarea").val("");
+	});
+	//	$('.reset-privacy-setting-btn').click(function () {
+	//		$("#foundation_phone_number").val("");
+	//		$("#email").val("");
+	//	});
+	$('.reset-privacy-setting-btn').click(function () {
+		$("input[type=checkbox]").bootstrapSwitch('state', true);
+	});
+
+	// End Validation for reset check box
+
+	// Start Validation for phone number
+	//	$('.submit_foundation').click(function () {
+	//		if ($('#foundation_phone_number').val()=="") {
+	//			$('#foundation_phone_number_error').show();
+	//			return false;
+	//		}
+	//		else {
+	//			$('#foundation_phone_number_error').hide();
+	//			return true;
+	//		}
+	//	});
+
+	$(".change_user_foundation_image").click(function(){
+		$("#edit_foundation_picture_"+this.id).show();
+		$(this).toggle();
+	});
+	$(".change_new_user_foundation_image").click(function(){
+		$("#new_foundation_picture_"+this.id).show();
+		$(this).toggle();
+	});
+	$('.cancle_foundation_image').click(function(){
+		window.location.reload();
+		return false;
+	})
+
+	// Start Validation for Drop Down
+	$('.role').dropdown();
+	$('.role li').on('click', function() {
+		$('#dropdown_role').html($(this).find('a').html());
+		select_value = $('#dropdown_role').text();
+		$('#user_role').val(select_value);
+	});
+
+	$('.gig').dropdown();
+	$('.gig li').on('click', function() {
+		$('#dropdown_gig').html($(this).find('a').html());
+		select_value = $('#dropdown_gig').text();
+		$('#type_of_gig').val(select_value);
+	});
+
+	// End Validation for Drop Down
+	$('.new_user_foundation_images').submit(function(){
+		var val = $(".upload_new_image").val();
+		if(val == ''){
+			alert("Please uploads Foundation image");
+			return false;
+		}
+		else
+			return true;
+	});
+	$('#logo_btn').click(function(){
+		$("#foundation_image").click();
+		return false;
+	});
+
+	//  Start Set Email value
+	select_value = $('#email_id').val()
+	$('#email').val(select_value);
+	//  END Set Email value
+
+	//	Start Validate passsword
+	function update_password() {
+		if ($('#password').val() == '' || $('#password_confirmation').val() == '') {
+			if($('#user_success_message_password').is(':visible')){
+				$('#user_success_message_password').hide();
+			}
+			if($('#not_match_message_user_password').is(':visible')){
+				$('#not_match_message_user_password').hide();
+			}
+			$('#user_blank_message_password').show();
+		}
+		else {
+			if($('#password').val().length < 8 || $('#password_confirmation').val().length < 8){
+				alert("password size should be min 8 char..");
+				$('#password').focus();
+				return false;
+			}
+			if ($('#password').val() == $('#password_confirmation').val()) {
+				$.ajax({
+					type: 'post',
+					url: '/registrations/update_password',
+					data: {password: $('#password').val(), password_confirmation: $('#password_confirmation').val()},
+					success: function(){
+						if($('#user_blank_message_password').is(':visible')){
+							$('#user_blank_message_password').hide();
+						}
+						if($('#not_match_message_user_password').is(':visible')){
+							$('#not_match_message_user_password').hide();
+						}
+						$('#user_success_message_password').show();
+					}
+				});
+			}
+			else {
+				if($('#user_blank_message_password').is(':visible')){
+					$('#user_blank_message_password').hide();
+				}
+				if($('#user_success_message_password').is(':visible')){
+					$('#user_success_message_password').hide();
+				}
+				$('#not_match_message_user_password').show();
+			}
+		}
+		$("#password").val("");
+		$("#password_confirmation").val("");
+		return false;
+	}
+	$('.submit_foundation').click(function(){
+		if ($('#foundation_text_notifications').bootstrapSwitch('state') == true) {
+			if ($('#foundation_phone_number').val() == "") {
+				$('#foundation_phone_number_error').show();
+				return false;
+			}
+		}
+	});
+	//	END  Validate passsword
+</script>
+<style>
+	#error_explanation h2 {
+		display: none;
+	}
+	.foundation_images {
+		display: none;
+	}
+	.user_foundation_images {
+		display: none;
+	}
+	.new_user_foundation_images {
+		display: none;
+	}
+	.error{
+		color: red;
+	}
+	#foundation_city_error{
+		display: none;
+	}
+	#foundation_state_error{
+		display: none;
+	}
+	#foundation_name_error{
+		display: none;
+	}
+	#foundation_phone_number_error{
+		display: none;
+	}
+	/*password style */
+	#user_success_message_password{
+		display: none;
+	}
+	#user_blank_message_password{
+		display: none;
+	}
+	#not_match_message_user_password{
+		display: none;
+	}
+	.prof_sett{
+		margin-top: 0px;
+	}
+</style>

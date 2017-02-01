@@ -1,36 +1,39 @@
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<%= javascript_include_tag 'jquery.validate.min' %>
 <div class="contact-popup">
   <div class="modal-header">
     <h3>Contact Us</h3>
     <div class="modal-body">
-      <!--<div id="edit_address_errors"></div>-->
       <div id="success_msg"></div>
       <%= form_for @contact, url: contact_path, html: {id: 'new_address', class: 'form-horizontal', role: 'form', data: {remote: true}} do |f| %>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Name</div>
+          <div class="contact_label">Name</div>
           <div class="col-reg-lft-contact">
             <%= f.text_field :name, id: 'name', class: 'form-control', required: true,  maxlength: "30"%>
           </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Email</div>
-           <div class="col-reg-lft-contact">
-             <%= f.email_field :email, id: 'email', class: 'form-control', required: true %>
-           </div>
+          <div class="contact_label">Email</div>
+          <div class="col-reg-lft-contact">
+            <%= f.email_field :email, id: 'email', class: 'form-control', required: true %>
+          </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Company Name</div>
+          <div class="contact_label">Company Name</div>
           <div class="col-reg-lft-contact">
             <%= f.text_field :company_name, id: 'company_name', class: 'form-control', required: true %>
           </div>
         </div>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Phone number</div>
+          <div class="contact_label">Phone number</div>
           <div class="col-reg-lft-contact">
-            <%= f.text_field :phone_number, id: 'phone_number', class: 'form-control', required: true, pattern: '[0-9]{10}' %>
+            <%= f.text_field :phone_number, id: 'phone_number', :maxlength => "10", :onkeypress=>"return event.charCode >= 48 && event.charCode <= 57" %>
           </div>
+          <label id="phonenumber_error" for="phone_number" generated="true" class="error">Phone number size should be 10 digit .</label>
         </div>
+        <label id="phone_error" for="phone_number" generated="true" class="error">This field is required.</label>
         <div class="form-row">
-          <div style="float: left; width: 100px;">Description</div>
+          <div class="contact_label">Description</div>
           <div class="col-reg-lft-contact">
             <%= f.text_area :description, id: 'description', class: 'form-control', required: true %>
           </div>
@@ -39,9 +42,54 @@
           <div class="col-reg-lft-contact">
             <%= f.submit 'Send',:id => 'send_form', :class=>"reg-fb sub-regis", :onclick => 'check_form();' %>
           </div>
-          <%#= image_tag 'ajax-loader.gif', :id => 'submit_contact_form', :style => 'display: none; height: 25px;' %>
+          <%= image_tag 'ajax-loader.gif', :id => 'submit_contact_form', :style => 'display: none; height: 25px;' %>
         </div>
         </div>
       <% end %>
-  </div>
+      </div>
 </div>
+<style>
+	.error{
+		color: red;
+		font-weight: 700;
+		font-size: 14px;
+	}
+	#phonenumber_error{
+		display: none;
+	}
+	#phone_error{
+		display: none;
+	}
+	.contact_label{
+		float: left;
+		width: 100%;
+	}
+</style>
+<script>
+	$('#new_address').validate();
+	function check_form(){
+		if ($('#name').val() != "" && $('#email').val() != "" && $('#company_name').val() != "" && $('#phone_number').val() != "" && $('#description').val() != ""){
+			$("#send_form").prop("disabled", true);
+			$("#send_form").val("Sending...");
+			$("#send_form").addClass("sub-regis-contact");
+			$("#send_form").submit();
+		}
+	}
+	$('#new_address').submit(function(){
+		if ($('#phone_number').val().length < 10 && !$('#phone_number').val()== "") {
+			$('#phonenumber_error').show();
+			$('#phone_number').focus();
+			return false;
+		}
+	});
+	$('#new_address').submit(function(){
+		if ($('#phone_number').val()== "") {
+			$('#phone_error').show();
+			$('#phone_number').focus();
+			return false;
+		}
+	});
+//	$('#new_address').submit(function(){
+//		$('.contact-popup').animate({height:'660px'});
+//	});
+</script>

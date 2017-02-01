@@ -1,66 +1,132 @@
 <!--Register Popup starts here-->
-<%= javascript_include_tag 'user.js'%>
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<!--<script src="/assets/user.js"></script>-->
+<%= javascript_include_tag 'jquery.validate.min' %>
+<%= javascript_include_tag 'user'%>
 <div class="register-popup">
-  <h3>Register</h3>
-  <%=form_for(resource, :as => resource_name,
-              :url => registration_path(resource_name),
-              :html => {:id => "sign_up_user"},
-              :format => :json,
-              :remote => true ) do |f| %>
-    <%= devise_error_messages! %>
-    <div class="form-row">
-      <div class="col-reg-lft">
-        <%= f.text_field :first_name, :placeholder=>"First Name", :required => true %>
-      </div>
-      <div class="col-reg-lft">
-        <%= f.text_field :last_name, :placeholder=>"Last Name", :required => true %>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="col-reg-lft">
-        <%= f.email_field :email, :placeholder=>"Email", :required => true %>
-      </div>
-      <div class="col-reg-lft">
-        <%= f.email_field :confirm_email, :placeholder=>"Confirm Email", :required => true, :oninput=>"check_email(this)" %>
-        <script language='javascript' type='text/javascript'>
-          function check_email(input) {
-            if (input.value != document.getElementById('user_email').value) {
-              input.setCustomValidity('Email and email confirm must be matching.');
-            } else {
-              input.setCustomValidity('');
-            }
-          }
-        </script>
-      </div>
-    </div>
+  <div class="login">
+    <h3>Log In</h3>
+    <%= form_for resource, url: session_path(:user), remote: true do |f| %>
+      <div class="form-row">
+        <div class="col-reg-lft">
+          <%= f.email_field :email, placeholder: 'Email', :required => true, autofocus: true  %>
+        </div>
 
-    <div class="form-row">
-      <div class="col-reg-lft">
-        <%= f.password_field :password, autocomplete: "off", :placeholder=>"Password", :required => true , :minlength=>"8" %>
+        <div class="col-reg-lft">
+          <%= f.password_field :password, placeholder: 'Password', :required => true, autocomplete: "off" %>
+        </div>
+
+        <label id="login_error" for="email" generated="true" class="error">Invalid email or password.</label>
+
+        <div class="login-submit">
+          <%= f.submit "Your Account", :class => 'login-acct' %>
+        </div>
+      </div>
+      <p class="forgot_pass_link"><%= link_to "Forgot password", new_password_path('user') %></p>
+    <% end %>
+  </div>
+  <div class="register">
+    <h3>Not A Member?</h3>
+    <%=form_for(resource, :as => resource_name,
+                :url => registration_path(resource_name),
+                :html => {:id => "sign_up_user"},
+                :format => :json,
+                :remote => true ) do |f| %>
+      <%= devise_error_messages! %>
+      <div class="form-row">
+        <div class="col-reg-lft">
+          <%= f.text_field :first_name, :placeholder=>"First Name", :maxlength=> "10", :required => true %>
+        </div>
+        <div class="col-reg-lft">
+          <%= f.text_field :last_name, :placeholder=>"Last Name", :maxlength=> "10", :required => true %>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-reg-lft">
+          <%= f.email_field :email, :placeholder=>"Email", :id=>"register_email",  :required => true  %>
+        </div>
+
+        <div class="col-reg-lft">
+          <%= f.email_field :confirm_email, :placeholder=>"Confirm Email", :required => true, :oninput=>"check_confirm_email(this)" %>
+          <script language='javascript' type='text/javascript'>
+	          function check_confirm_email(input) {
+		          if (input.value != document.getElementById('user_email').value || document.getElementById('user_email').value != document.getElementById('user_confirm_email').value) {
+			          input.setCustomValidity('Email and email confirm must be matching.');
+		          } else {
+			          input.setCustomValidity('');
+		          }
+	          }
+          </script>
+        </div>
+        <label id="email_exist_error" for="email" generated="true" class="error">Email and email confirm must be matching.</label>
       </div>
 
-      <div class="col-reg-lft">
-        <%= f.password_field :password_confirmation, :placeholder=> "Confirm Password", :required => true, :minlength=>"8", :oninput=>"check(this)" %>
-        <script language='javascript' type='text/javascript'>
-          function check(input) {
-            if (input.value != document.getElementById('user_password').value) {
-              input.setCustomValidity('Password Must be Matching.');
-            } else {
-              // input is valid -- reset the error message
-              input.setCustomValidity('');
-            }
-          }
-        </script>
-      </div>
-    </div>
+      <div class="form-row">
+        <div class="col-reg-lft">
+          <%= f.password_field :password, autocomplete: "off", :placeholder=>"Password", :required => true , :minlength=>"8" %>
+        </div>
 
-    <div class="form-row">
-      <div class="col-reg-lft">
-        <input type="button" class="reg-fb" value="Register with Facebook" onclick="window.location.href='/users/auth/facebook'"></input>
+        <div class="col-reg-lft">
+          <%= f.password_field :password_confirmation, :placeholder=> "Confirm Password", :required => true, :minlength=>"8", :oninput=>"check(this)" %>
+          <script language='javascript' type='text/javascript'>
+	          function check(input) {
+		          if (input.value != document.getElementById('user_password').value) {
+			          input.setCustomValidity('Password Must be Matching.');
+		          } else {
+			          // input is valid -- reset the error message
+			          input.setCustomValidity('');
+		          }
+	          }
+          </script>
+        </div>
       </div>
-      <div class="col-reg-lft">
-        <%= f.submit "Submit Registration",:class=>"reg-fb sub-regis" %>
+
+      <div class="form-row">
+        <div class="col-reg-lft">
+          <%= f.submit "Submit Registration",:class=>"reg-fb sub-regis" %>
+        </div>
+        <div class="col-reg-lft">
+          <input type="button" class="reg-fb" value="Register with Facebook" onclick="window.location.href='/users/auth/facebook'"></input>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
+<script>
+	$('#new_user').validate();
+	$('#sign_up_user').validate();
+	$('#sign_up_user').submit(function(){
+		if ($('#register_email').val() != $('#user_confirm_email').val() && !$('#register_email').val() == "" && !$('#user_confirm_email').val() == "") {
+			$('#email_exist_error').show();
+			return false;
+		}
+	});
+	$('.forgot_pass_link').click(function(){
+		window.location.href='/users/password/new';
+	})
+  </script>
+<style>
+	.error{
+		color: red;
+		font-size: 14px;
+		font-weight: 700;
+	}
+	#login_error{
+		display: none;
+	}
+	#email_not_same_error{
+		display: none;
+	}
+	#wrong_password_error{
+		display: none;
+	}
+	#email_exist_error{
+		display: none;
+	}
+	/*.forgot_pass_link:hover {*/
+		/*color: #5b9ebd;*/
+	/*}*/
+	a:hover {
+		color: #5b9ebd;
+	}
+</style>

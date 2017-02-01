@@ -1,10 +1,6 @@
-<%= month_calendar events: events do |date, events| %>
-  <div style="border-radius: 50%; width: 25px; height: 25px; background: white; padding: 4px;">
-   <%= date.strftime('%e') %>
-  </div>
+<%= month_calendar events: @events do |date, events| %>
+  <%= date.strftime('%e') %>
   <% events.each do |event| %>
-    <div>
-      <%#= event.title %>
-    </div>
+    <span>*</span>
   <% end %>
 <% end %>

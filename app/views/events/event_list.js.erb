@@ -1,1 +1,4 @@
-$('#calendar_page').html('<%= j render("events/calendar_table", :events => @event_list) %>');
+if(isMobile.any())
+	$('.sched').html("<%= j render(partial: 'events/mobile_calendar', locals: {today_gig_mobile: @today_gig_mobile}) %>");
+else
+	$('#calendar_page').html('<%= j render("events/calendar_table") %>');

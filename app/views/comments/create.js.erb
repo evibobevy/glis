@@ -1,3 +1,5 @@
-$('.comments').first().remove();
+$('.comments_<%= params[:post_id]%>').first().remove();
 $('.comments').after('<%= j render("events/comment", :comment => @comment) %>');
+$('#comment_commenter_<%= params[:post_id]%>').val('')
 $('#comment_commenter').val('')
+window.location.reload();

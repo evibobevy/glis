@@ -1,0 +1,276 @@
+<!--<link rel="stylesheet" href="/assets/tinycarousel.css" type="text/css" media="screen"/>-->
+<%= stylesheet_link_tag 'tinycarousel' %>
+<section id="midd-container">
+  <!--new volunteer section-->
+  <div class="user-prf-sec">
+    <div class="fixed-wrapper">
+      <div class="user-prf-row1">
+        <div class="user-prf-left">
+          <div class="vol-img-lft found-imag">
+            <% if @foundation.foundation_pictures.present? && @foundation.foundation_pictures.first.image.url.present? %>
+              <%= image_tag @foundation.foundation_pictures.first.image.url(:medium), alt: '' %>
+            <% else %>
+              <%= image_tag 'stayIcon.png', alt: "" %>
+            <% end %>
+          </div>
+          <div class="user-prf-left-cont">
+            <!--<h2><%#= @foundation.name.present? ? @foundation.name.titleize : 'Stay Inspired ' %> Foundation</h2>-->
+            <h2><% if @foundation.present? && @foundation.name.present? %><%=@foundation.name.titleize %><% end %></h2>
+            <i class="add-icon">
+              <%= image_tag 'addIcon.jpg', alt: "" %>
+            </i>
+            <span>
+	            <% if @foundation.city.present? || @foundation.state.present? %>
+                <%= @foundation.full_address.titleize %>
+              <% end %>
+            </span>
+            <p style="font-family: 'GothamRndBook';color: #474747;">
+              <% if @foundation.description.present? %>
+                <%=@foundation.description.titleize %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+        <div class="user-prf-rgt">
+          <% if user_signed_in? %>
+            <%= link_to image_tag("messageUs.png"), inbox_notifications_path %> <br/><br/>
+          <% else %>
+            <%= link_to image_tag("messageUs.png"), 'javascript:;', :onclick => 'alert("Please Sign Up to send this user.");'%> <br/><br/>
+          <% end %>
+          <a href="#">
+            <%#= image_tag 'checkCalendar.png' %>
+            <%= link_to image_tag("checkCalendar.png"), foundation_calendar_path(:popout_calendar => true), data: {fancybox_width: 900}, class: 'fancybox view_foundation_calendar' %>
+            <%#= link_to 'VIEW MY FOUNDATION PROFILES', user_foundations_path, data: { fancybox_width: 600 }, class: 'fancybox view_foundation', :id => "view_foundation", :style=> "display:none;"%>
+          </a><br/><br/>
+          <% if user_signed_in? %>
+            <% unless @foundation.users.exists?(current_user)%>
+              <%= link_to image_tag("supportUs.png"), support_foundation_path(:support=> true)  %> <br/>
+              <br/>
+            <% end %>
+          <% else %>
+            <%= link_to image_tag("supportUs.png"), 'javascript:;', :onclick => 'alert("Please Sign Up to support user.");'%> <br/><br/>
+          <% end %>
+        </div>
+        <div class ="notice_message">
+          <% if flash[:notice] %>
+            <% flash.each do |type, message| %>
+              <div class="alert <%= bootstrap_class_for(type) %> fade in">
+                <button class="close" data-dismiss="alert">×</button>
+                <%= message %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="user-photos-row">
+          <ul>
+            <% foundation_image_counter = 4 - @foundation.foundation_pictures.size %>
+            <% if @foundation.foundation_pictures.present? %>
+              <% @foundation.foundation_pictures.last(4).each do |foundation_image|%>
+                <li><%= image_tag foundation_image.image.url, style: "width: 100%;" %></li>
+              <% end %>
+            <% end %>
+            <% 1.upto(foundation_image_counter) do |i| %>
+              <li><%= image_tag 'photoImg.jpg', alt: "" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-wrapper">
+    <div id="slider1">
+      <div class="corner2"></div>
+      <h1 style="margin-left: -30px;">Upcoming Volunteer Opportunities</h1>
+      <% if @upcoming_gigs.present? %>
+        <a class="buttons prev" href="#">&#60;</a>
+      <% end %>
+      <div class="viewport">
+        <% if @upcoming_gigs.present? %>
+          <ul class="overview">
+            <% @upcoming_gigs.each do |upcoming_gig|%>
+              <li>
+                <% if upcoming_gig.present? && upcoming_gig.pictures.present? && upcoming_gig.pictures.first.image_file_name.present? %>
+                  <%= link_to image_tag(upcoming_gig.pictures.first.image.url(:medium),  style: "height: 166px;width: 241px;"), foundation_path %>
+                <% else %>
+                  <%= image_tag 'defaultGigSlide.png' %>
+                <% end %><br/>
+                <h2><%= upcoming_gig.title.present? ? upcoming_gig.title : " " %></h2>
+                <h3><%= upcoming_gig.event_date.present? ? upcoming_gig.event_date.try(:strftime, '%B %d, %Y') : " " %></h3>
+                <h4><%= upcoming_gig.type_of_gig.present? ? upcoming_gig.type_of_gig : " " %></h4>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <h2 class ="no_upcom_vol"><b><%= t(:no_upcomming_volunteer_opportunities) %></b></h2>
+        <% end %>
+      </div>
+      <% if @upcoming_gigs.present? %> <a class="buttons next" href="#">&#62;</a> <% end %>
+    </div>
+  </div>
+  <div class="fixed-wrapper">
+    <div id="volunteers">
+      <div class="corner"></div>
+      <h1>Our Supporters</h1><br/>
+      <div class="volBox">
+        <% if @foundation_supporters.present? %>
+          <% @foundation_supporters.in_groups_of(3, false) do |foundation_support| %>
+            <% for user in foundation_support %>
+              <div class="supporters">
+                <% if user.present? && user.user_pictures.present? %>
+                  <%= image_tag user.user_pictures.first.image.url(:medium)%>
+                <% else %>
+                  <%= image_tag 'noImg.jpg' %>
+                <% end %>
+                <h2 style="float: initial;margin-left: 20px;"><% if user.present? && user.first_name.present? %>
+                    <%= link_to user.first_name.capitalize, user_profile_path(:id => user.id) %>
+                  <% end %>
+                </h2>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <h2 align="center" style="margin: 100px;"><b><%= t(:no_supporter) %></b></h2>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!--new volunteer section ends-->
+  <% if @post.present? || @posts.present? %>
+    <div class="volunteer-full float-full user-prf-vol">
+      <div class="fixed-wrapper">
+        <div style="float:left; width:103%; padding:64px 0 0 0; overflow-y: scroll; height: 500px;">
+          <% if @posts.present? %>
+            <% @posts.each do |post|%>
+              <div style="float:left; width:100%; padding:64px 0 0 0;">
+                <div style="float:left; width:19%;">
+                  <div class="vol-img-lft"><% if post.present? && post.user.image.present? %> <%= image_tag post.user.image.url(:medium), style: 'height: 180px; width: 170px;' %><% else %><%= image_tag 'noImg.jpg' %> <% end %></div>
+                  <% if user_signed_in? %>
+                    <%= link_to 'Message', inbox_notifications_path(:page=> "inbox_notifications"), :method => :post, :class=>"btn-black support-btn"%>
+                  <% end %>
+                  <% if user_signed_in? %>
+                    <%= button_to ' Spread ', spread_user_post_path(:post_id => post.id), :method => :post, :class=>"btn-black spread"%>
+                  <% else %>
+                    <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black spread", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <% end %>
+                  <%= button_to 'Join', user_support_path(:friend_id => post.user), :method => :post, :class=>"btn-black join"%>
+                </div>
+                <div class="vol-user-comment">
+                  <% if post.present? && post.user.present? %>
+                    <h4><%=post.user.full_name %> <% end %><span>posted for</span>
+                  <% if post.postable.present? %>
+                    <%= post.postable.name.titleize %>
+                  <% end %>
+                  </h4>
+                  <span class="day-time-row"><strong><%= "%d " % "#{time_diff_for_post(post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(post)[1]}" %></strong>hours</span>
+                  <p class="vol-desc"><%= post.name %></p>
+                  <div class="vol-reply-sec">
+                    <ul>
+                      <% unless post.blank?  %>
+                        <% @comments = post.comments.last(2) %>
+                        <% @comments.each do |comment|%>
+                          <%= render "events/comment", :comment => comment %>
+                        <% end %>
+                      <% end %>
+                    </ul>
+                    <div class="reply-form">
+                      <%= form_for([post, post.comments.build], remote: true) do |f| %>
+                        <div>
+                          <%#= f.hidden_field :comment_id, :value => post.id %>
+                          <%= f.text_field :commenter, :required => true , :id => "comment_commenter_#{post.id}" %>
+                          <% if user_signed_in? %>
+                            <%= f.button 'Reply', :class => 'btn-reply' %>
+                          <% else %>
+                            <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this foundation.");' %>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="vol-detail-row">
+              <div class="vol-lft">
+                <div class="vol-img-lft">
+                  <% if @post.present? && @post.user.present? && @post.user.user_pictures.present? && @post.user.user_pictures.first.image.present? %> <%= image_tag @post.user.user_pictures.first.image.url(:medium), style: 'height: 180px; width: 180px;'  %><% else %><%= image_tag 'no-img.jpg' %></div> <% end %>
+                  <% if user_signed_in? && @post.present? %>
+                    <% unless current_user.friendships.exists?(friend_id:@post.user) %>
+                      <%= button_to 'Message', inbox_notifications_path(:page=> "inbox_notifications"), :method => :post, :class=>"btn-black support-btn "%>
+                    <% end %>
+                  <% else %>
+                    <%= button_to 'Message', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <% end %>
+                  <%# else %>
+                  <%#= button_to ' Message ', 'javascript:;', :class=>"btn-black support-btn", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <%# end %>
+                  <% if user_signed_in? && @post.present? %>
+                    <%= button_to ' Spread ', spread_user_post_path(:post_id => @post.id), :method => :post, :class=>"btn-black spread"%>
+                  <% else %>
+                    <%= button_to ' Spread ', 'javascript:;', :class=>"btn-black spread", :onclick => 'alert("Please Sign Up to support this user.");'%>
+                  <% end %>
+                  <% if user_signed_in? && @post.present?  %>
+                    <%= button_to 'Join', user_support_path(:friend_id => @post.user), :method => :post, :class=>"btn-black join"%>
+                    <%# else %>
+                    <%#= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-black join'%>
+                    <%#= link_to 'Join', user_support_path(:friend_id => Post.last.user), :method => :post, :class=>"btn-black join"%>
+                  <% end %>
+                  </div>
+            </div>
+            <div class="vol-user-comment">
+              <% if @post.present? && @post.postable.present? %> <h4><%=@post.user.full_name %> <% end %><span>posted for</span> <%#= @post.postable.present? ?  @post.postable.name.titleize : 'Kaohsiung Relief' %></h4>
+              <span class="day-time-row"><strong><% if @post.present? %><%= "%d " % "#{time_diff_for_post(@post)[0]}" %></strong>days ago for <strong><%= "%d " % "#{time_diff_for_post(@post)[1]}" %><% end %></strong>hours</span>
+              <p class="vol-desc"><% if @post.present?%><%= @post.name %><% end %></p>
+              <div class="vol-reply-sec">
+                <ul>
+                  <li>
+                    <% if  @post.present?  %>
+                      <% @comments = @post.comments.last(2) %>
+                      <% @comments.each do |comment|%>
+                        <%= render "events/comment", :comment => comment %>
+                      <% end %>
+                    <% end %>
+                  </li>
+                </ul>
+                <div class="reply-form">
+                  <% if @post.present? %>
+                    <%= form_for([@post, @post.comments.build], remote: true) do |f| %>
+                      <div>
+                        <%= f.text_field :commenter, :required => true %>
+                        <% if user_signed_in? %>
+                          <%= f.button 'Reply', :class => 'btn-reply' %>
+                        <% else %>
+                          <%= f.button 'Reply', :class => 'btn-reply', :onclick => 'alert("Please Sign Up to comment on this foundation.");' %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</section>
+<script src="/assets/jquery.tinycarousel.js"></script>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		$('#slider1').tinycarousel();
+	});
+</script>
+<style>
+	.notice{
+		color: green;
+	}
+	@media (min-width: 320px) and (max-width: 460px) {
+		/*Start Founation profile page*/
+		.found-imag img {
+			width: 243px;
+			height: 214px;
+		}
+		/*End Foundation profile page */
+	}
+</style>

@@ -1,33 +1,255 @@
-<%= form_for(@event) do |f| %>
-  <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
-      <ul>
-      <% @event.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<%= stylesheet_link_tag 'bootstrap.min' %>
+<%= javascript_include_tag 'jquery.validate.min' %>
+<!--<link href="/assets/bootstrap.min.css" rel="stylesheet">-->
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>-->
+<div class="newgig-sec">
+  <div class="fixed-wrapper">
+    <div class="inbox">
+      <div class="corner3"></div>
+      <h1>Create A Gig</h1>
+      <%= form_for @event, :html => { :multipart => true } do |f| %>
+        <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, class: "alert alert-info" %>
+        <% end %>
+        <div class="createGig-left">
+          <%= f.text_field :title, :placeholder => 'Gig Name *', :required => true %><br/>
+          <div class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle role"><span id="dropdown_role">Your Role<span>*</span><b class="caret"></b></a>
+            <ul class="dropdown-menu role">
+              <li><a>Group Leader</a></li>
+              <li><a>Volunteer</a></li>
+            </ul>
+            <%= hidden_field_tag :user_role %>
+          </div>
+          <label id="user_role_error" for="user_role" generated="true" class="error">This field is required.</label>
+          <div class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle gig"><span id="dropdown_gig">Type of Gig<span>*</span><b class="caret"></b>
+              <%#= f.select :type_of_gig, options_for_select(gigs_type.collect { |s| [s[0].humanize, s[0]] }), {}, :include_blank => true %> </a>
+            <ul class="dropdown-menu gig">
+              <li><a>Community</a></li>
+              <li><a>Environment</a></li>
+              <li><a>Health</a></li>
+              <li><a>Animals</a></li>
+              <li><a>Faith</a></li>
+              <li><a>Other</a></li>
+            </ul>
+            <%= hidden_field_tag :type_of_gig %>
+          </div>
+          <label id="type_of_gig_error" for="type_of_gig" generated="true" class="error">This field is required.</label>
+          <%= f.text_field :location, :placeholder => 'Location *', :required => true %> <br/>
+          <%= f.text_field :event_date, :id=> "datepicker", :placeholder=> "Start Date *", :required => true %><br/>
+          <%= f.text_field :end_date, :id=> "datepicker1", :placeholder=> "End Date *" , :required => true %><br/>
+          <label id="end_date_error" for="end_date" generated="true" class="error">End date must be greater then or equal start to date</label>
+          <div class="time">
+            <span style="float: left; width: 50%;">
+              <%= f.text_field :event_start_time, :class=> "timepicker", :placeholder=> "Start Time *" %> <br />
+              <label id="start_time_error" for="event_start_time" generated="true" class="error">This field is required.</label>
+            </span>
+            <span style="float: right; width: 50%;">
+              <%= f.text_field :event_end_time, :class => "timepicker1", :placeholder=> "End Time *" %> <br />
+              <label id="end_time_error" for="event_end_time" generated="true" class="error">This field is required.</label>
+            </span>
+            <label id="time_error" for="event_end_time" generated="true" class="error">Start Time is greater then End time.</label>
+            <label id="current_time_error" for="event_start_time" generated="true" class="error">Start and End time should be greater than current time for today's date.</label>
+          </div>
+          <div class='switchQuestions'>
+            <div class="questions">
+              <h5>Is this recurring? </h5><br/>
+              <h5>Is this open to the public?</h5></br>
+              <h5>Can anyone volunteer?</h5>
+            </div>
+            <div class="switch">
+              <div>
+                <%= f.check_box :recurring, :class=>"form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :open_to_the_public, :class=>"form-control" %>
+              </div>
+              <div>
+                <%= f.check_box :anyone_volunteer, :class=>"form-control" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="createGig-right">
+          <%= f.text_field :foundation_name, :placeholder => 'Foundation Name (Optional)' %><br/>
+          <%= f.text_area :basic_info, :placeholder => 'Basic Info *', :required => true %>
+          <%= f.text_area :full_description, :placeholder => 'Full Description *', :required => true %><br/>
+          <div class="upload">
+            <span><%= file_field_tag "images[]", multiple: true, class: "multi flaticon-upload" %></span>
+          </div>
+          <label id="image_error" for="image" generated="true" class="error">This field is required.</label>
+          <div class="submitCancel">
+            <input type="button" value="Cancel", class="btn-cancel"/>
+            <%= f.submit "Create Gig" %>
+          </div>
+        </div>
       <% end %>
-      </ul>
     </div>
-  <% end %>
+  </div>
+  <!--</div>-->
+  <script>
+	  $('#new_event').validate();
+	  $(function() {
+		  $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd', minDate: 'now'});
+		  $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd', minDate: 'now'});
+	  });
+	  $(function(){
+		  $('.multi').MultiFile({
+			  accept:'gif|jpg',
+			  max:5,
+//			  STRING: {
+//				  remove:'Remover',
+//				  selected:'Selecionado: $file',
+//				  denied:'Invalido arquivo de tipo $ext!',
+//				  duplicate:'Arquivo ja selecionado:\n$file!'
+//			  }
+		  });
+	  });
+	  $(function(argument) {
+		  $('[type="checkbox"]').bootstrapSwitch('onText', 'YES');
+		  $('[type="checkbox"]').bootstrapSwitch('offText', 'NO');
+	  });
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title, :required => true %>
-  </div>
-  <div class="field">
-    <%= f.label :start_time %><br>
-    <%= f.date_select :start_time %>
-  </div>
-  <div class="field">
-    <%= f.label :end_date %><br>
-    <%= f.date_select :end_date %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.file_field :image %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+	  $('.timepicker').timepicker({
+		  timeFormat: 'h:mm p',
+		  dynamic: false,
+		  dropdown: true,
+		  scrollbar: true
+	  });
+	  $('.timepicker1').timepicker({
+		  timeFormat: 'h:mm p',
+		  dynamic: false,
+		  dropdown: true,
+		  scrollbar: true
+	  });
+	  $('.btn-cancel').click(function(){
+		  window.location.href='/event_list';
+	  })
+
+	  $('.role').dropdown();
+	  $('.role li').on('click', function() {
+		  $('#dropdown_role').html($(this).find('a').html());
+		  select_value = $('#dropdown_role').text();
+		  $('#user_role').val(select_value);
+	  });
+
+	  $('.gig').dropdown();
+	  $('.gig li').on('click', function() {
+		  $('#dropdown_gig').html($(this).find('a').html());
+		  select_value = $('#dropdown_gig').text();
+		  $('#type_of_gig').val(select_value);
+	  });
+	  $('#new_event').submit(function(){
+		  if ($('#user_role').val() == "") {
+			  $('#user_role_error').show();
+			  return false;
+		  }
+	  });
+	  // START SHOW THE VALIDATION OF DROP DOWN
+	  $('#new_event').submit(function(){
+		  if ($('#type_of_gig').val() == "") {
+			  $('#type_of_gig_error').show();
+			  return false;
+		  }
+	  });
+	  $('#new_event').submit(function(){
+		  if ($('#event_event_start_time').val() == "") {
+			  $('#start_time_error').show();
+			  return false;
+		  }
+	  });
+	  $('#new_event').submit(function(){
+		  if ($('#event_event_end_time').val() == "") {
+			  $('#end_time_error').show();
+			  return false;
+		  }
+	  });
+
+	  $('#new_event').submit(function(){
+		  var startDate = new Date($('#datepicker').val());
+		  var endDate = new Date($('#datepicker1').val());
+		  if (endDate < startDate){
+			  $('#end_date_error').show();
+			  return false;
+		  }
+	  });
+	  $('#new_event').submit(function() {
+		  var startDate = new Date($('#datepicker').val());
+		  var endDate = new Date($('#datepicker1').val());
+		  var startTime = $('#event_event_start_time').val();
+		  var endTime = $('#event_event_end_time').val();
+		  if ((startDate - endDate === 0) && endTime < startTime ) {
+			  $('#time_error').show();
+			  return false;
+		  }
+	  });
+
+	  $('#new_event').submit(function() {
+		  var now = new Date();
+		  var current_time = now.toLocaleTimeString().replace(/:\d+ /, ' ');
+		  var startDate = new Date($('#datepicker').val());
+		  var endDate = new Date($('#datepicker1').val());
+		  var startTime = $('#event_event_start_time').val();
+		  var endTime = $('#event_event_end_time').val();
+		  if ((startDate.getDate() == now.getDate()) && (endDate.getDate() == now.getDate())) {
+			  if ((startTime < current_time || endTime < current_time) && !($('#event_event_end_time').val() == "") && !($('#event_event_end_time').val() == "")) {
+				  $('#current_time_error').show();
+				  return false;
+			  }
+		  }
+		  else{
+			  return true;
+		  }
+	  });
+
+	  $('#new_event').submit(function(){
+		  if ($('.multi').val() == "") {
+			  $('#image_error').show();
+			  return false;
+		  }
+	  });
+	  // END SHOW THE VALIDATION OF DROP DOWN
+  </script>
+  <style>
+	  #time_error {
+		  display: none;
+	  }
+	  .error{
+		  color: red;
+	  }
+	  #user_role_error{
+		  display: none;
+	  }
+	  #type_of_gig_error{
+		  display: none;
+	  }
+	  #start_time_error{
+		  display: none;
+	  }
+	  #fileuplode_errors{
+		  display: none;
+	  }
+	  #end_time_error{
+		  display: none;
+	  }
+	  #end_date_error {
+		  display: none;
+	  }
+	  #event_full_description{
+		  height: 150px;
+	  }
+	  .flash-notice {
+		  color: #4F8A10;
+		  background-color: #DFF2BF;
+		  width: 50%;
+	  }
+	  #image_error{
+		  display: none;
+	  }
+	  #current_time_error{
+		  display: none;
+	  }
+  </style>
+

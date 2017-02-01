@@ -1,12 +1,13 @@
-<div class="comments">
-  <div class="reply-img"> <%= image_tag @post.user.image.url(:medium), style: 'height: 70px; width: 90px;' %></div>
-  <div class="reply-desc">
-    <!--<h5>John Smith</h5>-->
-    <h5><%= @post.user.full_name %></h5>
-    <!--<span>2 minutes ago</span>-->
-    <span><%= time_ago_in_words(comment.created_at) + " ago" %></span>
-    <p>
-      <%= comment.commenter %>
-    </p><br><hr>
-  </div>
-</div>
+<li class="comments_<%=comment.id%>">
+  <% if @post.present? %>
+    <div class="reply-img">
+      <% if comment.user.present? && comment.present? && comment.user.user_pictures.present? %><%=image_tag comment.user.user_pictures.first.image.url, style: "height: 75px;width: 100%;" %><% else %><%= image_tag 'no-img.jpg', style: 'height: 70px; width: 90px;' %><% end %>
+    </div>
+    <div class="reply-desc">
+      <!--<h5><%# if @post.present? && @post.user.full_name.present? %><%#=@post.user.full_name %><%# end %></h5>-->
+	    <h5><% if comment.present? && comment.user.full_name.present? %><%=comment.user.full_name %><% end %></h5>
+      <span><% if comment.created_at.present? %><%= time_ago_in_words(comment.created_at) + " ago" %><% end %></span>
+      <p><% if comment.commenter.present? %><%= comment.commenter %> <% end %></p>
+    </div>
+  <% end %>
+</li>

@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
 
 
+ruby '2.2.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
 # Use sqlite3 as the database for Active Record
 gem 'mysql2', '~> 0.3.18'
+gem 'pg'
+gem 'geocoder'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -13,16 +16,19 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
+gem "jquery-fileupload-rails"
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'paperclip', '~> 4.3', '>= 4.3.6'
+gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
 gem 'time_difference', '~> 0.4.2'
 gem 'fancybox2-rails'
+gem 'rails_12factor', group: "production"
 gem "simple_calendar", "~> 2.0"
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
+gem 'quiet_assets', group: :development
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -41,5 +47,6 @@ gem 'spring',        group: :development
 # gem 'capistrano-rails', group: :development
 
 # Use debugger
-gem 'debugger2'
+gem 'debugger2', group: :development
 
+gem 'aws-sdk', '~> 2'

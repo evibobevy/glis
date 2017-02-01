@@ -1,18 +1,7 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file.
-//
-// Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
-// about supported directives.
-//
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery.MultiFile
 //= require fancybox
 //= require_tree .
 
@@ -51,4 +40,41 @@ var isMobile = {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 };
+$(function() {
+    var dateToday = new Date();
+    $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd', minDate: dateToday });
+    $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd',minDate: dateToday });
+});
+$(function(){
+    $('.multi').MultiFile({
+        accept:'gif|jpg',
+        max:4,
+        STRING: {
+            remove:'Remover',
+            selected:'Selecionado: $file',
+            denied:'Invalid image $ext!',
+            duplicate:'Arquivo ja selecionado:\n$file!'
+        }
+    });
+});
+$(function(argument) {
+    $('[type="checkbox"]').bootstrapSwitch();
+});
+
+$('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+$('.timepicker1').timepicker({
+    timeFormat: 'h:mm p',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+
+//$(function() {
+//    $('body').scrollTop(0);
+//});
 

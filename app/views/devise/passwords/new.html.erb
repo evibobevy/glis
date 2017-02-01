@@ -1,16 +1,73 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<%#= stylesheet_link_tag 'style' %>
+<%= javascript_include_tag 'jquery.validate.min' %>
+<div class="password_form">
+  <h2 class="forgot-pass-lbl">Forgot your password?</h2>
+  <br />
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <%= f.email_field :email, placeholder: 'Email', autofocus: true  %>
+      </div>
+    </div>
+    <%= devise_error_messages! %>
+    <label id="email_error" for="state" generated="true" class="error">This field is required.</label>
+    <br />
+    <div class="actions">
+      <%= f.submit "Send me reset password instructions", :class=>"reg-fb sub-regis password-btn" %>
+    </div>
+  <% end %>
+</div>
+<script>
+	$('#new_user').validate();
+	$('#new_user').submit(function(){
+		if ($('#user_email').val() == "") {
+			$('#email_error').show();
+			return false;
+		}
+	});
+</script>
+<style>
+	#error_explanation ol, ul {
+		color: red;
+	}
+	#error_explanation li {
+		font-weight: 700;
+	}
+	#email_error {
+		display: none;
+		font-weight: 700;
+		color: red;
+	}
+	.error{
+		color: red;
+		display: table-cell;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+	}
+	h1 {
+		/*color : #000000;*/
+		text-align : center;
+		font-family: "SIMPSON";
+	}
+	.password-btn{
+	 font-size: 14px;
+	}
+	#user_email{
+		border: 3px solid #979797;
+		border-radius: 8px;
+		height: 46px;
+		padding: 0 13px;
+		font-size: 16px;
+		width: 295px;
+	}
+	#error_explanation{
+		height: 65px;
+	}
+	.forgot-pass-lbl{
+		font-family: 'GothamRndMedium';
+		color: #5c5b5c;
+	}
+</style>

@@ -1,25 +1,88 @@
-<h2>Change your password</h2>
-
+<!--<script src="/assets/jquery.validate.min.js"></script>-->
+<%= javascript_include_tag 'jquery.validate.min' %>
+<div class="password_change_form">
+<h2 class="change_pass_lbl">Change your password</h2>
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, placeholder: 'Password', :required => true, autocomplete: "off" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
+    <div class="form-row">
+      <div class="col-reg-lft">
+        <%= f.password_field :password_confirmation,  placeholder: 'Password Confirmation', :required => true, autocomplete: "off" %>
+      </div>
+    </div>
+      <br />
+    <div class="actions">
+      <%= f.submit "Change my password", :class=>"reg-fb sub-regis password-change-btn" %>
+    </div>
 <% end %>
+</div>
+<style>
+	#error_explanation ol, ul {
+		color: red;
+	}
+	#error_explanation li {
+		font-weight: 700;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+	}
+	h1 {
+		/*color : #000000;*/
+		text-align : center;
+		font-family: "SIMPSON";
+	}
+	.password_change_form {
+		width: 300px;
+		margin: 25px auto;
+	}
+	.password-change-btn{
+		font-size: 14px;
+	}
+	.password-change-btn {
+		font-size: 14px;
+	}
+	#user_password{
+		border: 3px solid #979797;
+		border-radius: 8px;
+		height: 46px;
+		width: 300px;
+		padding: 0 13px;
+		font-size: 16px;
+	}
+	#user_password_confirmation{
+		border: 3px solid #979797;
+		border-radius: 8px;
+		height: 46px;
+		padding: 0 13px;
+		font-size: 16px;
+		width: 300px;
+	}
+	.error{
+		color: red;
+		ont-weight: 700;
+	}
+	.change_pass_lbl{
+		font-family: 'GothamRndMedium';
+		color: #5c5b5c;
+	}
+</style>
+<script>
+	$('#new_user').validate();
+	$('#edit_user').validate();
+</script>
 
-<%= render "devise/shared/links" %>
+
+
+
+
+

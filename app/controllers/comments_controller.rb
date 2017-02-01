@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
 
   def authorize
     unless user_signed_in?
-      redirect_to new_user_registration_path
+      redirect_to root_path
     end
   end
 
@@ -13,15 +13,16 @@ class CommentsController < ApplicationController
   end
   def create
     @post = Post.find(params[:post_id])
-    @comment = @post.comments.create(comment_params)
+    @comment = @post.comments.build(comment_params)
+    @comment.user_id = current_user.id if user_signed_in?
+    @comment.save
     respond_to do |format|
       format.js
     end
-    #redirect_to root_path
   end
 
   private
   def comment_params
-    params.require(:comment).permit(:commenter)
+    params.require(:comment).permit(:commenter, :user_id)
   end
 end

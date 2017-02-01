@@ -1,0 +1,26 @@
+<!--Register Popup starts here-->
+<div class="register-popup">
+  <div id="foundations">
+    <div class="corner"></div>
+    <h1>My Volunteer</h1><br/>
+    <div class="volBox">
+      <% if @gig_users.present? %>
+        <% @gig_users.in_groups_of(2, false) do |gig_user| %>
+          <% for user in gig_user %>
+            <div class="supporters">
+              <% if user.present? %>
+                <% if user.user_pictures.present? %>
+                  <%= image_tag user.user_pictures.first.image.url(:medium) %>
+                <% else %>
+                  <%= image_tag 'noImg.jpg' %>
+                <% end %>
+                <h2 style="float: left"><%= link_to user.full_name.capitalize, user_profile_path(:id => user.id) %></h2>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <h2 align="center" style="margin: 100px;"><b><%= t(:no_supporter) %></b></h2>
+      <% end %>
+    </div>
+    <!--ends here-->

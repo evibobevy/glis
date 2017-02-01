@@ -1,0 +1,310 @@
+@font-face { font-family: 'GothamRndBold'; src: url('/assets/GothamRnd-Bold.otf') format('OpenType');}
+@font-face { font-family: 'GothamRndBook'; src: url('/assets/GothamRnd-Book.otf') format('OpenType');}
+@font-face { font-family: 'GothamRndMedium'; src: url('/assets/GothamRnd-Medium.otf') format('OpenType');}
+@font-face { font-family: 'GothamRndLight'; src: url('/assets/GothamRnd-Light.otf') format('OpenType');}
+
+    #myCalendar {
+      line-height: 1;
+      margin: 50px;
+      width:100%;
+      margin:0 auto;
+      /*height:400px;*/
+    }
+    .calendar {
+      background-color:#fff;
+      border-radius: 5px;
+      width: 100%;
+      height:400px;
+      margin:0 auto;
+      visibility: visible;
+    }
+    .calHead {
+      overflow: clear;
+      position: relative;
+      width:15%;
+    }
+    .calHead h2 {
+      font-family: "GothamRndBook";
+      font-size: 14px !important;
+      font-weight: 700;
+      margin: 0 0 -30px;
+      text-align: center;
+      color: #67AA4D;
+      padding-top: 5px;
+    }
+    .calHead_mob h2 {
+        font-family: "GothamRndBook";
+        font-size: 14px !important;
+        font-weight: 700;
+        margin: 0 0 -30px;
+        text-align: center;
+        color: #67AA4D;
+        padding-top: 5px;
+    }
+    .calHead span h2 {
+      visibility: hidden;
+    }
+    .calHead_mob span h2 {
+        visibility: hidden;
+    }
+    h2 {
+      font-family: "GothamRndBook";
+      font-size: 14px !important;
+      font-weight: 700;
+      margin: 0 0 -35px;
+      text-align: center;
+      color: #67AA4D;
+      padding-top: 5px;
+    }
+    h3{
+      font-size:12px;
+      line-height: 14px;
+      margin-top:0px;
+      margin-left:5px;
+      /*width:55px;*/
+      height: 13px;
+    }
+    h4{
+      font-size:12px;
+      line-height: 14px;
+      margin-top:-25px;
+      margin-left:5px;
+      width:55px;
+    }
+    i {
+      position: absolute;
+      top: 0px;
+    }
+    span i{
+      position:relative;
+      top:0;
+      float:left;
+      margin-right: 10px;
+      margin-top:-1px;
+    }
+    i:first-child {
+      left:0
+    }
+    .send-feedback a img{
+      position:relative;
+      top:0;
+    }
+    i:last-child {
+      right:0
+    }
+    table {
+      background: #67AA4D;
+      border-collapse: collapse;
+      color: #222;
+      font-family: "GothamRndBook";
+      font-size: 13px;
+      width: 554px;
+    }
+    td {
+      border: 15px solid #fff;
+      color: #fff;
+      line-height: 20px;
+      text-align: left;
+      height:75px;
+      background-color:#67AA4D;
+    }
+    tr:first-child td {
+      color: #222;
+      font-weight: 700;
+      line-height: 22px;
+      height:40px;
+      text-align: center;
+      background-color: #fff;
+    }
+    .selected {
+      background: #5b9ebd;
+      border: 0;
+    }
+    .sched{
+      width:15%;
+      height:365px;
+      border:3px solid #979797;
+      border-radius:5px;
+      display: block;
+      float: left;
+      margin-top: 5%;
+      padding: 5px;
+      text-align: center;
+      font-size:14px;
+      overflow: scroll;
+    }
+    .sched h4{
+    width: 95%;
+    border: 2px solid #979797;
+    color: #979797;
+    background-color: #E8E6E6;
+    border-radius: 5px;
+    display: block;
+    float: left;
+    margin-top: 0%;
+    padding: 4px;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 5px;
+
+    }
+    .sched2 h4{
+      width:90%;
+      border: 2px solid #979797;
+      color: #979797;
+      background-color: #C1F38A;
+      border-radius:5px;      
+      display: block;
+      margin-top: 0%;
+      padding: 1px;
+      text-align: center;
+    }
+    .sched2{
+      width:15%;
+      height:180px;
+      border:3px solid #979797;
+      border-radius:5px;
+      display: block;
+      float: right;
+      padding: 4px;
+      margin-top: -44%;
+      text-align: center;
+      overflow: auto;
+    }
+    .sched3 h4{
+      width:90%;
+      border: 2px solid #979797;
+      color: #979797;
+      background-color: #89BBF5;
+      border-radius:5px;      
+      display: block;
+      margin-top: 0%;
+      padding: 1px;
+      text-align: center;
+    }
+    .sched3 {
+      width:15%;
+      height:180px;
+      border:3px solid #979797;
+      border-radius:5px;      
+      display: block;
+      float: right;
+      padding: 4px;
+      margin-top: -21%;
+      text-align: center;
+      overflow: auto;
+    }
+    /*Media Css for mycalendar*/
+@media (min-width: 1px) and (max-width: 767px) {
+.calHead {
+    overflow: clear;
+    position: relative;
+    width: 95%;
+    margin: 0 auto;
+}
+.calHead_mob {
+    overflow: clear;
+    position: relative;
+    width: 95%;
+    margin: 0 auto;
+}
+.sched {
+    width: 95%;
+    height: 365px;
+    border: 3px solid #979797;
+    border-radius: 5px;
+    display: block;
+    float: none;
+    margin-top: 6%;
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+    margin: 40px auto;
+}
+.sched h4 {
+  font-size: 22px;
+}
+.sched2 {
+    width: 95%;
+    height: 200px;
+    border: 3px solid #979797;
+    border-radius: 5px;
+    display: block;
+    float: none;
+    padding: 4px;
+    margin-top: -20%;
+    text-align: center;
+    margin: 0 auto;
+    overflow: scroll;
+}
+.sched2 h4 {
+    width: 95%;
+    font-size: 22px;
+    border: 2px solid #979797;
+    color: #979797;
+    background-color: #C1F38A;
+    border-radius: 5px;
+    display: block;
+    margin-top: 0%;
+    padding: 1px;
+    text-align: center;
+    margin: 0 auto;
+}
+.sched3 {
+    width: 95%;
+    height: 200px;
+    border: 3px solid #979797;
+    border-radius: 5px;
+    display: block;
+    float: none;
+    padding: 4px;
+    margin-top: 0%;
+    text-align: center;
+    margin:20px auto;
+}
+.sched3 h4 {
+    width: 95%;
+    font-size:22px;
+    border: 2px solid #979797;
+    color: #979797;
+    background-color: #89BBF5;
+    border-radius: 5px;
+    display: block;
+    margin-top: 0%;
+    padding: 1px;
+    text-align: center;
+    margin: 0 auto;
+}
+.newgig-sec { margin-top:40px; width: 100%; background: #fff; padding: 60px 0 0 0; border-top: 3px solid #5c5b5c; }
+.calendar{
+  visibility: hidden;
+  height:0px;
+}
+.createGig-left {float:none;display:block;width:100%;}
+.createGig-right {float:none;display:block;width:100%;}
+.questions {margin-bottom: 15px;}
+.submitCancel input[type=submit]{margin-bottom: 40px;}
+.calHead span h2 {
+      font-family: "GothamRndBook";
+      font-size: 22px !important;
+      font-weight: 700;
+      margin: 0 0 -35px;
+      text-align: center;
+      color: #67AA4D;
+      padding-top: 5px;
+      visibility: visible;
+    }
+.calHead_mob span h2 {
+    font-family: "GothamRndBook";
+    font-size: 22px !important;
+    font-weight: 700;
+    margin: 0 0 -35px;
+    text-align: center;
+    color: #67AA4D;
+    padding-top: 5px;
+    visibility: visible;
+}
+/*.calHead h2{*/
+  /*visibility: hidden;*/
+/*}    */
+}

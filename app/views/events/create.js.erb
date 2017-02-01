@@ -1,0 +1,4 @@
+<% if @event.new_record?  %>
+<%  else %>
+  $('#images_').append("<%= j render(@event)%>");
+<% end %>

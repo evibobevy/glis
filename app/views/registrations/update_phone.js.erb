@@ -1,0 +1,3 @@
+$('#edit_phone').hide();
+$('#show_phone span').html('<%= j @user.phone_number[0..2] + "-" + @user.phone_number[3..5] + "-" + @user.phone_number[6..9] %>');
+$('#show_phone').show();

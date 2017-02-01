@@ -1,0 +1,12 @@
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<p>Hello <b><% if @user.full_name.present? %><%= "#{@user.full_name.capitalize}"%><% end %></b>,</p>
+<p>
+  <b><% if @friend_id.present? %><%= find_fullname_by_id(@friend_id) %><% end %></b>  has send you friend request.
+</p>
+<br/>
+</body>
+</html>
