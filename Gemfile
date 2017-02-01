@@ -20,7 +20,7 @@ gem "jquery-fileupload-rails"
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'paperclip', '~> 4.3', '>= 4.3.6'
+gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
 gem 'time_difference', '~> 0.4.2'
 gem 'fancybox2-rails'
 gem 'rails_12factor', group: "production"
@@ -49,3 +49,4 @@ gem 'spring',        group: :development
 # Use debugger
 gem 'debugger2', group: :development
 
+gem 'aws-sdk', '~> 2'

@@ -1,0 +1,10 @@
+
+development:
+  access_key_id: 'AKIAITD67UZ3Q5LCXHMQ'
+  secret_access_key: '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'
+  bucket: 'glis-org'
+
+production:
+  access_key_id: 'AKIAITD67UZ3Q5LCXHMQ'
+  secret_access_key: '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'
+  bucket: 'glis-org'

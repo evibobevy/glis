@@ -3,7 +3,15 @@ class Event < ActiveRecord::Base
   belongs_to :user
   has_many :posts, :as => :postable
   has_many :pictures, :dependent => :destroy
-  has_attached_file :image, styles: { medium: " 200x200#", thumb: "100x100>" } , default_url: "/assets/stayIcon.png"
+  # has_attached_file :image, styles: { medium: " 200x200#", thumb: "100x100>" } , default_url: "/assets/stayIcon.png"
+  has_attached_file :image,
+                    :styles => { medium: " 200x200#", thumb: "100x100>" },
+                    :storage        => :s3,
+                    :s3_host_name   => 's3-us-west-2.amazonaws.com',
+                    :path           => "#{Rails.env}/events/:id/:style/:filename",
+                    :s3_region      => 'us-west-2',
+                    :s3_credentials => YAML.load_file("#{Rails.root}/config/aws.yml"),
+                    :default_url    => '/assets/stayIcon.png'
   #validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   # validates :title, :presence => true
   # validate :validate_git_start_date
