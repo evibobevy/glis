@@ -17,17 +17,17 @@
       <div class="loged-rgt">
         <div class="after-login-icon">
           <ul>
-	          <li><%= link_to image_tag("date-icon.png"), event_list_path %></li>
-	          <li><%= link_to image_tag("setting-icon.png"), edit_user_registration_path %></li>
+            <li><%= link_to image_tag("date-icon.png"), event_list_path %></li>
+            <li><%= link_to image_tag("setting-icon.png"), edit_user_registration_path %></li>
             <li><%= link_to image_tag("email-icon.png"), inbox_notifications_path %></li>
             <li><%= link_to image_tag("add-icon.png"), "#", :id=> "add-user-btn" %></li>
-          <% if params[:id].present? && !current_user.friendships.exists?(friend_id:@user) && @user.present?  %> <%= link_to image_tag(''), support_path(:friend_id => @user), :method => :post, :id=> "add-user-as-friend" %> <% end %>
+            <% if params[:id].present? && !current_user.friendships.exists?(friend_id:@user) && @user.present?  %> <%= link_to image_tag(''), support_path(:friend_id => @user), :method => :post, :id=> "add-user-as-friend" %> <% end %>
           </ul>
         </div>
         <div class="loged-user">
           <% if user_signed_in? && current_user.image_file_name.present? || current_user.image.url.present? %><%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 58px;width: 59px;"), root_path %><% else %><%= link_to image_tag("noImg.jpg", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %> <% end %>
-           <br /><span class="login-user-name"><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name.first(9).capitalize %><% end %> </span>
-           <span><%= link_to 'Log Out', destroy_user_session_path, :method => :get, style: "color: #fff;" %></span>
+          <br /><span class="login-user-name"><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name.first(9).capitalize %><% end %> </span>
+          <span><%= link_to 'Log Out', destroy_user_session_path, :method => :get, style: "color: #fff;" %></span>
         </div>
       </div>
     <% else %>
@@ -42,21 +42,21 @@
   <%= link_to " ", search_gigs_path, data: {fancybox_width: 600}, class: 'fancybox btn', id: "search-result", style: 'display: none' %>
 </header>
 <style>
-#add-user-as-friend
-{
-	display: none
-}
-/*.overflowhidden{*/
-	/*overflow: hidden;*/
-/*}*/
+  #add-user-as-friend
+  {
+    display: none
+  }
+  /*.overflowhidden{*/
+  /*overflow: hidden;*/
+  /*}*/
 </style>
 <script>
-	$('#add-user-btn').click(function(){
-		$("#add-user-as-friend").click();
-		return false;
-	});
-	$('#gigs_search').submit(function(){
-		$("#search-result").click();
-//				this.reset();
-	});
+    $('#add-user-btn').click(function(){
+        $("#add-user-as-friend").click();
+        return false;
+    });
+    $('#gigs_search').submit(function(){
+        $("#search-result").click();
+//        this.reset();
+    });
 </script>

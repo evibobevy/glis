@@ -12,6 +12,7 @@ class UserPicture < ActiveRecord::Base
                     :s3_host_name   => 's3-us-west-2.amazonaws.com',
                     :path           => "#{Rails.env}/user_pictures/:id/:style/:filename",
                     :s3_region      => 'us-west-2',
+                    :s3_protocol    => :https,
                     :s3_credentials => YAML.load_file("#{Rails.root}/config/aws.yml"),
                     :default_url    => '/assets/noImg.jpg'
 
