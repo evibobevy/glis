@@ -90,7 +90,7 @@
             <% @upcoming_gigs.each do |upcoming_gig|%>
               <li>
                 <% if upcoming_gig.present? && upcoming_gig.pictures.present? && upcoming_gig.pictures.first.image_file_name.present? %>
-                  <%= link_to image_tag(upcoming_gig.pictures.first.image.url(:medium),  style: "height: 166px;width: 241px;"), foundation_path %>
+                  <%= link_to image_tag(upcoming_gig.pictures.first.image.url,  style: "height: 166px;width: 241px;"), foundation_path %>
                 <% else %>
                   <%= image_tag 'defaultGigSlide.png' %>
                 <% end %><br/>

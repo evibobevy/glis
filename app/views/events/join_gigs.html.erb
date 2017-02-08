@@ -8,7 +8,7 @@
         <div class="photoSettings">
           <li>
             <% if @event.present? && @event.pictures.present? %>
-	          <%= image_tag @event.pictures.first.image.url(:medium), style: 'height: 123px; width: 142px;' %>
+	          <%= image_tag @event.pictures.first.image.url, style: 'height: 123px; width: 142px;' %>
             <% else %>
               <%= image_tag 'stayIcon.png', alt: '' %>
             <% end %>
