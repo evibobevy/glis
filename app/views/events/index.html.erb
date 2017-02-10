@@ -10,7 +10,7 @@
         </div>
       </div>
     <% end %>
-    <% if !user_signed_in? %>
+    <% if true %>
       <div class="volunteer-row">
         <div class="vol-left-main">
           <div class="corner"></div>
@@ -29,7 +29,7 @@
                 <div class="stay-detail">
                   <% if event.title.present? %><h5><%= link_to event.title, join_gigs_path(:id => event.id), data: { fancybox_width: 600 }, :class=>"fancybox btn-volunteer"%></h5><% end %>
                   <span class="date-small"><%= event.event_date.try(:strftime, '%B %d, %Y') %></span>
-                  <% if user_signed_in? && event.present? && post.event.open_to_the_public? %>
+                  <% if user_signed_in? && event.present? && event.open_to_the_public? %>
                     <%= link_to 'Join', join_event_path(:event_id => event.id), :method => :post, :class=> "btn-join"%>
                   <% else %>
                     <%= link_to 'Join', new_user_registration_path, data: { fancybox_width: 600 }, class: 'fancybox btn btn-success btn-join'%>
@@ -125,7 +125,7 @@
         </div>
       </div>
     <% end %>
-	    <% if @post.present? || @posts.present? %>
+    <% if @post.present? || @posts.present? %>
       <div style="float:left; width:103%; padding:64px 0 0 0; overflow-y: scroll; height: 500px;">
         <% if @posts.present? %>
           <% @posts.each do |post|%>

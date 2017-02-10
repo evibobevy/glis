@@ -47,7 +47,7 @@
           <% user_image_counter = 4 - @user.user_pictures.size %>
           <% if @user.user_pictures.present? %>
             <% @user.user_pictures.last(4).each do |user_image|%>
-              <li><%= image_tag user_image.image.url, style: "height: 130px;width: 100%;" %></li>
+              <li><%= image_tag user_image.image.url, style: "width: 100%;" %></li>
             <% end %>
           <% end %>
           <% 1.upto(user_image_counter) do |i| %>
