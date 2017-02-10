@@ -22,6 +22,7 @@
       overflow: clear;
       position: relative;
       width:15%;
+      padding-bottom: 10px;
     }
     .calHead h2 {
       font-family: "GothamRndBook";
@@ -201,6 +202,7 @@
     position: relative;
     width: 95%;
     margin: 0 auto;
+    padding-bottom: 50px;
 }
 .calHead_mob {
     overflow: clear;
@@ -303,6 +305,7 @@
     color: #67AA4D;
     padding-top: 5px;
     visibility: visible;
+    padding-bottom: 40px;
 }
 /*.calHead h2{*/
   /*visibility: hidden;*/

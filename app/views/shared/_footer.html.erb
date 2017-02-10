@@ -1,14 +1,19 @@
 <footer id="bott-container">
   <div class="fixed-wrapper">
-    <div class="foo-col-1"> <span>Glis, Inc. (888) 888-8888</span>
-      <div class="social-foo"> <a href="#" target="_blank"><%= image_tag('fb-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('twitter-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('gplus-icon.png', alt: '') %></a> <a href="#" target="_blank"><%= image_tag('linked-icon.png', alt: '') %></a> </div>
+    <div class="foo-col-1"> <span>Glis, Inc.</span>
+      <div class="social-foo">
+        <a href="https://facebook.com/enjoyglis" target="_blank"><%= image_tag('fb-icon.png', alt: '') %></a>
+        <a href="#" target="_blank"><%= image_tag('twitter-icon.png', alt: '') %></a>
+        <a href="#" target="_blank"><%= image_tag('gplus-icon.png', alt: '') %></a>
+        <a href="https://instagram.com?enjoyglis" target="_blank"><%= image_tag('linked-icon.png', alt: '') %></a>
+      </div>
       <!--<a href="#" class="btn-contact">Contact Us</a>-->
       <%= link_to 'Contact Us', contacts_new_path, data: { fancybox_width: 600, fancybox_height: 200 }, class: 'fancybox btn btn-success btn-contact', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
     </div>
     <div class="footer-link">
       <ul>
 	      <!-- Home link -->
-        <li><%= link_to "Home",root_path %></li>
+        <li><%= link_to "Home", root_path %></li>
         <!-- Settings link -->
         <% if user_signed_in? && !@foundation.present? %>
           <li><%= link_to 'Settings',edit_user_registration_path %></li>
@@ -28,7 +33,7 @@
           <li><%= link_to 'My Profile', foundation_path(@foundation.id)  %></li>
         <% end %>
         <!-- Partners link -->
-        <li><a href="#">Partners</a></li>
+        <!--<li><a href="#">Partners</a></li>-->
         <!-- My Gigs link -->
         <% if user_signed_in? && !@foundation.present? %>
           <li><%= link_to "My Calendar", event_list_path %></li>
@@ -40,7 +45,7 @@
       </ul>
     </div>
     <div class="send-feedback">
-      <a href="#">SEND US <br>
+      <a href="mailto:info@glis.org">SEND US <br>
         FEEDBACK<br>
         <%= image_tag 'feedbackIcon.png', :class=> "feedback_image"%>
     </div>
