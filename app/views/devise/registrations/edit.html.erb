@@ -33,7 +33,13 @@
               </div>
             </div>
             <div class="user-prf-left-cont">
-              <div class="nameSettings"> <%= f.text_field :first_name, :required => true, :placeholder => "First Name" %> </div>
+              <div class="nameSettings">
+                <%= f.text_field :first_name, :required => true, :placeholder => "First Name" %>
+              </div>
+              <br/>
+              <div class="nameSettings">
+                <%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %>
+              </div>
               <br/>
               <div class="city">
                 <%= f.text_field :city, :placeholder => "City" %>

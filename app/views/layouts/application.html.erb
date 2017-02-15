@@ -20,13 +20,19 @@
 <!--Main Wrapper Starts Here-->
 <div id="wrapper">
   <!--Header Starts Here-->
-    <%= render 'shared/header' %>
+  <%= render 'shared/header' %>
   <!--Header ends here-->
 
   <!--Middle content starts here-->
   <section id="midd-container">
     <% if user_signed_in? %>
-      <%= render 'shared/volunteer_section' if action_name != 'profile_settings' %>
+      <%=
+        if action_name == 'index'
+          render 'shared/social_network'
+        elsif action_name != 'profile_settings'
+          render 'shared/volunteer_section'
+        end
+      %>
     <% else %>
       <%= render 'shared/social_network' %>
     <% end %>
@@ -34,9 +40,9 @@
   </section>
   <!--Middle content ends here-->
   <!--Footer Starts here-->
-    <%= render 'shared/footer' %>
+  <%= render 'shared/footer' %>
   <!--Footer ends here-->
 </div>
-  <!--Main Wrapper Ends Here-->
+<!--Main Wrapper Ends Here-->
 </body>
 </html>

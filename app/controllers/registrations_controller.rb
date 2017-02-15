@@ -35,6 +35,13 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def profile
+    @user_supporters = current_user.friendships.find_unremove_friend.reject{|user| user.friend_id == current_user.id}  if user_signed_in?
+    @post           = Post.event_posts.first if Post.event_posts.first.present?
+    @posts          = current_user.friends.collect {|i| i.posts}.flatten.uniq if user_signed_in?
+    @comments       = @post.comments if @post.present?
+  end
+
   def profile_settings
     @user_picture  = UserPicture.new
     @user_settings = User::USER_PRIVACY_SETTINGS

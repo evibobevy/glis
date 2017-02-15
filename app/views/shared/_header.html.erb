@@ -25,7 +25,11 @@
           </ul>
         </div>
         <div class="loged-user">
-          <% if user_signed_in? && current_user.image_file_name.present? || current_user.image.url.present? %><%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 58px;width: 59px;"), root_path %><% else %><%= link_to image_tag("noImg.jpg", :alt => '', :title => '', style: "height: 60px;width: 59px;"), root_path %> <% end %>
+          <% if user_signed_in? && current_user.image_file_name.present? || current_user.image.url.present? %>
+            <%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 58px;width: 59px;"), profile_path %>
+          <% else %>
+            <%= link_to image_tag("noImg.jpg", :alt => '', :title => '', style: "height: 60px;width: 59px;"), profile_path %>
+          <% end %>
           <br /><span class="login-user-name"><% if user_signed_in? &&  current_user.first_name.present? %><%= current_user.first_name.first(9).capitalize %><% end %> </span>
           <span><%= link_to 'Log Out', destroy_user_session_path, :method => :get, style: "color: #fff;" %></span>
         </div>
