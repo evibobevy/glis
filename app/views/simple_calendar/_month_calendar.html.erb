@@ -31,9 +31,8 @@
           </div>
           <!-- End Mobile calender -->
           <!-- Start Web calender-->
-          <!--<div class="sched"><h4>Today's Schedule</h4>-->
+          <div class="sched"><h4>Today's Schedule</h4>
             <!-- Start todays events -->
-            <!--
             <% if params[:action] =='event_list' && params[:controller] =='events' %>
               <% if @today_gigs.present? %>
                 <% @today_gigs.each do |today_gig|%>
@@ -78,10 +77,9 @@
               <% else %>
                 <% if params[:action] =='event_list' && params[:controller] =='events' %><%= t(:today_no_event)%> <% end %>
               <% end %>
-            <% end %> -->
+            <% end %>
             <!-- END todays events -->
             <!-- Start todays foundations -->
-            <!--
             <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %>
               <% if @today_foundation.present? %>
                 <% @today_foundation.each do |today_foundation|%>
@@ -104,9 +102,9 @@
               <% else %>
                 <% if params[:action] =='foundation_calendar' && params[:controller] =='foundations' %> <div class="no_event"><%= t(:today_no_foundation)%></div> <% end %>
               <% end %>
-            <% end %> -->
+            <% end %>
             <!-- End todays foundations -->
-          <!--</div>-->
+          </div>
           <!--End Web calender -->
 
           <div class="calendar">

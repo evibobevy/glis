@@ -72,6 +72,7 @@ Rails.application.routes.draw do
     get 'registrations/view_user_foundations' => 'registrations#view_user_foundations', as: :user_foundations
     get 'registrations/view_gigs_users' => 'registrations#view_gigs_users', as: :view_gigs_users
     get 'registrations/share_event' => 'registrations#share_event' , as: :share_event
+    get 'profile' => 'registrations#profile' , as: :profile
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
