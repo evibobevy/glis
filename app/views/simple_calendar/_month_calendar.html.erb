@@ -22,7 +22,7 @@
           <!-- Start todays events web -->
           <div class="calHead">
             <i><%= link_to "", url_for(params.merge(start_date: date_range.first - 1.day, previous_link:  "previous_link") ), remote: true, class:'flaticon-arrows', style: 'float: left; margin-top: 3px;"' %></i>
-            <h2 class="hidden-md hidden-xs hidden-sm"><%= I18n.t("date.abbr_month_names")[start_date.month] %> <%= start_date.year %> </h2>
+            <h2 class="hidden-md hidden-xs"><%= I18n.t("date.abbr_month_names")[start_date.month] %> <%= start_date.year %> </h2>
             <i><%= link_to "", url_for(params.merge(start_date: date_range.last + 1.day, next_link:  "next_link")), remote: true, class:'flaticon-arrows-1', style: 'float: left; margin-top: 3px;"' %></i>
           </div>
           <!-- Start Mobile calender -->
