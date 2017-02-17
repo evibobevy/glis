@@ -124,6 +124,7 @@ a.btn-join:hover{background:#4b962e;}
 .left-hd {float:left;}
 .rgt-hd {float:right; width:38%;}
 .no-scroll {overflow:hidden;}
+.no-supporter{ margin: 98px 0px; }
 
 /*.vol-detail-row {float:left; width:100%; border-top:4px solid #4a4a4a; padding:64px 0 0 0;}*/
 .vol-detail-row {width:100%; padding:1px 0 0 0;}
@@ -765,9 +766,15 @@ button{-moz-border:0px;}
     font-size: 20px !important;
     padding-bottom: 10px;
 }
-.privacyQuestion-left {
+.privacyQuestion-left h2{
     float: left;
-    width: 87%;
+    width: 80%;
+    margin-right: 20px;
+}
+.privacyQuestion-left input{
+    float: right;
+    /*width: 80%;*/
+    /*margin-right: 20px;*/
 }
 .privacyQuestion {
     float:left;
