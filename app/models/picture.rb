@@ -4,6 +4,7 @@ class Picture < ActiveRecord::Base
   #                   :path => ":rails_root/public/images/:id/:filename",
   #                   :url  => "/images/:id/:filename"
   has_attached_file :image,
+                    :styles => {  small:"181x160#" },
                     :storage        => :s3,
                     :s3_host_name   => 's3-us-west-2.amazonaws.com',
                     :path           => "#{Rails.env}/pictures/:id/:style/:filename",
