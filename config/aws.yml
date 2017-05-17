@@ -6,4 +6,4 @@ development:
 production:
   access_key_id: 'AKIAJQW3JLR5363Y6OSA'
   secret_access_key: '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'
-  bucket: 'glis-org'
+  bucket: 'glis-org-nano'
