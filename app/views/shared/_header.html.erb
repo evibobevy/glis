@@ -26,7 +26,8 @@
         </div>
         <div class="loged-user">
           <% if user_signed_in? && current_user.image_file_name.present? || current_user.image.url.present? %>
-            <%= link_to image_tag("#{current_user.image.url}", :alt => '', :title => '', style: "height: 58px;width: 59px;"), profile_path %>
+            <%=link_to( image_tag(current_user.image.url(:tiny)), profile_path) %>
+            
           <% else %>
             <%= link_to image_tag("noImg.jpg", :alt => '', :title => '', style: "height: 60px;width: 59px;"), profile_path %>
           <% end %>

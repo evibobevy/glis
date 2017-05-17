@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   has_many :user_pictures, :dependent => :destroy
   # has_attached_file :image, styles: { medium: "150x200#", thumb: "100x100#" }, default_url: "/assets/noImg.jpg"
   has_attached_file :image,
-                    :styles => { medium: "150x200#", thumb: "100x100#" },
+                    :styles => { medium: "150x200#", small:"141x149#",  thumb: "140x142#", tiny: '59x58#' },
                     :storage        => :s3,
                     :s3_host_name   => 's3-us-west-2.amazonaws.com',
                     :path           => "#{Rails.env}/users/:id/:style/:filename",
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   def self.search(search)
     if search
-      where('first_name LIKE ?', "%#{search}%")
+      where('LOWER(first_name) LIKE ?', "%#{search.downcase}%" )
     end
   end
 

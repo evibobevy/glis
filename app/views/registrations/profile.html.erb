@@ -9,12 +9,7 @@
         <% if @user_supporters.present? %>
           <% @user_supporters.in_groups_of(3, false) do |user_support| %>
             <% for user in user_support %>
-              <div class="supporters">
-                <% if user.present? && find_user_by_id(user.friend_id).user_pictures.present? %>
-                  <%= image_tag find_user_by_id(user.friend_id).user_pictures.first.image.url(:medium), style: "height: 65px;background:url(https://glis.herokuapp.com/assets/noImg-e73068d04051750734d3758e47214f46.jpg) no-repeat;" %>
-                <% else %>
-                  <%= image_tag 'noImg.jpg' %>
-                <% end %>
+      
                 <h2 style="float: left;margin-left: 20px;"><% if user.present? && find_user_by_id(user.friend_id).first_name.present? %>
                     <%= link_to find_user_by_id(user.friend_id).last_name_initial.capitalize, user_profile_path(:id => user.friend_id) %>
                   <% end %>

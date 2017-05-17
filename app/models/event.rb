@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   has_many :pictures, :dependent => :destroy
   # has_attached_file :image, styles: { medium: " 200x200#", thumb: "100x100>" } , default_url: "/assets/stayIcon.png"
   has_attached_file :image,
-                    :styles => { medium: " 200x200#", thumb: "100x100>" },
+                    :styles => { medium: " 200x200#", small:"160x182#", thumb: "100x100>" },
                     :storage        => :s3,
                     :s3_host_name   => 's3-us-west-2.amazonaws.com',
                     :path           => "#{Rails.env}/events/:id/:style/:filename",
