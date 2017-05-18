@@ -13,7 +13,7 @@
             <% if user_signed_in? && !current_user.friendships.exists?(friend_id:@user) && !(current_user.id == params[:id].to_i )  %>
               <i class="add-icon"> <%= link_to image_tag('addIcon.jpg'), support_path(:friend_id => @user), :method => :post %> </i>
             <% else %>
-              <i class="add-icon">
+               <i class="add-icon">
                 <%= image_tag 'addIcon.jpg', alt: "" %>
               </i>
             <% end %>

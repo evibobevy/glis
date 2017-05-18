@@ -6,6 +6,8 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="viewport" content="user-scalable=1.0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
   <title>:: Glis ::</title>
+
+   <%= stylesheet_link_tag 'bootstrap.min' %>
   <%= stylesheet_link_tag 'application' %>
   <!--end  Event on -off button -->
   <%= stylesheet_link_tag 'flaticon' %>
@@ -13,12 +15,14 @@
   <%= stylesheet_link_tag 'bootstrap-switch' %>
   <%= stylesheet_link_tag 'jquery-ui' %>
   <%= stylesheet_link_tag 'jquery.timepicker.min' %>
+   
   <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag 'jquery.timepicker.min' %>
 </head>
 <body>
 <!--Main Wrapper Starts Here-->
 <div id="wrapper">
+  <%= render partial: "shared/flash_messages", flash: flash %> 
   <!--Header Starts Here-->
   <%= render 'shared/header' %>
   <!--Header ends here-->
@@ -36,6 +40,11 @@
     <% else %>
       <%= render 'shared/social_network' %>
     <% end %>
+
+ 
+
+
+
     <%= yield %>
   </section>
   <!--Middle content ends here-->

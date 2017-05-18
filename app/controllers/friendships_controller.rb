@@ -8,7 +8,7 @@ class FriendshipsController < ApplicationController
       @user       = User.find(params[:friend_id])
       if @friendship.save
         # UserMailer.user_notification(@user,@friend_id).deliver!  if @user.email_notification?
-        flash[:notice] = "Added friend."
+        flash[:notice] = "Your request has been sent."
       else
         flash[:error] = "Error occur when adding friend."
       end
@@ -42,7 +42,7 @@ class FriendshipsController < ApplicationController
     if params[:friend_id].present?
       @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending')
       if @friendship.save
-        flash.now[:notice] = "Added friend."
+        flash.now[:notice] = "Your request has been sent."
       else
         flash.now[:error] = "Error occurred when adding friend."
       end
@@ -101,7 +101,7 @@ class FriendshipsController < ApplicationController
   end
 
   def glis_support
-    @friend_requests = Friendship.where('user_id =? AND accepted=? AND friend_id !=?', current_user.id, 'pending', current_user.id) if user_signed_in?
+    @friend_requests = Friendship.where('user_id !=? AND accepted=? AND friend_id =?', current_user.id, 'pending', current_user.id) if user_signed_in?
   end
 
   private

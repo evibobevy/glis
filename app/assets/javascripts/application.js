@@ -19,6 +19,16 @@ $(function(){
     })
 });
 
+
+
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+
+
+
 var isMobile = {
     Android: function() {
         return navigator.userAgent.match(/Android/i);
@@ -72,6 +82,11 @@ $('.timepicker1').timepicker({
     dropdown: true,
     scrollbar: true
 });
+
+
+
+
+
 
 //$(function() {
 //    $('body').scrollTop(0);
