@@ -101,7 +101,7 @@ class FriendshipsController < ApplicationController
   end
 
   def glis_support
-    @friend_requests = Friendship.where('user_id =? AND accepted=? AND friend _id !=?', current_user.id, 'pending', current_user.id) if user_signed_in?
+    @friend_requests = Friendship.where('user_id =? AND accepted=? AND friend_id !=?', current_user.id, 'pending', current_user.id) if user_signed_in?
   end
 
   private
