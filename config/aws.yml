@@ -1,9 +1,9 @@
 development:
-  access_key_id: 'AKIAJQW3JLR5363Y6OSA'
-  secret_access_key: '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'
-  bucket: 'glis-org-nano'
+  access_key_id: 'AKIAIHNFI4CAG5E2762A'
+  secret_access_key: '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'
+  bucket: 'glis-org'
 
 production:
   access_key_id: 'AKIAJQW3JLR5363Y6OSA'
-  secret_access_key: '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'
-  bucket: 'glis-org-nano'
+  secret_access_key: 'iK7++/1dL0xSNqBfMbaH/nMcMKs4W2+qVf06U43G'
+  bucket: 'glis-org'
