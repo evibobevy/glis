@@ -4,6 +4,6 @@ development:
   bucket: 'glis-org'
 
 production:
-  access_key_id: 'AKIAJQW3JLR5363Y6OSA'
+  access_key_id: 'AKIAIHNFI4CAG5E2762A'
   secret_access_key: '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'
   bucket: 'glis-org'
