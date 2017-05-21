@@ -63,6 +63,7 @@ class FriendshipsController < ApplicationController
   end
 
   def remove_friend
+    byebug
     if params[:user_id] && params[:friend_id]
       friendship = Friendship.find_friend_by_user_and_friend_id(params[:user_id], params[:friend_id]).first
       unless friendship.nil?

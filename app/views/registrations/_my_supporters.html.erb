@@ -1,0 +1,35 @@
+  <h1>My Supporters</h1><br/>
+  <div class="volBox" >
+    <%if @user_supporters.present? %>
+
+
+      <% @user_supporters.in_groups_of(3, false) do |user_support| %>
+      <div class = "row">
+        <% for user in user_support %>
+         
+       
+          <div class = "col-md-4">
+            <div class="supporters">
+              <%= image_tag find_user_by_id(user.user_id).image.url(:thumb) %>
+              <h2>
+                <%= link_to find_user_by_id(user.user_id).last_name_initial.capitalize, user_profile_path(:id => user.user_id) %>
+              </h2>
+                <%= button_to 'Remove', remove_friend_path(:friend_id => user.user_id, :user_id => current_user.id), :method => :post, :class=>"remove-btn" %>
+            </div>
+          </div>
+ 
+
+
+
+
+
+
+        <% end %>
+               </div>
+
+
+      <% end %>
+    <% else %>
+      <h2 align="center" class="no-supporter"><b><%= t(:no_supporter) %></b></h2>
+    <% end %>
+  </div>

@@ -21,7 +21,7 @@
 
 en:
   hello: "Hello world"
-  request_not_found: "You have no requests at this time. Use the sections below find some supporters with mutual inerests !"
+  request_not_found: "You have no requests at this time. Use the search section below find some supporters with mutual interests!"
   no_mutual_friend: "No mutual friend"
   no_supporter: "No supporters yet…"
   no_upcomming_volunteer_opportunities: "No upcoming volunteer opportunities..."

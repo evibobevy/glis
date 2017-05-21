@@ -4,24 +4,8 @@
   <div class="fixed-wrapper">
     <div id="volunteers">
       <div class="corner"></div>
-      <h1>My Supporters</h1><br/>
-      <div class="volBox">
-        <% if @user_supporters.present? %>
-          <% @user_supporters.in_groups_of(3, false) do |user_support| %>
-            <% for user in user_support %>
-      
-                <h2 style="float: left;margin-left: 20px;"><% if user.present? && find_user_by_id(user.user_id).first_name.present? %>
-                    <%= link_to find_user_by_id(user.user_id).last_name_initial.capitalize, user_profile_path(:id => user.user_id) %>
-                  <% end %>
-                </h2>
-              </div>
-            <% end %>
-          <% end %>
-        <% else %>
-          <h2 align="center" class="no-supporter"><b><%= t(:no_supporter) %></b></h2>
-        <% end %>
+        <%= render 'my_supporters' %>
       </div>
-    </div>
     <% if @post.present? || @posts.present? %>
       <div style="float:left; width:103%; padding:64px 0 0 0; overflow-y: scroll; height: 500px;">
         <% if @posts.present? %>
