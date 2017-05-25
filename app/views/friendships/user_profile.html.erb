@@ -12,9 +12,10 @@
             <h2><%= @user.full_name.present? ? @user.full_name : 'Jameson Welch'  %></h2>
             <% if user_signed_in? && !current_user.friendships.exists?(friend_id:@user) && !(current_user.id == params[:id].to_i )  %>
               <i class="add-icon"> <%= link_to image_tag('addIcon.jpg'), support_path(:friend_id => @user), :method => :post %> </i>
+              <%elsif !user_signed_in? %>
+               <%= link_to image_tag('addIcon.jpg'), new_user_registration_path, data: { fancybox_width: 600, autoSize: false }, class: 'fancybox ', onclick: 'if(isMobile.any()){$("body").addClass("no-scroll");}' %>
             <% else %>
                <i class="add-icon">
-                <%= image_tag 'addIcon.jpg', alt: "" %>
               </i>
             <% end %>
             <span><%= @user.full_address %></span>
@@ -29,7 +30,7 @@
           <p><span><% if user_signed_in? %><%= current_user.events.count %><% else %> <%= @user.events.count %><% end %></span> times</p>
           <p><span>
             <% if user_signed_in? %>
-		          <% @hours = [] %>
+              <% @hours = [] %>
               <% current_user.events. each do |event| %>
                 <% @hours << volunteers_works_hours(event) %>
               <% end %>
@@ -37,7 +38,7 @@
               <%#= @hours[0].present? ? @hours[0] : 0  %>
               <%= @hours.present? ? @hours.map {|i,j| i}.inject(:+) : 0  %>
               </span> hours
-		          <% end %>
+              <% end %>
             </p><br/>
           <p><span><% if user_signed_in? %><%= current_user.friendships.uniq.count %><% else %><%= @user.friendships.uniq.count %><% end %></span> Supporters </p>
         </div>

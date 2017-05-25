@@ -5,7 +5,7 @@
 <body>
 <p>Hello <b><% if @user.full_name.present? %><%= "#{@user.full_name.capitalize}"%><% end %></b>,</p>
 <p>
-  <b><% if @friend_id.present? %><%= find_fullname_by_id(@friend_id) %><% end %></b>  has send you friend request.
+  <b><% if @friend_id.present? %><%= find_fullname_by_id(@friend_id) %><% end %></b>  has sent you a supporter request.
 </p>
 <br/>
 </body>

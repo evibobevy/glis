@@ -31,7 +31,7 @@
   <section id="midd-container">
     <% if user_signed_in? %>
       <%=
-        if action_name == 'index'
+        if (action_name == 'index' && controller_name != "email_messages")
           render 'shared/social_network'
         elsif action_name != 'profile_settings'
           render 'shared/volunteer_section'
@@ -41,11 +41,8 @@
       <%= render 'shared/social_network' %>
     <% end %>
 
- 
-
-
-
     <%= yield %>
+    
   </section>
   <!--Middle content ends here-->
   <!--Footer Starts here-->

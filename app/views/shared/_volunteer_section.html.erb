@@ -39,7 +39,7 @@
             <%= @hours.present? ? @hours.map {|i,j| i}.inject(:+) : 0  %>
           </span> hours
           </p><br/>
-          <p><span><% if user_signed_in? %><%= current_user.friends.count %><% end %></span> Supporters </p>
+          <p><span><% if user_signed_in? %><%= @user_supporters.count %><% end %></span> Supporters </p>
         </div>
       </div>
       <div class="user-photos-row">

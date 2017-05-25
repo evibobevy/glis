@@ -330,7 +330,7 @@ button{-moz-border:0px;}
 
 
 .supporters img{width:60px;height: 64px; float: left;border:2px solid #5c5b5c; border-radius:5px;}
-.supporters h2 a {float:left; padding-left: 20px; color:#67AA4D;}
+.supporters h2 a {float:left; margin-right: 20px; padding-left: 20px; color:#67AA4D;}
 #slider1 h1{margin-left:-30px; font-size:22px; font-family: "GothamRndMedium";margin-top:-20px; color:#5c5b5c;}
 #slider1 h2 {font-size:22px; font-family: "GothamRndMedium"; color:#5c5b5c;}
 .viewport h1 {margin-left: 0px!important;}
@@ -1024,4 +1024,11 @@ button{-moz-border:0px;}
 }
 .search_found_name:hover {
     color: #5b9ebd;
+}
+
+#requestrow {
+	padding: 1%;
+	border-bottom-color: #78b55f;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
 }

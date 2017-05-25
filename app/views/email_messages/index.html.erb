@@ -130,11 +130,13 @@
               </div>
             <% end %>
             <% if @user_friendrequests.present? %>
-              <h3><%= image_tag("add-friend.svg", size: "20x20") %>&nbsp;&nbsp;&nbsp;You have a support request</h3>
+              <h3><%= image_tag("add-friend.svg", size: "20x20") %>&nbsp;&nbsp;&nbsp;You have supporter requests</h3>
               <div>
                 <% @user_friendrequests.each do |user_friendrequest| %>
-                  <h3> <b>* <%= find_fullname_by_id(user_friendrequest.user_id) %></b> has send you friend request.
-                <% end %></h3>
+                  <div id = "requestrow">
+                     <strong> <%= find_fullname_by_id(user_friendrequest.user_id) %></strong> has sent you a supporter request.
+                   </div>
+                <% end %>
               </div>
             <% end %>
           </div>
