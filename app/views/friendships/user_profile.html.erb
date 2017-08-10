@@ -43,16 +43,13 @@
           <p><span><% if user_signed_in? %><%= current_user.friendships.uniq.count %><% else %><%= @user.friendships.uniq.count %><% end %></span> Supporters </p>
         </div>
       </div>
-      <div class="user-photos-row">
+      <div class="<%= 'user-photos-row' if @user.user_pictures.present? %>">
         <ul>
           <% user_image_counter = 4 - @user.user_pictures.size %>
           <% if @user.user_pictures.present? %>
             <% @user.user_pictures.last(4).each do |user_image|%>
               <li><%= image_tag user_image.image.url, style: "width: 100%;" %></li>
             <% end %>
-          <% end %>
-          <% 1.upto(user_image_counter) do |i| %>
-            <li><%= image_tag 'photo-img.jpg', alt: "" %></li>
           <% end %>
         </ul>
       </div>
