@@ -3,7 +3,7 @@
   <% @search_user.each do |user|%>
     <div class="supporters">
       <% if user.present? %>
-        <%= image_tag user.image.url(:medium), style: "height: 64px;width :60px;" %>
+        <%= image_tag user.image.url(:tiny) %>
       <% end %>
       <% if user.present? && user.first_name.present? %>
         <h2><%= link_to user.first_name.first(12).capitalize, user_profile_path(user.id),  target: "_blank", :class=> "search_user_name" %></h2>
