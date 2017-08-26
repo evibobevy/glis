@@ -2,15 +2,16 @@ class FriendshipsController < ApplicationController
   before_filter :authorize, only: [:support]
 
   def support
+    byebug
     if params[:friend_id].present?
-      @friend_id  = params[:friend_id] if params[:friend_id].present?
-      @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'pending')
+      @friend_id  = params[:friend_id] 
+      @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'approved')
       @user       = User.find(params[:friend_id])
       if @friendship.save
         # UserMailer.user_notification(@user,@friend_id).deliver!  if @user.email_notification?
-        flash[:notice] = "Your request has been sent."
+        flash[:notice] = "You are now supporting " + @user.first_name
       else
-        flash[:error] = "Error occur when adding friend."
+        flash[:error] = "Error occur when supporting " + @user.first_name
       end
       redirect_to :back and return
     end
@@ -93,7 +94,11 @@ class FriendshipsController < ApplicationController
   def user_profile
     if params[:id].present?
       @user            = User.find(params[:id])
-      @user_supporters = @user.friendships.find_unremove_friend.uniq.reject { |user| user.user_id == @user.id }
+
+      byebug
+      
+      @user_supporters = User.where(id: (Friendship.find_by_friend_id(@user.id).user_id ))
+
       @post            = Post.first
       @posts           = @user.posts.uniq if @user.posts.present?
       @comments        = @post.comments if @post.present?

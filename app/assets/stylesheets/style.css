@@ -126,7 +126,7 @@ a.btn-join:hover{background:#4b962e;}
 .left-hd {float:left;}
 .rgt-hd {float:right; width:38%;}
 .no-scroll {overflow:hidden;}
-.no-supporter{ margin: 98px 0px; }
+.no-supporter{ padding-top: 10%; }
 
 /*.vol-detail-row {float:left; width:100%; border-top:4px solid #4a4a4a; padding:64px 0 0 0;}*/
 .vol-detail-row {width:100%; padding:1px 0 0 0;}

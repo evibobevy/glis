@@ -62,29 +62,13 @@
       <div class="fixed-wrapper">
         <div id="volunteers">
           <div class="corner"></div>
-          <h1>My Supporters</h1><br/>
-          <div class="volBox">
-            <% if @user_supporters.present? %>
-              <% @user_supporters.in_groups_of(3, false) do |user_support| %>
-                <% for user in user_support %>
-                  <div class="supporters">
-                    <% if user.friend.present? && user.friend.user_pictures.first.present? %>
-                      <%= image_tag user.friend.user_pictures.first.image.url(:medium), style: "height: 65px;" %>
-                    <% else %>
-                      <!--<img src="/assets/no-img.jpg"/>-->
-                      <%= image_tag 'no-img.jpg' %>
-                    <% end %>
-                    <h2><% if user.friend.present? && user.friend.first_name.present? %>
-                        <%= link_to user.friend.last_name_initial.capitalize, user_profile_path(:id => user.friend.id) %>
-                      <% end %>
-                    </h2>
-                  </div>
-                <% end %>
-              <% end %>
-            <% else %>
-              <h2 align="center" style="margin: 95px;"><b><%= t(:no_supporter) %></b></h2>
-            <% end %>
-          </div>
+
+
+          <%= render "registrations/my_supporters"%>
+
+
+
+
         </div>
   <% end %>
   <!--mysupporters section ends-->

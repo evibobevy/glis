@@ -1,22 +1,24 @@
   <h1>My Supporters</h1><br/>
   <div class="volBox" >
+
     <%if @user_supporters.present? %>
-
-
       <% @user_supporters.in_groups_of(3, false) do |user_support| %>
+
       <div class = "row">
         <% for user in user_support %>
        
           <div class = "col-md-4">
             <div class="supporters">
-              <%= image_tag find_user_by_id(user.user_id).image.url(:thumb) %>
+              <% byebug %>
+              <%= image_tag user.image.url(:thumb) %>
               <h2>
-                <%= link_to find_user_by_id(user.user_id).last_name_initial.capitalize, user_profile_path(:id => user.user_id) %>
+                <%= link_to user.last_name_initial.capitalize, user_profile_path(:id => user.id) %>
               </h2>
-                <%= button_to 'Remove', remove_friend_path(:friend_id => current_user.id, :user_id => user.user_id), :method => :post, :class=>"remove-btn" if user_signed_in? %> 
+                <%= button_to 'Remove', remove_friend_path(:friend_id => current_user.id, :user_id => user.id), :method => :post, :class=>"remove-btn" if user_signed_in? %> 
             </div>
           </div>
         <% end %>
+
       </div>
 
       <% end %>
