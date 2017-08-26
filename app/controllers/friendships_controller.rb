@@ -2,7 +2,6 @@ class FriendshipsController < ApplicationController
   before_filter :authorize, only: [:support]
 
   def support
-    byebug
     if params[:friend_id].present?
       @friend_id  = params[:friend_id] 
       @friendship = current_user.friendships.build(:friend_id => params[:friend_id].to_i, :accepted => 'approved')
@@ -92,7 +91,6 @@ class FriendshipsController < ApplicationController
   end
 
   def user_profile
-    byebug
     if params[:id].present?
       @user            = User.find(params[:id])
       @user_supporters = User.where(id: Friendship.where(friend_id: @user.id ).pluck(:user_id)    )

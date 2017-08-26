@@ -12,7 +12,6 @@
             <% end %>
           </div>
           <div class="user-prf-left-cont">
-            <% byebug %>
             <% if user_signed_in? && current_user.full_name.present? %>
               <h2><%= current_user.full_name %></h2>
             <% end %>
@@ -40,7 +39,6 @@
             <%= @hours.present? ? @hours.map {|i,j| i}.inject(:+) : 0  %>
           </span> hours
           </p><br/>
-          <% byebug %>
           <p><span><% if user_signed_in? %><%= @user_supporters.count %><% end %></span> Supporters </p>
         </div>
       </div>

@@ -59,21 +59,10 @@
             </div>
           <% end %>
         </div>
-        <div class="user-prf-rgt"> <strong>Volunteered:</strong>
-          <p><span><% if user_signed_in? %><%= current_user.events.count %><% end %></span> times</p>
-          <p><span>
-            <% if user_signed_in? %>
-		          <% @hours = [] %>
-              <% current_user.events. each do |event| %>
-                <% @hours << volunteers_works_hours(event).first %>
-              <% end %>
-              <% end %>
-            <%#= @hours.join("','").present? ? @hours.join("','") : 0 %>
-            <%= @hours[0].present? ? @hours[0] : 0  %>
-          </span> hours
-          </p><br/>
-          <p><span><% if user_signed_in? %><%= @supporters.present? ? @supporters.count : 0 %><% end %></span> Supporters </p>
-        </div>
+
+
+      <%= render 'friendships/user_info_box' %>
+
         <div class="foundCreate">
           <button id="foundation_cal">CREATE YOUR FOUNDATION PROFILE</button>
         </div>
@@ -129,29 +118,17 @@
     <div class="fixed-wrapper">
       <div id="volunteers">
         <div class="corner"></div>
-        <h1><%=t (:my_supporters)%></h1><br/>
 
-        <div class="volBox">
-          <% if @user_supporters.present? %>
-            <% @user_supporters.in_groups_of(3, false) do |user_support| %>
-              <% for user in user_support %>
-                <div class="supporters">
-                  <% if user.present? && find_user_by_id(user.friend_id).user_pictures.present? %>
-                    <%= image_tag find_user_by_id(user.friend_id).user_pictures.first.image.url(:medium), style: "height: 65px;" %>
-                  <% else %>
-                    <%= image_tag 'noImg.jpg' %>
-                  <% end %>
-                  <h2 style="float: left;margin-left: 20px;"><% if user.present? && find_user_by_id(user.friend_id).first_name.present? %>
-                      <%= link_to find_user_by_id(user.friend_id).last_name_initial.capitalize, user_profile_path(:id => user.friend_id) %>
-                    <% end %>
-                  </h2>
-                </div>
-              <% end %>
-            <% end %>
-          <% else %>
-            <h2 align="center" class="no-supporter"><b><%= t(:no_supporter) %></b></h2>
-          <% end %>
-        </div>
+        <%= render "registrations/my_supporters" %>
+
+
+
+
+
+
+
+
+
       </div>
     </div>
     <!--mysupporters section ends-->

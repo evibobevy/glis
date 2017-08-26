@@ -27,6 +27,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def edit
     @user_pictures  = current_user.user_pictures.last(4)  if user_signed_in?
+    @user_supporters=  User.where(id: Friendship.where(friend_id: current_user.id ).pluck(:user_id)    )
     @supporters = current_user.friendships.find_unremove_friend.reject{|user| user.friend_id == current_user.id}  if user_signed_in?
     # @picture = UserPicture.new
   end
@@ -36,7 +37,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def profile
-    byebug
     @user_supporters=  User.where(id: Friendship.where(friend_id: current_user.id ).pluck(:user_id)    )
     @post           = Post.event_posts.first if Post.event_posts.first.present?
     @posts          = current_user.friends.collect {|i| i.posts}.flatten.uniq if user_signed_in?

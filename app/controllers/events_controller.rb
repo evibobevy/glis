@@ -152,7 +152,6 @@ class EventsController < ApplicationController
   end
 
   def login_user_friend
-    byebug
     @user_supporters = current_user.friendships.find_unremove_friend.reject{|user| user.friend_id == current_user.id}  if user_signed_in?
   end
 
