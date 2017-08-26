@@ -92,13 +92,10 @@ class FriendshipsController < ApplicationController
   end
 
   def user_profile
+    byebug
     if params[:id].present?
       @user            = User.find(params[:id])
-
-      byebug
-      
-      @user_supporters = User.where(id: (Friendship.find_by_friend_id(@user.id).user_id ))
-
+      @user_supporters = User.where(id: Friendship.where(friend_id: @user.id ).pluck(:user_id)    )
       @post            = Post.first
       @posts           = @user.posts.uniq if @user.posts.present?
       @comments        = @post.comments if @post.present?

@@ -36,7 +36,8 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def profile
-    @user_supporters = Friendship.where('user_id !=? AND accepted=? AND friend_id =? AND removed_friend=?', current_user.id, 'approved', current_user.id, false ) if user_signed_in?
+    byebug
+    @user_supporters=  User.where(id: Friendship.where(friend_id: current_user.id ).pluck(:user_id)    )
     @post           = Post.event_posts.first if Post.event_posts.first.present?
     @posts          = current_user.friends.collect {|i| i.posts}.flatten.uniq if user_signed_in?
     @comments       = @post.comments if @post.present?

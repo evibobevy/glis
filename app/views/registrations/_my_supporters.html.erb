@@ -11,10 +11,18 @@
             <div class="supporters">
               <% byebug %>
               <%= image_tag user.image.url(:thumb) %>
-              <h2>
+              <h2> 
                 <%= link_to user.last_name_initial.capitalize, user_profile_path(:id => user.id) %>
               </h2>
+
+              <% byebug %>
+              <% if action_name == "profile" %>
+
                 <%= button_to 'Remove', remove_friend_path(:friend_id => current_user.id, :user_id => user.id), :method => :post, :class=>"remove-btn" if user_signed_in? %> 
+              <% end %> 
+
+
+
             </div>
           </div>
         <% end %>

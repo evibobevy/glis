@@ -26,22 +26,9 @@
             </p>
           </div>
         </div>
-        <div class="user-prf-rgt"> <strong>Volunteered:</strong>
-          <p><span><% if user_signed_in? %><%= current_user.events.count %><% else %> <%= @user.events.count %><% end %></span> times</p>
-          <p><span>
-            <% if user_signed_in? %>
-              <% @hours = [] %>
-              <% current_user.events. each do |event| %>
-                <% @hours << volunteers_works_hours(event) %>
-              <% end %>
-              <%# if @hours.present? %> <%#= @hours.join("','") %><%#else %> <%# end %>
-              <%#= @hours[0].present? ? @hours[0] : 0  %>
-              <%= @hours.present? ? @hours.map {|i,j| i}.inject(:+) : 0  %>
-              </span> hours
-              <% end %>
-            </p><br/>
-          <p><span><% if user_signed_in? %><%= current_user.friendships.uniq.count %><% else %><%= @user.friendships.uniq.count %><% end %></span> Supporters </p>
-        </div>
+
+          <%= render 'user_info_box' %>
+
       </div>
       <div class="<%= 'user-photos-row' if @user.user_pictures.present? %>">
         <ul>
