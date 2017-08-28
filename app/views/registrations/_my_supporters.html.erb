@@ -8,10 +8,21 @@
        
           <div class = "col-md-4 ">
             <div class="supporters">
-              <%= image_tag user.image.url(:thumb) %>
+           
+
+
+              <%=link_to( image_tag(user.image.url(:thumb)),  user_profile_path(:id => user.id) ) %>
+            
+
+
+
               <h2> 
                 <%= link_to user.last_name_initial.capitalize, user_profile_path(:id => user.id) %>
               </h2>
+
+
+
+
               <% if action_name.in?( ["profile", "edit"] ) %>
                 <%= button_to 'Remove', remove_friend_path(:friend_id => current_user.id, :user_id => user.id), :method => :post, :class=>"remove-btn" if user_signed_in? %> 
               <% end %> 
