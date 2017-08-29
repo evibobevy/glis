@@ -127,6 +127,25 @@ a.btn-join:hover{background:#4b962e;}
 .rgt-hd {float:right; width:38%;}
 .no-scroll {overflow:hidden;}
 .no-supporter{ padding-top: 10%; }
+.todays-events h4 {
+	width: 100%;
+    border: 2px solid #979797;
+    color: white;
+    background-color: #67aa4d;
+    border-radius: 5px;
+    margin-top: 0px;
+    padding: 5px;
+    margin-left: 0;
+    font-size: 94%;
+
+    text-align: center;
+}
+
+.todays-events  {
+	padding-top: 0;
+	margin-left: 0;
+
+}
 
 /*.vol-detail-row {float:left; width:100%; border-top:4px solid #4a4a4a; padding:64px 0 0 0;}*/
 .vol-detail-row {width:100%; padding:1px 0 0 0;}
