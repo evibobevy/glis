@@ -237,7 +237,9 @@ Devise.setup do |config|
 
   require 'omniauth-facebook'
   #config.omniauth :facebook, "256992397968520", "6d2a9d514cf8a932843da089fd6a6289"
-  config.omniauth :facebook, "357508021019662", "98b2de13456c04491dbaeed9d4dfb3e6"
+  #config.omniauth :facebook, "357508021019662", "98b2de13456c04491dbaeed9d4dfb3e6"
+  config.omniauth :facebook, "682397081956155", "c05cdc352e9a83a7f0808adfc76aebfd"
+  
 
   config.http_authenticatable_on_xhr = false
   config.navigational_formats = ["*/*", :html, :json]
