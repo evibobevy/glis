@@ -17,3 +17,6 @@ $('#new_user').bind('ajax:success', function(evt, data, status, xhr) {
             //return false;
             //alert(xhr.responseText);
     });
+
+
+

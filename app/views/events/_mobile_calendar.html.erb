@@ -9,7 +9,11 @@
         <div class="gig_info" style="display:none; width: 95%;">
           <% if today_gig.location.present? %> <b>Address:</b></h3> <h3 class="event_details", style="width: 80%;"><%= today_gig.location.titleize %><% end %>
           <% if today_gig.full_description.present? %> <br /><b>Details:</b> <%= today_gig.full_description %><% end %><br />
-          <%= link_to 'View GIG', "javascript:void(0)" %> <br />
+       
+
+                 <%= link_to 'View GIG', join_gigs_path(:id => today_gig.id), data: { fancybox_width: 600 }, :class=>"fancybox "%>
+
+
           <%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %>
         </div>
         <br> <%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn", :id => "#{today_gig.id}" %>  </h2></br><hr>

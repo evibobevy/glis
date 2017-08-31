@@ -43,7 +43,14 @@
                     <div class="gig_info" style="display:none; width: 95%;">
                       <% if today_gig.location.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Address:</b></h3> <h3 style="width: 80%;"><%= today_gig.location.titleize %><% end %>
                       <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <b>Details:</b> <%= today_gig.full_description %><% end %>
-                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <div><%= link_to 'View GIG', "javascript:void(0)" %> </div><% end %>
+                      <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> 
+
+                      <div>
+
+                                  <%= link_to 'View GIG', join_gigs_path(:id => today_gig.id), data: { fancybox_width: 600 }, :class=>"fancybox "%>
+
+
+                      </div><% end %>
                       <% if today_gig.full_description.present? && today_gig.event_date == Time.zone.now.beginning_of_day %><div><%= link_to 'CLOSE INFO', "javascript:void(0)", :class=> "close_btn" %> </div><% end %>
                     </div>
                     <% if today_gig.title.present? && today_gig.event_date == Time.zone.now.beginning_of_day %> <br><%= link_to 'BASIC INFO', "javascript:void(0)", :class=>"basic_btn", :id =>"#{today_gig.id}" %>  </h2></br><hr> <% end %>
