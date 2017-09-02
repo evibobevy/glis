@@ -1055,3 +1055,12 @@ button{-moz-border:0px;}
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 }
+
+
+@media all and (min-width:0px) and (max-width: 480px) {
+ 
+
+.fancybox-inner {
+  overflow: hidden !important;
+}
+}

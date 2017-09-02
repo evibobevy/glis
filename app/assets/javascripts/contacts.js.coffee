@@ -14,6 +14,7 @@ $ ->
     arrows: false
     beforeLoad: ->
       @width = parseInt(@element.data('fancybox-width'))
+      @height = parseInt(@element.data('fancybox_height'))
       return
     helpers:
       overlay:

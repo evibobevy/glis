@@ -83,8 +83,8 @@ class EventsController < ApplicationController
     end
     @today_gigs = Event.today_event
     @event = Event.new
-    layout = user_signed_in? ? 'application' : 'fancybox'
-    #layout = 'fancybox'
+    layout = user_signed_in? && !params[:showinfancy] ? 'application' : 'fancybox'
+ 
     if params[:is_mobile] == "true"
       respond_to do |format|
         format.js  { render layout: false }

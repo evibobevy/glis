@@ -28,6 +28,11 @@ window.setTimeout(function() {
 }, 4000);
 
 
+$(window).resize(function() {
+    $.fancybox.update();
+});
+
+
 
 var isMobile = {
     Android: function() {
